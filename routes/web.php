@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'IndexController@index');
+
 
 //all auth routes
 //var_dump($this);die();
@@ -29,3 +28,16 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');*/
 Route::post('auth/register', 'Auth\AuthController@postRegister');*/
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::group([
+    'as' => 'users::',
+    'prefix' => 'users'
+    ], function () {
+
+        Route::get('/', 'UsersController@index')->name('list');
+        Route::get('/create', 'UsersController@create')->name('create');
+        Route::get('/edit', 'UsersController@show')->name('edit');
+        Route::post('/update/{id?}', 'UsersController@update');
+
+});
