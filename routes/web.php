@@ -11,33 +11,45 @@
 |
 */
 
-Route::get('/', 'IndexController@index');
+Route::get('/', 'IndexController@index')->name('main');
 
 
-//all auth routes
-//var_dump($this);die();
-Auth::routes();
+
 
 // auth routes...
-/*Route::get('auth/login', 'Auth\AuthController@getLogin');
-Route::post('auth/login', 'Auth\AuthController@postLogin');
-Route::get('auth/logout', 'Auth\AuthController@getLogout');*/
+//Auth::routes();
+//Registration Routes...
+Route::get('invite/{code}', 'Auth\RegisterController@showRegistrationForm');
+Route::post('invite/{code}', 'Auth\RegisterController@register');
 
-// register routes
-/*Route::get('auth/register', 'Auth\AuthController@getRegister');
-Route::post('auth/register', 'Auth\AuthController@postRegister');*/
+
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login');
+
+
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
+// Password Reset Routes...
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::group([
-    'as' => 'users::',
+    'as' => 'users.',
     'prefix' => 'users'
     ], function () {
 
-        Route::get('/', 'UsersController@index')->name('list');
+        Route::get('/', 'UsersController@index')->name('index');
         Route::get('/create', 'UsersController@create')->name('create');
-        Route::get('/edit', 'UsersController@show')->name('edit');
-        Route::post('/update/{id?}', 'UsersController@update');
+        Route::post('/create', 'UsersController@saveNew');
+        Route::get('/edit', 'UsersController@show');
+        Route::post('/update/{id}', 'UsersController@update');
 
 });

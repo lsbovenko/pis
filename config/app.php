@@ -168,7 +168,8 @@ return [
          */
         Laravel\Tinker\TinkerServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
-        'Collective\Html\HtmlServiceProvider',
+        Collective\Html\HtmlServiceProvider::class,
+        Junaidnasir\Larainvite\LaraInviteServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -178,6 +179,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\RepositoryServiceProvider::class,
 
     ],
 
@@ -229,8 +231,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
-        'Form' => 'Collective\Html\FormFacade',
-        'Html' => 'Collective\Html\HtmlFacade',
+        'Invite'  => Junaidnasir\Larainvite\Facades\Invite::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
     ],
 
 ];

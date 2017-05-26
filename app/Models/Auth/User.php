@@ -5,11 +5,13 @@ namespace App\Models\Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+use Junaidnasir\Larainvite\InviteTrait;
 
 class User extends Authenticatable
 {
     use Notifiable;
     use EntrustUserTrait;
+    use InviteTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +19,18 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'department_id',
+        'is_active'
+    ];
+
+    /**
+     * @var array
+     */
+    protected $guarded = [
+        'id',
+        'password'
     ];
 
     /**

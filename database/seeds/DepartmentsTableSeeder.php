@@ -27,7 +27,7 @@ class DepartmentsTableSeeder extends Seeder
             'Отдел PHP разработки',
             'Отдел Ruby разработки',
             'Отдел Frontend разработки',
-            'Отдел UI/ UX',
+            'Отдел UI/UX',
             'Отдел маркетинга и продаж',
             'Отдел кадров',
             'Другой',

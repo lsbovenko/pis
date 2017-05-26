@@ -12,6 +12,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        //todo
         User::create(
             [
                 'email' => 'foo@bar.com'

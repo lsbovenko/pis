@@ -13,11 +13,18 @@ class ChangeUsersTable extends Migration
      */
     public function up()
     {
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('password');
+        });
+
         Schema::table('users', function (Blueprint $table) {
             $table->integer('department_id')
                 ->nullable()
                 ->unsigned();
 
+            $table->boolean('is_active');
+            $table->string('password')->nullable();
             $table
                 ->foreign('department_id')
                 ->references('id')->on('departments')
@@ -35,6 +42,7 @@ class ChangeUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign('department_id');
             $table->dropColumn('department_id');
+            $table->dropColumn('is_active');
         });
     }
 }

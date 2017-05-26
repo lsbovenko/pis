@@ -9,7 +9,8 @@
     </div>
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <form method="POST" action="{{ action('UsersController@update') }}">
+            @include('partials.errors')
+            <form method="POST" action="{{ route('users.create') }}">
                 {{ csrf_field() }}
                 <div class="form-group">
                     <label for="name">{{ trans('users.name') }}</label>
@@ -21,12 +22,12 @@
                 </div>
                 <div class="form-group">
                     <label for="department">{{ trans('users.department') }}</label>
-                    {{ Form::select('department', $departments, 'S', ['class'=>'form-control']) }}
+                    {{ Form::select('department_id', $departments, 'TODO SET DEFFF', ['class'=>'form-control']) }}
 
                 </div>
                 <div class="form-group">
                     <label for="department">{{ trans('users.role') }}</label>
-                    {{ Form::select('role', $roles, 'S', ['class'=>'form-control']) }}
+                    {{ Form::select('role_id', $roles, 'S', ['class'=>'form-control']) }}
                 </div>
                 <button type="submit" class="btn btn-primary pull-right">Submit</button>
             </form>

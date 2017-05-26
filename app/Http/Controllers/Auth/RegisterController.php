@@ -2,33 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\Auth\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use Junaidnasir\Larainvite\Facades\Invite;
+
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
-    use RegistersUsers;
-
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
     /**
      * Create a new controller instance.
      *
@@ -40,6 +21,51 @@ class RegisterController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showRegistrationForm(Request $request)
+    {
+        $code = $request->route('code');
+        try {
+            if(!Invite::isValid($code)) {
+                abort(404);
+            }
+        } catch (\Exception $e) {
+            abort(404);
+        }
+
+        return view('auth.register', ['code' => $code]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+        $code = $request->route('code');
+        try {
+            if(Invite::isValid($code)){
+                $invitation = Invite::get($code);
+                $user = $invitation->user;
+                $data = $request->all();
+                $user->password = bcrypt($data['password']);
+                $user->save();
+                Invite::consume($code);
+            }
+        } catch (\Exception $e) {
+            abort(404);
+        }
+
+        //todo
+        //$this->guard()->login($user);
+
+        return redirect()->route('main');
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
@@ -48,24 +74,17 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
 
     /**
-     * Create a new user instance after a valid registration.
+     * Get the guard to be used during registration.
      *
-     * @param  array  $data
-     * @return User
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
      */
-    protected function create(array $data)
+    protected function guard()
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        return Auth::guard();
     }
 }
