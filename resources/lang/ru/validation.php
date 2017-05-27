@@ -19,4 +19,11 @@ return [
             'in' => 'Выберите отдел из списка'
         ],
     ],
+    'min'                  => [
+        'numeric' => 'Должен быть не менее :min.',
+        'file'    => 'The :attribute must be at least :min kilobytes.',
+        'string'  => 'Должен быть не менее :min символов.',
+        'array'   => 'The :attribute must have at least :min items.',
+    ],
+    'confirmed' => 'Подтверждение не совпадает',
 ];

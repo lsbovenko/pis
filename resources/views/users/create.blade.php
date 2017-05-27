@@ -22,14 +22,14 @@
                 </div>
                 <div class="form-group">
                     <label for="department">{{ trans('users.department') }}</label>
-                    {{ Form::select('department_id', $departments, 'TODO SET DEFFF', ['class'=>'form-control']) }}
+                    {{ Form::select('department_id', $departments, '', ['class'=>'form-control']) }}
 
                 </div>
                 <div class="form-group">
                     <label for="department">{{ trans('users.role') }}</label>
-                    {{ Form::select('role_id', $roles, 'S', ['class'=>'form-control']) }}
+                    {{ Form::select('role_id', $roles, '', ['class'=>'form-control']) }}
                 </div>
-                <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                <button type="submit" class="btn btn-primary pull-right">Добавить</button>
             </form>
         </div>
     </div>

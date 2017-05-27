@@ -27,14 +27,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>...</td>
-                        <td>...</td>
-                    </tr>
+                    @foreach ($users as $user)
+                        <tr class="@if (!$user->is_active)danger @endif">
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>..</td>
+                            <td>..</td>
+                            <td>..</td>
+                            <td>{{ $user->roles()->first()->display_name }}</td>
+                            <td>
+                                <a href="{{ route('users.edit', ['id' => $user->id]) }}">Редактировать</a>
+                            </td>
+                        </tr>
+                    @endforeach
+
                 </tbody>
             </table>
         </div>
     </div>
     <hr>
+    {{ $users->render() }}
 </div>
 @endsection

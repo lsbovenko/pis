@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -9,7 +9,7 @@ use App\Repositories\{
     Role as RoleRepository
 };
 
-class UserRequest extends FormRequest
+abstract class AbstractRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,7 @@ class UserRequest extends FormRequest
      */
     public function rules(DepartmentRepository $departmentRepository, RoleRepository $roleRepository)
     {
-        return [
+        $rules = [
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users,email',
             'department_id' => [
@@ -40,5 +40,12 @@ class UserRequest extends FormRequest
                 'required',
             ],
         ];
+
+        return array_merge($rules, $this->getEmailValidator());
     }
+
+    /**
+     * @return array
+     */
+    abstract protected function getEmailValidator() : array;
 }

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Junaidnasir\Larainvite\Facades\Invite;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\User\PasswordRequest;
 
 class RegisterController extends Controller
 {
@@ -39,12 +41,11 @@ class RegisterController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param PasswordRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function register(Request $request)
+    public function register(PasswordRequest $request)
     {
-        $this->validator($request->all())->validate();
         $code = $request->route('code');
         try {
             if(Invite::isValid($code)){
@@ -59,23 +60,9 @@ class RegisterController extends Controller
             abort(404);
         }
 
-        //todo
-        //$this->guard()->login($user);
+        $this->guard()->login($user);
 
         return redirect()->route('main');
-    }
-
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'password' => 'required|string|min:6|confirmed',
-        ]);
     }
 
     /**
