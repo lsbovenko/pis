@@ -10,17 +10,8 @@ use App\Models\Categories\Department as ModelDepartment;
  */
 class Department extends AbstractRepository
 {
-    /**
-     * @return array
-     */
-    public function getAllForSelect() : array
+    protected function getModelClass() : string
     {
-        $res = [];
-        foreach (ModelDepartment::orderBy('id')->get() as $department)
-        {
-            $res[$department->id] = $department->name;
-        }
-
-        return $res;
+        return ModelDepartment::class;
     }
 }

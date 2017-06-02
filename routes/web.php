@@ -12,6 +12,9 @@
 */
 
 Route::get('/', 'IndexController@index')->name('main');
+Route::get('/add-idea', 'IndexController@addIdea')->name('add-idea');
+Route::post('/add-idea', 'IndexController@createIdea');
+Route::get('/success', 'IndexController@success')->name('add-idea-success');
 
 
 
@@ -45,8 +48,8 @@ Route::group([
 Route::group([
     'as' => 'profile.',
     'prefix' => 'profile'
-], function () {
-    Route::get('/', 'ProfileController@index')->name('index');
-    Route::post('/update', 'ProfileController@update')->name('update');
-    Route::post('/change-pass', 'ProfileController@changePass')->name('change-pass');
+    ], function () {
+        Route::get('/', 'ProfileController@index')->name('index');
+        Route::post('/update', 'ProfileController@update')->name('update');
+        Route::post('/change-pass', 'ProfileController@changePass')->name('change-pass');
 });

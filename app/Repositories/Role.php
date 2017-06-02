@@ -10,17 +10,9 @@ use App\Models\Auth\Role as ModelRole;
  */
 class Role extends AbstractRepository
 {
-    /**
-     * @return array
-     */
-    public function getAllForSelect() : array
-    {
-        $res = [];
-        foreach (ModelRole::orderBy('id', 'desc')->get() as $role)
-        {
-            $res[$role->id] = $role->display_name;
-        }
 
-        return $res;
+    protected function getModelClass() : string
+    {
+        return ModelRole::class;
     }
 }

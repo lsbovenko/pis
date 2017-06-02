@@ -4,7 +4,7 @@ namespace App\Models\Categories;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Department extends Model
+class StrategicObjective extends Model
 {
     /**
      * disable update timestamp fields
@@ -20,11 +20,6 @@ class Department extends Model
     protected $fillable = [
         'name',
     ];
-
-    public function user()
-    {
-        return $this->hasOne('App\Models\Auth\User');
-    }
 
     /**
      * @return string

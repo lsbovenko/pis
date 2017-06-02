@@ -41,20 +41,27 @@ class RepositoryServiceProvider extends ServiceProvider
     private function registerRepositories()
     {
         foreach ($this->getRepositoriesList() as $name => $className) {
-            $this->app->bind('repository' . $name, function ($app) use ($className) {
-                return new $className($app);
+            $className = "\\" . $className;
+            $this->app->singleton('repository.' . $name, function ($app) use ($className) {
+                return new $className();
             });
         }
 
-
-        $this->app->alias('entrust', 'Zizaco\Entrust\Entrust');
     }
 
+    /**
+     * @return array
+     */
     private function getRepositoriesList() : array
     {
         return [
-            'role' => App\Repositories\Role::class,
-            'department' => App\Repositories\Department::class,
+            'role' => \App\Repositories\Role::class,
+            'department' => \App\Repositories\Department::class,
+            'coreCompetency' => \App\Repositories\CoreCompetency::class,
+            'operationalGoal' => \App\Repositories\OperationalGoal::class,
+            'strategicObjective' => \App\Repositories\StrategicObjective::class,
+            'type' => \App\Repositories\Type::class,
+            'status' => \App\Repositories\Status::class,
         ];
     }
 }

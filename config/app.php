@@ -180,7 +180,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
-
+        App\Providers\ReferenceServiceProvider::class,
+        App\Providers\IdeaCreatorServiceProvider::class,
+        App\Providers\DataCleanerServiceProvider::class,
     ],
 
     /*
