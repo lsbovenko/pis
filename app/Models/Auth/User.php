@@ -42,9 +42,20 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function department()
     {
         return $this->belongsTo('App\Models\Categories\Department');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function ideas()
+    {
+        return $this->hasMany('App\Models\Idea');
     }
 
     /**

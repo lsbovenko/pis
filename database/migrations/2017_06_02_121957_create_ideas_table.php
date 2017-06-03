@@ -80,6 +80,8 @@ class CreateIdeasTable extends Migration
                 ->foreign('status_id')
                 ->references('id')->on('statuses')
                 ->onDelete('set null');
+
+            $table->tinyInteger('approve_status')->unsigned();
         });
     }
 

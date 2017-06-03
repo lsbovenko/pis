@@ -2,21 +2,20 @@
 
 namespace App\Handlers\Events;
 
-use App\Events\IdeaWasCreated;
+use App\Events\IdeaWasApproved;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Notifications\IdeaCreated\{
+use App\Notifications\IdeaApproved\{
     ToUser,
-    ToSuperadmin,
     ToAdmin
 };
 use Illuminate\Support\Facades\App;
 
 /**
- * Class IdeaCreated
+ * Class IdeaApproved
  * @package App\Handlers\Events
  */
-class IdeaCreated
+class IdeaApproved
 {
     /**
      * @var \App\Repositories\User
@@ -26,47 +25,32 @@ class IdeaCreated
     /**
      * Handle the event.
      *
-     * @param  IdeaCreated  $event
+     * @param  IdeaWasApproved  $event
      * @return void
      */
-    public function handle(IdeaWasCreated $event)
+    public function handle(IdeaWasApproved $event)
     {
         $this
             ->notifyUser($event)
-            ->notifyAdmins($event)
-            ->notifySuperadmins($event);
+            ->notifyAdmins($event);
     }
 
     /**
-     * @param IdeaWasCreated $event
+     * @param IdeaWasApproved $event
      * @return $this
      */
-    protected function notifyUser(IdeaWasCreated $event)
+    protected function notifyUser(IdeaWasApproved $event)
     {
-        $event->getIdea()->user()->first()->notify(new ToUser());
+        $event->getIdea()->user()->first()->notify(new ToUser($event->getIdea()));
 
         return $this;
     }
 
     /**
-     * @param IdeaWasCreated $event
+     * @param IdeaWasApproved $event
      * @return $this
      */
-    protected function notifySuperadmins(IdeaWasCreated $event)
-    {
-        /** @var \App\Models\Auth\User $user */
-        foreach ($this->getUserRepository()->getSuperadmins()->get() as $user) {
-            $user->notify(new ToSuperadmin($event->getIdea()));
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param IdeaWasCreated $event
-     * @return $this
-     */
-    protected function notifyAdmins(IdeaWasCreated $event)
+    protected function notifyAdmins(IdeaWasApproved $event)
     {
         /** @var \App\Models\Auth\User $user */
         foreach ($this->getUserRepository()->getAdmins()->get() as $user) {

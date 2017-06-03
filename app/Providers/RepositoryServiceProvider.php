@@ -55,6 +55,7 @@ class RepositoryServiceProvider extends ServiceProvider
     private function getRepositoriesList() : array
     {
         return [
+            'user' => \App\Repositories\User::class,
             'role' => \App\Repositories\Role::class,
             'department' => \App\Repositories\Department::class,
             'coreCompetency' => \App\Repositories\CoreCompetency::class,

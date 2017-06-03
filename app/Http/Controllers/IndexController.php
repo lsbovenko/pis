@@ -32,7 +32,7 @@ class IndexController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(\App\Repositories\User $userRepository)
     {
         return view('index.index');
     }
@@ -68,7 +68,7 @@ class IndexController extends Controller
                 $status = Status::createNew(Status::SLUG_ACTIVE);
             }
 
-            App::make('idea.creator')->create(Auth::user(), $data, $status);
+            App::make('idea.control')->create(Auth::user(), $data, $status);
         } catch (\Exception $e) {
             Log::error($e);
             return redirect()->back();

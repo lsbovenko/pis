@@ -6,6 +6,10 @@ use Zizaco\Entrust\EntrustRole;
 
 class Role extends EntrustRole
 {
+    const ROLE_SUPERADMIN = 'superadmin';
+    const ROLE_ADMIN = 'admin';
+    const ROLE_USER = 'user';
+
     /**
      * @return string
      */

@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'UTC+3',
 
     /*
     |--------------------------------------------------------------------------
@@ -181,7 +181,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         App\Providers\ReferenceServiceProvider::class,
-        App\Providers\IdeaCreatorServiceProvider::class,
+        App\Providers\IdeaControlServiceProvider::class,
         App\Providers\DataCleanerServiceProvider::class,
     ],
 

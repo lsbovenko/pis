@@ -5,10 +5,10 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 /**
- * Class IdeaCreatorServiceProvider
+ * Class IdeaControlServiceProvider
  * @package App\Providers
  */
-class IdeaCreatorServiceProvider extends ServiceProvider
+class IdeaControlServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -34,8 +34,8 @@ class IdeaCreatorServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('idea.creator', function ($app) {
-            return new \App\Service\IdeaCreator();
+        $this->app->singleton('idea.control', function ($app) {
+            return new \App\Service\IdeaControl();
         });
     }
 }

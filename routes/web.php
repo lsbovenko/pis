@@ -17,6 +17,11 @@ Route::post('/add-idea', 'IndexController@createIdea');
 Route::get('/success', 'IndexController@success')->name('add-idea-success');
 
 
+//superadmin only
+Route::get('/review-idea/{id}', 'ReviewIdeaController@index')->where('id', '[0-9]+')->name('review-idea');
+Route::post('/review-idea/{id}', 'ReviewIdeaController@approve')->where('id', '[0-9]+');
+
+
 
 //Registration Routes...
 Route::get('invite/{code}', 'Auth\RegisterController@showRegistrationForm')->name('invite');

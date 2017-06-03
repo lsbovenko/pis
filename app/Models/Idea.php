@@ -4,8 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Idea
+ * @package App\Models
+ */
 class Idea extends Model
 {
+    const NEW = 0;
+    const APPROVED = 1;
+    const DECLINED = 2;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,11 +29,80 @@ class Idea extends Model
         'type_id',
     ];
 
+    protected $dates = [
+        'created_at',
+        'updated_at'
+    ];
+
+    /**
+     * return \App\Models\Note
+     */
+    public function getDeclinedReason()
+    {
+        return $this->notes()->where('type', '=', \App\Models\Note::TYPE_DECLINED_REASON)->first();
+    }
+
     /**
      * @return string
      */
     public function getDisplayNameField() : string
     {
         return $this->title;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\Models\Auth\User');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function coreCompetency()
+    {
+        return $this->belongsTo('App\Models\Categories\CoreCompetency');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function department()
+    {
+        return $this->belongsTo('App\Models\Categories\Department');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function operationalGoal()
+    {
+        return $this->belongsTo('App\Models\Categories\OperationalGoal');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function strategicObjective()
+    {
+        return $this->belongsTo('App\Models\Categories\StrategicObjective');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function type()
+    {
+        return $this->belongsTo('App\Models\Categories\Type');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function notes()
+    {
+        return $this->hasMany('App\Models\Note');
     }
 }
