@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'department_id',
+        'position_id',
         'is_active'
     ];
 
@@ -48,6 +49,14 @@ class User extends Authenticatable
     public function department()
     {
         return $this->belongsTo('App\Models\Categories\Department');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function position()
+    {
+        return $this->belongsTo('App\Models\Categories\Position');
     }
 
     /**

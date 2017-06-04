@@ -15,7 +15,8 @@ class StatusesTableSeeder extends Seeder
         foreach ($this->getItems() as $item) {
             Status::create(
                 [
-                    'name' => $item['name']
+                    'name' => $item['name'],
+                    'slug' => $item['slug']
                 ]
             );
         }

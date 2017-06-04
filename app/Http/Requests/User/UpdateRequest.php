@@ -13,7 +13,6 @@ class UpdateRequest extends AbstractRequest
      */
     protected function getEmailValidator() : array
     {
-        //todo добавить проверку уникальности, если изменен
         return ['email' => 'required|email'];
     }
 }

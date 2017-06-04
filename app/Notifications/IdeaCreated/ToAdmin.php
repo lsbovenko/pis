@@ -6,19 +6,25 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use App\Models\Idea;
 
 class ToAdmin extends Notification
 {
     use Queueable;
 
     /**
+     * @var Idea
+     */
+    protected $idea;
+
+    /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Idea $idea)
     {
-
+        $this->idea = $idea;
     }
 
     /**
@@ -42,6 +48,6 @@ class ToAdmin extends Notification
     {
         return (new MailMessage)
             ->subject('Добавлена новая идея.')
-            ->view('emails.idea-created.to-admin');
+            ->view('emails.idea-created.to-admin', ['idea' => $this->idea]);
     }
 }

@@ -57,4 +57,20 @@ class Reference
     {
         return (App::make('repository.role'))->getAllForSelect();
     }
+
+    /**
+     * @return array
+     */
+    public function getAllStatusesForSelect() : array
+    {
+        return (App::make('repository.status'))->getAllForSelect();
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllPositionsForSelect() : array
+    {
+        return (App::make('repository.position'))->getAllForSelect();
+    }
 }

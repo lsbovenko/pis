@@ -32,17 +32,14 @@ class ReviewIdeaController extends Controller
      */
     public function index(Request $request)
     {
-
         /** @var \App\Models\Idea $idea */
         $idea = Idea::findOrFail($request->route('id'));
         return view('review-idea.review', [
             'idea' => $idea,
-            'user' => $idea->user()->first(),
-            'coreCompetency' => $idea->coreCompetency()->first(),
-            'department' => $idea->department()->first(),
-            'operationalGoal' => $idea->operationalGoal()->first(),
-            'strategicObjective' => $idea->strategicObjective()->first(),
-            'type' => $idea->type()->first(),
+            'user' => $idea->user,
+            'priorityReason' => $idea->is_priority ? $idea->getPriorityReason() : null,
+            'statuses' => App::make('reference')->getAllStatusesForSelect(),
+            'status' => $idea->status,
         ]);
     }
 
@@ -65,9 +62,9 @@ class ReviewIdeaController extends Controller
 
         try {
             if ($status === Idea::DECLINED) {
-                App::make('idea.control')->decline($idea, $data['reason']);
+                $this->getIdeaControl()->decline($idea, $data['reason']);
             } else {
-                App::make('idea.control')->approve($idea);
+                $this->getIdeaControl()->approve($idea);
             }
         } catch (\App\Exceptions\IdeaApproved $e) {
             return redirect()->back()->withErrors([$e->getMessage()]);
@@ -76,6 +73,84 @@ class ReviewIdeaController extends Controller
             return redirect()->back();
         }
 
-        return redirect()->route('main');
+        $request->session()->flash('alert-success', 'Изменения успешно сохранены.');
+        return redirect()->back();
+    }
+
+    /**
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
+    public function pinToPriority(Request $request)
+    {
+        /** @var \App\Models\Idea $idea */
+        $idea = Idea::findOrFail($request->route('id'));
+        $data = App::make('datacleaner')->cleanData($request->all());
+        $this->validate($request, [
+            'reason_priority' => 'required|min:5',
+        ]);
+
+        try {
+            $this->getIdeaControl()->pinToPriority($idea, $data['reason_priority']);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back();
+        }
+
+        $request->session()->flash('alert-success', 'Изменения успешно сохранены.');
+        return redirect()->back();
+    }
+
+    /**
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
+    public function unpinToPriority(Request $request)
+    {
+        /** @var \App\Models\Idea $idea */
+        $idea = Idea::findOrFail($request->route('id'));
+        try {
+            $this->getIdeaControl()->unpinToPriority($idea);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back();
+        }
+
+        $request->session()->flash('alert-success', 'Изменения успешно сохранены.');
+        return redirect()->back();
+    }
+
+    /**
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
+    public function changePriorityReason(Request $request)
+    {
+        /** @var \App\Models\Idea $idea */
+        $idea = Idea::findOrFail($request->route('id'));
+        $data = App::make('datacleaner')->cleanData($request->all());
+        $this->validate($request, [
+            'reason_priority' => 'required|min:5',
+        ]);
+
+        try {
+            $this->getIdeaControl()->changePriorityReason($idea, $data['reason_priority']);
+        } catch (\App\Exceptions\PriorityReasonNotFound $e) {
+            return redirect()->back()->withErrors([$e->getMessage()]);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back();
+        }
+
+        $request->session()->flash('alert-success', 'Изменения успешно сохранены.');
+        return redirect()->back();
+    }
+
+    /**
+     * @return \App\Service\IdeaControl
+     */
+    protected function getIdeaControl() : \App\Service\IdeaControl
+    {
+        return App::make('idea.control');
     }
 }

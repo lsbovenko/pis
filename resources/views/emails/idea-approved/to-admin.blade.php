@@ -3,6 +3,6 @@
 @section('content')
     <p>
         Опубликована новая идея.
-        <a href="#">Просмотреть</a>.
+        <a href="{{ route('review-idea', ['id' => $idea->id]) }}">Просмотреть</a>.
     </p>
 @endsection

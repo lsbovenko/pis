@@ -43,7 +43,7 @@ class IdeaCreated
      */
     protected function notifyUser(IdeaWasCreated $event)
     {
-        $event->getIdea()->user()->first()->notify(new ToUser());
+        $event->getIdea()->user()->first()->notify(new ToUser($event->getIdea()));
 
         return $this;
     }

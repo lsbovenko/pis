@@ -7,14 +7,12 @@ use App\Http\Requests\User\{
     RegistrationRequest,
     UpdateRequest
 };
-
 use App\Models\Auth\User;
-use App\Repositories\{
-    Department as DepartmentRepository,
-    Role as RoleRepository
+use App\Service\Reference;
+use Illuminate\Support\Facades\{
+    App,
+    DB
 };
-
-use Illuminate\Support\Facades\DB;
 use Junaidnasir\Larainvite\Facades\Invite;
 
 class UsersController extends Controller
@@ -43,7 +41,7 @@ class UsersController extends Controller
      */
     public function saveNew(RegistrationRequest $request)
     {
-        $input = $request->all();
+        $input = App::make('datacleaner')->cleanData($request->all());
         $user = (new \App\Models\Auth\User($input));
         $user->is_active = 1;
         DB::beginTransaction();
@@ -72,7 +70,13 @@ class UsersController extends Controller
     {
         /** @var \App\Models\Auth\User $user */
         $user = User::findOrFail($request->route('id'));
-        $input = $request->all();
+
+        $input = App::make('datacleaner')->cleanData($request->all());
+        if ($input['email'] !== $user->email) {
+            $rulesValidation['email'] = 'required|email|unique:users,email';
+            $this->validate($request, $rulesValidation);
+        }
+
         $input['is_active'] = isset($input['is_active']) ? (int)$input['is_active'] : 0;
         $user->fill($input);
         $role = \App\Models\Auth\Role::findOrFail($input['role_id']);
@@ -85,11 +89,10 @@ class UsersController extends Controller
 
     /**
      * @param Request $request
-     * @param DepartmentRepository $departmentRepository
-     * @param RoleRepository $roleRepository
+     * @param Reference $reference
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Request $request, DepartmentRepository $departmentRepository, RoleRepository $roleRepository)
+    public function edit(Request $request, Reference $reference)
     {
         /** @var \App\Models\Auth\User $user */
         $user = User::findOrFail($request->route('id'));
@@ -97,21 +100,22 @@ class UsersController extends Controller
         return view('users.edit', [
             'user' => $user,
             'inviteStatus' => $user->invitations()->first()->status,
-            'roles' => $roleRepository->getAllForSelect(),
-            'departments' => $departmentRepository->getAllForSelect(),
+            'roles' => $reference->getAllRolesForSelect(),
+            'departments' => $reference->getAllDepartmentForSelect(),
+            'positions' => $reference->getAllPositionsForSelect(),
         ]);
     }
 
     /**
-     * @param DepartmentRepository $departmentRepository
-     * @param RoleRepository $roleRepository
+     * @param Reference $reference
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create(DepartmentRepository $departmentRepository, RoleRepository $roleRepository)
+    public function create(Reference $reference)
     {
         return view('users.create', [
-            'roles' => $roleRepository->getAllForSelect(),
-            'departments' => $departmentRepository->getAllForSelect(),
+            'roles' => $reference->getAllRolesForSelect(),
+            'departments' => $reference->getAllDepartmentForSelect(),
+            'positions' => $reference->getAllPositionsForSelect(),
         ]);
     }
 }

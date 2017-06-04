@@ -29,7 +29,10 @@
                 <div class="form-group">
                     <label for="department">{{ trans('users.department') }}</label>
                     {{ Form::select('department_id', $departments, $user->department->id, ['class'=>'form-control']) }}
-
+                </div>
+                <div class="form-group">
+                    <label for="department">Должность</label>
+                    {{ Form::select('position_id', $positions, $user->position->id, ['class'=>'form-control']) }}
                 </div>
                 <div class="form-group">
                     <label for="department">{{ trans('users.role') }}</label>

@@ -1,30 +1,36 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Notifications\IdeaChangedStatus;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use App\Models\Idea;
 
-class SendInvite extends Notification
+class ToUser extends Notification
 {
     use Queueable;
 
     /**
-     * invite code
-     * @var string
+     * @var Idea
      */
-    protected $code;
+    protected $idea;
+
+    /**
+     * @var \App\Models\Categories\Status
+     */
+    protected $status;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(string $code)
+    public function __construct(Idea $idea)
     {
-        $this->code = $code;
+        $this->idea = $idea;
+        $this->status = $idea->status()->first();
     }
 
     /**
@@ -46,23 +52,11 @@ class SendInvite extends Notification
      */
     public function toMail($notifiable)
     {
-
         return (new MailMessage)
-            ->view(
-            'emails.send-invite', ['code' => $this->code]
-        )->subject('Приглашение ikantam.com');
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            //
-        ];
+            ->subject('Изменен статус идеи.')
+            ->view('emails.idea-changed-status.to-user', [
+                'idea' => $this->idea,
+                'status' => $this->status,
+            ]);
     }
 }

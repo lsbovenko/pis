@@ -15,6 +15,6 @@ class Role extends EntrustRole
      */
     public function getDisplayNameField() : string
     {
-        return $this->name;
+        return $this->display_name;
     }
 }

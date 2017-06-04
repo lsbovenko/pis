@@ -25,9 +25,9 @@ class RolesAndPermissionsTableSeeder extends Seeder
     protected function getRoles()
     {
         return [
-            'superadmin' => 'Super Admin',
-            'admin' => 'Admin',
             'user' => 'User',
+            'admin' => 'Admin',
+            'superadmin' => 'Super Admin',
         ];
     }
 }

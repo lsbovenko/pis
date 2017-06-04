@@ -25,6 +25,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\IdeaWasDeclined' => [
             'App\Handlers\Events\IdeaDeclined@handle',
         ],
+        'App\Events\IdeaWasChangedStatus' => [
+            'App\Handlers\Events\IdeaChangedStatus@handle',
+        ],
     ];
 
     /**

@@ -63,6 +63,7 @@ class RepositoryServiceProvider extends ServiceProvider
             'strategicObjective' => \App\Repositories\StrategicObjective::class,
             'type' => \App\Repositories\Type::class,
             'status' => \App\Repositories\Status::class,
+            'position' => \App\Repositories\Position::class,
         ];
     }
 }

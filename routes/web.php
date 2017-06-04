@@ -11,16 +11,26 @@
 |
 */
 
+// all
 Route::get('/', 'IndexController@index')->name('main');
 Route::get('/add-idea', 'IndexController@addIdea')->name('add-idea');
 Route::post('/add-idea', 'IndexController@createIdea');
 Route::get('/success', 'IndexController@success')->name('add-idea-success');
 
 
-//superadmin only
+//superadmin and admin
 Route::get('/review-idea/{id}', 'ReviewIdeaController@index')->where('id', '[0-9]+')->name('review-idea');
-Route::post('/review-idea/{id}', 'ReviewIdeaController@approve')->where('id', '[0-9]+');
 
+
+Route::post('/pin-priority/{id}', 'ReviewIdeaController@pinToPriority')->where('id', '[0-9]+')->name('pin-priority');
+Route::post('/unpin-priority/{id}', 'ReviewIdeaController@unpinToPriority')->where('id', '[0-9]+')->name('unpin-priority');
+Route::post('/change-priority-reason/{id}', 'ReviewIdeaController@changePriorityReason')->where('id', '[0-9]+')->name('change-priority-reason');
+Route::post('/change-status/{id}', 'EditIdeaController@changeStatus')->where('id', '[0-9]+')->name('change-status');
+Route::get('/edit-idea/{id}', 'EditIdeaController@edit')->where('id', '[0-9]+')->name('edit-idea');
+Route::post('/edit-idea/{id}', 'EditIdeaController@postEdit')->where('id', '[0-9]+');
+
+//superadmin
+Route::post('/review-idea/{id}', 'ReviewIdeaController@approve')->where('id', '[0-9]+');
 
 
 //Registration Routes...

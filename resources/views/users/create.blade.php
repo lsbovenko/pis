@@ -23,8 +23,13 @@
                 <div class="form-group">
                     <label for="department">{{ trans('users.department') }}</label>
                     {{ Form::select('department_id', $departments, '', ['class'=>'form-control']) }}
-
                 </div>
+
+                <div class="form-group">
+                    <label for="department">Должность</label>
+                    {{ Form::select('position_id', $positions, '', ['class'=>'form-control']) }}
+                </div>
+
                 <div class="form-group">
                     <label for="department">{{ trans('users.role') }}</label>
                     {{ Form::select('role_id', $roles, '', ['class'=>'form-control']) }}

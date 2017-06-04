@@ -11,7 +11,8 @@ use App\Models\{
 use App\Events\{
     IdeaWasCreated,
     IdeaWasApproved,
-    IdeaWasDeclined
+    IdeaWasDeclined,
+    IdeaWasChangedStatus
 };
 
 /**
@@ -35,6 +36,18 @@ class IdeaControl
         $idea->save();
 
         event(new IdeaWasCreated($idea));
+
+        return $idea;
+    }
+
+    /**
+     * @param array $data
+     * @return Idea
+     */
+    public function update(Idea $idea, array $data)
+    {
+        $idea->fill($data);
+        $idea->save();
 
         return $idea;
     }
@@ -76,6 +89,77 @@ class IdeaControl
         ]);
         event(new IdeaWasDeclined($idea));
 
+        return $idea;
+    }
+
+    /**
+     * @param Idea $idea
+     * @param string $reason
+     * @return Idea
+     */
+    public function pinToPriority(Idea $idea, string $reason)
+    {
+        $idea->is_priority = 1;
+        $idea->save();
+
+        Note::create([
+            'text' => $reason,
+            'idea_id' => $idea->id,
+            'type' => Note::TYPE_PRIORITY_REASON,
+        ]);
+
+        return $idea;
+    }
+
+    /**
+     * @param Idea $idea
+     * @return Idea
+     */
+    public function unpinToPriority(Idea $idea)
+    {
+        $idea->is_priority = 0;
+        $idea->save();
+
+        $reason = $idea->getPriorityReason();
+        if ($reason !== null) {
+            $reason->delete();
+        }
+
+        return $idea;
+    }
+
+    /**
+     * @param Idea $idea
+     * @param string $text
+     * @return Idea
+     * @throws \App\Exceptions\PriorityReasonNotFound
+     */
+    public function changePriorityReason(Idea $idea, string $text)
+    {
+        $reason = $idea->getPriorityReason();
+        if ($reason === null) {
+            throw new \App\Exceptions\PriorityReasonNotFound('Резюме не найдено');
+        }
+
+        $reason->text = $text;
+        $reason->save();
+        return $idea;
+    }
+
+    /**
+     * @param Idea $idea
+     * @param Status $status
+     * @return Idea
+     */
+    public function changeStatus(Idea $idea, Status $status)
+    {
+        if ($idea->approve_status !== Idea::APPROVED) {
+            throw new \App\Exceptions\IdeaIsNotApproved('Вы не можете изменить статус неутвержденной идеи');
+        }
+        $idea->status_id = $status->id;
+        $idea->save();
+
+        event(new IdeaWasChangedStatus($idea));
         return $idea;
     }
 }

@@ -23,11 +23,20 @@ class ChangeUsersTable extends Migration
                 ->nullable()
                 ->unsigned();
 
+            $table->integer('position_id')
+                ->nullable()
+                ->unsigned();
+
             $table->boolean('is_active');
             $table->string('password')->nullable();
             $table
                 ->foreign('department_id')
                 ->references('id')->on('departments')
+                ->onDelete('set null');
+
+            $table
+                ->foreign('position_id')
+                ->references('id')->on('positions')
                 ->onDelete('set null');
         });
     }

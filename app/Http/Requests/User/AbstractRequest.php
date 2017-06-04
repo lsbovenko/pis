@@ -4,10 +4,7 @@ namespace App\Http\Requests\User;
 
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Repositories\{
-    Department as DepartmentRepository,
-    Role as RoleRepository
-};
+use App\Service\Reference;
 
 abstract class AbstractRequest extends FormRequest
 {
@@ -26,17 +23,21 @@ abstract class AbstractRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(DepartmentRepository $departmentRepository, RoleRepository $roleRepository)
+    public function rules(Reference $reference)
     {
         $rules = [
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users,email',
             'department_id' => [
-                Rule::in(array_keys($departmentRepository->getAllForSelect())),
+                Rule::in(array_keys($reference->getAllDepartmentForSelect())),
                 'required',
             ],
             'role_id' => [
-                Rule::in(array_keys($roleRepository->getAllForSelect())),
+                Rule::in(array_keys($reference->getAllRolesForSelect())),
+                'required',
+            ],
+            'position_id' => [
+                Rule::in(array_keys($reference->getAllPositionsForSelect())),
                 'required',
             ],
         ];

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\{
+    App,
+    Auth
+};
 use App\Http\Requests\User\PasswordRequest;
 
 class ProfileController extends Controller
@@ -41,13 +44,13 @@ class ProfileController extends Controller
             'email' => 'required|email'
         ];
 
-        if ($request->input('email') !== $user->email) {
+        $data = App::make('datacleaner')->cleanData($request->all());
+        if ($data['email'] !== $user->email) {
             $rulesValidation['email'] = 'required|email|unique:users,email';
         }
         $this->validate($request, $rulesValidation);
-        $input = $request->all();
-        $user->name = $input['name'];
-        $user->email = $input['email'];
+        $user->name = $data['name'];
+        $user->email = $data['email'];
         $user->save();
         $request->session()->flash('alert-success', 'Изменения успешно сохранены.');
 

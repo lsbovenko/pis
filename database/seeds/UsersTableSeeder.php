@@ -30,6 +30,7 @@ class UsersTableSeeder extends Seeder
                     'name' => $user['name'],
                     'password' => bcrypt($user['pass']),
                     'department_id' => $department->id,
+                    'position_id' => 1,
                     'is_active' => 1,
                 ]
             );

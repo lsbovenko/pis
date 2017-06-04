@@ -43,6 +43,14 @@ class Idea extends Model
     }
 
     /**
+     * return \App\Models\Note
+     */
+    public function getPriorityReason()
+    {
+        return $this->notes()->where('type', '=', \App\Models\Note::TYPE_PRIORITY_REASON)->first();
+    }
+
+    /**
      * @return string
      */
     public function getDisplayNameField() : string
@@ -100,6 +108,14 @@ class Idea extends Model
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function status()
+    {
+        return $this->belongsTo('App\Models\Categories\Status');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function notes()
     {

@@ -82,6 +82,8 @@ class CreateIdeasTable extends Migration
                 ->onDelete('set null');
 
             $table->tinyInteger('approve_status')->unsigned();
+
+            $table->boolean('is_priority')->default(0);
         });
     }
 
