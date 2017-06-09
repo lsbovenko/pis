@@ -59,7 +59,7 @@ class IdeaControl
      */
     public function approve(Idea $idea)
     {
-        if ($idea->approve_status !== Idea::NEW) {
+        if (!$idea->isNew()) {
             throw new \App\Exceptions\IdeaApproved('Идея уже прошла этап модерации');
         }
         $idea->approve_status = Idea::APPROVED;
@@ -76,7 +76,7 @@ class IdeaControl
      */
     public function decline(Idea $idea, string $reason)
     {
-        if ($idea->approve_status !== Idea::NEW) {
+        if (!$idea->isNew()) {
             throw new \App\Exceptions\IdeaApproved('Идея уже прошла этап модерации');
         }
         $idea->approve_status = Idea::DECLINED;
@@ -153,13 +153,16 @@ class IdeaControl
      */
     public function changeStatus(Idea $idea, Status $status)
     {
-        if ($idea->approve_status !== Idea::APPROVED) {
+        if (!$idea->isApproved()) {
             throw new \App\Exceptions\IdeaIsNotApproved('Вы не можете изменить статус неутвержденной идеи');
         }
-        $idea->status_id = $status->id;
-        $idea->save();
+        if ($idea->status_id !== $status->id) {
+            $idea->status_id = $status->id;
+            $idea->save();
 
-        event(new IdeaWasChangedStatus($idea));
+            event(new IdeaWasChangedStatus($idea));
+        }
+
         return $idea;
     }
 }

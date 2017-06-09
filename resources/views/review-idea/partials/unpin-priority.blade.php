@@ -1,4 +1,4 @@
-@if ($idea->is_priority === 1 && $idea->approve_status === 1)
+@if ($idea->is_priority === 1 && $idea->isApproved())
     <br />
     <div class="row">
         <div class="col-sm12">

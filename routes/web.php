@@ -12,10 +12,13 @@
 */
 
 // all
-Route::get('/', 'IndexController@index')->name('main');
+Route::get('/', 'BrowseIdeasController@index')->name('main');
+Route::get('/priority-board', 'BrowseIdeasController@priorityBoard')->name('priority-board');
+
 Route::get('/add-idea', 'IndexController@addIdea')->name('add-idea');
 Route::post('/add-idea', 'IndexController@createIdea');
 Route::get('/success', 'IndexController@success')->name('add-idea-success');
+
 
 
 //superadmin and admin
@@ -31,6 +34,9 @@ Route::post('/edit-idea/{id}', 'EditIdeaController@postEdit')->where('id', '[0-9
 
 //superadmin
 Route::post('/review-idea/{id}', 'ReviewIdeaController@approve')->where('id', '[0-9]+');
+Route::get('/pending-review', 'BrowseIdeasController@pendingReview')->name('pending-review');
+Route::get('/declined', 'BrowseIdeasController@declined')->name('declined');
+Route::get('/categories', 'CategoryController@index')->name('categories');
 
 
 //Registration Routes...

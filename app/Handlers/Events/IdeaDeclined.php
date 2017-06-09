@@ -43,7 +43,7 @@ class IdeaDeclined
      */
     protected function notifyUser(IdeaWasDeclined $event)
     {
-        $event->getIdea()->user()->first()->notify(new ToUser($event->getIdea(), $this->getDeclinedReason($event)));
+        $event->getIdea()->user()->first()->notify(new ToUser($event->getIdea(), $this->getDeclineReason($event)));
 
         return $this;
     }
@@ -52,10 +52,10 @@ class IdeaDeclined
      * @param IdeaWasDeclined $event
      * @return \App\Models\Note
      */
-    protected function getDeclinedReason(IdeaWasDeclined $event)
+    protected function getDeclineReason(IdeaWasDeclined $event)
     {
         if (!$this->reason) {
-            $this->reason = $event->getIdea()->getDeclinedReason();
+            $this->reason = $event->getIdea()->getDeclineReason();
         }
 
         return $this->reason;

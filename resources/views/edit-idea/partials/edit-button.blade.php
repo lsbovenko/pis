@@ -1,4 +1,4 @@
-@if ($idea->approve_status === 1)
+@if ($idea->isApproved())
     <div class="row">
         <div class="col-sm12">
             <div class="col-sm-3">

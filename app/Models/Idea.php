@@ -35,9 +35,33 @@ class Idea extends Model
     ];
 
     /**
+     * @return bool
+     */
+    public function isDeclined() : bool
+    {
+        return $this->approve_status === self::DECLINED;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isApproved() : bool
+    {
+        return $this->approve_status === self::APPROVED;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNew() : bool
+    {
+        return $this->approve_status === self::NEW;
+    }
+
+    /**
      * return \App\Models\Note
      */
-    public function getDeclinedReason()
+    public function getDeclineReason()
     {
         return $this->notes()->where('type', '=', \App\Models\Note::TYPE_DECLINED_REASON)->first();
     }

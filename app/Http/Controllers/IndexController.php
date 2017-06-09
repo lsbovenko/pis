@@ -28,17 +28,6 @@ class IndexController extends Controller
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(\App\Repositories\User $userRepository)
-    {
-        return view('index.index');
-    }
-
-
-    /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function addIdea()

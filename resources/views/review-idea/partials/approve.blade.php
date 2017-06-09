@@ -1,4 +1,4 @@
-@if ($idea->approve_status === 0)
+@if ($idea->isNew())
     <br />
     <div class="row">
         <form action="{{ route('review-idea', ['id' => $idea->id]) }}" method="post">

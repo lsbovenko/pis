@@ -18,8 +18,8 @@
         @include('partials.errors')
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Создана : {{ $idea->created_at->format('d.m.Y') }}
-                    Пользователь {{ $user->name }}, {{ $user->position->name }}
+                <div class="panel-heading">Создана : {{ $idea->created_at->format('d.m.Y') }},
+                    {{ $user->name }}, {{ $user->position->name }}
                 </div>
 
                 <div class="panel-body">
@@ -33,11 +33,14 @@
                     {{ $idea->description }}
                 </div>
             </div>
-            @include('review-idea.partials.approve')
-            @include('review-idea.partials.pin-priority')
-            @include('review-idea.partials.unpin-priority')
-            @include('edit-idea.partials.change-status')
-            @include('edit-idea.partials.edit-button')
+            <div class="col-sm-12">
+                @include('review-idea.partials.approve')
+                @include('review-idea.partials.pin-priority')
+                @include('review-idea.partials.unpin-priority')
+                @include('edit-idea.partials.change-status')
+                @include('edit-idea.partials.edit-button')
+                @include('review-idea.partials.declined')
+            </div>
         </div>
     </div>
     <hr>

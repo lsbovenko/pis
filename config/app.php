@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC+3',
+    'timezone' => 'Europe/Minsk',
 
     /*
     |--------------------------------------------------------------------------
@@ -170,6 +170,7 @@ return [
         Zizaco\Entrust\EntrustServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Junaidnasir\Larainvite\LaraInviteServiceProvider::class,
+        Spatie\Menu\Laravel\MenuServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -183,6 +184,7 @@ return [
         App\Providers\ReferenceServiceProvider::class,
         App\Providers\IdeaControlServiceProvider::class,
         App\Providers\DataCleanerServiceProvider::class,
+        App\Providers\MenuServiceProvider::class
     ],
 
     /*
@@ -236,6 +238,7 @@ return [
         'Invite'  => Junaidnasir\Larainvite\Facades\Invite::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Menu' => Spatie\Menu\Laravel\MenuFacade::class,
     ],
 
 ];
