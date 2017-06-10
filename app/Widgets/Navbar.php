@@ -20,21 +20,27 @@ class Navbar {
 
         Menu::macro('main', function () {
             $menu = Menu::new()
-                ->addClass('nav navbar-nav')
-                ->route('main', 'Идеи')
-                ->route('priority-board', 'Приоритетный список');
-
+                ->addClass('nav navbar-nav');
             $user = Auth::user();
-            if (isset($user) && $user->hasRole(Role::ROLE_SUPERADMIN)) {
+            if (isset($user)) {
                 $menu
-                    ->route('pending-review', 'Ожидающие обзор')
-                    ->route('declined', 'Отклоненные')
-                    ->route('categories', 'Категории');
+                    ->route('main', 'Идеи')
+                    ->route('priority-board', 'Приоритетный список');
+                if ($user->hasRole(Role::ROLE_SUPERADMIN)) {
+                    $menu
+                        ->route('pending-review', 'Ожидающие обзор')
+                        ->route('declined', 'Отклоненные')
+                        ->route('users.index', 'Пользователи')
+                        ->route('categories.index', 'Категории')
+                    ;
+                }
+                $menu
+                    ->route('add-idea', '+ Добавить идею')
+                    ->setActiveFromRequest();
             }
 
-            return $menu
-                ->route('add-idea', '+ Добавить идею')
-                ->setActiveFromRequest();
+
+            return $menu;
         });
     }
 }

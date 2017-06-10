@@ -36,7 +36,6 @@ Route::post('/edit-idea/{id}', 'EditIdeaController@postEdit')->where('id', '[0-9
 Route::post('/review-idea/{id}', 'ReviewIdeaController@approve')->where('id', '[0-9]+');
 Route::get('/pending-review', 'BrowseIdeasController@pendingReview')->name('pending-review');
 Route::get('/declined', 'BrowseIdeasController@declined')->name('declined');
-Route::get('/categories', 'CategoryController@index')->name('categories');
 
 
 //Registration Routes...
@@ -62,9 +61,113 @@ Route::group([
         Route::get('/', 'UsersController@index')->name('index');
         Route::get('/create', 'UsersController@create')->name('create');
         Route::post('/create', 'UsersController@saveNew');
-        Route::get('/edit/{id}', 'UsersController@edit')->name('edit');
-        Route::post('/update/{id}', 'UsersController@update')->name('update');
+        Route::get('/edit/{id}', 'UsersController@edit')->where('id', '[0-9]+')->name('edit');
+        Route::post('/update/{id}', 'UsersController@update')->where('id', '[0-9]+')->name('update');
 });
+
+//categories
+Route::group([
+    'as' => 'categories.',
+    'prefix' => 'categories'
+], function () {
+    Route::get('/', 'Categories\IndexController@index')->name('index');
+
+    //statuses
+    Route::group([
+        'as' => 'statuses.',
+        'prefix' => 'statuses'
+    ], function () {
+        Route::get('/', 'Categories\StatusController@index')->name('index');
+        Route::get('/edit/{id}', 'Categories\StatusController@edit')->where('id', '[0-9]+')->name('edit');
+        Route::post('/edit/{id}', 'Categories\StatusController@update')->where('id', '[0-9]+');
+        Route::get('/delete/{id}', 'Categories\StatusController@delete')->where('id', '[0-9]+')->name('delete');
+        Route::get('/create', 'Categories\StatusController@create')->name('create');
+        Route::post('/create', 'Categories\StatusController@saveNew');
+    });
+
+    //core-competency
+    Route::group([
+        'as' => 'core-competency.',
+        'prefix' => 'core-competency'
+    ], function () {
+        Route::get('/', 'Categories\CoreCompetencyController@index')->name('index');
+        Route::get('/edit/{id}', 'Categories\CoreCompetencyController@edit')->where('id', '[0-9]+')->name('edit');
+        Route::post('/edit/{id}', 'Categories\CoreCompetencyController@update')->where('id', '[0-9]+');
+        Route::get('/delete/{id}', 'Categories\CoreCompetencyController@delete')->where('id', '[0-9]+')->name('delete');
+        Route::get('/create', 'Categories\CoreCompetencyController@create')->name('create');
+        Route::post('/create', 'Categories\CoreCompetencyController@saveNew');
+    });
+
+    //operational-goal
+    Route::group([
+        'as' => 'operational-goal.',
+        'prefix' => 'operational-goal'
+    ], function () {
+        Route::get('/', 'Categories\OperationalGoalController@index')->name('index');
+        Route::get('/edit/{id}', 'Categories\OperationalGoalController@edit')->where('id', '[0-9]+')->name('edit');
+        Route::post('/edit/{id}', 'Categories\OperationalGoalController@update')->where('id', '[0-9]+');
+        Route::get('/delete/{id}', 'Categories\OperationalGoalController@delete')->where('id', '[0-9]+')->name('delete');
+        Route::get('/create', 'Categories\OperationalGoalController@create')->name('create');
+        Route::post('/create', 'Categories\OperationalGoalController@saveNew');
+    });
+
+    //strategic_objective
+    Route::group([
+        'as' => 'strategic-objective.',
+        'prefix' => 'strategic-objective'
+    ], function () {
+        Route::get('/', 'Categories\StrategicObjectiveController@index')->name('index');
+        Route::get('/edit/{id}', 'Categories\StrategicObjectiveController@edit')->where('id', '[0-9]+')->name('edit');
+        Route::post('/edit/{id}', 'Categories\StrategicObjectiveController@update')->where('id', '[0-9]+');
+        Route::get('/delete/{id}', 'Categories\StrategicObjectiveController@delete')->where('id', '[0-9]+')->name('delete');
+        Route::get('/create', 'Categories\StrategicObjectiveController@create')->name('create');
+        Route::post('/create', 'Categories\StrategicObjectiveController@saveNew');
+    });
+
+    //type
+    Route::group([
+        'as' => 'type.',
+        'prefix' => 'type'
+    ], function () {
+        Route::get('/', 'Categories\TypeController@index')->name('index');
+        Route::get('/edit/{id}', 'Categories\TypeController@edit')->where('id', '[0-9]+')->name('edit');
+        Route::post('/edit/{id}', 'Categories\TypeController@update')->where('id', '[0-9]+');
+        Route::get('/delete/{id}', 'Categories\TypeController@delete')->where('id', '[0-9]+')->name('delete');
+        Route::get('/create', 'Categories\TypeController@create')->name('create');
+        Route::post('/create', 'Categories\TypeController@saveNew');
+    });
+
+
+    //department
+    Route::group([
+        'as' => 'department.',
+        'prefix' => 'department'
+    ], function () {
+        Route::get('/', 'Categories\DepartmentController@index')->name('index');
+        Route::get('/edit/{id}', 'Categories\DepartmentController@edit')->where('id', '[0-9]+')->name('edit');
+        Route::post('/edit/{id}', 'Categories\DepartmentController@update')->where('id', '[0-9]+');
+        Route::get('/delete/{id}', 'Categories\DepartmentController@delete')->where('id', '[0-9]+')->name('delete');
+        Route::get('/create', 'Categories\DepartmentController@create')->name('create');
+        Route::post('/create', 'Categories\DepartmentController@saveNew');
+    });
+
+    //position
+    Route::group([
+        'as' => 'position.',
+        'prefix' => 'position'
+    ], function () {
+        Route::get('/', 'Categories\PositionController@index')->name('index');
+        Route::get('/edit/{id}', 'Categories\PositionController@edit')->where('id', '[0-9]+')->name('edit');
+        Route::post('/edit/{id}', 'Categories\PositionController@update')->where('id', '[0-9]+');
+        Route::get('/delete/{id}', 'Categories\PositionController@delete')->where('id', '[0-9]+')->name('delete');
+        Route::get('/create', 'Categories\PositionController@create')->name('create');
+        Route::post('/create', 'Categories\PositionController@saveNew');
+    });
+
+
+});
+
+
 
 Route::group([
     'as' => 'profile.',

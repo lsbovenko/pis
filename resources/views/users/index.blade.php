@@ -31,9 +31,9 @@
                         <tr class="@if (!$user->is_active)danger @endif">
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>..</td>
-                            <td>..</td>
-                            <td>..</td>
+                            <td>{{ $user->countActiveIdeas() }}</td>
+                            <td>{{ $user->countFrozenIdeas() }}</td>
+                            <td>{{ $user->countCompletedIdeas() }}</td>
                             <td>{{ $user->roles()->first()->display_name }}</td>
                             <td>
                                 <a href="{{ route('users.edit', ['id' => $user->id]) }}">Редактировать</a>

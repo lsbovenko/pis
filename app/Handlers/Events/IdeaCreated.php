@@ -33,7 +33,7 @@ class IdeaCreated
     {
         $this
             ->notifyUser($event)
-            ->notifyAdmins($event)
+            //->notifyAdmins($event)
             ->notifySuperadmins($event);
     }
 

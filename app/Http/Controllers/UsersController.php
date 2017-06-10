@@ -99,7 +99,7 @@ class UsersController extends Controller
 
         return view('users.edit', [
             'user' => $user,
-            'inviteStatus' => $user->invitations()->first()->status,
+            'inviteStatus' => $user->invitations()->first() ? $user->invitations()->first()->status : 'success',
             'roles' => $reference->getAllRolesForSelect(),
             'departments' => $reference->getAllDepartmentForSelect(),
             'positions' => $reference->getAllPositionsForSelect(),

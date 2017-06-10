@@ -19,27 +19,31 @@
                 <tbody>
                     <tr>
                         <td>Статусы</td>
-                        <td><a href="">Редактировать</a></td>
+                        <td><a href="{{ route('categories.statuses.index') }}">Редактировать</a></td>
                     </tr>
                     <tr>
                         <td>Отделы</td>
-                        <td><a href="">Редактировать</a></td>
+                        <td><a href="{{ route('categories.department.index') }}">Редактировать</a></td>
+                    </tr>
+                    <tr>
+                        <td>Должности</td>
+                        <td><a href="{{ route('categories.position.index') }}">Редактировать</a></td>
                     </tr>
                     <tr>
                         <td>Основные компетенции</td>
-                        <td><a href="">Редактировать</a></td>
+                        <td><a href="{{ route('categories.core-competency.index') }}">Редактировать</a></td>
                     </tr>
                     <tr>
                         <td>Оперативные цели</td>
-                        <td><a href="">Редактировать</a></td>
+                        <td><a href="{{ route('categories.operational-goal.index') }}">Редактировать</a></td>
                     </tr>
                     <tr>
                         <td>Стратегические цели</td>
-                        <td><a href="">Редактировать</a></td>
+                        <td><a href="{{ route('categories.strategic-objective.index') }}">Редактировать</a></td>
                     </tr>
                     <tr>
                         <td>Типы</td>
-                        <td><a href="">Редактировать</a></td>
+                        <td><a href="{{ route('categories.type.index') }}">Редактировать</a></td>
                     </tr>
                 </tbody>
             </table>

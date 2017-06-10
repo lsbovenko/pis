@@ -6,7 +6,13 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Junaidnasir\Larainvite\InviteTrait;
+use App\Models\Idea;
+use App\Models\Categories\Status;
 
+/**
+ * Class User
+ * @package App\Models\Auth
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -42,6 +48,42 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * @return int
+     */
+    public function countActiveIdeas() : int
+    {
+        $status = Status::getActiveStatus();
+        return Idea::where('status_id', '=', isset($status) ? $status->id : 0)
+            ->where('approve_status', '=', Idea::APPROVED)
+            ->where('user_id', '=', $this->id)
+            ->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function countFrozenIdeas() : int
+    {
+        $status = Status::getFrozenStatus();
+        return Idea::where('status_id', '=', isset($status) ? $status->id : 0)
+            ->where('approve_status', '=', Idea::APPROVED)
+            ->where('user_id', '=', $this->id)
+            ->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function countCompletedIdeas() : int
+    {
+        $status = Status::getCompletedStatus();
+        return Idea::where('status_id', '=', isset($status) ? $status->id : 0)
+            ->where('approve_status', '=', Idea::APPROVED)
+            ->where('user_id', '=', $this->id)
+            ->count();
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
