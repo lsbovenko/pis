@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             @include('partials.errors')
-            @if ($inviteStatus !== 'success')
+            @if ($inviteStatus !== 'successful')
                 <div class="alert alert-warning alert-dismissable">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     Пользователь еще не активировал приглашение.

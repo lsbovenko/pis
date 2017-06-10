@@ -35,7 +35,9 @@ class User extends AbstractRepository
             throw new \Exception('Role not found');
         }
 
-        return $role->users()->where('is_active', '=', $isActive);
+        return $role->users()
+            ->where('is_active', '=', $isActive)
+            ->whereNotNull('password');
     }
 
     /**
