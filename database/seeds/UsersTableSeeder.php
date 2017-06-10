@@ -43,6 +43,12 @@ class UsersTableSeeder extends Seeder
     {
         return [
             [
+                'role' => Role::ROLE_SUPERADMIN,
+                'name' => 'Гончаров Леонид',
+                'email' => 'leonid@ikantam.com',
+                'pass' => '123456',
+            ],
+            /*[
                 'role' => Role::ROLE_USER,
                 'name' => 'user1',
                 'email' => 'user1@mail.ru',
@@ -77,7 +83,7 @@ class UsersTableSeeder extends Seeder
                 'name' => 'superadmin2',
                 'email' => 'superadmin2@mail.ru',
                 'pass' => '123456',
-            ],
+            ],*/
         ];
 
     }

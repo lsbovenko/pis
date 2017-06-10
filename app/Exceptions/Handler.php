@@ -51,6 +51,12 @@ class Handler extends ExceptionHandler
         ) {
             return response()->view('404', [], 404);
         }
+
+        // 403
+        if($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException) {
+            return response()->view('403', [], 403);
+        }
+
         return parent::render($request, $exception);
     }
 

@@ -21,7 +21,9 @@
             <div class="col-md-4">
                 <div class="row">
                     <div class="col-md-6">
-                        <a class="btn btn-primary pull-right" href="{{ route('edit-idea', ['id' => $idea->id]) }}">Редактировать</a>
+                        @role('superadmin')
+                            <a class="btn btn-primary pull-right" href="{{ route('edit-idea', ['id' => $idea->id]) }}">Редактировать</a>
+                        @endrole
                     </div>
                     <div class="col-md-6">
                         <a class="btn btn-primary pull-right" href="{{ route('review-idea', ['id' => $idea->id]) }}">Подробности</a>

@@ -1,4 +1,4 @@
-@if ($idea->isApproved())
+@if ($idea->isApproved() && Entrust::hasRole(['superadmin', 'admin']))
     <br />
     <div class="row">
         @if ($idea->is_priority === 1)
