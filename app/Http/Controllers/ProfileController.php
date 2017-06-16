@@ -40,7 +40,8 @@ class ProfileController extends Controller
         /** @var \App\Models\Auth\User $user */
         $user = Auth::user();
         $rulesValidation = [
-            'name' => 'required|max:255',
+            'name' => 'required|max:191',
+            'last_name' => 'required|max:191',
             'email' => 'required|email'
         ];
 
@@ -51,6 +52,7 @@ class ProfileController extends Controller
         $this->validate($request, $rulesValidation);
         $user->name = $data['name'];
         $user->email = $data['email'];
+        $user->last_name = $data['last_name'];
         $user->save();
         $request->session()->flash('alert-success', 'Изменения успешно сохранены.');
 
