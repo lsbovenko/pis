@@ -34,11 +34,11 @@
                         <td><a href="{{ route('categories.core-competency.index') }}">Редактировать</a></td>
                     </tr>
                     <tr>
-                        <td>Оперативные цели</td>
+                        <td>Операционные цели</td>
                         <td><a href="{{ route('categories.operational-goal.index') }}">Редактировать</a></td>
                     </tr>
                     <tr>
-                        <td>Стратегические цели</td>
+                        <td>Стратегические задачи</td>
                         <td><a href="{{ route('categories.strategic-objective.index') }}">Редактировать</a></td>
                     </tr>
                     <tr>

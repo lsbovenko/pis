@@ -74,7 +74,7 @@ class OperationalGoalController extends Controller
     public function create()
     {
         return view('categories.status.edit', [
-            'title' => 'Создать Оперативную цель',
+            'title' => 'Создать Операционную цель',
             'route' => route('categories.operational-goal.create')
         ]);
     }

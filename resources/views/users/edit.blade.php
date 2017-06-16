@@ -23,6 +23,10 @@
                     {{ Form::text('name',$user->name, ['class'=>'form-control']) }}
                 </div>
                 <div class="form-group">
+                    <label for="name">Фамилия</label>
+                    {{ Form::text('last_name',$user->last_name, ['class'=>'form-control']) }}
+                </div>
+                <div class="form-group">
                     <label for="email">{{ trans('users.email') }}</label>
                     {{ Form::text('email',$user->email, ['class'=>'form-control']) }}
                 </div>

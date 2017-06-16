@@ -32,7 +32,7 @@ class StrategicObjectiveController extends Controller
     {
         return view('categories.status.index', [
             'items' => StrategicObjective::all(),
-            'title' => 'Стратегические цели',
+            'title' => 'Стратегические задачи',
             'route' => 'categories.strategic-objective'
         ]);
     }
@@ -74,7 +74,7 @@ class StrategicObjectiveController extends Controller
     public function create()
     {
         return view('categories.status.edit', [
-            'title' => 'Создать Стратегическую цель',
+            'title' => 'Создать Стратегическую задачу',
             'route' => route('categories.strategic-objective.create')
         ]);
     }

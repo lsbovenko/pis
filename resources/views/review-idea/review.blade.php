@@ -24,8 +24,8 @@
 
                 <div class="panel-body">
                     <p><b>Основная компетенция:</b> {{ $idea->coreCompetency->name }}</p>
-                    <p><b>Оперативная цель:</b> {{ $idea->operationalGoal->name }}</p>
-                    <p><b>Стратегическая цель:</b> {{ $idea->strategicObjective->name }}</p>
+                    <p><b>Операционная цель:</b> {{ $idea->operationalGoal->name }}</p>
+                    <p><b>Стратегическая задача:</b> {{ $idea->strategicObjective->name }}</p>
                     <p><b>Отдел:</b> {{ $idea->department->name }}</p>
                     <p><b>Тип:</b> {{ $idea->type->name }}</p>
                 </div>
@@ -36,7 +36,6 @@
             <div class="col-sm-12">
                 @include('review-idea.partials.approve')
                 @include('review-idea.partials.pin-priority')
-                @include('review-idea.partials.unpin-priority')
                 @include('edit-idea.partials.change-status')
                 @include('edit-idea.partials.edit-button')
                 @include('review-idea.partials.declined')

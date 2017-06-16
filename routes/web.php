@@ -14,7 +14,7 @@
 /**
  * only auth users
  */
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth', 'active_user']], function () {
     Route::get('/', 'BrowseIdeasController@index')->name('main');
     Route::get('/priority-board', 'BrowseIdeasController@priorityBoard')->name('priority-board');
     Route::get('/add-idea', 'IndexController@addIdea')->name('add-idea');
@@ -35,7 +35,7 @@ Route::group(['middleware' => ['auth']], function () {
     //superadmin or admin
     Route::group(['middleware' => ['role:admin|superadmin']], function() {
         Route::post('/pin-priority/{id}', 'ReviewIdeaController@pinToPriority')->where('id', '[0-9]+')->name('pin-priority');
-        Route::post('/unpin-priority/{id}', 'ReviewIdeaController@unpinToPriority')->where('id', '[0-9]+')->name('unpin-priority');
+        Route::get('/unpin-priority/{id}', 'ReviewIdeaController@unpinToPriority')->where('id', '[0-9]+')->name('unpin-priority');
         Route::post('/change-priority-reason/{id}', 'ReviewIdeaController@changePriorityReason')->where('id', '[0-9]+')->name('change-priority-reason');
         Route::post('/change-status/{id}', 'EditIdeaController@changeStatus')->where('id', '[0-9]+')->name('change-status');
     });

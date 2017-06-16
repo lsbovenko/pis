@@ -16,6 +16,12 @@
                     <label for="name">{{ trans('users.name') }}</label>
                     {{ Form::text('name','', ['class'=>'form-control']) }}
                 </div>
+
+                <div class="form-group">
+                    <label for="name">Фамилия</label>
+                    {{ Form::text('last_name','', ['class'=>'form-control']) }}
+                </div>
+
                 <div class="form-group">
                     <label for="email">{{ trans('users.email') }}</label>
                     {{ Form::text('email','', ['class'=>'form-control']) }}

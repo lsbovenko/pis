@@ -16,7 +16,7 @@
         <p>{{ str_limit($idea->description, $limit = 150, $end = '...') }}</p>
         <div class="row">
             <div class="col-md-8">
-                Создана : {{ $idea->created_at->format('d.m.Y') }}, {{ $idea->user->name }}, {{ $idea->user->position->name }}
+                Создана : {{ $idea->created_at->format('d.m.Y') }}, {{ $idea->user->getFullName() }}, {{ $idea->user->position->name }}
             </div>
             <div class="col-md-4">
                 <div class="row">

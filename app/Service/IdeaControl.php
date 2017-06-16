@@ -138,7 +138,7 @@ class IdeaControl
     {
         $reason = $idea->getPriorityReason();
         if ($reason === null) {
-            throw new \App\Exceptions\PriorityReasonNotFound('Резюме не найдено');
+            throw new \App\Exceptions\PriorityReasonNotFound('Пояснительная записка не найденa');
         }
 
         $reason->text = $text;

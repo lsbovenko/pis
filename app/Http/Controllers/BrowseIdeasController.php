@@ -145,8 +145,8 @@ class BrowseIdeasController extends Controller
         $reference = App::make('reference');
         return [
             'coreCompetenciesList' => array_merge(['0' => '-- Основная компетенция --'], $reference->getAllCoreCompetencyForSelect()),
-            'operationalGoalsList' => array_merge(['0' => '-- Оперативная цель --'], $reference->getAllOperationalGoalForSelect()),
-            'strategicObjectivesList' => array_merge(['0' => '-- Стратегическая цель --'], $reference->getAllStrategicObjectiveForSelect()),
+            'operationalGoalsList' => array_merge(['0' => '-- Операционная цель --'], $reference->getAllOperationalGoalForSelect()),
+            'strategicObjectivesList' => array_merge(['0' => '-- Стратегическая задача --'], $reference->getAllStrategicObjectiveForSelect()),
             'typesList' => array_merge(['0' => '-- Тип --'], $reference->getAllTypeForSelect()),
             'departmentsList' => array_merge(['0' => '-- Отдел --'], $reference->getAllDepartmentForSelect()),
             'statuses' => array_merge(['0' => '-- Статус --'], $reference->getAllStatusesForSelect()),

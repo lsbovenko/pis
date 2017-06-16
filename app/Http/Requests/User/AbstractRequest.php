@@ -27,6 +27,7 @@ abstract class AbstractRequest extends FormRequest
     {
         $rules = [
             'name' => 'required|max:255',
+            'last_name' => 'required|max:255',
             'email' => 'required|email|unique:users,email',
             'department_id' => [
                 Rule::in(array_keys($reference->getAllDepartmentForSelect())),

@@ -5,7 +5,7 @@ return [
     'name' => 'Имя',
     'email' => 'Email',
     'active_ideas' => 'Активных идей',
-    'frozen_ideas' => 'Замороженных идей',
+    'frozen_ideas' => 'На паузе',
     'completed_ideas' => 'Завершенных идей',
     'role' => 'Роль',
     'department' => 'Отдел',

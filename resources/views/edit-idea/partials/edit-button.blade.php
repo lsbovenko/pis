@@ -1,11 +1,11 @@
 @role('superadmin')
     @if ($idea->isApproved())
         <div class="row">
-            <div class="col-sm12">
+            <div class="row">
                 <div class="col-sm-3">
-                    <a href="{{ route('edit-idea', ['id' => $idea->id]) }}">
-                        <button type="button" class="btn btn-success pull-left">Редактировать</button>
-                    </a>
+                    <div class="form-group">
+                        <a href="{{ route('edit-idea', ['id' => $idea->id]) }}" class="btn btn-success pull-left">Редактировать</a>
+                    </div>
                 </div>
             </div>
         </div>

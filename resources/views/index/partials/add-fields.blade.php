@@ -12,11 +12,11 @@
     {{ Form::select('core_competency_id', $coreCompetenciesList, isset($idea) ? $idea->coreCompetency->id : '', ['class'=>'form-control']) }}
 </div>
 <div class="form-group">
-    <label for="department">Оперативная цель</label>
+    <label for="department">Операционная цель</label>
     {{ Form::select('operational_goal_id', $operationalGoalsList, isset($idea) ? $idea->operationalGoal->id : '', ['class'=>'form-control']) }}
 </div>
 <div class="form-group">
-    <label for="department">Стратегическая цель</label>
+    <label for="department">Стратегическая задача</label>
     {{ Form::select('strategic_objective_id', $strategicObjectivesList, isset($idea) ? $idea->strategicObjective->id : '', ['class'=>'form-control']) }}
 </div>
 <div class="form-group">

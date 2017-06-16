@@ -26,6 +26,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'last_name',
         'email',
         'department_id',
         'position_id',
@@ -49,6 +50,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * @return string
+     */
+    public function getFullName() : string
+    {
+        return $this->last_name . ' ' . $this->name;
+    }
     /**
      * @return int
      */

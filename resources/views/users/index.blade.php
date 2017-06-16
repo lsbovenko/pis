@@ -18,6 +18,7 @@
                 <thead>
                     <tr>
                         <th>{{ trans('users.name') }}</th>
+                        <th>Фамилия</th>
                         <th>{{ trans('users.email') }}</th>
                         <th>{{ trans('users.active_ideas') }}</th>
                         <th>{{ trans('users.frozen_ideas') }}</th>
@@ -30,6 +31,7 @@
                     @foreach ($users as $user)
                         <tr class="@if (!$user->is_active)danger @endif">
                             <td>{{ $user->name }}</td>
+                            <td>{{ $user->last_name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->countActiveIdeas() }}</td>
                             <td>{{ $user->countFrozenIdeas() }}</td>
