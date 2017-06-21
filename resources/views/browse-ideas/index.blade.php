@@ -3,11 +3,12 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-6">
             <h1 class="page-header">{{ $title }}
                 <small>({{ $ideas->total() }})</small>
             </h1>
         </div>
+        @include('partials.top-users')
     </div>
 
     @include('browse-ideas.partials.filter')

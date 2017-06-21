@@ -63,7 +63,8 @@ class DepartmentController extends Controller
         /** @var \App\Models\Categories\Department $item */
         $item = Department::findOrFail($request->route('id'));
         $input = App::make('datacleaner')->cleanData($request->all());
-        $item->name = $input['name'];
+        $item->fill($input);
+        $item->is_active = (int)$input['is_active'];
         $item->save();
 
         return redirect()->route('categories.department.index');
@@ -87,7 +88,7 @@ class DepartmentController extends Controller
     public function saveNew(CategoryRequest $request)
     {
         $input = App::make('datacleaner')->cleanData($request->all());
-        Department::create(['name' => $input['name']]);
+        Department::create($input);
 
         return redirect()->route('categories.department.index');
     }

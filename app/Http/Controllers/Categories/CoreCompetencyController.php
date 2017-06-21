@@ -62,7 +62,8 @@ class CoreCompetencyController extends Controller
         /** @var \App\Models\Categories\CoreCompetency $item */
         $item = CoreCompetency::findOrFail($request->route('id'));
         $input = App::make('datacleaner')->cleanData($request->all());
-        $item->name = $input['name'];
+        $item->fill($input);
+        $item->is_active = (int)$input['is_active'];
         $item->save();
 
         return redirect()->route('categories.core-competency.index');
@@ -86,7 +87,7 @@ class CoreCompetencyController extends Controller
     public function saveNew(CategoryRequest $request)
     {
         $input = App::make('datacleaner')->cleanData($request->all());
-        CoreCompetency::create(['name' => $input['name']]);
+        CoreCompetency::create($input);
 
         return redirect()->route('categories.core-competency.index');
     }

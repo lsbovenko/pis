@@ -62,7 +62,8 @@ class StatusController extends Controller
         /** @var \App\Models\Categories\Status $status */
         $status = Status::findOrFail($request->route('id'));
         $input = App::make('datacleaner')->cleanData($request->all());
-        $status->name = $input['name'];
+        $status->fill($input);
+        $status->is_active = (int)$input['is_active'];
         $status->save();
 
         return redirect()->route('categories.statuses.index');
@@ -86,7 +87,7 @@ class StatusController extends Controller
     public function saveNew(CategoryRequest $request)
     {
         $input = App::make('datacleaner')->cleanData($request->all());
-        Status::create(['name' => $input['name']]);
+        Status::create($input);
 
         return redirect()->route('categories.statuses.index');
     }

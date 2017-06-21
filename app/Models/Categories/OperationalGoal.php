@@ -19,6 +19,7 @@ class OperationalGoal extends Model
      */
     protected $fillable = [
         'name',
+        'is_active',
     ];
 
     /**

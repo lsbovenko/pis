@@ -62,7 +62,8 @@ class PositionController extends Controller
         /** @var \App\Models\Categories\Position $item */
         $item = Position::findOrFail($request->route('id'));
         $input = App::make('datacleaner')->cleanData($request->all());
-        $item->name = $input['name'];
+        $item->fill($input);
+        $item->is_active = (int)$input['is_active'];
         $item->save();
 
         return redirect()->route('categories.position.index');
@@ -86,7 +87,7 @@ class PositionController extends Controller
     public function saveNew(CategoryRequest $request)
     {
         $input = App::make('datacleaner')->cleanData($request->all());
-        Position::create(['name' => $input['name']]);
+        Position::create($input);
 
         return redirect()->route('categories.position.index');
     }

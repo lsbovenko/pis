@@ -144,12 +144,12 @@ class BrowseIdeasController extends Controller
         /** @var \App\Service\Reference $reference */
         $reference = App::make('reference');
         return [
-            'coreCompetenciesList' => array_merge(['0' => '-- Основная компетенция --'], $reference->getAllCoreCompetencyForSelect()),
-            'operationalGoalsList' => array_merge(['0' => '-- Операционная цель --'], $reference->getAllOperationalGoalForSelect()),
-            'strategicObjectivesList' => array_merge(['0' => '-- Стратегическая задача --'], $reference->getAllStrategicObjectiveForSelect()),
-            'typesList' => array_merge(['0' => '-- Тип --'], $reference->getAllTypeForSelect()),
-            'departmentsList' => array_merge(['0' => '-- Отдел --'], $reference->getAllDepartmentForSelect()),
-            'statuses' => array_merge(['0' => '-- Статус --'], $reference->getAllStatusesForSelect()),
+            'coreCompetenciesList' => array_merge(['0' => '-- Основная компетенция --'], $reference->getAllCoreCompetencyForSelect(0, 'is_active', 'desc')),
+            'operationalGoalsList' => array_merge(['0' => '-- Операционная цель --'], $reference->getAllOperationalGoalForSelect(0, 'is_active', 'desc')),
+            'strategicObjectivesList' => array_merge(['0' => '-- Стратегическая задача --'], $reference->getAllStrategicObjectiveForSelect(0, 'is_active', 'desc')),
+            'typesList' => array_merge(['0' => '-- Тип --'], $reference->getAllTypeForSelect(0, 'is_active', 'desc')),
+            'departmentsList' => array_merge(['0' => '-- Отдел --'], $reference->getAllDepartmentForSelect(0, 'is_active', 'desc')),
+            'statuses' => array_merge(['0' => '-- Статус --'], $reference->getAllStatusesForSelect(0, 'is_active', 'desc')),
         ];
     }
 }

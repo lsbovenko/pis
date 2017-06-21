@@ -19,6 +19,7 @@ class Position extends Model
      */
     protected $fillable = [
         'name',
+        'is_active',
     ];
 
     public function user()

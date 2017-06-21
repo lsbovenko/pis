@@ -2,7 +2,9 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-12">
-                <h3>{{ $idea->title }}</h3>
+                <a href="{{ route('review-idea', ['id' => $idea->id]) }}">
+                    <h3>{{ $idea->title }}</h3>
+                </a>
             </div>
         </div>
         @unless ($idea->isDeclined() )

@@ -19,6 +19,7 @@ class Type extends Model
      */
     protected $fillable = [
         'name',
+        'is_active',
     ];
 
     /**

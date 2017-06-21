@@ -62,7 +62,8 @@ class OperationalGoalController extends Controller
         /** @var \App\Models\Categories\OperationalGoal $item */
         $item = OperationalGoal::findOrFail($request->route('id'));
         $input = App::make('datacleaner')->cleanData($request->all());
-        $item->name = $input['name'];
+        $item->fill($input);
+        $item->is_active = (int)$input['is_active'];
         $item->save();
 
         return redirect()->route('categories.operational-goal.index');
@@ -86,7 +87,7 @@ class OperationalGoalController extends Controller
     public function saveNew(CategoryRequest $request)
     {
         $input = App::make('datacleaner')->cleanData($request->all());
-        OperationalGoal::create(['name' => $input['name']]);
+        OperationalGoal::create($input);
 
         return redirect()->route('categories.operational-goal.index');
     }

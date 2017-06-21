@@ -15,6 +15,7 @@ class MenuServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('*', 'App\Widgets\Navbar');
+        View::composer('*', 'App\Widgets\TopUsers');
     }
 
     public function register()

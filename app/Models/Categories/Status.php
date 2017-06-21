@@ -44,7 +44,8 @@ class Status extends Model
      */
     protected $fillable = [
         'name',
-        'slug'
+        'slug',
+        'is_active',
     ];
 
     /**

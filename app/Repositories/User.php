@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Auth\User as ModelUser;
 use App\Models\Auth\Role as ModelRole;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class User
@@ -56,6 +57,22 @@ class User extends AbstractRepository
     public function getAdmins($isActive = 1)
     {
         return $this->getByRole(ModelRole::ROLE_ADMIN, $isActive);
+    }
+
+    /**
+     * @param int $limit
+     * @return \Illuminate\Support\Collection
+     */
+    public function getTopUsers(int $limit = 3) : \Illuminate\Support\Collection
+    {
+        return DB::table('users')
+            ->rightJoin('ideas', 'users.id', '=', 'ideas.user_id')
+            ->select(DB::raw('users.*, count(users.id) AS number'))
+            ->groupBy('users.id')
+            ->orderBy('number', 'DESC')
+            ->orderBy('users.id', 'asc')
+            ->limit($limit)
+            ->get();
     }
 
     /**

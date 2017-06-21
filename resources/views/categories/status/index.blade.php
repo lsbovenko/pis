@@ -23,7 +23,7 @@
                 </thead>
                 <tbody>
                     @foreach($items as $item)
-                        <tr>
+                        <tr class="@if (!$item->is_active)danger @endif">
                             <td>{{ $item->name }}</td>
                             <td><a href="{{ route($route . '.edit', ['id' => $item->id]) }}">Редактировать</a></td>
                         </tr>

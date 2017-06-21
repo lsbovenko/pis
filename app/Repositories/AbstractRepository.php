@@ -12,12 +12,21 @@ abstract class AbstractRepository
      * @param string $order
      * @return array
      */
-    public function getAllForSelect($sortField = 'id', $order = 'asc') : array
+    public function getAllForSelect($isActive = true, $sortField = 'id', $order = 'asc') : array
     {
         $res = [];
-        foreach (($this->getModelClass())::orderBy($sortField, $order)->get() as $model)
+        $query = ($this->getModelClass())::orderBy($sortField, $order);
+        if ($isActive) {
+            $query->where('is_active', '=', '1');
+        }
+        foreach ($query->get() as $model)
         {
-            $res[$model->id] = $model->getDisplayNameField();
+            $name = $model->getDisplayNameField();
+
+            if ($model->is_active === 0) {
+                $name .= '(устаревш.)';
+            }
+            $res[$model->id] = $name;
         }
 
         return $res;
