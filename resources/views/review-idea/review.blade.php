@@ -19,7 +19,7 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">Создана : {{ $idea->created_at->format('d.m.Y') }},
-                    {{ $user->getFullNAme() }}, {{ $user->position->name }}
+                    {{ $user->getFullName() }}, {{ $user->position->name }}
                 </div>
 
                 <div class="panel-body">
