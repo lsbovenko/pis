@@ -24,7 +24,9 @@
                 <div class="row">
                     <div class="col-md-6">
                         @role('superadmin')
-                            <a class="btn btn-primary pull-right" href="{{ route('edit-idea', ['id' => $idea->id]) }}">Редактировать</a>
+                            @if(!$idea->isDeclined())
+                                <a class="btn btn-primary pull-right" href="{{ route('edit-idea', ['id' => $idea->id]) }}">Редактировать</a>
+                            @endif
                         @endrole
                     </div>
                     <div class="col-md-6">

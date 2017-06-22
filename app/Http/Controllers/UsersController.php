@@ -70,14 +70,12 @@ class UsersController extends Controller
     {
         /** @var \App\Models\Auth\User $user */
         $user = User::findOrFail($request->route('id'));
-
         $input = App::make('datacleaner')->cleanData($request->all());
-        if ($input['email'] !== $user->email) {
-            $rulesValidation['email'] = 'required|email|unique:users,email';
-            $this->validate($request, $rulesValidation);
-        }
 
         $input['is_active'] = isset($input['is_active']) ? (int)$input['is_active'] : 0;
+        if (isset($input['email'])) {
+            unset($input['email']);//not update email
+        }
         $user->fill($input);
         $role = \App\Models\Auth\Role::findOrFail($input['role_id']);
         $user->save();

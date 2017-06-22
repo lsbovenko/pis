@@ -13,6 +13,6 @@ class UpdateRequest extends AbstractRequest
      */
     protected function getEmailValidator() : array
     {
-        return ['email' => 'required|email'];
+        return [];
     }
 }

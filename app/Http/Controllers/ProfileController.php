@@ -42,16 +42,11 @@ class ProfileController extends Controller
         $rulesValidation = [
             'name' => 'required|max:191',
             'last_name' => 'required|max:191',
-            'email' => 'required|email'
         ];
 
         $data = App::make('datacleaner')->cleanData($request->all());
-        if ($data['email'] !== $user->email) {
-            $rulesValidation['email'] = 'required|email|unique:users,email';
-        }
         $this->validate($request, $rulesValidation);
         $user->name = $data['name'];
-        $user->email = $data['email'];
         $user->last_name = $data['last_name'];
         $user->save();
         $request->session()->flash('alert-success', 'Изменения успешно сохранены.');

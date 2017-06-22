@@ -9,20 +9,19 @@
 </div>
 <div class="form-group">
     <label for="department">Основная компетенция</label>
-    {{ Form::select('core_competency_id', $coreCompetenciesList, isset($idea) ? $idea->coreCompetency->id : '', ['class'=>'form-control']) }}
+    {{ Form::select('core_competency_id[]', $coreCompetenciesList, isset($idea) ? $idea->coreCompetencies : '', ['class'=>'form-control', 'multiple' => true]) }}
 </div>
 <div class="form-group">
     <label for="department">Операционная цель</label>
-    {{ Form::select('operational_goal_id', $operationalGoalsList, isset($idea) ? $idea->operationalGoal->id : '', ['class'=>'form-control']) }}
+    {{ Form::select('operational_goal_id[]', $operationalGoalsList, isset($idea) ? $idea->operationalGoals : '', ['class'=>'form-control', 'multiple' => true]) }}
 </div>
 <div class="form-group">
     <label for="department">Стратегическая задача</label>
-    {{ Form::select('strategic_objective_id', $strategicObjectivesList, isset($idea) ? $idea->strategicObjective->id : '', ['class'=>'form-control']) }}
+    {{ Form::select('strategic_objective_id[]', $strategicObjectivesList, isset($idea) ? $idea->strategicObjectives : '', ['class'=>'form-control', 'multiple' => true]) }}
 </div>
 <div class="form-group">
     <label for="department">Отдел</label>
-    {{ Form::select('department_id', $departmentsList, isset($idea) ? $idea->department->id : '', ['class'=>'form-control']) }}
-
+    {{ Form::select('department_id[]', $departmentsList, isset($idea) ? $idea->departments : '', ['class'=>'form-control', 'multiple' => true]) }}
 </div>
 <div class="form-group">
     <label for="department">Тип</label>

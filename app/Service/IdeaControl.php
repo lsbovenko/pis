@@ -34,6 +34,10 @@ class IdeaControl
         $idea->status_id = $status->id;
         $idea->approve_status = Idea::NEW;
         $idea->save();
+        $idea->coreCompetencies()->attach($data['core_competency_id']);
+        $idea->departments()->attach($data['department_id']);
+        $idea->operationalGoals()->attach($data['operational_goal_id']);
+        $idea->strategicObjectives()->attach($data['strategic_objective_id']);
 
         event(new IdeaWasCreated($idea));
 
@@ -48,6 +52,10 @@ class IdeaControl
     {
         $idea->fill($data);
         $idea->save();
+        $idea->coreCompetencies()->sync($data['core_competency_id'], 1);
+        $idea->departments()->sync($data['department_id'], 1);
+        $idea->operationalGoals()->sync($data['operational_goal_id'], 1);
+        $idea->strategicObjectives()->sync($data['strategic_objective_id'], 1);
 
         return $idea;
     }

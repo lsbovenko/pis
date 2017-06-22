@@ -31,21 +31,25 @@ class IdeaRequest extends FormRequest
         return [
             'title' => 'required|max:255|string|min:6',
             'description' => 'required|max:5000|string|min:10',
-            'department_id' => [
-                Rule::in(array_keys($reference->getAllDepartmentForSelect())),
-                'required',
-            ],
             'core_competency_id' => [
                 Rule::in(array_keys($reference->getAllCoreCompetencyForSelect())),
                 'required',
+                'array',
+            ],
+            'department_id' => [
+                Rule::in(array_keys($reference->getAllDepartmentForSelect())),
+                'required',
+                'array',
             ],
             'operational_goal_id' => [
                 Rule::in(array_keys($reference->getAllOperationalGoalForSelect())),
                 'required',
+                'array',
             ],
             'strategic_objective_id' => [
                 Rule::in(array_keys($reference->getAllStrategicObjectiveForSelect())),
                 'required',
+                'array',
             ],
             'type_id' => [
                 Rule::in(array_keys($reference->getAllTypeForSelect())),

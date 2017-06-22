@@ -1,5 +1,5 @@
 @role('superadmin')
-    @if ($idea->isApproved())
+    @if(!$idea->isDeclined())
         <div class="row">
             <div class="row">
                 <div class="col-sm-3">

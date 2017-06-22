@@ -28,7 +28,7 @@
                 </div>
                 <div class="form-group">
                     <label for="email">{{ trans('users.email') }}</label>
-                    {{ Form::text('email',$user->email, ['class'=>'form-control']) }}
+                    {{ Form::text('email',$user->email, ['class'=>'form-control' , 'disabled' => true]) }}
                 </div>
                 <button type="submit" class="btn btn-primary pull-right">Сохранить</button>
             </form>

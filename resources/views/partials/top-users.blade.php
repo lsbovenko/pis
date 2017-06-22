@@ -6,7 +6,7 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
-            @foreach ($topUsers->get() as $user)
+            @foreach ($topUsers as $user)
                 <span class="pull-right">
                     {{ $user->last_name }} {{ $user->name }} ({{ $user->number }})
                 </span>

@@ -44,6 +44,7 @@ class BrowseIdeasController extends Controller
             'ideas' => $ideas->appends(Input::except('page')),
             'title' => 'Все идеи',
             'filter' => $this->getValuesForFilter(),
+            'topUsers' => $this->getTopUsers(),
         ]);
     }
 
@@ -62,6 +63,7 @@ class BrowseIdeasController extends Controller
             'ideas' => $ideas->appends(Input::except('page')),
             'title' => 'Приоритетный список',
             'filter' => $this->getValuesForFilter(),
+            'topUsers' => $this->getTopUsers(),
         ]);
     }
 
@@ -79,6 +81,7 @@ class BrowseIdeasController extends Controller
             'ideas' => $ideas->appends(Input::except('page')),
             'title' => 'Ожидают утверждения',
             'filter' => $this->getValuesForFilter(),
+            'topUsers' => $this->getTopUsers(),
         ]);
     }
 
@@ -96,6 +99,7 @@ class BrowseIdeasController extends Controller
             'ideas' => $ideas->appends(Input::except('page')),
             'title' => 'Отклоненные идеи',
             'filter' => $this->getValuesForFilter(),
+            'topUsers' => $this->getTopUsers(),
         ]);
     }
 
@@ -109,13 +113,19 @@ class BrowseIdeasController extends Controller
 
         $query = Idea::with('user.position', 'status');
         if ($departmentId = $request->get('department_id')) {
-            $query->where('department_id', '=',  $departmentId);
+            $query->whereHas('departments', function($q) use ($departmentId) {
+                $q->where('id', '=', $departmentId);
+            });
         }
         if ($operationalGoalId = $request->get('operational_goal_id')) {
-            $query->where('operational_goal_id', '=',  $operationalGoalId);
+            $query->whereHas('operationalGoals', function($q) use ($operationalGoalId) {
+                $q->where('id', '=', $operationalGoalId);
+            });
         }
         if ($strategicObjectiveId = $request->get('strategic_objective_id')) {
-            $query->where('strategic_objective_id', '=',  $strategicObjectiveId);
+            $query->whereHas('strategicObjectives', function($q) use ($strategicObjectiveId) {
+                $q->where('id', '=', $strategicObjectiveId);
+            });
         }
         if ($typeId = $request->get('type_id')) {
             $query->where('type_id', '=',  $typeId);
@@ -124,7 +134,9 @@ class BrowseIdeasController extends Controller
             $query->where('status_id', '=',  $statusId);
         }
         if ($coreCompetencyId = $request->get('core_competency_id')) {
-            $query->where('core_competency_id', '=',  $coreCompetencyId);
+            $query->whereHas('coreCompetencies', function($q) use ($coreCompetencyId) {
+                $q->where('id', '=', $coreCompetencyId);
+            });
         }
         $orderBy = $request->get('order_by');
         if ($orderBy == 'asc') {
@@ -151,5 +163,13 @@ class BrowseIdeasController extends Controller
             'departmentsList' => array_merge(['0' => '-- Отдел --'], $reference->getAllDepartmentForSelect(0, 'is_active', 'desc')),
             'statuses' => array_merge(['0' => '-- Статус --'], $reference->getAllStatusesForSelect(0, 'is_active', 'desc')),
         ];
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getTopUsers()
+    {
+        return App::make('repository.user')->getTopUsers(3);
     }
 }

@@ -22,10 +22,6 @@ class Idea extends Model
     protected $fillable = [
         'title',
         'description',
-        'core_competency_id',
-        'operational_goal_id',
-        'strategic_objective_id',
-        'department_id',
         'type_id',
     ];
 
@@ -91,35 +87,35 @@ class Idea extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function coreCompetency()
+    public function coreCompetencies()
     {
-        return $this->belongsTo('App\Models\Categories\CoreCompetency');
+        return $this->belongsToMany('App\Models\Categories\CoreCompetency', 'idea_core_competency');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function department()
+    public function departments()
     {
-        return $this->belongsTo('App\Models\Categories\Department');
+        return $this->belongsToMany('App\Models\Categories\Department', 'idea_departament');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function operationalGoal()
+    public function operationalGoals()
     {
-        return $this->belongsTo('App\Models\Categories\OperationalGoal');
+        return $this->belongsToMany('App\Models\Categories\OperationalGoal', 'idea_operational_goal');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function strategicObjective()
+    public function strategicObjectives()
     {
-        return $this->belongsTo('App\Models\Categories\StrategicObjective');
+        return $this->belongsToMany('App\Models\Categories\StrategicObjective', 'idea_strategic_objective');
     }
 
     /**
