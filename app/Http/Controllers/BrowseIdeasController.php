@@ -156,12 +156,12 @@ class BrowseIdeasController extends Controller
         /** @var \App\Service\Reference $reference */
         $reference = App::make('reference');
         return [
-            'coreCompetenciesList' => array_merge(['0' => '-- Основная компетенция --'], $reference->getAllCoreCompetencyForSelect(0, 'is_active', 'desc')),
-            'operationalGoalsList' => array_merge(['0' => '-- Операционная цель --'], $reference->getAllOperationalGoalForSelect(0, 'is_active', 'desc')),
-            'strategicObjectivesList' => array_merge(['0' => '-- Стратегическая задача --'], $reference->getAllStrategicObjectiveForSelect(0, 'is_active', 'desc')),
-            'typesList' => array_merge(['0' => '-- Тип --'], $reference->getAllTypeForSelect(0, 'is_active', 'desc')),
-            'departmentsList' => array_merge(['0' => '-- Отдел --'], $reference->getAllDepartmentForSelect(0, 'is_active', 'desc')),
-            'statuses' => array_merge(['0' => '-- Статус --'], $reference->getAllStatusesForSelect(0, 'is_active', 'desc')),
+            'departmentsList' => ['0' => '-- Отдел --'] + $reference->getAllDepartmentForSelect(0, 'is_active', 'desc'),
+            'coreCompetenciesList' => ['0' => '-- Основная компетенция --'] + $reference->getAllCoreCompetencyForSelect(0, 'is_active', 'desc'),
+            'operationalGoalsList' => ['0' => '-- Операционная цель --'] + $reference->getAllOperationalGoalForSelect(0, 'is_active', 'desc'),
+            'strategicObjectivesList' => ['0' => '-- Стратегическая задача --'] + $reference->getAllStrategicObjectiveForSelect(0, 'is_active', 'desc'),
+            'typesList' => ['0' => '-- Тип --'] + $reference->getAllTypeForSelect(0, 'is_active', 'desc'),
+            'statuses' => ['0' => '-- Статус --'] + $reference->getAllStatusesForSelect(0, 'is_active', 'desc'),
         ];
     }
 
