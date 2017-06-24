@@ -28,7 +28,7 @@ class Navbar {
                     ->route('priority-board', 'Приоритетный список');
                 if ($user->hasRole(Role::ROLE_SUPERADMIN)) {
                     $menu
-                        ->route('pending-review', 'Ожидающие обзор')
+                        ->route('pending-review', 'Ожидающие')
                         ->route('declined', 'Отклоненные')
                         ->route('users.index', 'Пользователи')
                         ->route('categories.index', 'Категории')

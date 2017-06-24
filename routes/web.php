@@ -21,6 +21,7 @@ Route::group(['middleware' => ['auth', 'active_user']], function () {
     Route::post('/add-idea', 'IndexController@createIdea');
     Route::get('/success', 'IndexController@success')->name('add-idea-success');
     Route::get('/review-idea/{id}', 'ReviewIdeaController@index')->where('id', '[0-9]+')->name('review-idea');
+    Route::get('/about', 'AboutController@index')->name('about');
 
     Route::group([
         'as' => 'profile.',

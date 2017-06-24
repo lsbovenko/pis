@@ -110,11 +110,17 @@ class IdeaControl
         $idea->is_priority = 1;
         $idea->save();
 
-        Note::create([
-            'text' => $reason,
-            'idea_id' => $idea->id,
-            'type' => Note::TYPE_PRIORITY_REASON,
-        ]);
+        $reasonModel = $idea->getPriorityReason();
+        if ($reasonModel === null) {
+            Note::create([
+                'text' => $reason,
+                'idea_id' => $idea->id,
+                'type' => Note::TYPE_PRIORITY_REASON,
+            ]);
+        } else {
+            $reasonModel->text = $reason;
+            $reasonModel->save();
+        }
 
         return $idea;
     }
@@ -127,11 +133,6 @@ class IdeaControl
     {
         $idea->is_priority = 0;
         $idea->save();
-
-        $reason = $idea->getPriorityReason();
-        if ($reason !== null) {
-            $reason->delete();
-        }
 
         return $idea;
     }

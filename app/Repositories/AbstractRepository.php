@@ -24,7 +24,7 @@ abstract class AbstractRepository
             $name = $model->getDisplayNameField();
 
             if ($model->is_active === 0) {
-                $name .= '(устаревш.)';
+                $name .= ' (устаревш.)';
             }
             $res[$model->id] = $name;
         }
