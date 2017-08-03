@@ -2,15 +2,13 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
-use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\App;
 
 /**
- * Class CheckActiveUser
+ * Class AuthorizeByJWT
  * @package App\Http\Middleware
  */
-class CheckActiveUser
+class AuthorizeByJWT
 {
     /**
      * Handle an incoming request.
@@ -19,12 +17,14 @@ class CheckActiveUser
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, \Closure $next)
     {
-        if (!$request->user()->is_active) {
-            Auth::guard()->logout();
-            return redirect()->route('login');
+        try {
+            App::make('jwt_service')->authenticateFromRequest();
+        } catch (\Exception $e) {
+            // do nothing
         }
+
         return $next($request);
     }
 }

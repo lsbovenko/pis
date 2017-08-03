@@ -52,6 +52,8 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'main_domain' => env('MAIN_DOMAIN', 'localhost'),
+    'auth_url' => env('AUTH_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -169,8 +171,8 @@ return [
         Laravel\Tinker\TinkerServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-        Junaidnasir\Larainvite\LaraInviteServiceProvider::class,
         Spatie\Menu\Laravel\MenuServiceProvider::class,
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -184,7 +186,9 @@ return [
         App\Providers\ReferenceServiceProvider::class,
         App\Providers\IdeaControlServiceProvider::class,
         App\Providers\DataCleanerServiceProvider::class,
-        App\Providers\MenuServiceProvider::class
+        App\Providers\MenuServiceProvider::class,
+        App\Providers\JWTServiceProvider::class,
+        App\Providers\AuthApiClientServiceProvider::class,
     ],
 
     /*
@@ -235,10 +239,11 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
-        'Invite'  => Junaidnasir\Larainvite\Facades\Invite::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Menu' => Spatie\Menu\Laravel\MenuFacade::class,
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ],
 
 ];

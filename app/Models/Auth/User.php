@@ -5,7 +5,6 @@ namespace App\Models\Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
-use Junaidnasir\Larainvite\InviteTrait;
 use App\Models\Idea;
 use App\Models\Categories\Status;
 
@@ -17,7 +16,6 @@ class User extends Authenticatable
 {
     use Notifiable;
     use EntrustUserTrait;
-    use InviteTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -115,16 +113,5 @@ class User extends Authenticatable
     public function ideas()
     {
         return $this->hasMany('App\Models\Idea');
-    }
-
-    /**
-     * Send the password reset notification.
-     *
-     * @param  string  $token
-     * @return void
-     */
-    public function sendPasswordResetNotification($token)
-    {
-        $this->notify(new \App\Notifications\ResetPassword($token));
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Widgets;
-use Illuminate\Contracts\View\View;
 
+use Illuminate\Contracts\View\View;
 use Spatie\Menu\Laravel\MenuFacade as Menu;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Auth\Role;
@@ -38,7 +38,6 @@ class Navbar {
                     ->route('add-idea', '+ Добавить идею')
                     ->setActiveFromRequest();
             }
-
 
             return $menu;
         });
