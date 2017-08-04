@@ -57,6 +57,14 @@ class Status extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function ideas()
+    {
+        return $this->belongsToMany('App\Models\Idea');
+    }
+
+    /**
      * @param string $slug
      * @return mixed
      */

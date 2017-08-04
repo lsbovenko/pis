@@ -102,7 +102,7 @@ class DepartmentController extends Controller
         /** @var \App\Models\Categories\Department $item */
         $item = Department::findOrFail($request->route('id'));
 
-        $itemCount = Idea::where('department_id', '=', $item->id)->count();
+        $itemCount = $item->ideas()->count();
         if ($itemCount) {
             return redirect()->back()->withErrors(['Невозможно удалить элемент. Существуют идеи с таким отделом']);
         }

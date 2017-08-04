@@ -101,7 +101,7 @@ class CoreCompetencyController extends Controller
         /** @var \App\Models\Categories\CoreCompetency $item */
         $item = CoreCompetency::findOrFail($request->route('id'));
 
-        $itemCount = Idea::where('core_competency_id', '=', $item->id)->count();
+        $itemCount = $item->ideas()->count();
         if ($itemCount) {
             return redirect()->back()->withErrors(['Невозможно удалить элемент. Существуют идеи с такой компетенцией']);
         }

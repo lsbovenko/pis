@@ -101,7 +101,7 @@ class OperationalGoalController extends Controller
         /** @var \App\Models\Categories\OperationalGoal $item */
         $item = OperationalGoal::findOrFail($request->route('id'));
 
-        $itemCount = Idea::where('operational_goal_id', '=', $item->id)->count();
+        $itemCount = $item->ideas()->count();
         if ($itemCount) {
             return redirect()->back()->withErrors(['Невозможно удалить элемент. Существуют идеи с такой целью']);
         }

@@ -101,7 +101,7 @@ class StrategicObjectiveController extends Controller
         /** @var \App\Models\Categories\StrategicObjective $item */
         $item = StrategicObjective::findOrFail($request->route('id'));
 
-        $itemCount = Idea::where('strategic_objective_id', '=', $item->id)->count();
+        $itemCount = $item->ideas()->count();
         if ($itemCount) {
             return redirect()->back()->withErrors(['Невозможно удалить элемент. Существуют идеи с такой целью']);
         }

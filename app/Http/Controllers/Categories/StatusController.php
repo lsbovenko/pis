@@ -105,7 +105,7 @@ class StatusController extends Controller
             return redirect()->back()->withErrors(['Это стандартный статус. Его нельзя удалить']);
         }
 
-        $ideasCount = Idea::where('status_id', '=', $status->id)->count();
+        $ideasCount = $status->ideas()->count();
         if ($ideasCount) {
             return redirect()->back()->withErrors(['Невозможно удалить статус. Существуют идеи с таким статусом']);
         }

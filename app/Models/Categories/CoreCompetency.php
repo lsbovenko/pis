@@ -29,4 +29,12 @@ class CoreCompetency extends Model
     {
         return $this->name;
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function ideas()
+    {
+        return $this->belongsToMany('App\Models\Idea', 'idea_core_competency');
+    }
 }
