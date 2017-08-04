@@ -5,7 +5,10 @@ namespace App\Service;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
 use App\Models\Auth\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\{
+    Auth,
+    App
+};
 
 /**
  * Class JWTService
@@ -48,11 +51,9 @@ class JWTService
         }
 
         if (JWTAuth::getToken()) {
-            $email = JWTAuth::getPayload()->get('sub');
-            $user = User::where(compact('email'))->first();
-            if ($user) {
-                $this->authenticateUser($user);
-            }
+
+            $user = $this->getUserFromToken();
+            $this->authenticateUser($user);
         }
     }
 
@@ -100,17 +101,16 @@ class JWTService
     }
 
     /**
-     * @param string $email
-     * @return mixed
-     * @throws \Exception
+     * @return \Illuminate\Database\Eloquent\Model|null|static
      */
-    protected function getUserByEmail(string $email = '')
+    protected function getUserFromToken()
     {
-        $email = $email ? $email : JWTAuth::getPayload()->get('sub');
+        $payload = JWTAuth::getPayload()->toArray();
+        $email = $payload['sub'];
         $user = User::where(compact('email'))->first();
 
         if (!$user) {
-            throw new \Exception('User not found.');
+            $user = App::make('user_creator')->createFromJwt($payload);
         }
 
         return $user;

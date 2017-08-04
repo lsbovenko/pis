@@ -4,13 +4,9 @@
 <div class="container">
     <div class="row page-header">
         <div class="col-sm-8">
-            <h1>{{ trans('users.title') }}</h1>
+            <h1>Список пользователей</h1>
         </div>
-        <div class="col-sm-4">
-            <a href="{{ route('users.create') }}">
-                <button class="btn btn-primary h1" type="button">{{ trans('users.add_new') }}</button>
-            </a>
-        </div>
+        <div class="col-sm-4"></div>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -24,7 +20,6 @@
                         <th>{{ trans('users.frozen_ideas') }}</th>
                         <th>{{ trans('users.completed_ideas') }}</th>
                         <th>{{ trans('users.role') }}</th>
-                        <th>{{ trans('users.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,9 +32,6 @@
                             <td>{{ $user->countFrozenIdeas() }}</td>
                             <td>{{ $user->countCompletedIdeas() }}</td>
                             <td>{{ $user->roles()->first()->display_name }}</td>
-                            <td>
-                                <a href="{{ route('users.edit', ['id' => $user->id]) }}">Редактировать</a>
-                            </td>
                         </tr>
                     @endforeach
 

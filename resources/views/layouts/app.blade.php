@@ -47,7 +47,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
                 @if (Auth::guest())
-                    <li><a href="{{ config('auth_url') }}">Login</a></li>
+                    <li><a href="{{ config('app.auth_url') }}">Login</a></li>
                 @else
                     <li><a href="{{ route('about') }}">О системе</a></li>
                     <li class="dropdown">
@@ -60,7 +60,7 @@
                                 <a href="{{ route('profile.index') }}">Профиль</a>
                             </li>
                             <li>
-                                <a href="{{ config('auth_url') }}/logout">Выйти</a>
+                                <a href="{{ config('app.auth_url') }}/logout">Выйти</a>
                             </li>
                         </ul>
                     </li>

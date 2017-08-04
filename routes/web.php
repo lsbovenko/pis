@@ -56,10 +56,6 @@ Route::group(['middleware' => ['jwt']], function () {
                 'prefix' => 'users'
             ], function () {
                 Route::get('/', 'UsersController@index')->name('index');
-                Route::get('/create', 'UsersController@create')->name('create');
-                Route::post('/create', 'UsersController@saveNew');
-                Route::get('/edit/{id}', 'UsersController@edit')->where('id', '[0-9]+')->name('edit');
-                Route::post('/update/{id}', 'UsersController@update')->where('id', '[0-9]+')->name('update');
             });
 
             //categories

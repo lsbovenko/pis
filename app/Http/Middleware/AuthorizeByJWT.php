@@ -2,7 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\{
+    App,
+    Auth
+};
 
 /**
  * Class AuthorizeByJWT
@@ -22,7 +25,8 @@ class AuthorizeByJWT
         try {
             App::make('jwt_service')->authenticateFromRequest();
         } catch (\Exception $e) {
-            // do nothing
+            Auth::logout();
+            return redirect(config('app.auth_url'));
         }
 
         return $next($request);

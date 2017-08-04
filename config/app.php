@@ -52,8 +52,27 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Main Domain
+    |--------------------------------------------------------------------------
+    |
+    | for set cookies
+    |
+    */
     'main_domain' => env('MAIN_DOMAIN', 'localhost'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Auth Url
+    |--------------------------------------------------------------------------
+    |
+    */
     'auth_url' => env('AUTH_URL', 'http://localhost'),
+
+
+    'auth_api_key' => env('AUTH_API_KEY', ''),
 
     /*
     |--------------------------------------------------------------------------
@@ -189,6 +208,7 @@ return [
         App\Providers\MenuServiceProvider::class,
         App\Providers\JWTServiceProvider::class,
         App\Providers\AuthApiClientServiceProvider::class,
+        App\Providers\UserCreatorServiceProvider::class,
     ],
 
     /*

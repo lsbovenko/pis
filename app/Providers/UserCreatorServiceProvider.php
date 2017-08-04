@@ -3,13 +3,12 @@
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use GuzzleHttp\Client;
 
 /**
- * Class AuthApiClientServiceProvider
+ * Class UserCreatorServiceProvider
  * @package App\Providers
  */
-class AuthApiClientServiceProvider extends ServiceProvider
+class UserCreatorServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -35,8 +34,8 @@ class AuthApiClientServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('auth.api.client', function ($app) {
-            return new \App\Service\AuthApiClient(new Client());
+        $this->app->singleton('user_creator', function ($app) {
+            return new \App\Service\UserCreator();
         });
     }
 }

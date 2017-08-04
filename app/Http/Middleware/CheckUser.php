@@ -3,7 +3,11 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\{
+    Auth,
+    App,
+    Log
+};
 use App\Models\Auth\User;
 
 /**
@@ -35,14 +39,59 @@ class CheckUser
      */
     public function check(User $user)
     {
-
-        $remoteUser = App::make('auth.api.client')->getUser($user->email);
-
-        dd($remoteUser);
-
-        if (!$user->isActive) {
-            Auth::logout();
-            return redirect(config('app.auth_url'));
+        try {
+            $remoteUser = App::make('auth.api.client')->getUser($user->email);
+        } catch (\Exception $e) {
+            Log::error($e);
+            $this->logout();
         }
+
+        if (!$remoteUser['is_active']) {
+            $user->is_active = 0;
+            $user->save();
+            $this->logout();
+        }
+
+        $this->updateUser($user, $remoteUser);
+
+    }
+
+    /**
+     * @param User $user
+     * @param array $remoteUser
+     */
+    protected function updateUser(User $user, array $remoteUser)
+    {
+        $isNeedUpdate = false;
+
+        if ($user->name != $remoteUser['name']) {
+            $isNeedUpdate = true;
+            $user->name = $remoteUser['name'];
+        }
+
+        if ($user->last_name != $remoteUser['last_name']) {
+            $isNeedUpdate = true;
+            $user->last_name = $remoteUser['last_name'];
+        }
+
+        if ($isNeedUpdate) {
+            $user->save();
+        }
+
+        $role = App::make('user_creator')->getRole($remoteUser);
+
+        if ($role->name != $user->roles()->get()->first()->name) {
+            $user->detachRoles();
+            $user->attachRole($role);
+        }
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    protected function logout()
+    {
+        Auth::logout();
+        return redirect(config('app.auth_url'));
     }
 }
