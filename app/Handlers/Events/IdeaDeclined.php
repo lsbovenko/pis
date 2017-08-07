@@ -43,7 +43,10 @@ class IdeaDeclined
      */
     protected function notifyUser(IdeaWasDeclined $event)
     {
-        $event->getIdea()->user()->first()->notify(new ToUser($event->getIdea(), $this->getDeclineReason($event)));
+        $user = $event->getIdea()->user()->first();
+        if ($user->is_active == 1) {
+            $user->notify(new ToUser($event->getIdea(), $this->getDeclineReason($event)));
+        }
 
         return $this;
     }

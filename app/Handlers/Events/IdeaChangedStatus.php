@@ -33,7 +33,10 @@ class IdeaChangedStatus
      */
     protected function notifyUser(IdeaWasChangedStatus $event)
     {
-        $event->getIdea()->user()->first()->notify(new ToUser($event->getIdea()));
+        $user = $event->getIdea()->user()->first();
+        if ($user->is_active == 1) {
+            $user->notify(new ToUser($event->getIdea()));
+        }
 
         return $this;
     }

@@ -56,6 +56,7 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         return [
             'user' => \App\Repositories\User::class,
+            'remote_user' => \App\Repositories\RemoteUser::class,
             'role' => \App\Repositories\Role::class,
             'department' => \App\Repositories\Department::class,
             'coreCompetency' => \App\Repositories\CoreCompetency::class,

@@ -7,9 +7,9 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Notifications\IdeaCreated\{
     ToUser,
-    ToSuperadmin,
-    ToAdmin
+    ToSuperadmin
 };
+use App\Models\Auth\User;
 use Illuminate\Support\Facades\App;
 
 /**
@@ -26,14 +26,13 @@ class IdeaCreated
     /**
      * Handle the event.
      *
-     * @param  IdeaCreated  $event
+     * @param  IdeaCreated $event
      * @return void
      */
     public function handle(IdeaWasCreated $event)
     {
         $this
             ->notifyUser($event)
-            //->notifyAdmins($event)
             ->notifySuperadmins($event);
     }
 
@@ -43,7 +42,10 @@ class IdeaCreated
      */
     protected function notifyUser(IdeaWasCreated $event)
     {
-        $event->getIdea()->user()->first()->notify(new ToUser($event->getIdea()));
+        $user = $event->getIdea()->user()->first();
+        if ($user->is_active == 1) {
+            $user->notify(new ToUser($event->getIdea()));
+        }
 
         return $this;
     }
@@ -54,33 +56,30 @@ class IdeaCreated
      */
     protected function notifySuperadmins(IdeaWasCreated $event)
     {
-        /** @var \App\Models\Auth\User $user */
-        foreach ($this->getUserRepository()->getSuperadmins()->get() as $user) {
+        foreach ($this->getRemoteUserRepository()->getSuperadmins() as $user) {
+            $user = $this->createUserModel($user);
             $user->notify(new ToSuperadmin($event->getIdea()));
         }
-
         return $this;
     }
 
     /**
-     * @param IdeaWasCreated $event
-     * @return $this
+     * a user may not exist in our database, so we create a temporary object
+     * do not save this model!!!!!!!!!!!!!
+     * @param array $user
+     * @return User
      */
-    protected function notifyAdmins(IdeaWasCreated $event)
+    protected function createUserModel(array $user)
     {
-        /** @var \App\Models\Auth\User $user */
-        foreach ($this->getUserRepository()->getAdmins()->get() as $user) {
-            $user->notify(new ToAdmin($event->getIdea()));
-        }
-
-        return $this;
+        return new User($user);
     }
 
+
     /**
-     * @return \App\Repositories\User
+     * @return \App\Repositories\RemoteUser
      */
-    protected function getUserRepository() : \App\Repositories\User
+    protected function getRemoteUserRepository(): \App\Repositories\RemoteUser
     {
-        return App::make('repository.user');
+        return App::make('repository.remote_user');
     }
 }
