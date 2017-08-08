@@ -25,16 +25,6 @@ Route::group(['middleware' => ['jwt']], function () {
         Route::get('/review-idea/{id}', 'ReviewIdeaController@index')->where('id', '[0-9]+')->name('review-idea');
         Route::get('/about', 'AboutController@index')->name('about');
 
-        Route::group([
-            'as' => 'profile.',
-            'prefix' => 'profile'
-        ], function () {
-            Route::get('/', 'ProfileController@index')->name('index');
-            Route::post('/update', 'ProfileController@update')->name('update');
-            Route::post('/change-pass', 'ProfileController@changePass')->name('change-pass');
-        });
-
-
         //superadmin or admin
         Route::group(['middleware' => ['role:admin|superadmin']], function() {
             Route::post('/pin-priority/{id}', 'ReviewIdeaController@pinToPriority')->where('id', '[0-9]+')->name('pin-priority');

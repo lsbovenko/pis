@@ -57,7 +57,7 @@
 
                         <ul class="dropdown-menu" role="menu">
                             <li>
-                                <a href="{{ route('profile.index') }}">Профиль</a>
+                                <a href="{{ config('app.auth_url') }}/profile">Профиль</a>
                             </li>
                             <li>
                                 <a href="{{ config('app.auth_url') }}/logout">Выйти</a>
