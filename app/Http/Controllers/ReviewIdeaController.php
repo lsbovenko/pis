@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\{
     App,
-    Log
+    Log,
+    Auth
 };
 use Zizaco\Entrust\EntrustFacade;
 use App\Models\Idea;
@@ -34,9 +35,15 @@ class ReviewIdeaController extends Controller
     {
         /** @var \App\Models\Idea $idea */
         $idea = Idea::findOrFail($request->route('id'));
-        if (!$idea->isApproved() && EntrustFacade::hasRole(['user', 'admin'])) {
+        /*if (!$idea->isApproved() && EntrustFacade::hasRole(['user', 'admin'])) {
+            abort(404);
+        }*/
+
+        if (!$idea->isApproved() && EntrustFacade::hasRole(['user', 'admin']) && $idea->user_id != Auth::user()->id) {
             abort(404);
         }
+
+
         return view('review-idea.review', [
             'idea' => $idea,
             'user' => $idea->user,

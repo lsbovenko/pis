@@ -19,6 +19,7 @@ Route::group(['middleware' => ['jwt']], function () {
     Route::group(['middleware' => ['auth', 'check_user', 'refresh_jwt']], function () {
         Route::get('/', 'BrowseIdeasController@index')->name('main');
         Route::get('/priority-board', 'BrowseIdeasController@priorityBoard')->name('priority-board');
+        Route::get('/my-ideas', 'BrowseIdeasController@myIdeas')->name('my-ideas');
         Route::get('/add-idea', 'IndexController@addIdea')->name('add-idea');
         Route::post('/add-idea', 'IndexController@createIdea');
         Route::get('/success', 'IndexController@success')->name('add-idea-success');

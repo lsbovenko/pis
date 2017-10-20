@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\{
     App,
-    Input
+    Input,
+    Auth
 };
 
 
@@ -30,7 +31,8 @@ class BrowseIdeasController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
@@ -45,6 +47,7 @@ class BrowseIdeasController extends Controller
             'title' => 'Все идеи',
             'filter' => $this->getValuesForFilter(),
             'topUsers' => $this->getTopUsers(),
+            'showApproveStatus' => false
         ]);
     }
 
@@ -64,6 +67,26 @@ class BrowseIdeasController extends Controller
             'title' => 'Приоритетный список',
             'filter' => $this->getValuesForFilter(),
             'topUsers' => $this->getTopUsers(),
+            'showApproveStatus' => false
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function myIdeas(Request $request)
+    {
+        $ideas = $this->getQuery($request)
+            ->where('user_id', '=',  Auth::user()->id)
+            ->paginate(self::QUANTITY_ITEMS_ON_PAGE);
+
+        return view('browse-ideas.index', [
+            'ideas' => $ideas->appends(Input::except('page')),
+            'title' => 'Мои идеи',
+            'filter' => $this->getValuesForFilter(),
+            'topUsers' => $this->getTopUsers(),
+            'showApproveStatus' => true
         ]);
     }
 

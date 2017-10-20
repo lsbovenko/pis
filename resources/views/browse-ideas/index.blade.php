@@ -12,7 +12,10 @@
     </div>
 
     @include('browse-ideas.partials.filter')
-    @each('browse-ideas.partials.item', $ideas, 'idea')
+
+    @foreach ($ideas as $idea)
+        @include('browse-ideas.partials.item')
+    @endforeach
 
     @unless($ideas->count())
         Ничего не найдено.

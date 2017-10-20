@@ -3,7 +3,18 @@
         <div class="row">
             <div class="col-md-12">
                 <a href="{{ route('review-idea', ['id' => $idea->id]) }}">
-                    <h3>{{ $idea->title }}</h3>
+                    <h3>
+                        {{ $idea->title }}
+                        @if ($showApproveStatus)
+                            @if ($idea->isDeclined())
+                                (Отклонена)
+                            @elseif ($idea->isNew())
+                                (Еще не одобрена)
+                            @else
+                                (Одобрена)
+                            @endif
+                        @endif
+                    </h3>
                 </a>
             </div>
         </div>

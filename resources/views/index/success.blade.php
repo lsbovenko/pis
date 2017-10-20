@@ -7,22 +7,11 @@
         <div class="col-md-6 col-md-offset-3">
             @include('partials.errors')
             <div class="alert alert-success alert-dismissable">
-                Спасибо. Идея успешно добавлена.
+                Спасибо. Ваша идея успешно добавлена.
             </div>
-            <p>Вы будете перенаправлены на главную страницу через <span id="time">5</span> ...</p>
+            <p>Идя будет опубликована только после одобрения администратора.</p>
         </div>
     </div>
     <hr>
-    <script>
-        var i = 5,
-            url = "{{ route('main') }}";
-        function time(){
-            document.getElementById("time").innerHTML = i;
-            i--;
-            if (i < 0) location.href = url;
-        }
-        time();
-        setInterval(time, 1000);
-    </script>
 </div>
 @endsection
