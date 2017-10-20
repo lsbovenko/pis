@@ -26,7 +26,11 @@
             </div>
         @endunless
 
-        <p>{{ str_limit($idea->description, $limit = 150, $end = '...') }}</p>
+        <p>
+            @php
+                echo str_limit(strip_tags($idea->description), $limit = 150, $end = '...')
+            @endphp
+        </p>
         <div class="row">
             <div class="col-md-8">
                 Создана : {{ $idea->created_at->format('d.m.Y') }}, {{ $idea->user->getFullName() }}, {{ $idea->user->position->name }}

@@ -159,6 +159,7 @@ class IdeaControl
      * @param Idea $idea
      * @param Status $status
      * @return Idea
+     * @throws \App\Exceptions\IdeaIsNotApproved
      */
     public function changeStatus(Idea $idea, Status $status)
     {

@@ -105,6 +105,7 @@ class BrowseIdeasController extends Controller
             'title' => 'Ожидают утверждения',
             'filter' => $this->getValuesForFilter(),
             'topUsers' => $this->getTopUsers(),
+            'showApproveStatus' => false,
         ]);
     }
 
@@ -123,6 +124,7 @@ class BrowseIdeasController extends Controller
             'title' => 'Отклоненные идеи',
             'filter' => $this->getValuesForFilter(),
             'topUsers' => $this->getTopUsers(),
+            'showApproveStatus' => false
         ]);
     }
 

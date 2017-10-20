@@ -63,7 +63,7 @@ class EditIdeaController extends Controller
         /** @var \App\Models\Idea $idea */
         $idea = Idea::findOrFail($request->route('id'));
         try {
-            $data = App::make('datacleaner')->cleanData($request->all());
+            $data = App::make('datacleaner')->cleanData($request->all(), ['description']);
             $this->getIdeaControl()->update($idea, $data);
         } catch (\Exception $e) {
             Log::error($e);

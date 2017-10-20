@@ -5,7 +5,7 @@
 </div>
 <div class="form-group">
     <label for="email">Описание</label>
-    {{ Form::textarea('description', isset($idea) ? $idea->description : '', ['class'=>'form-control']) }}
+    {{ Form::textarea('description', isset($idea) ? $idea->description : '', ['class'=>'form-control', 'id' => 'description']) }}
 </div>
 <div class="form-group">
     <label for="department">Основная компетенция</label>
@@ -27,3 +27,28 @@
     <label for="department">Тип</label>
     {{ Form::select('type_id', $typesList, isset($idea) ? $idea->type->id : '', ['class'=>'form-control']) }}
 </div>
+
+@section('scripts')
+    <script src="{!! asset('/vendor/summernote/summernote.js') !!}"></script>
+    <script src="{!! asset('/vendor/summernote/lang/summernote-ru-RU.js') !!}"></script>
+    <link href="{{ asset('/vendor/summernote/summernote.css') }}" rel="stylesheet">
+@stop
+
+@section('inline-scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#description').summernote({
+                height:300,
+                lang: 'ru-RU',
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link']]
+                ]
+            });
+        });
+    </script>
+@stop

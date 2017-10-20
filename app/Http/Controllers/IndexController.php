@@ -51,7 +51,7 @@ class IndexController extends Controller
     public function createIdea(IdeaRequest $request)
     {
         try {
-            $data = App::make('datacleaner')->cleanData($request->all());
+            $data = App::make('datacleaner')->cleanData($request->all(), ['description']);
             $status = App::make('repository.status')->getBySlug(Status::SLUG_ACTIVE);
             if (!isset($status)) {
                 $status = Status::createNew(Status::SLUG_ACTIVE);

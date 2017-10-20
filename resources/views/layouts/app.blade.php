@@ -88,6 +88,7 @@
 <script src="{{ asset('js/jquery.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/custom.js') }}"></script>
-
+@yield('scripts')
+@yield('inline-scripts')
 </body>
 </html>

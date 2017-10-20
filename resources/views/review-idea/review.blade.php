@@ -83,7 +83,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    {{ $idea->description }}
+                    {!! $idea->description !!}
                 </div>
             </div>
             <div class="col-sm-12">
