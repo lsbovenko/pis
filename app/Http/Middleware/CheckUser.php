@@ -34,7 +34,7 @@ class CheckUser
     }
 
     /**
-     * @param $request
+     * @param User $user
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function check(User $user)
@@ -44,6 +44,7 @@ class CheckUser
         } catch (\Exception $e) {
             Log::error($e);
             $this->logout();
+            return redirect(config('app.auth_url'));
         }
 
         if (!$remoteUser['is_active']) {
@@ -53,7 +54,6 @@ class CheckUser
         }
 
         $this->updateUser($user, $remoteUser);
-
     }
 
     /**

@@ -100,6 +100,7 @@ class AuthApiClient
 
     /**
      * @return $this
+     * @throws \Exception
      */
     protected function setApiKey()
     {

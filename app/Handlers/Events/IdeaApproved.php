@@ -5,10 +5,7 @@ namespace App\Handlers\Events;
 use App\Events\IdeaWasApproved;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Notifications\IdeaApproved\{
-    ToUser,
-    ToAdmin
-};
+use App\Notifications\IdeaApproved\ToAll;
 use Illuminate\Support\Facades\App;
 use App\Models\Auth\User;
 
@@ -31,34 +28,18 @@ class IdeaApproved
      */
     public function handle(IdeaWasApproved $event)
     {
-        $this
-            ->notifyUser($event)
-            ->notifyAdmins($event);
+        $this->notifyAll($event);
     }
 
     /**
      * @param IdeaWasApproved $event
      * @return $this
      */
-    protected function notifyUser(IdeaWasApproved $event)
+    protected function notifyAll(IdeaWasApproved $event)
     {
-        $user = $event->getIdea()->user()->first();
-        if ($user->is_active == 1) {
-            $user->notify(new ToUser($event->getIdea()));
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param IdeaWasApproved $event
-     * @return $this
-     */
-    protected function notifyAdmins(IdeaWasApproved $event)
-    {
-        foreach ($this->getRemoteUserRepository()->getAdmins() as $user) {
+        foreach ($this->getRemoteUserRepository()->getAll() as $user) {
             $user = $this->createUserModel($user);
-            $user->notify(new ToAdmin($event->getIdea()));
+            $user->notify(new ToAll($event->getIdea()));
         }
 
         return $this;

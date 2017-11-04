@@ -24,10 +24,7 @@ class IdeaCreated
     protected $userRepository;
 
     /**
-     * Handle the event.
-     *
-     * @param  IdeaCreated $event
-     * @return void
+     * @param IdeaWasCreated $event
      */
     public function handle(IdeaWasCreated $event)
     {
