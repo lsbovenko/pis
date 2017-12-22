@@ -8,7 +8,13 @@
                 <small>({{ $ideas->total() }})</small>
             </h1>
         </div>
-        @include('partials.top-users')
+
+    </div>
+    <div class="row">
+        @include('partials.top-users', ['users' => $topUsers, 'title' => 'Идеи за все время'])
+        @include('partials.top-users', ['users' => $topUsersByCompletedIdeas, 'title' => 'Реализованные за все время'])
+        @include('partials.top-users', ['users' => $topUsersLast3Month, 'title' => 'Идеи за 90 дней'])
+        @include('partials.top-users', ['users' => $topUsersByCompletedIdeasLast3Month, 'title' => 'Реализованные за 90 дней'])
     </div>
 
     @include('browse-ideas.partials.filter')

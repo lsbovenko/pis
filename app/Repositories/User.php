@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Auth\User as ModelUser;
 use App\Models\Auth\Role as ModelRole;
 use Illuminate\Support\Facades\DB;
+use App\Models\Categories\Status;
 
 /**
  * Class User
@@ -60,17 +61,29 @@ class User extends AbstractRepository
     }
 
     /**
+     * @param Status|null $status
+     * @param \DateTime|null $date
      * @param int $limit
-     * @return \Illuminate\Support\Collection
+     * @return mixed
      */
-    public function getTopUsers(int $limit = 3) : \Illuminate\Support\Collection
+    public function getTopUsers(Status $status = null, \DateTime $date = null,  int $limit = 3)
     {
-        return DB::table('users')
+        /** @var \Illuminate\Database\Query\Builder $query */
+        $query = DB::table('users')
             ->rightJoin('ideas', 'users.id', '=', 'ideas.user_id')
             ->select(DB::raw('users.*, count(users.id) AS number'))
             ->groupBy('users.id')
             ->orderBy('number', 'DESC')
-            ->orderBy('users.id', 'asc')
+            ->orderBy('users.id', 'asc');
+
+        if ($status) {
+            $query->where('ideas.status_id', '=', $status->id);
+        }
+        if ($date) {
+            $query->where('ideas.created_at', '>', $date->format('Y-m-d H:i:s'));
+        }
+
+        return $query
             ->limit($limit)
             ->get();
     }

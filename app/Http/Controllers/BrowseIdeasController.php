@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\{
 
 use Illuminate\Http\Request;
 use App\Models\Idea;
+use App\Models\Categories\Status;
 
 /**
  * Class BrowseIdeasController
@@ -47,6 +48,9 @@ class BrowseIdeasController extends Controller
             'title' => 'Все идеи',
             'filter' => $this->getValuesForFilter(),
             'topUsers' => $this->getTopUsers(),
+            'topUsersByCompletedIdeas' => $this->getTopUsersByCompletedIdeas(),
+            'topUsersLast3Month' =>$this->getTopUsersLast3Month(),
+            'topUsersByCompletedIdeasLast3Month' => $this->getTopUsersByCompletedIdeasLast3Month(),
             'showApproveStatus' => false
         ]);
     }
@@ -67,6 +71,9 @@ class BrowseIdeasController extends Controller
             'title' => 'Приоритетный список',
             'filter' => $this->getValuesForFilter(),
             'topUsers' => $this->getTopUsers(),
+            'topUsersByCompletedIdeas' => $this->getTopUsersByCompletedIdeas(),
+            'topUsersLast3Month' =>$this->getTopUsersLast3Month(),
+            'topUsersByCompletedIdeasLast3Month' => $this->getTopUsersByCompletedIdeasLast3Month(),
             'showApproveStatus' => false
         ]);
     }
@@ -86,6 +93,9 @@ class BrowseIdeasController extends Controller
             'title' => 'Мои идеи',
             'filter' => $this->getValuesForFilter(),
             'topUsers' => $this->getTopUsers(),
+            'topUsersByCompletedIdeas' => $this->getTopUsersByCompletedIdeas(),
+            'topUsersLast3Month' =>$this->getTopUsersLast3Month(),
+            'topUsersByCompletedIdeasLast3Month' => $this->getTopUsersByCompletedIdeasLast3Month(),
             'showApproveStatus' => true
         ]);
     }
@@ -105,6 +115,9 @@ class BrowseIdeasController extends Controller
             'title' => 'Ожидают утверждения',
             'filter' => $this->getValuesForFilter(),
             'topUsers' => $this->getTopUsers(),
+            'topUsersByCompletedIdeas' => $this->getTopUsersByCompletedIdeas(),
+            'topUsersLast3Month' =>$this->getTopUsersLast3Month(),
+            'topUsersByCompletedIdeasLast3Month' => $this->getTopUsersByCompletedIdeasLast3Month(),
             'showApproveStatus' => false,
         ]);
     }
@@ -124,6 +137,9 @@ class BrowseIdeasController extends Controller
             'title' => 'Отклоненные идеи',
             'filter' => $this->getValuesForFilter(),
             'topUsers' => $this->getTopUsers(),
+            'topUsersByCompletedIdeas' => $this->getTopUsersByCompletedIdeas(),
+            'topUsersLast3Month' =>$this->getTopUsersLast3Month(),
+            'topUsersByCompletedIdeasLast3Month' => $this->getTopUsersByCompletedIdeasLast3Month(),
             'showApproveStatus' => false
         ]);
     }
@@ -195,6 +211,32 @@ class BrowseIdeasController extends Controller
      */
     protected function getTopUsers()
     {
-        return App::make('repository.user')->getTopUsers(3);
+        return App::make('repository.user')->getTopUsers();
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getTopUsersByCompletedIdeas()
+    {
+        return App::make('repository.user')->getTopUsers(Status::getCompletedStatus());
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getTopUsersLast3Month()
+    {
+        $date = new \DateTime('-3 month');
+        return App::make('repository.user')->getTopUsers(null, $date);
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getTopUsersByCompletedIdeasLast3Month()
+    {
+        $date = new \DateTime('-3 month');
+        return App::make('repository.user')->getTopUsers(Status::getCompletedStatus(), $date);
     }
 }

@@ -1,12 +1,10 @@
-<div class="col-md-6">
-    <div class="row">
-        <div class="col-sm-12">
-            <h4 class="pull-right">Самые активные пользователи:</h4>
+<div class="col-md-3">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            {{ $title }}:
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            @foreach ($topUsers as $user)
+        <div class="panel-body">
+            @foreach ($users as $user)
                 <span class="pull-right">
                     {{ $user->last_name }} {{ $user->name }} ({{ $user->number }})
                 </span>
