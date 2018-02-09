@@ -66,7 +66,7 @@ class User extends AbstractRepository
      * @param int $limit
      * @return mixed
      */
-    public function getTopUsers(Status $status = null, \DateTime $date = null,  int $limit = 3)
+    public function getTopUsers(Status $status = null, \DateTime $date = null, int $limit = 3)
     {
         /** @var \Illuminate\Database\Query\Builder $query */
         $query = DB::table('users')
@@ -91,7 +91,7 @@ class User extends AbstractRepository
     /**
      * @return string
      */
-    protected function getModelClass() : string
+    protected function getModelClass(): string
     {
         return ModelUser::class;
     }

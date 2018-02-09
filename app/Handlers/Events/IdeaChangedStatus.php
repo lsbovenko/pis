@@ -6,16 +6,18 @@ use App\Events\IdeaWasChangedStatus;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\Categories\Status;
-use App\Notifications\IdeaChangedStatus\ToUser;
-use App\Notifications\IdeaChangedStatus\ToAll;
+use App\Mail\IdeaChangedStatus\{
+    ToUser,
+    ToAll
+};
+
 use Illuminate\Support\Facades\App;
-use App\Models\Auth\User;
 
 /**
  * Class IdeaChangedStatus
  * @package App\Handlers\Events
  */
-class IdeaChangedStatus
+class IdeaChangedStatus extends AbstractIdea
 {
     /**
      * Handle the event.
@@ -41,7 +43,7 @@ class IdeaChangedStatus
     {
         $user = $event->getIdea()->user()->first();
         if ($user->is_active == 1) {
-            $user->notify(new ToUser($event->getIdea()));
+            $this->getQueueService()->add($user->email, new ToUser($event->getIdea()));
         }
 
         return $this;
@@ -50,8 +52,7 @@ class IdeaChangedStatus
     protected function notifyAll(IdeaWasChangedStatus $event)
     {
         foreach ($this->getRemoteUserRepository()->getAll() as $user) {
-            $user = $this->createUserModel($user);
-            $user->notify(new ToAll($event->getIdea()));
+            $this->getQueueService()->add($user['email'], new ToAll($event->getIdea()));
         }
 
         return $this;
@@ -74,25 +75,5 @@ class IdeaChangedStatus
         }
 
         return $this;
-    }
-
-    /**
-     * a user may not exist in our database, so we create a temporary object
-     * do not save this model!!!!!!!!!!!!!
-     * @param array $user
-     * @return User
-     */
-    protected function createUserModel(array $user)
-    {
-        return new User($user);
-    }
-
-
-    /**
-     * @return \App\Repositories\RemoteUser
-     */
-    protected function getRemoteUserRepository(): \App\Repositories\RemoteUser
-    {
-        return App::make('repository.remote_user');
     }
 }
