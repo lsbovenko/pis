@@ -13,7 +13,7 @@ use App\Models\EmailQueue;
  */
 class SendEmails extends Command
 {
-    const LIMIT_FOR_BATCH = 10;
+    const LIMIT_FOR_BATCH = 20;
 
     /**
      * The name and signature of the console command.
