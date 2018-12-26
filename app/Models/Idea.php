@@ -141,4 +141,20 @@ class Idea extends Model
     {
         return $this->hasMany('App\Models\Note');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany('App\Models\Auth\User', 'idea_likes');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function likedUser($id)
+    {
+        return $this->users()->where('user_id', '=', $id)->first();
+    }
 }

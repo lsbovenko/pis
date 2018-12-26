@@ -7,6 +7,8 @@
 
 require('./bootstrap');
 
+import Vue from 'vue'
+
 window.Vue = require('vue');
 
 /**
@@ -16,6 +18,8 @@ window.Vue = require('vue');
  */
 
 Vue.component('example', require('./components/Example.vue'));
+
+const router = new VueRouter({});
 
 const app = new Vue({
     el: '#app'

@@ -4,10 +4,10 @@
     {{ Form::text('name', isset($item) ? $item->name : '', ['class'=>'form-control']) }}
 </div>
 <div class="form-group">
-    <div class="checkbox">
-        <label>
-            <input name="is_active" type="hidden" value="0">
-            {{ Form::checkbox('is_active', true, isset($item) ? $item->is_active : false) }}Активно?
-        </label>
-    </div>
+    <label class="inbtn">
+        <input name="is_active" type="hidden" value="0">
+        {{ Form::checkbox('is_active', true, isset($item) ? $item->is_active : false) }}
+        <span class="inbtn__indicator"></span>
+        &nbsp; Активно?
+    </label>
 </div>

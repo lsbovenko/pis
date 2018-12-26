@@ -114,4 +114,21 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Idea');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function likedUserIdea()
+    {
+        return $this->belongsToMany('App\Models\Idea', 'idea_likes')->withTimestamps();
+    }
+
+    /**
+     * @param $ideaId
+     * @return mixed
+     */
+    public function checkUserLike($ideaId)
+    {
+        return $this->likedUserIdea()->where('idea_id', $ideaId)->first();
+    }
 }

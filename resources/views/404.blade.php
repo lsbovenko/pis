@@ -1,16 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row page-header">
-        <div class="col-sm-8">
-            <h1>Страницы не существует</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-
-        </div>
+<div class="container bottom-padding">
+    <div class="content-box">
+        <div class="section-title">Страницы не существует</div>
     </div>
     <hr>
 </div>

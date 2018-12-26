@@ -21,6 +21,8 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return view('users.index', ['users' => User::where('id', '>', 0)->paginate(15)]);
+        return view('users.index', [
+            'users' => User::where('id', '>', 0)->paginate(15),
+        ]);
     }
 }

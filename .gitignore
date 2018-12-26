@@ -11,3 +11,5 @@ Homestead.yaml
 npm-debug.log
 .env
 composer.lock
+sandbox.php
+node_modules
