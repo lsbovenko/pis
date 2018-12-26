@@ -3,6 +3,7 @@
 return [
     'title' => 'Управление пользователями',
     'name' => 'Имя',
+    'last_name' => 'Фамилия',
     'email' => 'Email',
     'active_ideas' => 'Активных идей',
     'frozen_ideas' => 'На паузе',

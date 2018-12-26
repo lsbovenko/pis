@@ -19,10 +19,11 @@ class Navbar
     public function compose(View $view)
     {
         Menu::macro('main', function () {
-            $menu = Menu::new()->addClass('nav navbar-nav');
+            $menu = Menu::new()->addClass('dropdown-menu');
             $user = Auth::user();
             if (isset($user)) {
                 $menu
+                    ->route('about', 'О системе')
                     ->route('main', 'Идеи')
                     ->route('priority-board', 'Приоритетный список')
                     ->route('my-ideas', 'Мои идеи');
@@ -35,7 +36,11 @@ class Navbar
                 }
                 $menu
                     ->route('add-idea', '+ Добавить идею')
-                    ->setActiveFromRequest();
+                    ->setActiveFromRequest()
+                    ->setAttributes([
+                        'role' => 'menu',
+                        'aria-labelledby' => 'dLabel'
+                    ]);
             }
 
             return $menu;

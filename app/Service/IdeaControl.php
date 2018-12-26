@@ -6,7 +6,8 @@ use App\Models\Categories\Status;
 use App\Models\Auth\User;
 use App\Models\{
     Idea,
-    Note
+    Note,
+    IdeaLikes
 };
 use App\Events\{
     IdeaWasCreated,
@@ -174,5 +175,53 @@ class IdeaControl
         }
 
         return $idea;
+    }
+
+    /**
+     * @param Idea $idea
+     * @param $user
+     */
+    public function addPostLike(Idea $idea, $user)
+    {
+        if ($this->isUserHasLike($user, $idea->id)) {
+            $idea->likes_num++;
+            $idea->save();
+
+            $this->addLikeIdeasUser($idea->id, $user);
+        }
+    }
+
+    /**
+     * @param int $ideaId
+     * @param $user
+     */
+    private function addLikeIdeasUser(int $ideaId, $user) : bool
+    {
+        $user->likedUserIdea()->attach($ideaId);
+    }
+
+    /**
+     * @param Idea $idea
+     * @param $user
+     */
+    public function removeLike(Idea $idea, $user) : bool
+    {
+        if (!$this->isUserHasLike($user, $idea->id)) {
+            $idea->likes_num--;
+            $idea->save();
+            $user->likedUserIdea()->detach($idea->id);
+        }
+    }
+
+    /**
+     * @param User $user
+     * @param int $ideaId
+     * @return bool
+     */
+    public function isUserHasLike(User $user, int $ideaId) : bool
+    {
+        $likesUsers = $user->checkUserLike($ideaId);
+
+        return !$likesUsers;
     }
 }

@@ -40,6 +40,14 @@ class ReviewIdeaController extends Controller
             abort(404);
         }
 
+        $user = Auth::user();
+
+        $likedUserId = '';
+        $likedUser = $user->checkUserLike($idea->id);
+
+        if ($likedUser) {
+            $likedUserId = $likedUser->pivot->user_id;
+        }
 
         return view('review-idea.review', [
             'idea' => $idea,
@@ -47,6 +55,12 @@ class ReviewIdeaController extends Controller
             'priorityReason' => $idea->is_priority ? $idea->getPriorityReason() : null,
             'statuses' => App::make('reference')->getAllStatusesForSelect(),
             'status' => $idea->status,
+            'countUserIdea' => $user->ideas()->count(),
+            'authUser' => [
+                'user' => $user,
+                'userLike' => $likedUserId,
+                'listUsersLike' => $idea->users
+            ],
         ]);
     }
 
