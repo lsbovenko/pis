@@ -10358,3 +10358,13 @@ body .container .btn_.btn-outline-red:hover {
 .mg-top-10 {
     margin-top: 10px;
 }
+
+.mg-left-10 {
+    margin-left: 10px;
+}
+
+.no-border-shadow {
+    border: beige;
+    box-shadow: none;
+    width: 62px;
+}

@@ -12494,8 +12494,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Main__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Main___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Main__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_main_Main__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_main_Main___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_main_Main__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_priority_Priority__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_priority_Priority___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__views_priority_Priority__);
 window.axios = __webpack_require__(15);
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -12512,13 +12514,10 @@ if (token) {
 
 //import App from './App';
 
-
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
-    routes: [{
-        path: '/review-idea/:id', name: 'idea', component: __WEBPACK_IMPORTED_MODULE_2__Main___default.a
-    }],
+    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_main_Main___default.a }, { path: '/priority-board', component: __WEBPACK_IMPORTED_MODULE_3__views_priority_Priority___default.a }],
     mode: 'history'
 });
 
@@ -12526,7 +12525,8 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     el: '#app',
     template: '<Main/>',
     components: {
-        Main: __WEBPACK_IMPORTED_MODULE_2__Main___default.a
+        Main: __WEBPACK_IMPORTED_MODULE_2__views_main_Main___default.a,
+        Priority: __WEBPACK_IMPORTED_MODULE_3__views_priority_Priority___default.a
     },
     router: router
 });
@@ -16326,7 +16326,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-f5b2feea"
+var __vue_scopeId__ = "data-v-24f1a668"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -16337,7 +16337,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/Main.vue"
+Component.options.__file = "resources/assets/js/views/main/Main.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -16346,9 +16346,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-f5b2feea", Component.options)
+    hotAPI.createRecord("data-v-24f1a668", Component.options)
   } else {
-    hotAPI.reload("data-v-f5b2feea", Component.options)
+    hotAPI.reload("data-v-24f1a668", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -16369,13 +16369,13 @@ var content = __webpack_require__(39);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("4d3bddf0", content, false, {});
+var update = __webpack_require__(2)("fbda10ce", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-f5b2feea\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Main.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-f5b2feea\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Main.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-24f1a668\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Main.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-24f1a668\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Main.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -16658,7 +16658,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -16784,7 +16784,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: "MainFilterBlock"
+    name: "MainFilterBlock",
+    data: function data() {
+        return {};
+    },
+    mounted: function mounted() {
+        this.fetch();
+    },
+
+    methods: {
+        fetch: function fetch() {}
+    }
 });
 
 /***/ }),
@@ -16802,254 +16812,245 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "left-sidebar sameblock",
-        staticStyle: { height: "1197px" }
-      },
-      [
-        _c("section", { staticClass: "item" }, [
-          _c("ul", [
-            _c("li", { staticClass: "first" }, [_vm._v("Автор")]),
-            _vm._v(" "),
-            _c("li", [
-              _c("label", { staticClass: "inbtn" }, [
-                _c("input", { attrs: { type: "checkbox" } }),
-                _vm._v(" "),
-                _c("span", { staticClass: "inbtn__indicator" }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "data",
-                    attrs: { "data-title": "Кукареко А", id: "name-1" }
-                  },
-                  [_vm._v("Кукареко А (6)")]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("label", { staticClass: "inbtn" }, [
-                _c("input", { attrs: { type: "checkbox" } }),
-                _vm._v(" "),
-                _c("span", { staticClass: "inbtn__indicator" }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "data",
-                    attrs: { "data-title": "Грамузов В", id: "name-2" }
-                  },
-                  [_vm._v("Грамузов В (2)")]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("label", { staticClass: "inbtn" }, [
-                _c("input", { attrs: { type: "checkbox" } }),
-                _vm._v(" "),
-                _c("span", { staticClass: "inbtn__indicator" }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "data",
-                    attrs: { "data-title": "Ивашкин В", id: "name-3" }
-                  },
-                  [_vm._v("Ивашкин В (1)")]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "last" }, [
-              _c("a", { attrs: { href: "#" } }, [_vm._v("More")])
+    return _c("div", { staticClass: "left-sidebar" }, [
+      _c("section", { staticClass: "item" }, [
+        _c("ul", [
+          _c("li", { staticClass: "first" }, [_vm._v("Автор")]),
+          _vm._v(" "),
+          _c("li", [
+            _c("label", { staticClass: "inbtn" }, [
+              _c("input", { attrs: { type: "checkbox" } }),
+              _vm._v(" "),
+              _c("span", { staticClass: "inbtn__indicator" }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "data",
+                  attrs: { "data-title": "Кукареко А", id: "name-1" }
+                },
+                [_vm._v("Кукареко А (6)")]
+              )
             ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("section", { staticClass: "item" }, [
-          _c("ul", [
-            _c("li", { staticClass: "first" }, [
-              _vm._v("\n                Отдел\n                "),
-              _c("span", { staticClass: "drop" }, [_vm._v("Сбросить")])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("label", { staticClass: "inbtn" }, [
-                _c("input", { attrs: { type: "checkbox" } }),
-                _vm._v(" "),
-                _c("span", { staticClass: "inbtn__indicator" }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "data",
-                    attrs: { "data-title": "Ruby разработки", id: "data-1" }
-                  },
-                  [_vm._v("Ruby разработки (6)")]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("label", { staticClass: "inbtn" }, [
-                _c("input", { attrs: { type: "checkbox" } }),
-                _vm._v(" "),
-                _c("span", { staticClass: "inbtn__indicator" }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "data",
-                    attrs: { "data-title": "UI/UX", id: "data-2" }
-                  },
-                  [_vm._v("UI/UX (2)")]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("label", { staticClass: "inbtn" }, [
-                _c("input", { attrs: { type: "checkbox" } }),
-                _vm._v(" "),
-                _c("span", { staticClass: "inbtn__indicator" }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "data",
-                    attrs: { "data-title": "Кадров", id: "data-3" }
-                  },
-                  [_vm._v("Кадров (1)")]
-                )
-              ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("label", { staticClass: "inbtn" }, [
+              _c("input", { attrs: { type: "checkbox" } }),
+              _vm._v(" "),
+              _c("span", { staticClass: "inbtn__indicator" }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "data",
+                  attrs: { "data-title": "Грамузов В", id: "name-2" }
+                },
+                [_vm._v("Грамузов В (2)")]
+              )
             ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("section", { staticClass: "item" }, [
-          _c("ul", [
-            _c("li", { staticClass: "first" }, [_vm._v("Операционная цель")]),
-            _vm._v(" "),
-            _c("li", [
-              _c("label", { staticClass: "inbtn" }, [
-                _c("input", { attrs: { type: "checkbox" } }),
-                _vm._v(" "),
-                _c("span", { staticClass: "inbtn__indicator" }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "data",
-                    attrs: { "data-title": "Вступление в ПВТ", id: "data-4" }
-                  },
-                  [_vm._v("Вступление в ПВТ (6)")]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("label", { staticClass: "inbtn" }, [
-                _c("input", { attrs: { type: "checkbox" } }),
-                _vm._v(" "),
-                _c("span", { staticClass: "inbtn__indicator" }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "data",
-                    attrs: {
-                      "data-title": "Удовлетворенность клиентов",
-                      id: "data-5"
-                    }
-                  },
-                  [_vm._v("Удовлетворенность клиентов (2)")]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("label", { staticClass: "inbtn" }, [
-                _c("input", { attrs: { type: "checkbox" } }),
-                _vm._v(" "),
-                _c("span", { staticClass: "inbtn__indicator" }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "data",
-                    attrs: { "data-title": "Другая", id: "data-6" }
-                  },
-                  [_vm._v("Другая (1)")]
-                )
-              ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("label", { staticClass: "inbtn" }, [
+              _c("input", { attrs: { type: "checkbox" } }),
+              _vm._v(" "),
+              _c("span", { staticClass: "inbtn__indicator" }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "data",
+                  attrs: { "data-title": "Ивашкин В", id: "name-3" }
+                },
+                [_vm._v("Ивашкин В (1)")]
+              )
             ])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "last" }, [
+            _c("a", { attrs: { href: "#" } }, [_vm._v("More")])
           ])
-        ]),
-        _vm._v(" "),
-        _c("section", { staticClass: "item" }, [
-          _c("ul", [
-            _c("li", { staticClass: "first" }, [
-              _vm._v("Основная компетенция")
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("label", { staticClass: "inbtn" }, [
-                _c("input", { attrs: { type: "checkbox" } }),
-                _vm._v(" "),
-                _c("span", { staticClass: "inbtn__indicator" }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "data",
-                    attrs: { "data-title": "Продажи", id: "data-7" }
-                  },
-                  [_vm._v("Продажи (6)")]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("label", { staticClass: "inbtn" }, [
-                _c("input", { attrs: { type: "checkbox" } }),
-                _vm._v(" "),
-                _c("span", { staticClass: "inbtn__indicator" }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "data",
-                    attrs: { "data-title": "Кадры", id: "data-8" }
-                  },
-                  [_vm._v("Кадры (2)")]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("label", { staticClass: "inbtn" }, [
-                _c("input", { attrs: { type: "checkbox" } }),
-                _vm._v(" "),
-                _c("span", { staticClass: "inbtn__indicator" }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "data",
-                    attrs: { "data-title": "Другая", id: "data-9" }
-                  },
-                  [_vm._v("Другая (1)")]
-                )
-              ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("section", { staticClass: "item" }, [
+        _c("ul", [
+          _c("li", { staticClass: "first" }, [
+            _vm._v("\n                Отдел\n                "),
+            _c("span", { staticClass: "drop" }, [_vm._v("Сбросить")])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("label", { staticClass: "inbtn" }, [
+              _c("input", { attrs: { type: "checkbox" } }),
+              _vm._v(" "),
+              _c("span", { staticClass: "inbtn__indicator" }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "data",
+                  attrs: { "data-title": "Ruby разработки", id: "data-1" }
+                },
+                [_vm._v("Ruby разработки (6)")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("label", { staticClass: "inbtn" }, [
+              _c("input", { attrs: { type: "checkbox" } }),
+              _vm._v(" "),
+              _c("span", { staticClass: "inbtn__indicator" }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "data",
+                  attrs: { "data-title": "UI/UX", id: "data-2" }
+                },
+                [_vm._v("UI/UX (2)")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("label", { staticClass: "inbtn" }, [
+              _c("input", { attrs: { type: "checkbox" } }),
+              _vm._v(" "),
+              _c("span", { staticClass: "inbtn__indicator" }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "data",
+                  attrs: { "data-title": "Кадров", id: "data-3" }
+                },
+                [_vm._v("Кадров (1)")]
+              )
             ])
           ])
         ])
-      ]
-    )
+      ]),
+      _vm._v(" "),
+      _c("section", { staticClass: "item" }, [
+        _c("ul", [
+          _c("li", { staticClass: "first" }, [_vm._v("Операционная цель")]),
+          _vm._v(" "),
+          _c("li", [
+            _c("label", { staticClass: "inbtn" }, [
+              _c("input", { attrs: { type: "checkbox" } }),
+              _vm._v(" "),
+              _c("span", { staticClass: "inbtn__indicator" }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "data",
+                  attrs: { "data-title": "Вступление в ПВТ", id: "data-4" }
+                },
+                [_vm._v("Вступление в ПВТ (6)")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("label", { staticClass: "inbtn" }, [
+              _c("input", { attrs: { type: "checkbox" } }),
+              _vm._v(" "),
+              _c("span", { staticClass: "inbtn__indicator" }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "data",
+                  attrs: {
+                    "data-title": "Удовлетворенность клиентов",
+                    id: "data-5"
+                  }
+                },
+                [_vm._v("Удовлетворенность клиентов (2)")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("label", { staticClass: "inbtn" }, [
+              _c("input", { attrs: { type: "checkbox" } }),
+              _vm._v(" "),
+              _c("span", { staticClass: "inbtn__indicator" }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "data",
+                  attrs: { "data-title": "Другая", id: "data-6" }
+                },
+                [_vm._v("Другая (1)")]
+              )
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("section", { staticClass: "item" }, [
+        _c("ul", [
+          _c("li", { staticClass: "first" }, [_vm._v("Основная компетенция")]),
+          _vm._v(" "),
+          _c("li", [
+            _c("label", { staticClass: "inbtn" }, [
+              _c("input", { attrs: { type: "checkbox" } }),
+              _vm._v(" "),
+              _c("span", { staticClass: "inbtn__indicator" }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "data",
+                  attrs: { "data-title": "Продажи", id: "data-7" }
+                },
+                [_vm._v("Продажи (6)")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("label", { staticClass: "inbtn" }, [
+              _c("input", { attrs: { type: "checkbox" } }),
+              _vm._v(" "),
+              _c("span", { staticClass: "inbtn__indicator" }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "data",
+                  attrs: { "data-title": "Кадры", id: "data-8" }
+                },
+                [_vm._v("Кадры (2)")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("label", { staticClass: "inbtn" }, [
+              _c("input", { attrs: { type: "checkbox" } }),
+              _vm._v(" "),
+              _c("span", { staticClass: "inbtn__indicator" }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "data",
+                  attrs: { "data-title": "Другая", id: "data-9" }
+                },
+                [_vm._v("Другая (1)")]
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -17147,7 +17148,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.current_page[data-v-1c60169c] {\n    min-width: 25px;\n    height: 25px;\n    padding: 3px;\n    border-radius: 30px;\n}\n", ""]);
 
 // exports
 
@@ -17160,6 +17161,15 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -17311,14 +17321,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: {
         url: String
     },
-    loading: true,
     data: function data() {
         return {
+            loading: true,
             query: {
                 limit: 15,
-                page: 1
+                page: 1,
+                count: 0
             },
             collection: {
+                data: []
+            },
+            topUsers: {
+                data: []
+            },
+            topUsersByCompletedIdeas: {
+                data: []
+            },
+            topUsersLast3Month: {
+                data: []
+            },
+            topUsersByCompletedIdeasLast3Month: {
                 data: []
             }
         };
@@ -17328,14 +17351,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        activeIdea: function activeIdea() {},
+        applyChange: function applyChange() {
+            this.fetch();
+        },
+        updateLimit: function updateLimit() {
+            this.query.page = 1;
+            this.applyChange();
+        },
+        prevPage: function prevPage() {
+            if (this.collection.prev_page_url) {
+                this.query.page = Number(this.query.page) - 1;
+                this.applyChange();
+            }
+        },
+        nextPage: function nextPage() {
+            if (this.collection.next_page_url) {
+                this.query.page = Number(this.query.page) + 1;
+                this.applyChange();
+            }
+        },
         fetch: function fetch() {
             var _this = this;
 
-            axios.get('/ideas').then(function (res) {
+            var params = _extends({}, this.query);
+
+            axios.get('/get-idea/all', { params: params }).then(function (res) {
                 console.log(res);
-                __WEBPACK_IMPORTED_MODULE_0_vue___default.a.set(_this.$data, 'collection', res.data[0]);
-                _this.query.page = res.data[0].current_page;
-                _this.query.dtClass = res.data[0].status.slug;
+                __WEBPACK_IMPORTED_MODULE_0_vue___default.a.set(_this.$data, 'collection', res.data.ideas);
+                __WEBPACK_IMPORTED_MODULE_0_vue___default.a.set(_this.$data, 'topUsers', res.data.topUsers);
+                __WEBPACK_IMPORTED_MODULE_0_vue___default.a.set(_this.$data, 'topUsersByCompletedIdeas', res.data.topUsersByCompletedIdeas);
+                __WEBPACK_IMPORTED_MODULE_0_vue___default.a.set(_this.$data, 'topUsersLast3Month', res.data.topUsersLast3Month);
+                __WEBPACK_IMPORTED_MODULE_0_vue___default.a.set(_this.$data, 'topUsersByCompletedIdeasLast3Month', res.data.topUsersByCompletedIdeasLast3Month);
+                _this.query.page = res.data.ideas.current_page;
+                _this.query.count = res.data.totalIdeas;
             }).catch(function (error) {}).finally(function () {
                 _this.loading = false;
             });
@@ -17352,197 +17401,139 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "content-idea" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _vm._m(1),
-    _vm._v(" "),
-    _vm._m(2),
-    _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("ul", { staticClass: "list-idea" }, [
+    _c("div", { staticClass: "row info-row" }, [
+      _c("div", { staticClass: "col-md-3 col-sm-6" }, [
+        _c("div", { staticClass: "item" }, [
           _c(
-            "li",
-            _vm._l(_vm.collection.data, function(item) {
-              return _vm.collection.data && _vm.collection.data.length
-                ? _c(
-                    "div",
-                    { staticClass: "item" },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "title",
-                          attrs: {
-                            to: { name: "idea", params: { id: item.id } }
-                          }
-                        },
-                        [
-                          _c("span", { staticClass: "text" }, [
-                            _vm._v(_vm._s(item.title))
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            { staticClass: "status", class: item.status.slug },
-                            [_vm._v(_vm._s(item.status.name))]
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("p", {
-                        domProps: { innerHTML: _vm._s(item.description) }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "router-link",
-                        {
-                          attrs: {
-                            to: { name: "idea", params: { id: item.id } }
-                          }
-                        },
-                        [_vm._v("Read more")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-md-6" }, [
-                          _c("div", { staticClass: "user-info" }, [
-                            _c("span", { staticClass: "avatar" }, [
-                              _vm._v(
-                                "\n                                        " +
-                                  _vm._s(item.user.name.substring(0, 1)) +
-                                  "\n                                        " +
-                                  _vm._s(item.user.last_name.substring(0, 1)) +
-                                  "\n                                    "
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "user-name" }, [
-                              _vm._v(
-                                "\n                                        " +
-                                  _vm._s(item.user.name) +
-                                  "\n                                        " +
-                                  _vm._s(item.user.last_name) +
-                                  ",\n                                    "
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "date" }, [
-                              _vm._v(_vm._s(item.created_at))
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "col-md-6 text-right statistics" },
-                          [
-                            _c("span", { staticClass: "favorite" }, [
-                              _c("i", { staticClass: "zmdi zmdi-favorite" }),
-                              _vm._v(" " + _vm._s(item.comments_count))
-                            ]),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "coomment" }, [
-                              _c("i", { staticClass: "zmdi zmdi-comment-alt" }),
-                              _vm._v(" " + _vm._s(item.likes_num))
-                            ])
-                          ]
-                        )
-                      ])
-                    ],
-                    1
-                  )
-                : _vm._e()
-            }),
-            0
+            "ul",
+            [
+              _c("li", [_vm._v("Всего")]),
+              _vm._v(" "),
+              _vm._l(_vm.topUsers, function(topUser) {
+                return topUser
+                  ? _c("li", [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(topUser.name) +
+                          "\n                        " +
+                          _vm._s(topUser.last_name) +
+                          "\n                        (" +
+                          _vm._s(topUser.number) +
+                          ")\n                    "
+                      )
+                    ])
+                  : _vm._e()
+              })
+            ],
+            2
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3 col-sm-6" }, [
+        _c("div", { staticClass: "item" }, [
+          _c(
+            "ul",
+            [
+              _c("li", [_vm._v("Всего реализовано")]),
+              _vm._v(" "),
+              _vm._l(_vm.topUsersByCompletedIdeas, function(
+                topUsersByCompletedIdea
+              ) {
+                return _vm.topUsersByCompletedIdeas
+                  ? _c("li", [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(topUsersByCompletedIdea.name) +
+                          "\n                        " +
+                          _vm._s(topUsersByCompletedIdea.last_name) +
+                          "\n                        (" +
+                          _vm._s(topUsersByCompletedIdea.number) +
+                          ")\n                    "
+                      )
+                    ])
+                  : _vm._e()
+              })
+            ],
+            2
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3 col-sm-6" }, [
+        _c("div", { staticClass: "item" }, [
+          _c(
+            "ul",
+            [
+              _c("li", [_vm._v("Всего за 90 дней")]),
+              _vm._v(" "),
+              _vm._l(_vm.topUsersLast3Month, function(topUsersLast3M) {
+                return _vm.topUsersLast3Month
+                  ? _c("li", [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(topUsersLast3M.name) +
+                          "\n                        " +
+                          _vm._s(topUsersLast3M.last_name) +
+                          "\n                        " +
+                          _vm._s(topUsersLast3M.number) +
+                          "\n                    "
+                      )
+                    ])
+                  : _vm._e()
+              })
+            ],
+            2
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3 col-sm-6" }, [
+        _c("div", { staticClass: "item" }, [
+          _c(
+            "ul",
+            [
+              _c("li", [_vm._v("Всего за 90 дней")]),
+              _vm._v(" "),
+              _vm._l(_vm.topUsersByCompletedIdeasLast3Month, function(
+                topUsersByCompletedIdeasLast3M
+              ) {
+                return _vm.topUsersByCompletedIdeasLast3Month
+                  ? _c("li", [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(topUsersByCompletedIdeasLast3M.name) +
+                          "\n                        " +
+                          _vm._s(topUsersByCompletedIdeasLast3M.last_name) +
+                          "\n                        " +
+                          _vm._s(topUsersByCompletedIdeasLast3M.number) +
+                          "\n                    "
+                      )
+                    ])
+                  : _vm._e()
+              })
+            ],
+            2
           )
         ])
       ])
     ]),
     _vm._v(" "),
-    _vm._m(3)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row info-row" }, [
-      _c("div", { staticClass: "col-md-3 col-sm-6" }, [
-        _c("div", { staticClass: "item" }, [
-          _c("ul", [
-            _c("li", [_vm._v("Всего")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Кукареко Александр (14)")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Ивашкин Вячеслав (5)")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Полюшкин Алексей (3)")])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3 col-sm-6" }, [
-        _c("div", { staticClass: "item" }, [
-          _c("ul", [
-            _c("li", [_vm._v("Всего реализовано")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Кукареко Александр (14)")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Ивашкин Вячеслав (5)")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Полюшкин Алексей (3)")])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3 col-sm-6" }, [
-        _c("div", { staticClass: "item" }, [
-          _c("ul", [
-            _c("li", [_vm._v("Всего за 90 дней")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Кукареко Александр (14)")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Ивашкин Вячеслав (5)")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Полюшкин Алексей (3)")])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3 col-sm-6" }, [
-        _c("div", { staticClass: "item" }, [
-          _c("ul", [
-            _c("li", [_vm._v("Всего за 90 дней")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Кукареко Александр (14)")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Ивашкин Вячеслав (5)")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Полюшкин Алексей (3)")])
-          ])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row page-title" }, [
+    _c("div", { staticClass: "row page-title" }, [
       _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "pull-left" }, [
           _c("div", { staticClass: "text" }, [
             _vm._v("Идеи "),
-            _c("span", [_vm._v("(638)")])
+            _c("span", [_vm._v("(" + _vm._s(_vm.query.count) + ")")])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "filter-row" }, [
             _c("ul", [
               _c("li", { staticClass: "active" }, [_vm._v("Все")]),
               _vm._v(" "),
-              _c("li", [_vm._v("Активные (3)")]),
+              _c("li", { on: { click: _vm.activeIdea } }, [
+                _vm._v("Активные (3)")
+              ]),
               _vm._v(" "),
               _c("li", [_vm._v("Реализованные (3)")]),
               _vm._v(" "),
@@ -17551,49 +17542,252 @@ var staticRenderFns = [
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "pull-right" }, [
-          _c("div", { staticClass: "dropdown customer-select" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-default dropdown-toggle home",
-                attrs: {
-                  type: "button",
-                  id: "dropdownMenu1",
-                  "data-toggle": "dropdown",
-                  "aria-haspopup": "true",
-                  "aria-expanded": "true"
+        _vm._m(0)
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(1),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("ul", { staticClass: "list-idea" }, [
+          _c(
+            "li",
+            _vm._l(_vm.collection.data, function(item) {
+              return _vm.collection.data && _vm.collection.data.length
+                ? _c("div", { staticClass: "item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "title",
+                        attrs: { href: "/review-idea/" + item.id }
+                      },
+                      [
+                        _c("span", { staticClass: "text" }, [
+                          _vm._v(_vm._s(item.title))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          { staticClass: "status", class: item.status.slug },
+                          [_vm._v(_vm._s(item.status.name))]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("p", {
+                      domProps: { innerHTML: _vm._s(item.description) }
+                    }),
+                    _vm._v(" "),
+                    _c("a", { attrs: { href: "/review-idea/" + item.id } }, [
+                      _vm._v("Read more")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-6" }, [
+                        _c("div", { staticClass: "user-info" }, [
+                          _c("span", { staticClass: "avatar" }, [
+                            _vm._v(
+                              "\n                                        " +
+                                _vm._s(item.user.name.substring(0, 1)) +
+                                _vm._s(item.user.last_name.substring(0, 1)) +
+                                "\n                                    "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "user-name" }, [
+                            _vm._v(
+                              "\n                                        " +
+                                _vm._s(item.user.name) +
+                                "\n                                        " +
+                                _vm._s(item.user.last_name) +
+                                ",\n                                    "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "date" }, [
+                            _vm._v(_vm._s(item.created_at))
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-6 text-right statistics" },
+                        [
+                          _c("span", { staticClass: "favorite" }, [
+                            _c("i", { staticClass: "zmdi zmdi-favorite" }),
+                            _vm._v(" " + _vm._s(item.comments_count))
+                          ]),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "coomment" }, [
+                            _c("i", { staticClass: "zmdi zmdi-comment-alt" }),
+                            _vm._v(" " + _vm._s(item.likes_num))
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
+                : _vm._e()
+            }),
+            0
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row paginaton" }, [
+      _c("div", { staticClass: "col-md-3 col-sm-3 col-xs-6" }, [
+        _c("div", { staticClass: "dropdown customer-select" }, [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.query.limit,
+                  expression: "query.limit"
                 }
-              },
-              [
-                _c("em", [_vm._v(" Сначала новые ")]),
-                _vm._v(" "),
-                _c("span", { staticClass: "caret" })
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "ul",
-              {
-                staticClass: "dropdown-menu",
-                attrs: { "aria-labelledby": "dropdownMenu1" }
-              },
-              [
-                _c("li", { staticClass: "active" }, [
-                  _c("a", { attrs: { href: "#" } }, [_vm._v("Сначала новые ")])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", { attrs: { href: "#" } }, [_vm._v("Link 3")])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", { attrs: { href: "#" } }, [_vm._v("Link 4")])
-                ])
-              ]
-            )
+              ],
+              staticClass: "form-control no-border-shadow",
+              attrs: { disabled: _vm.loading },
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.query,
+                      "limit",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  },
+                  _vm.updateLimit
+                ]
+              }
+            },
+            [
+              _c("option", [_vm._v("15")]),
+              _vm._v(" "),
+              _c("option", [_vm._v("25")]),
+              _vm._v(" "),
+              _c("option", [_vm._v("50")])
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6 col-sm-6 text-center hidden-xs" }, [
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-primary",
+            attrs: {
+              href: "#",
+              disabled: !_vm.collection.prev_page_url || _vm.loading
+            },
+            on: { click: _vm.prevPage }
+          },
+          [
+            _c("i", { staticClass: "zmdi zmdi-long-arrow-left" }),
+            _vm._v(" Назад")
+          ]
+        ),
+        _vm._v(" "),
+        _c("span", { staticClass: "btn btn-default current_page" }, [
+          _vm._v(_vm._s(_vm.collection.current_page))
+        ]),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-primary",
+            attrs: {
+              href: "#",
+              disabled: !_vm.collection.next_page_url || _vm.loading
+            },
+            on: { click: _vm.nextPage }
+          },
+          [
+            _vm._v("Далее "),
+            _c("i", { staticClass: "zmdi zmdi-long-arrow-right" })
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3 col-sm-3 col-xs-6 text-right" }, [
+        _c("ul", [
+          _c("li", [
+            _c("a", { attrs: { href: "#" } }, [
+              _vm._v(_vm._s(_vm.collection.from) + " - ")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("a", { attrs: { href: "#" } }, [
+              _vm._v(_vm._s(_vm.collection.to))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("a", { attrs: { href: "#", title: "total" } }, [
+              _vm._v("(" + _vm._s(_vm.collection.total) + ")")
+            ])
           ])
         ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "pull-right" }, [
+      _c("div", { staticClass: "dropdown customer-select" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-default dropdown-toggle home",
+            attrs: {
+              type: "button",
+              id: "dropdownMenu1",
+              "data-toggle": "dropdown",
+              "aria-haspopup": "true",
+              "aria-expanded": "true"
+            }
+          },
+          [
+            _c("em", [_vm._v(" Сначала новые ")]),
+            _vm._v(" "),
+            _c("span", { staticClass: "caret" })
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "ul",
+          {
+            staticClass: "dropdown-menu",
+            attrs: { "aria-labelledby": "dropdownMenu1" }
+          },
+          [
+            _c("li", { staticClass: "active" }, [
+              _c("a", { attrs: { href: "#" } }, [_vm._v("Сначала новые ")])
+            ]),
+            _vm._v(" "),
+            _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Link 3")])]),
+            _vm._v(" "),
+            _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Link 4")])])
+          ]
+        )
       ])
     ])
   },
@@ -17605,88 +17799,6 @@ var staticRenderFns = [
       _c("div", { staticClass: "col-md-12" }, [
         _c("ul", { staticClass: "tag-line" })
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row paginaton" }, [
-      _c("div", { staticClass: "col-md-3 col-sm-3 col-xs-6" }, [
-        _c("div", { staticClass: "dropdown customer-select" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-default dropdown-toggle",
-              attrs: {
-                type: "button",
-                id: "dropdownMenuBot",
-                "data-toggle": "dropdown",
-                "aria-haspopup": "true",
-                "aria-expanded": "true"
-              }
-            },
-            [
-              _c("em", { staticClass: "home" }, [_vm._v(" 20 на странице ")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "caret" })
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "ul",
-            {
-              staticClass: "dropdown-menu",
-              attrs: { "aria-labelledby": "dropdownMenu1" }
-            },
-            [
-              _c("li", { staticClass: "active" }, [
-                _c("a", { attrs: { href: "#" } }, [_vm._v("20 на странице ")])
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c("a", { attrs: { href: "#" } }, [_vm._v("30 на странице")])
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c("a", { attrs: { href: "#" } }, [_vm._v("40 на странице")])
-              ])
-            ]
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-6 col-sm-6 text-center hidden-xs " }, [
-        _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
-          _vm._v("Далее "),
-          _c("i", { staticClass: "zmdi zmdi-long-arrow-right" })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3 col-sm-3 col-xs-6 text-right" }, [
-        _c("ul", [
-          _c("li", { staticClass: "active" }, [
-            _c("a", { attrs: { href: "#" } }, [_vm._v("1")])
-          ]),
-          _vm._v(" "),
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("2")])]),
-          _vm._v(" "),
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("3")])]),
-          _vm._v(" "),
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("...")])])
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-xs-12 hidden-lg hidden-md hidden-sm text-center" },
-        [
-          _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
-            _vm._v("Далее "),
-            _c("i", { staticClass: "zmdi zmdi-long-arrow-right" })
-          ])
-        ]
-      )
     ])
   }
 ]
@@ -17718,10 +17830,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        {
-          staticClass: "col-md-9 main-content sameblock",
-          staticStyle: { height: "1197px" }
-        },
+        { staticClass: "col-md-9 main-content sameblock" },
         [_c("main-content-block")],
         1
       )
@@ -17754,7 +17863,266 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-f5b2feea", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-24f1a668", module.exports)
+  }
+}
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(59)
+}
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(61)
+/* template */
+var __vue_template__ = __webpack_require__(67)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-5636552c"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/views/priority/Priority.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5636552c", Component.options)
+  } else {
+    hotAPI.reload("data-v-5636552c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(60);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("4dd97396", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5636552c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Priority.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5636552c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Priority.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 61 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_PriorityPage__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_PriorityPage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_PriorityPage__);
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "Priority",
+    components: { PriorityPage: __WEBPACK_IMPORTED_MODULE_0__components_PriorityPage___default.a }
+});
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(63)
+}
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(65)
+/* template */
+var __vue_template__ = __webpack_require__(66)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-43dd8e8a"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/PriorityPage.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-43dd8e8a", Component.options)
+  } else {
+    hotAPI.reload("data-v-43dd8e8a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(64);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("3f43a2bd", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-43dd8e8a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PriorityPage.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-43dd8e8a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PriorityPage.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 65 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "Priority"
+});
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [_vm._v("\n    test\n")])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-43dd8e8a", module.exports)
+  }
+}
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("priority-page")
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5636552c", module.exports)
+
   }
 }
 

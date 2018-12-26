@@ -111,12 +111,12 @@
         }
 
         avatarColor($('body'));
-        $('.sameblock').matchHeight({
+        /*$('.sameblock').matchHeight({
             byRow: true,
             property: 'height',
             target: null,
             remove: false
-        });
+        });*/
         $('.mobile-btn').on('click', function () {
             $('.left-sidebar').toggleClass('open');
         })

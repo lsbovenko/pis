@@ -32,26 +32,11 @@ class BrowseIdeasController extends Controller
     }
 
     /**
-     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index()
     {
-        $ideas = $this->getQuery($request)
-            ->where('approve_status', '=', Idea::APPROVED)
-            ->where('is_priority', '=',  0)
-            ->paginate(self::QUANTITY_ITEMS_ON_PAGE);
-
-        return view('browse-ideas.index',[
-            'ideas' => $ideas->appends(Input::except('page')),
-            'title' => 'Все идеи',
-            'filter' => $this->getValuesForFilter(),
-            'topUsers' => $this->getTopUsers(),
-            'topUsersByCompletedIdeas' => $this->getTopUsersByCompletedIdeas(),
-            'topUsersLast3Month' =>$this->getTopUsersLast3Month(),
-            'topUsersByCompletedIdeasLast3Month' => $this->getTopUsersByCompletedIdeasLast3Month(),
-            'showApproveStatus' => false
-        ]);
+        return view('browse-ideas.index');
     }
 
     /**
@@ -186,56 +171,5 @@ class BrowseIdeasController extends Controller
         }
 
         return $query;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getValuesForFilter() : array
-    {
-        /** @var \App\Service\Reference $reference */
-        $reference = App::make('reference');
-        return [
-            'departmentsList' => ['0' => '-- Отдел --'] + $reference->getAllDepartmentForSelect(0, 'is_active', 'desc'),
-            'coreCompetenciesList' => ['0' => '-- Основная компетенция --'] + $reference->getAllCoreCompetencyForSelect(0, 'is_active', 'desc'),
-            'operationalGoalsList' => ['0' => '-- Операционная цель --'] + $reference->getAllOperationalGoalForSelect(0, 'is_active', 'desc'),
-            'strategicObjectivesList' => ['0' => '-- Стратегическая задача --'] + $reference->getAllStrategicObjectiveForSelect(0, 'is_active', 'desc'),
-            'typesList' => ['0' => '-- Тип --'] + $reference->getAllTypeForSelect(0, 'is_active', 'desc'),
-            'statuses' => ['0' => '-- Статус --'] + $reference->getAllStatusesForSelect(0, 'is_active', 'desc'),
-        ];
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getTopUsers()
-    {
-        return App::make('repository.user')->getTopUsers();
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getTopUsersByCompletedIdeas()
-    {
-        return App::make('repository.user')->getTopUsers(Status::getCompletedStatus());
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getTopUsersLast3Month()
-    {
-        $date = new \DateTime('-3 month');
-        return App::make('repository.user')->getTopUsers(null, $date);
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getTopUsersByCompletedIdeasLast3Month()
-    {
-        $date = new \DateTime('-3 month');
-        return App::make('repository.user')->getTopUsers(Status::getCompletedStatus(), $date);
     }
 }

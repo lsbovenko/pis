@@ -29,6 +29,9 @@ Route::group(['middleware' => ['jwt']], function () {
         Route::post('/remove-like', 'LikesController@removeLike')->name('remove-like');
         Route::post('/add-comment/{id}', 'ReviewIdeaController@addComment')->where('id', '[0-9]+')->name('add-comment');
 
+        //VueJS
+        Route::get('/get-idea/all', 'Get\IdeasController@index')->name('get-idea/all');
+
         //superadmin or admin
         Route::group(['middleware' => ['role:admin|superadmin']], function() {
             Route::post('/pin-priority/{id}', 'ReviewIdeaController@pinToPriority')->where('id', '[0-9]+')->name('pin-priority');
