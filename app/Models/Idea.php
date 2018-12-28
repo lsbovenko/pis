@@ -157,4 +157,12 @@ class Idea extends Model
     {
         return $this->users()->where('user_id', '=', $id)->first();
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class,'idea_id');
+    }
 }

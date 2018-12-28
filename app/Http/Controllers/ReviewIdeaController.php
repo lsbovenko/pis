@@ -61,6 +61,7 @@ class ReviewIdeaController extends Controller
                 'userLike' => $likedUserId,
                 'listUsersLike' => $idea->users
             ],
+            'comments' => $idea->comments
         ]);
     }
 
@@ -164,6 +165,32 @@ class ReviewIdeaController extends Controller
         }
 
         $request->session()->flash('alert-success', 'Изменения успешно сохранены.');
+        return redirect()->back();
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function addComment(Request $request)
+    {
+        /** @var \App\Models\Idea $idea */
+        $idea = Idea::findOrFail($request->route('id'));
+        $data = App::make('datacleaner')->cleanData($request->all(), ['message']);
+        $this->validate($request, [
+            'message' => 'required|min:2|max:10000'
+        ]);
+
+        $user = Auth::user();
+
+        try {
+            $this->getIdeaControl()->increaseAmountComment($idea, $user->id, $data['message']);
+        } catch (\Throwable $e) {
+            Log::error($e);
+            return redirect()->back();
+        }
+
+        $request->session()->flash('alert-success', 'Комментарий успешно добавлен.');
         return redirect()->back();
     }
 

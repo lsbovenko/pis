@@ -2,6 +2,7 @@
 
 namespace App\Models\Auth;
 
+use App\Models\Comment;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
@@ -53,7 +54,7 @@ class User extends Authenticatable
      */
     public function getFullName() : string
     {
-        return $this->last_name . ' ' . $this->name;
+        return $this->name . ' ' . $this->last_name;
     }
     /**
      * @return int
@@ -130,5 +131,13 @@ class User extends Authenticatable
     public function checkUserLike($ideaId)
     {
         return $this->likedUserIdea()->where('idea_id', $ideaId)->first();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class,'user_id');
     }
 }

@@ -45,7 +45,7 @@
                 <!-- Button Add Post -->
                 <div class="col-md-2 col-sm-2 col-xs-2 text-right button-block">
                     @if(request()->route()->getAction()['as'] != 'add-idea')
-                        <button class="add">+</button>
+                        <button class="add"><a href="{{ route('add-idea') }}">+</a></button>
                     @endif
                 </div>
                 <!-- End Button Add Post -->

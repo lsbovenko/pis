@@ -9042,11 +9042,18 @@ body .container .content-box .idea .reviews ul li .image {
     height: 32px;
     margin: 5px 16px 0 0;
     text-align: -webkit-center;
-    background: 50% 50% url("../img/pic-5.png") no-repeat;
+    line-height: 34px;
+    color: #fff;
+    font-weight: 500;
+/*    background: 50% 50% url("../img/pic-5.png") no-repeat;
     -webkit-background-size: 32px auto;
-    background-size: 32px auto;
+    background-size: 32px auto;*/
     -webkit-border-radius: 50%;
     border-radius: 50%;
+}
+
+.button-comment {
+    border: 0;
 }
 
 body .container .content-box .idea .reviews ul li .text-reviews {
@@ -10265,6 +10272,16 @@ body .container .btn_.btn-outline-red:hover {
     -webkit-transition: 0.2s ease;
     -o-transition: 0.2s ease;
     transition: 0.2s ease;
+}
+
+.header .button-block .add > a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0 14px;
+    border-radius: 50px;
+    position: inherit;
+    top: 0;
+    left: 0;
 }
 
 .header .button-block .add:hover {

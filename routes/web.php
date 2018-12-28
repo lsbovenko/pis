@@ -27,6 +27,7 @@ Route::group(['middleware' => ['jwt']], function () {
         Route::get('/about', 'AboutController@index')->name('about');
         Route::post('/add-like', 'LikesController@addLike')->name('add-like');
         Route::post('/remove-like', 'LikesController@removeLike')->name('remove-like');
+        Route::post('/add-comment/{id}', 'ReviewIdeaController@addComment')->where('id', '[0-9]+')->name('add-comment');
 
         //superadmin or admin
         Route::group(['middleware' => ['role:admin|superadmin']], function() {

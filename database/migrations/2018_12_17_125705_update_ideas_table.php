@@ -15,6 +15,7 @@ class UpdateIdeasTable extends Migration
     {
         Schema::table('ideas', function (Blueprint $table){
             $table->integer('likes_num')->default(0);
+            $table->integer('comments_count')->default(0);
         });
     }
 
