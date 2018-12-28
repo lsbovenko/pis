@@ -4,11 +4,7 @@ namespace App\Service;
 
 use App\Models\Categories\Status;
 use App\Models\Auth\User;
-use App\Models\{
-    Idea,
-    Note,
-    IdeaLikes
-};
+use App\Models\{Comment, Idea, Note};
 use App\Events\{
     IdeaWasCreated,
     IdeaWasApproved,
@@ -181,7 +177,7 @@ class IdeaControl
      * @param Idea $idea
      * @param $user
      */
-    public function addPostLike(Idea $idea, $user)
+    public function addPostLike(Idea $idea, User $user)
     {
         if ($this->isUserHasLike($user, $idea->id)) {
             $idea->likes_num++;
@@ -192,19 +188,11 @@ class IdeaControl
     }
 
     /**
-     * @param int $ideaId
-     * @param $user
-     */
-    private function addLikeIdeasUser(int $ideaId, $user) : bool
-    {
-        $user->likedUserIdea()->attach($ideaId);
-    }
-
-    /**
      * @param Idea $idea
      * @param $user
+     * @return bool
      */
-    public function removeLike(Idea $idea, $user) : bool
+    public function removeLike(Idea $idea, User $user) : bool
     {
         if (!$this->isUserHasLike($user, $idea->id)) {
             $idea->likes_num--;
@@ -223,5 +211,35 @@ class IdeaControl
         $likesUsers = $user->checkUserLike($ideaId);
 
         return !$likesUsers;
+    }
+
+    /**
+     * @param Idea $idea
+     * @return bool
+     */
+    public function increaseAmountComment(Idea $idea, int $userId, string $message) : bool
+    {
+        $idea->comments_count++;
+        $idea->save();
+
+        $comment = new Comment;
+        $comment->idea_id = $idea->id;
+        $comment->user_id = $userId;
+        $comment->message = $message;
+        $comment->save();
+
+        return true;
+    }
+
+    /**
+     * @param int $ideaId
+     * @param $user
+     * @return bool
+     */
+    private function addLikeIdeasUser(int $ideaId, User $user) : bool
+    {
+        $user->likedUserIdea()->attach($ideaId);
+
+        return true;
     }
 }

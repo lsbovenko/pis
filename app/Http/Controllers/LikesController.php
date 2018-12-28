@@ -21,7 +21,8 @@ class LikesController extends Controller
     /**
      * @param Request $request
      */
-    public function addLike(Request $request){
+    public function addLike(Request $request)
+    {
         $idea = Idea::findOrFail($request->id);
         try {
             $this->getIdeaControl()->addPostLike($idea, Auth::user());
@@ -33,7 +34,8 @@ class LikesController extends Controller
     /**
      * @param Request $request
      */
-    public function removeLike(Request $request){
+    public function removeLike(Request $request)
+    {
         $idea = Idea::findOrFail($request->id);
         try {
             $this->getIdeaControl()->removeLike($idea, Auth::user());

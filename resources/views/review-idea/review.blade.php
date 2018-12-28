@@ -129,6 +129,36 @@
                         <div>{{ $idea->type->name }}</div>
                     </div>
                 </div>
+                <div class="reviews col-md-12">
+                    <div class="title">Комментариев: {{ $idea->comments_count }}</div>
+                    <form action="{{ route('add-comment', ['id' => $idea->id]) }}" method="post">
+                        {{ csrf_field() }}
+                        {{ Form::textarea('message', '', [
+                        'class'=>'form-control',
+                        'placeholder' => 'Добавить комментарий'
+                        ]) }}
+                        <button type="submit" class="arrow button-comment"></button>
+                    </form>
+                    <ul>
+                        @if($comments)
+                            @foreach($comments as $comment)
+                                <li>
+                                    <div class="image avatar">
+                                        {{ mb_substr($comment->user->name, 0 ,1) }}
+                                        {{ mb_substr($comment->user->last_name, 0 ,1) }}
+                                    </div>
+                                    <div class="text-reviews">
+                                        <b>
+                                            {{ $comment->user->getFullName() }}
+                                        </b>
+                                        {{ $comment->message }}.
+                                        <i>{{ $comment->created_at }}</i>
+                                    </div>
+                                </li>
+                            @endforeach
+                        @endif
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

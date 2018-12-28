@@ -8,7 +8,7 @@
             <form method="post" action="{{ route('add-idea') }}" class="js-disable-after-submit">
                 @include('index.partials.add-fields')
                 <div class="row bottom-button">
-                    <div class="col-md-12 text-right"><button class="btn_ btn-blue last" onclick="addIdea.sendForm(event)">Сохранить</button></div>
+                    <div class="col-md-12 text-right"><button class="btn_ btn-blue last">Сохранить</button></div>
                 </div>
             </form>
 
