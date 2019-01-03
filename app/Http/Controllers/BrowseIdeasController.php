@@ -57,6 +57,18 @@ class BrowseIdeasController extends Controller
 
     /**
      * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function allIdeas(Request $request) {
+        $ideas = $this->getQuery($request)
+            ->where('approve_status', '=', Idea::APPROVED)
+            ->where('is_priority', '=',  0)
+            ->paginate(self::QUANTITY_ITEMS_ON_PAGE);
+        return response()->json([$ideas]);
+    }
+
+    /**
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function priorityBoard(Request $request)

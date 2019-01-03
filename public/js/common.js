@@ -144,7 +144,6 @@ jQuery(document).on('click','#add_like_user', function () {
 
     if (name && id) {
         count_like.html(parseInt(count_like.html()) + 1);
-        console.log('add');
         jQuery.ajax({
             url: '/add-like',
             type: 'POST',
@@ -158,7 +157,6 @@ jQuery(document).on('click','#add_like_user', function () {
                     .find('.i-support')
                     .addClass('btn_liked');
                 jQuery('.liked_users_' + id_idea).html(name + ' ' + jQuery('.liked_users_' + id_idea).html());
-                console.log('succes add like');
             }
         });
     }else{
@@ -173,7 +171,6 @@ jQuery(document).on('click', '#remove_like_user', function () {
 
     if (name && id) {
         count_like.html(parseInt(count_like.html()) - 1);
-        console.log('remove');
         jQuery.ajax({
             url: '/remove-like',
             type: 'POST',
@@ -188,7 +185,6 @@ jQuery(document).on('click', '#remove_like_user', function () {
                     .removeClass('btn_liked');
                 var str = jQuery('.liked_users_' + id_idea).html();
                 jQuery('.liked_users_' + id_idea).html(str.replace(name + '', ''));
-                console.log('succes remove like');
             }
         });
     }else{

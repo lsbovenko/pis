@@ -190,8 +190,9 @@ class ReviewIdeaController extends Controller
             return redirect()->back();
         }
 
-        $request->session()->flash('alert-success', 'Комментарий успешно добавлен.');
-        return redirect()->back();
+        return response()->json([
+            'message' => ['Комментарий успешно добавлен'],
+        ]);
     }
 
     /**

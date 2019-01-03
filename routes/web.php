@@ -18,6 +18,9 @@
 Route::group(['middleware' => ['jwt']], function () {
     Route::group(['middleware' => ['auth', 'check_user', 'refresh_jwt']], function () {
         Route::get('/', 'BrowseIdeasController@index')->name('main');
+        //VueJS
+        Route::get('/ideas', 'BrowseIdeasController@allIdeas')->name('ideas');
+
         Route::get('/priority-board', 'BrowseIdeasController@priorityBoard')->name('priority-board');
         Route::get('/my-ideas', 'BrowseIdeasController@myIdeas')->name('my-ideas');
         Route::get('/add-idea', 'IndexController@addIdea')->name('add-idea');

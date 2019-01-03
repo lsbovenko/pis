@@ -60,7 +60,7 @@
                             <a href="{{ config('app.auth_url') }}">Login</a>
                         @else
                             <a data-toggle="dropdown" href="#">
-                                <em class="avatar">
+                                <em class="avatar user_avatar_name">
                                     {{mb_substr(Auth::user()->name, 0 ,1)}}
                                     {{mb_substr(Auth::user()->last_name, 0 ,1)}}
                                 </em>

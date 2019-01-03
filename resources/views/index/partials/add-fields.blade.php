@@ -71,12 +71,8 @@
     </div>
 </div>
 
-
 @section('scripts')
     <script src="{!! asset('/vendor/summernote/summernote.js') !!}"></script>
     <script src="{!! asset('/vendor/summernote/lang/summernote-ru-RU.js') !!}"></script>
     <link href="{{ asset('/vendor/summernote/summernote.css') }}" rel="stylesheet">
-    <!-- add idea -->
-    <script src="{{ asset('js/v1/add_idea.js') }}"></script>
-
 @stop
