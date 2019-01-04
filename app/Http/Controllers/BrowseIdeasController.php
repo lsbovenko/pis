@@ -42,8 +42,7 @@ class BrowseIdeasController extends Controller
             ->where('is_priority', '=',  0)
             ->paginate(self::QUANTITY_ITEMS_ON_PAGE);
 
-
-        return view('browse-ideas.index', [
+        return view('browse-ideas.index',[
             'ideas' => $ideas->appends(Input::except('page')),
             'title' => 'Все идеи',
             'filter' => $this->getValuesForFilter(),
@@ -53,18 +52,6 @@ class BrowseIdeasController extends Controller
             'topUsersByCompletedIdeasLast3Month' => $this->getTopUsersByCompletedIdeasLast3Month(),
             'showApproveStatus' => false
         ]);
-    }
-
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function allIdeas(Request $request) {
-        $ideas = $this->getQuery($request)
-            ->where('approve_status', '=', Idea::APPROVED)
-            ->where('is_priority', '=',  0)
-            ->paginate(self::QUANTITY_ITEMS_ON_PAGE);
-        return response()->json([$ideas]);
     }
 
     /**

@@ -168,6 +168,7 @@
             fetch() {
                 axios.get('/ideas')
                     .then((res) => {
+                        console.log(res);
                         Vue.set(this.$data, 'collection', res.data[0]);
                         this.query.page = res.data[0].current_page;
                         this.query.dtClass = res.data[0].status.slug;

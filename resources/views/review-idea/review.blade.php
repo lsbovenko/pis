@@ -129,27 +129,17 @@
                         <div>{{ $idea->type->name }}</div>
                     </div>
                 </div>
-                <div class="reviews col-md-12" id="app_add_comment">
-<<<<<<< HEAD
-                    {{--<div class="title">Комментариев: {{ $idea->comments_count }}</div>
-=======
+                <div class="reviews col-md-12">
                     <div class="title">Комментариев: {{ $idea->comments_count }}</div>
->>>>>>> 546b676... front-end form checking. connected vue
-                    <form action="{{ route('add-comment', ['id' => $idea->id]) }}"
-                          :data-id="{{ $idea->id }}"
-                          method="post"
-                          @submit.prevent="onSubmit"
-                          @keydown="errors.clear($event.target.name)">
+                    <form action="{{ route('add-comment', ['id' => $idea->id]) }}" method="post">
                         {{ csrf_field() }}
                         {{ Form::textarea('message', '', [
                         'class'=>'form-control',
                         'placeholder' => 'Добавить комментарий',
-                        'v-model' => 'message',
                         ]) }}
-                        <div v-bind:class="[isActive ? classSuccess : classDanger]" class="mg-top-10" v-text="errors.get('message')"></div>
                         <button type="submit" class="arrow button-comment"></button>
-                    </form>--}}
-                    {{--<ul>
+                    </form>
+                    <ul>
                         @if($comments)
                             @foreach($comments as $comment)
                                 <li>
@@ -167,7 +157,7 @@
                                 </li>
                             @endforeach
                         @endif
-                    </ul>--}}
+                    </ul>
                 </div>
             </div>
         </div>
@@ -197,9 +187,3 @@
         </div>
     </div>
 @endsection
-@section('scripts')
-    {{--<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
-    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="{{ asset('js/app.js') }}"></script>--}}
-@stop
