@@ -82,7 +82,7 @@
                         @include('edit-idea.partials.change-status')
                 </div>
                 <div class="information no-status col-md-3">
-                    <div><b>Автор</b></div>
+                    <div data-user-name="{{ $user->getFullName() }}"><b>Автор</b></div>
                     <div class="block">
                         <b>{{ $user->getFullName() }}</b>
                         <div>{{ $user->position->name }}</div>
@@ -135,7 +135,7 @@
                         {{ csrf_field() }}
                         {{ Form::textarea('message', '', [
                         'class'=>'form-control',
-                        'placeholder' => 'Добавить комментарий'
+                        'placeholder' => 'Добавить комментарий',
                         ]) }}
                         <button type="submit" class="arrow button-comment"></button>
                     </form>
@@ -172,7 +172,10 @@
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label for="caption">Причина отказа</label>
-                        {{ Form::text('reason','', ['class'=>'form-control', 'placeholder' => 'Укажите причину отклонения']) }}
+                        {{ Form::text('reason','', [
+                        'class'=>'form-control',
+                        'placeholder' => 'Укажите причину отклонения'
+                        ]) }}
                     </div>
                     <div class="row bottom-button reject-popup">
                         <div class="col-md-12 col-sm-12 col-xs-12 text-right">

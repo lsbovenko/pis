@@ -42,8 +42,7 @@ class BrowseIdeasController extends Controller
             ->where('is_priority', '=',  0)
             ->paginate(self::QUANTITY_ITEMS_ON_PAGE);
 
-
-        return view('browse-ideas.index', [
+        return view('browse-ideas.index',[
             'ideas' => $ideas->appends(Input::except('page')),
             'title' => 'Все идеи',
             'filter' => $this->getValuesForFilter(),
