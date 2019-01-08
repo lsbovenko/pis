@@ -1,5 +1,5 @@
 <template>
-    <div class="left-sidebar sameblock" style="height: 1197px;">
+    <div class="left-sidebar sameblock">
         <section class="item">
             <ul>
                 <li class="first">Автор</li>
@@ -113,7 +113,20 @@
 
 <script>
     export default {
-        name: "MainFilterBlock"
+        name: "MainFilterBlock",
+        data() {
+            return {
+
+            }
+        },
+        mounted() {
+            this.fetch()
+        },
+        methods: {
+            fetch() {
+
+            }
+        }
     }
 </script>
 
