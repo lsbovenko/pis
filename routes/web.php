@@ -31,6 +31,7 @@ Route::group(['middleware' => ['jwt']], function () {
 
         //VueJS
         Route::get('/get-idea/all', 'Get\IdeasController@index')->name('get-idea/all');
+        Route::get('/get-idea/filter', 'Get\IdeasController@getFilter')->name('get-idea/filter');
 
         //superadmin or admin
         Route::group(['middleware' => ['role:admin|superadmin']], function() {
