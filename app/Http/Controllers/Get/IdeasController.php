@@ -33,7 +33,6 @@ class IdeasController extends Controller
         return response()->json([
             'ideas' => $ideas->appends(Input::except('page')),
             'totalIdeas' => $ideas->total(),
-            'filter' => $this->getValuesForFilter(),
             'topUsers' => $this->getTopUsers(),
             'topUsersByCompletedIdeas' => $this->getTopUsersByCompletedIdeas(),
             'topUsersLast3Month' =>$this->getTopUsersLast3Month(),
@@ -41,6 +40,16 @@ class IdeasController extends Controller
             'showApproveStatus' => false
         ]);
 
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getFilter()
+    {
+        return response()->json([
+            'filter' => $this->getValuesForFilter(),
+        ]);
     }
 
     /**
@@ -96,12 +105,12 @@ class IdeasController extends Controller
         /** @var \App\Service\Reference $reference */
         $reference = App::make('reference');
         return [
-            'departmentsList' => ['0' => '-- Отдел --'] + $reference->getAllDepartmentForSelect(0, 'is_active', 'desc'),
-            'coreCompetenciesList' => ['0' => '-- Основная компетенция --'] + $reference->getAllCoreCompetencyForSelect(0, 'is_active', 'desc'),
-            'operationalGoalsList' => ['0' => '-- Операционная цель --'] + $reference->getAllOperationalGoalForSelect(0, 'is_active', 'desc'),
-            'strategicObjectivesList' => ['0' => '-- Стратегическая задача --'] + $reference->getAllStrategicObjectiveForSelect(0, 'is_active', 'desc'),
-            'typesList' => ['0' => '-- Тип --'] + $reference->getAllTypeForSelect(0, 'is_active', 'desc'),
-            'statuses' => ['0' => '-- Статус --'] + $reference->getAllStatusesForSelect(0, 'is_active', 'desc'),
+            'departmentsList' => $reference->getAllDepartmentForSelect(0, 'is_active', 'desc'),
+            'coreCompetenciesList' => $reference->getAllCoreCompetencyForSelect(0, 'is_active', 'desc'),
+            'operationalGoalsList' => $reference->getAllOperationalGoalForSelect(0, 'is_active', 'desc'),
+            'strategicObjectivesList' => $reference->getAllStrategicObjectiveForSelect(0, 'is_active', 'desc'),
+            'typesList' => $reference->getAllTypeForSelect(0, 'is_active', 'desc'),
+            'statuses' => $reference->getAllStatusesForSelect(0, 'is_active', 'desc'),
         ];
     }
 

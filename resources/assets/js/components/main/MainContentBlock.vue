@@ -35,7 +35,7 @@
                             v-for="topUsersLast3M in topUsersLast3Month">
                             {{ topUsersLast3M.name }}
                             {{ topUsersLast3M.last_name }}
-                            {{ topUsersLast3M.number }}
+                            ({{ topUsersLast3M.number }})
                         </li>
                     </ul>
                 </div>
@@ -48,7 +48,7 @@
                             v-for="topUsersByCompletedIdeasLast3M in topUsersByCompletedIdeasLast3Month">
                             {{ topUsersByCompletedIdeasLast3M.name }}
                             {{ topUsersByCompletedIdeasLast3M.last_name }}
-                            {{ topUsersByCompletedIdeasLast3M.number }}
+                            ({{ topUsersByCompletedIdeasLast3M.number }})
                         </li>
                     </ul>
                 </div>
@@ -83,7 +83,9 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <ul class="tag-line"></ul>
+                <ul class="tag-line">
+                    <li class="data-2"><span>test</span></li>
+                </ul>
             </div>
         </div>
         <div class="row">
@@ -154,7 +156,7 @@
         name: "MainContentBlock",
         reviewidea: null,
         props: {
-            url: String
+            url: String,
         },
         data() {
             return {
@@ -215,7 +217,6 @@
 
                 axios.get('/get-idea/all', {params: params})
                     .then((res) => {
-                        console.log(res);
                         Vue.set(this.$data, 'collection', res.data.ideas);
                         Vue.set(this.$data, 'topUsers', res.data.topUsers);
                         Vue.set(this.$data, 'topUsersByCompletedIdeas', res.data.topUsersByCompletedIdeas);
