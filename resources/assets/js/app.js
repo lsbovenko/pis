@@ -12,7 +12,7 @@ if (token) {
 import Vue from 'vue';
 import VueRoute from 'vue-router';
 
-//import App from './App';
+import App from './Main';
 import Main from './views/main/Main';
 import Priority from './views/priority/Priority';
 
@@ -21,17 +21,13 @@ Vue.use(VueRoute);
 const router = new VueRoute({
     routes: [
         { path: '/', component: Main },
-        { path: '/priority-board', component: Priority }
+        { path: '/priority-board', component: Priority },
     ],
     mode: 'history'
 });
 
 new Vue({
     el: '#app',
-    template: '<Main/>',
-    components: {
-        Main: Main,
-        Priority: Priority
-    },
-    router
+    components: { App },
+    router,
 });

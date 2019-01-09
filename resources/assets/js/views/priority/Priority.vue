@@ -1,5 +1,7 @@
 <template id="priority">
-    <priority-page></priority-page>
+    <div>
+        <priority-page></priority-page>
+    </div>
 </template>
 
 <script>

@@ -57,13 +57,13 @@
         <div class="row page-title">
             <div class="col-md-12">
                 <div class="pull-left">
-                    <div class="text">Идеи <span>({{query.count}})</span></div>
+                    <div class="text">Идеи <span>({{ query.count }})</span></div>
                     <div class="filter-row">
                         <ul>
                             <li class="active">Все</li>
-                            <li @click="activeIdea">Активные (3)</li>
-                            <li>Реализованные (3)</li>
-                            <li>На паузе (3)</li>
+                            <li v-for="itemStatus in statuses">
+                                {{ itemStatus }}
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -73,19 +73,12 @@
                             <em> Сначала новые </em>
                             <span class="caret"></span>
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" v-model="query.filter_match">
                             <li class="active"><a href="#">Сначала новые </a></li>
-                            <li><a href="#">Link 3</a></li>
-                            <li><a href="#">Link 4</a></li></ul>
+                            <li><a href="#">Сначала старые</a></li>
+                        </ul>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <ul class="tag-line">
-                    <li class="data-2"><span>test</span></li>
-                </ul>
             </div>
         </div>
         <div class="row">
@@ -155,8 +148,10 @@
     export default {
         name: "MainContentBlock",
         reviewidea: null,
+        checkedNames: [],
         props: {
             url: String,
+            statuses: Object
         },
         data() {
             return {
@@ -164,7 +159,9 @@
                 query: {
                     limit: 15,
                     page: 1,
-                    count: 0
+                    count: 0,
+                    filterDesc: 'desc',
+                    filterAsc: 'asc'
                 },
                 collection: {
                     data: [],
@@ -180,11 +177,14 @@
                 },
                 topUsersByCompletedIdeasLast3Month: {
                     data: []
-                }
+                },
             }
         },
         mounted() {
-            this.fetch()
+            this.fetch();
+            this.$root.$on('input', function (data) {
+                this.checkedNames = data;
+            });
         },
         methods: {
             activeIdea() {
@@ -212,6 +212,7 @@
             },
             fetch() {
                 const params = {
+                    ...this.checkedNames,
                     ...this.query
                 };
 
