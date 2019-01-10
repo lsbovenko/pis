@@ -9608,6 +9608,24 @@ body .container .btn_.btn-outline-red:hover {
 .list-idea .item .title .active {
     -webkit-border-radius: 12.5px;
     border-radius: 12.5px;
+    border: solid 1px #155724;
+    padding: 6px 10px;
+    text-align: center;
+    color:#155724;
+    font-size: 11px;
+    -webkit-transition: 0.2s ease;
+    -o-transition: 0.2s ease;
+    transition: 0.2s ease;
+}
+
+.list-idea .item .title .active:hover {
+    background: #2d683d;
+    color: #fff;
+}
+
+.list-idea .item .title .completed {
+    -webkit-border-radius: 12.5px;
+    border-radius: 12.5px;
     border: solid 1px #f44336;
     padding: 6px 10px;
     text-align: center;
@@ -9618,7 +9636,7 @@ body .container .btn_.btn-outline-red:hover {
     transition: 0.2s ease;
 }
 
-.list-idea .item .title .active:hover {
+.list-idea .item .title .completed:hover {
     background: #f44336;
     color: #fff;
 }
@@ -9626,10 +9644,10 @@ body .container .btn_.btn-outline-red:hover {
 .list-idea .item .title .frozen {
     -webkit-border-radius: 12.5px;
     border-radius: 12.5px;
-    border: solid 1px #f41593;
+    border: solid 1px #383d41;
     padding: 6px 10px;
     text-align: center;
-    color: #f41593;
+    color: #383d41;
     font-size: 11px;
     -webkit-transition: 0.2s ease;
     -o-transition: 0.2s ease;
@@ -9637,7 +9655,7 @@ body .container .btn_.btn-outline-red:hover {
 }
 
 .list-idea .item .title .frozen:hover {
-    background: #f41593;
+    background: #41464a;
     color: #fff;
 }
 

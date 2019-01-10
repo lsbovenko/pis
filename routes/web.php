@@ -30,8 +30,9 @@ Route::group(['middleware' => ['jwt']], function () {
         Route::post('/add-comment/{id}', 'ReviewIdeaController@addComment')->where('id', '[0-9]+')->name('add-comment');
 
         //VueJS
-        Route::get('/get-idea/all', 'Get\IdeasController@index')->name('get-idea/all');
+        Route::any('/get-idea/all', 'Get\IdeasController@index')->name('get-idea/all');
         Route::get('/get-idea/filter', 'Get\IdeasController@getFilter')->name('get-idea/filter');
+        Route::get('/get-idea/change-filter', 'Get\IdeasController@getChangeFilter')->name('get-idea/change-filter');
 
         //superadmin or admin
         Route::group(['middleware' => ['role:admin|superadmin']], function() {

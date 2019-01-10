@@ -1,83 +1,90 @@
 <template>
     <div class="left-sidebar sameblock">
-        <section id="departments" class="item">
-            <ul>
-                <li class="first">
-                    Отдел
-                    <span class="drop">Сбросить</span>
-                </li>
-                <li v-for="(itemDepartament, index) in filters.departmentsList">
-                    <label class="inbtn">
-                        <input type="checkbox"
-                               :value="`department_id[]=${index}`"
-                               @change="changeHandler"
-                        >
-                        <span class="inbtn__indicator"></span>
-                        <span class="data" id="data-1">{{ itemDepartament }}</span>
-                    </label>
-                </li>
-            </ul>
-        </section>
-        <section id="competenc" class="item">
-            <ul>
-                <li class="first">Основная компетенция</li>
-                <li v-for="(itemCompetenc, index) in filters.coreCompetenciesList">
-                    <label class="inbtn">
-                        <input type="checkbox"
-                               :value="`core_competency_id[]=${index}`"
-                               @change="changeHandler"
-                        >
-                        <span class="inbtn__indicator"></span>
-                        <span class="data" id="data-2">{{ itemCompetenc }}</span>
-                    </label>
-                </li>
-            </ul>
-        </section>
-        <section id="operational" class="item">
-            <ul>
-                <li class="first">Операционная цель</li>
-                <li v-for="(itemOperational, index) in filters.operationalGoalsList">
-                    <label class="inbtn">
-                        <input type="checkbox"
-                               :value="`operational_goal_id[]=${index}`"
-                               @change="changeHandler"
-                        >
-                        <span class="inbtn__indicator"></span>
-                        <span class="data" id="data-3">{{ itemOperational }}</span>
-                    </label>
-                </li>
-            </ul>
-        </section>
-        <section id="strategic" class="item">
-            <ul>
-                <li class="first">Стратегическая задача</li>
-                <li v-for="(itemStrategic, index) in filters.strategicObjectivesList">
-                    <label class="inbtn">
-                        <input type="checkbox"
-                               :value="`strategic_objective_id[]=${index}`"
-                               @change="changeHandler"
-                        >
-                        <span class="inbtn__indicator"></span>
-                        <span class="data" id="data-4">{{ itemStrategic }}</span>
-                    </label>
-                </li>
-            </ul>
-        </section>
-        <section id="type" class="item">
-            <ul>
-                <li class="first">Тип</li>
-                <li v-for="(itemType, index) in filters.typesList">
-                    <label class="inbtn">
-                        <input type="checkbox"
-                               :value="`type_id[]=${index}`"
-                               @change="changeHandler"
-                        >
-                        <span class="inbtn__indicator"></span>
-                        <span class="data" id="data-5">{{ itemType }}</span>
-                    </label>
-                </li>
-            </ul>
-        </section>
+        <form action="">
+            <section id="departments" class="item">
+                <ul>
+                    <li class="first">
+                        Отдел
+                        <span class="drop" @click="removeChecked">Сбросить</span>
+                    </li>
+                    <li v-for="(itemDepartament, index) in filters.departmentsList">
+                        <label class="inbtn">
+                            <input type="checkbox"
+                                   name="department_id[]"
+                                   :value="`${index}`"
+                                   @change="changeHandler($event)"
+                            >
+                            <span class="inbtn__indicator"></span>
+                            <span class="data" id="data-1">{{ itemDepartament }}</span>
+                        </label>
+                    </li>
+                </ul>
+            </section>
+            <section id="competenc" class="item">
+                <ul>
+                    <li class="first">Основная компетенция</li>
+                    <li v-for="(itemCompetenc, index) in filters.coreCompetenciesList">
+                        <label class="inbtn">
+                            <input type="checkbox"
+                                   name="core_competency_id[]"
+                                   :value="`${index}`"
+                                   @change="changeHandler($event)"
+                            >
+                            <span class="inbtn__indicator"></span>
+                            <span class="data" id="data-2">{{ itemCompetenc }}</span>
+                        </label>
+                    </li>
+                </ul>
+            </section>
+            <section id="operational" class="item">
+                <ul>
+                    <li class="first">Операционная цель</li>
+                    <li v-for="(itemOperational, index) in filters.operationalGoalsList">
+                        <label class="inbtn">
+                            <input type="checkbox"
+                                   name="operational_goal_id[]"
+                                   :value="`${index}`"
+                                   @change="changeHandler"
+                            >
+                            <span class="inbtn__indicator"></span>
+                            <span class="data" id="data-3">{{ itemOperational }}</span>
+                        </label>
+                    </li>
+                </ul>
+            </section>
+            <section id="strategic" class="item">
+                <ul>
+                    <li class="first">Стратегическая задача</li>
+                    <li v-for="(itemStrategic, index) in filters.strategicObjectivesList">
+                        <label class="inbtn">
+                            <input type="checkbox"
+                                   name="strategic_objective_id[]"
+                                   :value="`${index}`"
+                                   @change="changeHandler"
+                            >
+                            <span class="inbtn__indicator"></span>
+                            <span class="data" id="data-4">{{ itemStrategic }}</span>
+                        </label>
+                    </li>
+                </ul>
+            </section>
+            <section id="type" class="item">
+                <ul>
+                    <li class="first">Тип</li>
+                    <li v-for="(itemType, index) in filters.typesList">
+                        <label class="inbtn">
+                            <input type="checkbox"
+                                   name="type_id[]"
+                                   :value="`${index}`"
+                                   @change="changeHandler"
+                            >
+                            <span class="inbtn__indicator"></span>
+                            <span class="data" id="data-5">{{ itemType }}</span>
+                        </label>
+                    </li>
+                </ul>
+            </section>
+        </form>
     </div>
 </template>
 
@@ -87,17 +94,64 @@
         props: ['filters'],
         data() {
             return {
-
+                checkedNames: [],
+                arrChecked: []
             }
         },
         methods: {
+            post() {
+                //token = document.head.querySelector('meta[name="csrf-token"]');
+                //console.log(token.content);
+                axios.post('/get-idea/all', this.arrChecked,
+                    {
+                        headers: {
+                            'X-CSRF-TOKEN': window.csrf_token
+                        }
+                    })
+                    .then( (res) => {
+                        this.$root.$emit('resultFilter', res);
+                    });
+            },
             changeHandler (e) {
+                let serialize = this.checkBoxStatus(e);
+                this.arrChecked = serialize.substr(1);
+
+                this.$root.$emit('resultChecked', this.arrChecked);
+
                 if (e.target.checked){
-                    this.$root.$emit('input', e.target.value)
+                    this.post();
+                }else {
+                    this.clearResult();
                 }
 
-            }
+            },
+            clearResult () {
+                //this.arrChecked = [];
+                this.post();
+            },
+            removeChecked () {
+                let uncheck=document.getElementsByTagName('input');
+                for (let i=0; i < uncheck.length; i++) {
 
+                    if (uncheck[i].type == 'checkbox') {
+                        uncheck[i].checked = false;
+                    }
+                }
+                this.clearResult();
+            },
+            checkBoxStatus (e) {
+                let serialize = '';
+                let checkboxAll = e.target.form.querySelectorAll('input[type=checkbox]');
+
+                let checkboxArray = Array.from(checkboxAll);
+
+                for (let i = 0; i < checkboxArray.length; ++i) {
+                    if (checkboxArray[i].type === 'checkbox' && checkboxArray[i].checked) {
+                        serialize += '&' + checkboxArray[i].name + '=' + checkboxArray[i].value;
+                    }
+                }
+                return serialize;
+            }
         },
     }
 </script>

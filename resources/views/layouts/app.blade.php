@@ -23,6 +23,9 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script type="text/javascript">
+        window.csrf_token = "{{ csrf_token() }}"
+    </script>
 </head>
 <body class="@if(request()->route()->getAction()['as'] == 'main') sameblock with-menu @else gray-bg @endif">
 <div class="main-wrapper">

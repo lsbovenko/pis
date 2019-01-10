@@ -25,10 +25,14 @@ class IdeasController extends Controller
 
     public function index(Request $request)
     {
-        $ideas = $this->getQuery($request)
+        $defaultLimit = 50;
+        $limit = (int)$request->get('limit', $defaultLimit);
+        $limit = $limit <= $defaultLimit ? $limit : $defaultLimit;
+
+        $ideas = $this->getChangeFilter($request)
             ->where('approve_status', '=', Idea::APPROVED)
             ->where('is_priority', '=',  0)
-            ->paginate(self::QUANTITY_ITEMS_ON_PAGE);
+            ->paginate($limit);
 
         return response()->json([
             'ideas' => $ideas->appends(Input::except('page')),
@@ -45,16 +49,70 @@ class IdeasController extends Controller
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getFilter(Request $request)
+    public function getFilter()
     {
-        $params = $request;
-
-        $data[] = $params;
-
         return response()->json([
             'filter' => $this->getValuesForFilter(),
             'status' => $this->availableStatuses()
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return Idea|\Illuminate\Database\Eloquent\Builder
+     */
+    public function getChangeFilter(Request $request)
+    {
+        $input = $request->all();
+
+        $query = Idea::with('user.position', 'status');
+
+        if (isset($input['department_id'])) {
+            $departmentId = $input['department_id'];
+            $query->whereHas('departments', function ($q) use ($departmentId) {
+                $q->whereIn('id', $departmentId);
+            });
+        }
+
+        if (isset($input['core_competency_id'])) {
+            $coreCompetencyId = $input['core_competency_id'];
+            $query->whereHas('coreCompetencies', function($q) use ($coreCompetencyId) {
+                $q->whereIn('id', $coreCompetencyId);
+            });
+        }
+
+        if (isset($input['operational_goal_id'])) {
+            $operationalGoalId = $input['operational_goal_id'];
+            $query->whereHas('operationalGoals', function ($q) use ($operationalGoalId) {
+                $q->whereIn('id', $operationalGoalId);
+            });
+        }
+
+        if (isset($input['strategic_objective_id'])) {
+            $strategicObjectiveId = $input['strategic_objective_id'];
+            $query->whereHas('strategicObjectives', function($q) use ($strategicObjectiveId) {
+                $q->whereIn('id', $strategicObjectiveId);
+            });
+        }
+
+        if (isset($input['statusId'])) {
+            $statusId = $input['statusId'];
+            $query->where('status_id', '=',  $statusId);
+        }
+
+        if (isset($input['type_id'])) {
+            $typeId = $input['type_id'];
+            $query->whereIn('type_id',  $typeId);
+        }
+
+        $orderBy = $request->get('order_by');
+        if ($orderBy == 'asc') {
+            $query->orderBy('id', 'ASC');
+        } else {
+            $query->orderBy('id', 'DESC');
+        }
+
+        return $query;
     }
 
     /**
