@@ -78,6 +78,7 @@
     <!-- End Header -->
     <!-- Container -->
     <div id="app">
+        <app></app>
         @yield('content')
     </div>
     <!-- End Container -->

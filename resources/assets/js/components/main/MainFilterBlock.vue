@@ -6,9 +6,12 @@
                     Отдел
                     <span class="drop">Сбросить</span>
                 </li>
-                <li v-for="itemDepartament in filters.departmentsList">
+                <li v-for="(itemDepartament, index) in filters.departmentsList">
                     <label class="inbtn">
-                        <input type="checkbox">
+                        <input type="checkbox"
+                               :value="`department_id[]=${index}`"
+                               @change="changeHandler"
+                        >
                         <span class="inbtn__indicator"></span>
                         <span class="data" id="data-1">{{ itemDepartament }}</span>
                     </label>
@@ -18,9 +21,12 @@
         <section id="competenc" class="item">
             <ul>
                 <li class="first">Основная компетенция</li>
-                <li v-for="itemCompetenc in filters.coreCompetenciesList">
+                <li v-for="(itemCompetenc, index) in filters.coreCompetenciesList">
                     <label class="inbtn">
-                        <input type="checkbox">
+                        <input type="checkbox"
+                               :value="`core_competency_id[]=${index}`"
+                               @change="changeHandler"
+                        >
                         <span class="inbtn__indicator"></span>
                         <span class="data" id="data-2">{{ itemCompetenc }}</span>
                     </label>
@@ -30,9 +36,12 @@
         <section id="operational" class="item">
             <ul>
                 <li class="first">Операционная цель</li>
-                <li v-for="itemOperational in filters.operationalGoalsList">
+                <li v-for="(itemOperational, index) in filters.operationalGoalsList">
                     <label class="inbtn">
-                        <input type="checkbox">
+                        <input type="checkbox"
+                               :value="`operational_goal_id[]=${index}`"
+                               @change="changeHandler"
+                        >
                         <span class="inbtn__indicator"></span>
                         <span class="data" id="data-3">{{ itemOperational }}</span>
                     </label>
@@ -42,9 +51,12 @@
         <section id="strategic" class="item">
             <ul>
                 <li class="first">Стратегическая задача</li>
-                <li v-for="itemStrategic in filters.strategicObjectivesList">
+                <li v-for="(itemStrategic, index) in filters.strategicObjectivesList">
                     <label class="inbtn">
-                        <input type="checkbox">
+                        <input type="checkbox"
+                               :value="`strategic_objective_id[]=${index}`"
+                               @change="changeHandler"
+                        >
                         <span class="inbtn__indicator"></span>
                         <span class="data" id="data-4">{{ itemStrategic }}</span>
                     </label>
@@ -54,9 +66,12 @@
         <section id="type" class="item">
             <ul>
                 <li class="first">Тип</li>
-                <li v-for="itemType in filters.typesList">
+                <li v-for="(itemType, index) in filters.typesList">
                     <label class="inbtn">
-                        <input type="checkbox">
+                        <input type="checkbox"
+                               :value="`type_id[]=${index}`"
+                               @change="changeHandler"
+                        >
                         <span class="inbtn__indicator"></span>
                         <span class="data" id="data-5">{{ itemType }}</span>
                     </label>
@@ -67,14 +82,22 @@
 </template>
 
 <script>
-    import Vue from 'vue';
-
     export default {
         name: "MainFilterBlock",
-        props: ['filters']
+        props: ['filters'],
+        data() {
+            return {
+
+            }
+        },
+        methods: {
+            changeHandler (e) {
+                if (e.target.checked){
+                    this.$root.$emit('input', e.target.value)
+                }
+
+            }
+
+        },
     }
 </script>
-
-<style scoped>
-
-</style>

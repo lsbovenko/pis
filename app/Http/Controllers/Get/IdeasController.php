@@ -45,10 +45,15 @@ class IdeasController extends Controller
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getFilter()
+    public function getFilter(Request $request)
     {
+        $params = $request;
+
+        $data[] = $params;
+
         return response()->json([
             'filter' => $this->getValuesForFilter(),
+            'status' => $this->availableStatuses()
         ]);
     }
 
@@ -110,7 +115,19 @@ class IdeasController extends Controller
             'operationalGoalsList' => $reference->getAllOperationalGoalForSelect(0, 'is_active', 'desc'),
             'strategicObjectivesList' => $reference->getAllStrategicObjectiveForSelect(0, 'is_active', 'desc'),
             'typesList' => $reference->getAllTypeForSelect(0, 'is_active', 'desc'),
-            'statuses' => $reference->getAllStatusesForSelect(0, 'is_active', 'desc'),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function availableStatuses() : array
+    {
+        /** @var \App\Service\Reference $reference */
+        $reference = App::make('reference');
+
+        return [
+            'status' => $reference->getAllStatusesForSelect(0, 'is_active', 'desc')
         ];
     }
 
