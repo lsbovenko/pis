@@ -5,7 +5,7 @@
                 <main-filter-block :filters="filters"></main-filter-block>
             </div>
             <div class="col-md-9 main-content sameblock">
-                <main-content-block :statuses="statuses"></main-content-block>
+                    <main-content-block :statuses="statuses"></main-content-block>
             </div>
         </div>
     </div>
@@ -16,6 +16,7 @@
     import MainContentBlock from './main/MainContentBlock';
     export default {
         name: "MainPage",
+        components: {MainContentBlock, MainFilterBlock},
         data() {
             return {
                 filters: {
@@ -24,6 +25,9 @@
                 statuses: {
                     data: []
                 },
+                resultFilter: {
+                    data: []
+                }
             }
         },
         mounted() {
@@ -38,9 +42,7 @@
                     })
                     .catch( (error) => {} );
             }
-
         },
-        components: {MainContentBlock, MainFilterBlock},
     }
 </script>
 

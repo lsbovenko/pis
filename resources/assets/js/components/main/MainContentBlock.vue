@@ -60,8 +60,10 @@
                     <div class="text">Идеи <span>({{ query.count }})</span></div>
                     <div class="filter-row">
                         <ul>
-                            <li class="active">Все</li>
-                            <li v-for="itemStatus in statuses">
+                            <li v-for="(itemStatus, index) in statuses"
+                                v-on:click="ideaStatus(`${index}`)"
+                                :class="{ active: isActive }"
+                            >
                                 {{ itemStatus }}
                             </li>
                         </ul>
@@ -81,6 +83,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-12">
                 <ul class="list-idea">
@@ -107,8 +110,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 text-right statistics">
-                                    <span class="favorite"><i class="zmdi zmdi-favorite"></i> {{ item.comments_count}}</span>
-                                    <span class="coomment"><i class="zmdi zmdi-comment-alt"></i> {{ item.likes_num }}</span>
+                                    <span class="favorite"><i class="zmdi zmdi-favorite"></i> {{ item.likes_num }}</span>
+                                    <span class="coomment"><i class="zmdi zmdi-comment-alt"></i> {{ item.comments_count}}</span>
                                 </div>
                             </div>
                         </div>
@@ -148,20 +151,21 @@
     export default {
         name: "MainContentBlock",
         reviewidea: null,
-        checkedNames: [],
         props: {
             url: String,
-            statuses: Object
+            statuses: Object,
         },
         data() {
             return {
+                isActive: false,
                 loading: true,
                 query: {
                     limit: 15,
                     page: 1,
                     count: 0,
                     filterDesc: 'desc',
-                    filterAsc: 'asc'
+                    filterAsc: 'asc',
+                    statusId: 1
                 },
                 collection: {
                     data: [],
@@ -178,30 +182,39 @@
                 topUsersByCompletedIdeasLast3Month: {
                     data: []
                 },
+                resultFilters: String
             }
         },
         mounted() {
             this.fetch();
-            this.$root.$on('input', function (data) {
-                this.checkedNames = data;
+            this.$root.$on('resultFilter', (result) => {
+                console.log(result);
+                this.collection = result.data.ideas;
+                this.query.count = result.data.totalIdeas;
             });
+
+            this.$root.$on('resultChecked', (result) => {
+                console.log(result);
+                this.resultFilters = result;
+            })
         },
         methods: {
-            activeIdea() {
-
+            ideaStatus(param) {
+                this.query.statusId = param;
+                this.applyChange();
             },
             applyChange() {
                 this.fetch();
             },
             updateLimit() {
                 this.query.page = 1;
-                this.applyChange()
+                this.applyChange();
             },
 
             prevPage() {
                 if(this.collection.prev_page_url) {
                     this.query.page = Number(this.query.page) - 1;
-                    this.applyChange()
+                    this.applyChange();
                 }
             },
             nextPage() {
@@ -212,8 +225,8 @@
             },
             fetch() {
                 const params = {
-                    ...this.checkedNames,
-                    ...this.query
+                    ...this.query,
+                    ...this.resultFilters
                 };
 
                 axios.get('/get-idea/all', {params: params})
