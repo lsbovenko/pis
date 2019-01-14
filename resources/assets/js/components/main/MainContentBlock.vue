@@ -71,13 +71,17 @@
                 </div>
                 <div class="pull-right">
                     <div class="dropdown customer-select">
-                        <button class="btn btn-default dropdown-toggle home" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <button class="btn btn-default dropdown-toggle home" type="button" id="dropdownMenu1"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="true"
+                        >
                             <em> Сначала новые </em>
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" v-model="query.filter_match">
-                            <li class="active"><a href="#">Сначала новые </a></li>
-                            <li><a href="#">Сначала старые</a></li>
+                            <li class="active" @click="orderSort(`${query.filterDesc}`)"><a href="#">Сначала новые </a></li>
+                            <li><a href="#" @click="orderSort(`${query.filterAsc}`)">Сначала старые</a></li>
                         </ul>
                     </div>
                 </div>
@@ -165,7 +169,8 @@
                     count: 0,
                     filterDesc: 'desc',
                     filterAsc: 'asc',
-                    statusId: 1
+                    statusId: 1,
+                    orderDir: String
                 },
                 collection: {
                     data: [],
@@ -182,7 +187,7 @@
                 topUsersByCompletedIdeasLast3Month: {
                     data: []
                 },
-                resultFilters: String
+                resultFilters: String,
             }
         },
         mounted() {
@@ -199,6 +204,14 @@
             })
         },
         methods: {
+            orderSort(sort) {
+                if (sort === this.query.filterAsc) {
+                    this.query.orderDir = this.query.filterAsc;
+                }else {
+                    this.query.orderDir = this.query.filterDesc;
+                }
+                this.applyChange();
+            },
             ideaStatus(param) {
                 this.query.statusId = param;
                 this.applyChange();
@@ -226,7 +239,7 @@
             fetch() {
                 const params = {
                     ...this.query,
-                    ...this.resultFilters
+                    ...this.resultFilters,
                 };
 
                 axios.get('/get-idea/all', {params: params})

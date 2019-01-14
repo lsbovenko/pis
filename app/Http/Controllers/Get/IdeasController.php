@@ -105,7 +105,7 @@ class IdeasController extends Controller
             $query->whereIn('type_id',  $typeId);
         }
 
-        $orderBy = $request->get('order_by');
+        $orderBy = $input['orderDir'];
         if ($orderBy == 'asc') {
             $query->orderBy('id', 'ASC');
         } else {
