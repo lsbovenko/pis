@@ -27,7 +27,7 @@
         window.csrf_token = "{{ csrf_token() }}"
     </script>
 </head>
-<body class="@if(request()->route()->getAction()['as'] == 'main') sameblock with-menu @else gray-bg @endif">
+<body class="sameblock with-menu">
 <div class="main-wrapper">
     <div class="mobile-btn hidden-lg hidden-md"><i class="zmdi zmdi-view-toc"></i></div>
     <!-- Header -->

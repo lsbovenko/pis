@@ -126,17 +126,17 @@
 
             },
             clearResult () {
-                //this.arrChecked = [];
                 this.post();
             },
             removeChecked () {
-                let uncheck=document.getElementsByTagName('input');
+                let uncheck = document.getElementsByTagName('input');
                 for (let i=0; i < uncheck.length; i++) {
 
                     if (uncheck[i].type == 'checkbox') {
                         uncheck[i].checked = false;
                     }
                 }
+                this.arrChecked = [];
                 this.clearResult();
             },
             checkBoxStatus (e) {

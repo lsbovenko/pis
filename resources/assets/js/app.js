@@ -21,14 +21,12 @@ import VueRoute from 'vue-router';
 
 import App from './Main';
 import Main from './views/main/Main';
-import Priority from './views/priority/Priority';
 
 Vue.use(VueRoute);
 
 const router = new VueRoute({
     routes: [
         { path: '/', component: Main },
-        { path: '/priority-board', component: Priority },
     ],
     mode: 'history'
 });

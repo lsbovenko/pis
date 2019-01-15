@@ -18,8 +18,8 @@
 Route::group(['middleware' => ['jwt']], function () {
     Route::group(['middleware' => ['auth', 'check_user', 'refresh_jwt']], function () {
         Route::get('/', 'BrowseIdeasController@index')->name('main');
-        Route::get('/priority-board', 'BrowseIdeasController@priorityBoard')->name('priority-board');
-        Route::get('/my-ideas', 'BrowseIdeasController@myIdeas')->name('my-ideas');
+        Route::get('/priority-board', 'BrowseIdeasController@index')->name('priority-board');
+        Route::get('/my-ideas', 'BrowseIdeasController@index')->name('my-ideas');
         Route::get('/add-idea', 'IndexController@addIdea')->name('add-idea');
         Route::post('/add-idea', 'IndexController@createIdea');
         Route::get('/success', 'IndexController@success')->name('add-idea-success');
@@ -33,6 +33,8 @@ Route::group(['middleware' => ['jwt']], function () {
         Route::any('/get-idea/all', 'Get\IdeasController@index')->name('get-idea/all');
         Route::get('/get-idea/filter', 'Get\IdeasController@getFilter')->name('get-idea/filter');
         Route::get('/get-idea/change-filter', 'Get\IdeasController@getChangeFilter')->name('get-idea/change-filter');
+        Route::get('/get-idea/priority-board', 'Get\IdeasController@priorityBoard')->name('/get-idea/priority-board');
+        Route::get('/get-idea/my-ideas', 'Get\IdeasController@myIdeas')->name('/get-idea/my-ideas');
 
         //superadmin or admin
         Route::group(['middleware' => ['role:admin|superadmin']], function() {
@@ -47,8 +49,12 @@ Route::group(['middleware' => ['jwt']], function () {
             Route::get('/edit-idea/{id}', 'EditIdeaController@edit')->where('id', '[0-9]+')->name('edit-idea');
             Route::post('/edit-idea/{id}', 'EditIdeaController@postEdit')->where('id', '[0-9]+');
             Route::post('/review-idea/{id}', 'ReviewIdeaController@approve')->where('id', '[0-9]+');
-            Route::get('/pending-review', 'BrowseIdeasController@pendingReview')->name('pending-review');
-            Route::get('/declined', 'BrowseIdeasController@declined')->name('declined');
+            Route::get('/pending-review', 'BrowseIdeasController@index')->name('pending-review');
+            Route::get('/declined', 'BrowseIdeasController@index')->name('declined');
+
+            //VueJS
+            Route::get('/get-idea/pending-review', 'Get\IdeasController@pendingReview')->name('/get-idea/pending-review');
+            Route::get('/get-idea/declined', 'Get\IdeasController@declined')->name('/get-idea/declined');
 
             Route::group([
                 'as' => 'users.',
