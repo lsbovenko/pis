@@ -195,7 +195,7 @@
             this.fetch();
             this.$root.$on('resultFilter', (result) => {
                 this.collection = result.data.ideas;
-                this.query.count = result.data.totalIdeas;
+                this.query.count = result.data.ideas.total;
             });
 
             this.$root.$on('resultChecked', (result) => {

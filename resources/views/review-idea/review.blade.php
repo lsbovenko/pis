@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container bottom-padding">
         <div class="content-box">
-            <div class="idea no-comments">
+            <div class="idea">
                 <div class="description col-md-9">
                     @if (Session::has('alert-success'))
                         <div class="alert alert-success alert-dismissable">
@@ -81,7 +81,7 @@
                         @include('review-idea.partials.pin-priority')
                         @include('edit-idea.partials.change-status')
                 </div>
-                <div class="information no-status col-md-3">
+                <div class="information col-md-3">
                     <div data-user-name="{{ $user->getFullName() }}"><b>Автор</b></div>
                     <div class="block">
                         <b>{{ $user->getFullName() }}</b>
@@ -129,35 +129,11 @@
                         <div>{{ $idea->type->name }}</div>
                     </div>
                 </div>
-                <div class="reviews col-md-12">
-                    <div class="title">Комментариев: {{ $idea->comments_count }}</div>
-                    <form action="{{ route('add-comment', ['id' => $idea->id]) }}" method="post">
-                        {{ csrf_field() }}
-                        {{ Form::textarea('message', '', [
-                        'class'=>'form-control',
-                        'placeholder' => 'Добавить комментарий',
-                        ]) }}
-                        <button type="submit" class="arrow button-comment"></button>
-                    </form>
-                    <ul>
-                        @if($comments)
-                            @foreach($comments as $comment)
-                                <li>
-                                    <div class="image avatar">
-                                        {{ mb_substr($comment->user->name, 0 ,1) }}
-                                        {{ mb_substr($comment->user->last_name, 0 ,1) }}
-                                    </div>
-                                    <div class="text-reviews">
-                                        <b>
-                                            {{ $comment->user->getFullName() }}
-                                        </b>
-                                        {{ $comment->message }}.
-                                        <i>{{ $comment->created_at }}</i>
-                                    </div>
-                                </li>
-                            @endforeach
-                        @endif
-                    </ul>
+                <script>
+                    const ideaId = {{ $idea->id }};
+                </script>
+                <div class="reviews col-md-12" id="comment">
+                    <comment></comment>
                 </div>
             </div>
         </div>
@@ -187,3 +163,6 @@
         </div>
     </div>
 @endsection
+@section('scripts')
+    <script src="{{ mix('js/comment.js') }}"></script>
+@stop
