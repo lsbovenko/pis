@@ -170,7 +170,8 @@
                     filterDesc: 'desc',
                     filterAsc: 'asc',
                     statusId: 1,
-                    orderDir: String
+                    orderDir: '',
+                    currentRoute: window.location.pathname
                 },
                 collection: {
                     data: [],
@@ -193,13 +194,11 @@
         mounted() {
             this.fetch();
             this.$root.$on('resultFilter', (result) => {
-                console.log(result);
                 this.collection = result.data.ideas;
                 this.query.count = result.data.totalIdeas;
             });
 
             this.$root.$on('resultChecked', (result) => {
-                console.log(result);
                 this.resultFilters = result;
             })
         },
@@ -242,7 +241,15 @@
                     ...this.resultFilters,
                 };
 
-                axios.get('/get-idea/all', {params: params})
+                let url = '';
+
+                if (this.query.currentRoute === '/'){
+                    url = '/get-idea/all';
+                }else {
+                    url = '/get-idea' + this.query.currentRoute
+                }
+
+                axios.get(url, {params: params})
                     .then((res) => {
                         Vue.set(this.$data, 'collection', res.data.ideas);
                         Vue.set(this.$data, 'topUsers', res.data.topUsers);
@@ -250,7 +257,7 @@
                         Vue.set(this.$data, 'topUsersLast3Month', res.data.topUsersLast3Month);
                         Vue.set(this.$data, 'topUsersByCompletedIdeasLast3Month', res.data.topUsersByCompletedIdeasLast3Month);
                         this.query.page = res.data.ideas.current_page;
-                        this.query.count = res.data.totalIdeas;
+                        this.query.count = res.data.ideas.total;
                     })
                     .catch((error) => {
 

@@ -14,7 +14,8 @@ use Illuminate\Http\Request;
 use App\Models\Idea;
 use Illuminate\Support\Facades\{
     App,
-    Input
+    Input,
+    Auth
 };
 use App\Models\Categories\Status;
 
@@ -23,27 +24,103 @@ class IdeasController extends Controller
 
     const QUANTITY_ITEMS_ON_PAGE = 15;
 
+    const DEFAULT_LIMIT = 50;
+
     public function index(Request $request)
     {
-        $defaultLimit = 50;
-        $limit = (int)$request->get('limit', $defaultLimit);
-        $limit = $limit <= $defaultLimit ? $limit : $defaultLimit;
-
         $ideas = $this->getChangeFilter($request)
             ->where('approve_status', '=', Idea::APPROVED)
-            ->where('is_priority', '=',  0)
-            ->paginate($limit);
+            ->where('is_priority', '=', 0)
+            ->paginate($this->checkedLimit($request));
 
-        return response()->json([
-            'ideas' => $ideas->appends(Input::except('page')),
-            'totalIdeas' => $ideas->total(),
-            'topUsers' => $this->getTopUsers(),
-            'topUsersByCompletedIdeas' => $this->getTopUsersByCompletedIdeas(),
-            'topUsersLast3Month' =>$this->getTopUsersLast3Month(),
-            'topUsersByCompletedIdeasLast3Month' => $this->getTopUsersByCompletedIdeasLast3Month(),
-            'showApproveStatus' => false
-        ]);
+        return response()->json(array_merge([
+                'ideas' => $ideas->appends(Input::except('page')),
+                'showApproveStatus' => false,
+            ],
+                $this->getValuesTopUsers()
+            )
+        );
+    }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function priorityBoard(Request $request)
+    {
+        $ideas = $this->getChangeFilter($request)
+            ->where('approve_status', '=', Idea::APPROVED)
+            ->where('is_priority', '=', 1)
+            ->paginate($this->checkedLimit($request));
+
+        return response()->json(array_merge([
+                'ideas' => $ideas->appends(Input::except('page')),
+                'title' => 'Приоритетный список',
+                'showApproveStatus' => false,
+            ],
+                $this->getValuesTopUsers()
+            )
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function myIdeas(Request $request)
+    {
+        $ideas = $this->getChangeFilter($request)
+            ->where('user_id', '=', Auth::user()->id)
+            ->paginate($this->checkedLimit($request));
+
+        return response()->json(array_merge([
+                'ideas' => $ideas->appends(Input::except('page')),
+                'title' => 'Мои идеи',
+                'showApproveStatus' => true
+            ],
+                $this->getValuesTopUsers()
+            )
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function pendingReview(Request $request)
+    {
+        $ideas = $this->getChangeFilter($request)
+            ->where('approve_status', '=', Idea::NEW)
+            ->paginate($this->checkedLimit($request));
+
+        return response()->json(array_merge([
+                'ideas' => $ideas->appends(Input::except('page')),
+                'title' => 'Ожидают утверждения',
+                'showApproveStatus' => false,
+            ],
+                $this->getValuesTopUsers()
+            )
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function declined(Request $request)
+    {
+        $ideas = $this->getChangeFilter($request)
+            ->where('approve_status', '=', Idea::DECLINED)
+            ->paginate($this->checkedLimit($request));
+
+        return response()->json(array_merge([
+                'ideas' => $ideas->appends(Input::except('page')),
+                'title' => 'Отклоненные идеи',
+                'showApproveStatus' => false,
+            ],
+                $this->getValuesTopUsers()
+            )
+        );
     }
 
     /**
@@ -105,7 +182,7 @@ class IdeasController extends Controller
             $query->whereIn('type_id',  $typeId);
         }
 
-        $orderBy = $input['orderDir'];
+        $orderBy = (isset($input['orderDir'])) ? $input['orderDir'] : '';
         if ($orderBy == 'asc') {
             $query->orderBy('id', 'ASC');
         } else {
@@ -115,49 +192,21 @@ class IdeasController extends Controller
         return $query;
     }
 
-    /**
-     * handle request
-     * @param Request $request
-     * @return \Illuminate\Database\Eloquent\Builder|static
-     */
-    protected function getQuery(Request $request)
+    protected function getValuesTopUsers()
     {
+        return [
+            'topUsers' => $this->getTopUsers(),
+            'topUsersByCompletedIdeas' => $this->getTopUsersByCompletedIdeas(),
+            'topUsersLast3Month' =>$this->getTopUsersLast3Month(),
+            'topUsersByCompletedIdeasLast3Month' => $this->getTopUsersByCompletedIdeasLast3Month(),
+        ];
+    }
 
-        $query = Idea::with('user.position', 'status');
-        if ($departmentId = $request->get('department_id')) {
-            $query->whereHas('departments', function($q) use ($departmentId) {
-                $q->where('id', '=', $departmentId);
-            });
-        }
-        if ($operationalGoalId = $request->get('operational_goal_id')) {
-            $query->whereHas('operationalGoals', function($q) use ($operationalGoalId) {
-                $q->where('id', '=', $operationalGoalId);
-            });
-        }
-        if ($strategicObjectiveId = $request->get('strategic_objective_id')) {
-            $query->whereHas('strategicObjectives', function($q) use ($strategicObjectiveId) {
-                $q->where('id', '=', $strategicObjectiveId);
-            });
-        }
-        if ($typeId = $request->get('type_id')) {
-            $query->where('type_id', '=',  $typeId);
-        }
-        if ($statusId = $request->get('status_id')) {
-            $query->where('status_id', '=',  $statusId);
-        }
-        if ($coreCompetencyId = $request->get('core_competency_id')) {
-            $query->whereHas('coreCompetencies', function($q) use ($coreCompetencyId) {
-                $q->where('id', '=', $coreCompetencyId);
-            });
-        }
-        $orderBy = $request->get('order_by');
-        if ($orderBy == 'asc') {
-            $query->orderBy('id', 'ASC');
-        } else {
-            $query->orderBy('id', 'DESC');
-        }
-
-        return $query;
+    protected function checkedLimit(Request $request)
+    {
+        $limit = (int)$request->get('limit', self::DEFAULT_LIMIT);
+        $reslimit = $limit <= self::DEFAULT_LIMIT ? $limit : self::DEFAULT_LIMIT;
+        return $reslimit;
     }
 
     /**
