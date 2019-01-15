@@ -17254,6 +17254,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -17274,7 +17278,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 count: 0,
                 filterDesc: 'desc',
                 filterAsc: 'asc',
-                statusId: 1
+                statusId: 1,
+                orderId: String
             },
             collection: {
                 data: []
@@ -17311,6 +17316,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
     methods: {
+        orderSort: function orderSort(sort) {
+            if (sort === this.query.filterAsc) {
+                this.query.orderId = this.query.filterAsc;
+            } else {
+                this.query.orderId = this.query.filterDesc;
+            }
+            this.applyChange();
+        },
         ideaStatus: function ideaStatus(param) {
             this.query.statusId = param;
             this.applyChange();
@@ -17534,7 +17547,39 @@ var render = function() {
                   expression: "query.filter_match"
                 }
               },
-              [_vm._m(1), _vm._v(" "), _vm._m(2)]
+              [
+                _c(
+                  "li",
+                  {
+                    staticClass: "active",
+                    on: {
+                      click: function($event) {
+                        _vm.orderSort("" + _vm.query.filterDesc)
+                      }
+                    }
+                  },
+                  [
+                    _c("a", { attrs: { href: "#" } }, [
+                      _vm._v("Сначала новые ")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("li", [
+                  _c(
+                    "a",
+                    {
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          _vm.orderSort("" + _vm.query.filterAsc)
+                        }
+                      }
+                    },
+                    [_vm._v("Сначала старые")]
+                  )
+                ])
+              ]
             )
           ])
         ])
@@ -17762,22 +17807,6 @@ var staticRenderFns = [
         _c("span", { staticClass: "caret" })
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "active" }, [
-      _c("a", { attrs: { href: "#" } }, [_vm._v("Сначала новые ")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [
-      _c("a", { attrs: { href: "#" } }, [_vm._v("Сначала старые")])
-    ])
   }
 ]
 render._withStripped = true
