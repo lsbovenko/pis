@@ -72,12 +72,17 @@ class ReviewIdeaController extends Controller
     public function getComments(Request $request)
     {
         /** @var \App\Models\Idea $idea */
-        $idea = Idea::findOrFail($request->route('id'));
+        $idea = Idea::query()->where('id', '=', $request->route('id'))
+            ->with('comments', 'comments.user')
+            ->get()
+            ->first();
 
-        return [
-            'count' => $idea->comments_count,
-            'comments' => $idea->comments
-        ];
+        if (isset($idea)) {
+            return [
+                'count' => $idea->comments_count,
+                'comments' => $idea->comments
+            ];
+        }
     }
 
     /**

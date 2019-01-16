@@ -13572,7 +13572,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             result: {
                 status: '',
                 message: ''
-            }
+            },
+            visible: true
         };
     },
 
@@ -13584,8 +13585,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 _this.body = '';
                 _this.result.status = result.data.status;
                 _this.result.message = result.data.message;
+                _this.visible = true;
             }).catch(function (error) {
-                console.log(error);
                 if (_typeof(error.response) === 'object') {
                     _this.result.status = 'error';
                     _this.result.message = error.response.data.message[0];
@@ -13593,6 +13594,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                     console.log('Something went wrong. Please try again.');
                 }
             });
+
+            setTimeout(function () {
+                _this.visible = false;
+            }, 2500);
         }
     }
 });
@@ -13653,6 +13658,16 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -13740,15 +13755,39 @@ var render = function() {
     _vm._v(" "),
     _vm.result.status === "success"
       ? _c("div", [
-          _c("div", { staticClass: "alert alert-success mg-top-10" }, [
-            _vm._v(_vm._s(_vm.result.message))
-          ])
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.visible,
+                  expression: "visible"
+                }
+              ],
+              staticClass: "alert alert-success mg-top-10"
+            },
+            [_vm._v(_vm._s(_vm.result.message))]
+          )
         ])
       : _vm.result.status === "error"
       ? _c("div", [
-          _c("div", { staticClass: "alert alert-danger mg-top-10" }, [
-            _vm._v(_vm._s(_vm.result.message))
-          ])
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.visible,
+                  expression: "visible"
+                }
+              ],
+              staticClass: "alert alert-danger mg-top-10"
+            },
+            [_vm._v(_vm._s(_vm.result.message))]
+          )
         ])
       : _vm._e()
   ])
@@ -13776,7 +13815,32 @@ var render = function() {
       "ul",
       _vm._l(_vm.comments, function(item) {
         return _c("li", [
-          _vm._v("\n            " + _vm._s(item) + "\n        ")
+          _c("div", { staticClass: "avatar-comment image" }, [
+            _vm._v(
+              "\n                " +
+                _vm._s(item.user.name.substring(0, 1)) +
+                _vm._s(item.user.last_name.substring(0, 1)) +
+                "\n            "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "text-reviews" }, [
+            _c("b", [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(item.user.name) +
+                  "\n                    " +
+                  _vm._s(item.user.last_name) +
+                  "\n                "
+              )
+            ]),
+            _vm._v(
+              "\n                " +
+                _vm._s(item.message) +
+                ".\n                "
+            ),
+            _c("i", [_vm._v(_vm._s(item.created_at))])
+          ])
         ])
       }),
       0

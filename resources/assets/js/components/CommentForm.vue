@@ -10,10 +10,10 @@
         </form>
 
         <div v-if="result.status === 'success'">
-            <div class="alert alert-success mg-top-10">{{result.message}}</div>
+            <div class="alert alert-success mg-top-10" v-show="visible">{{result.message}}</div>
         </div>
         <div v-else-if="result.status === 'error'">
-            <div class="alert alert-danger mg-top-10">{{result.message}}</div>
+            <div class="alert alert-danger mg-top-10" v-show="visible">{{result.message}}</div>
         </div>
 
     </div>
@@ -28,7 +28,8 @@
                 result: {
                     status: '',
                     message: ''
-                }
+                },
+                visible: true
             }
         },
         methods: {
@@ -38,10 +39,9 @@
                         this.body = '';
                         this.result.status = result.data.status;
                         this.result.message = result.data.message;
-
+                        this.visible = true;
                     })
                     .catch(error => {
-                        console.log(error);
                         if (typeof error.response === 'object') {
                             this.result.status = 'error';
                             this.result.message = error.response.data.message[0];
@@ -49,6 +49,10 @@
                             console.log('Something went wrong. Please try again.');
                         }
                     });
+
+                setTimeout( () => {
+                    this.visible = false
+                }, 2500);
             }
         }
     }

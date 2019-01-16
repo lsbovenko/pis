@@ -34,7 +34,7 @@
                         this.comments = result.data.comments;
                         this.query.count = result.data.count;
                     })
-                    .catch((error) => {})
+                    .catch((error) => { })
             }
         }
     }
