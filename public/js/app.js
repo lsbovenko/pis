@@ -16535,6 +16535,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             resultFilter: {
                 data: []
+            },
+            users: {
+                data: []
             }
         };
     },
@@ -16549,6 +16552,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('/get-idea/filter').then(function (res) {
                 _this.filters = res.data.filter;
                 _this.statuses = res.data.status.status;
+                _this.users = res.data.users;
             }).catch(function (error) {});
         }
     }
@@ -16697,10 +16701,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "MainFilterBlock",
-    props: ['filters'],
+    props: ['filters', 'users'],
     data: function data() {
         return {
             checkedNames: [],
@@ -16725,7 +16740,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         changeHandler: function changeHandler(e) {
             var serialize = this.checkBoxStatus(e);
             this.arrChecked = serialize.substr(1);
-
             this.$root.$emit('resultChecked', this.arrChecked);
 
             if (e.target.checked) {
@@ -16734,17 +16748,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.clearResult();
             }
         },
+        changeSelect: function changeSelect(e) {
+            var userId = e.target.value;
+
+            if (userId == 0) {
+                this.arrChecked = [];
+                this.clearResult();
+                return false;
+            } else {
+                this.arrChecked = userId;
+            }
+
+            this.post();
+        },
         clearResult: function clearResult() {
             this.post();
         },
         removeChecked: function removeChecked() {
             var uncheck = document.getElementsByTagName('input');
+
             for (var i = 0; i < uncheck.length; i++) {
 
                 if (uncheck[i].type == 'checkbox') {
                     uncheck[i].checked = false;
                 }
             }
+
             this.arrChecked = [];
             this.clearResult();
         },
@@ -16774,6 +16803,43 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "left-sidebar sameblock" }, [
     _c("form", { attrs: { action: "" } }, [
+      _c("section", { staticClass: "item" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mg-left-0" }, [
+          _c(
+            "select",
+            {
+              staticClass: "form-control col-lg-10",
+              on: { change: _vm.changeSelect }
+            },
+            [
+              _c("option", { attrs: { value: "0" } }, [
+                _vm._v("Выбрать автора")
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.users, function(user) {
+                return _c(
+                  "option",
+                  { domProps: { value: "user_id[]=" + user.id } },
+                  [
+                    _vm._v(
+                      _vm._s(user.name) +
+                        " " +
+                        _vm._s(user.last_name) +
+                        " (" +
+                        _vm._s(user.number) +
+                        ")"
+                    )
+                  ]
+                )
+              })
+            ],
+            2
+          )
+        ])
+      ]),
+      _vm._v(" "),
       _c("section", { staticClass: "item", attrs: { id: "departments" } }, [
         _c(
           "ul",
@@ -16950,7 +17016,16 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", { staticClass: "last-changes-list" }, [
+      _c("li", { staticClass: "first" }, [_vm._v("Автор")])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -17960,7 +18035,11 @@ var render = function() {
       _c(
         "div",
         { staticClass: "col-md-3 mobile-menu" },
-        [_c("main-filter-block", { attrs: { filters: _vm.filters } })],
+        [
+          _c("main-filter-block", {
+            attrs: { filters: _vm.filters, users: _vm.users }
+          })
+        ],
         1
       ),
       _vm._v(" "),

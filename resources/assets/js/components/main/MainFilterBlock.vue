@@ -1,6 +1,17 @@
 <template>
     <div class="left-sidebar sameblock">
         <form action="">
+            <section class="item">
+                <ul class="last-changes-list">
+                    <li class="first">Автор</li>
+                </ul>
+                <div class="row mg-left-0">
+                    <select class="form-control col-lg-10" @change="changeSelect">
+                        <option value="0">Выбрать автора</option>
+                        <option :value="`user_id[]=${user.id}`" v-for="user in users">{{user.name}} {{user.last_name}} ({{user.number}})</option>
+                    </select>
+                </div>
+            </section>
             <section id="departments" class="item">
                 <ul>
                     <li class="first">
@@ -91,11 +102,11 @@
 <script>
     export default {
         name: "MainFilterBlock",
-        props: ['filters'],
+        props: ['filters', 'users'],
         data() {
             return {
                 checkedNames: [],
-                arrChecked: []
+                arrChecked: [],
             }
         },
         methods: {
@@ -115,27 +126,41 @@
             changeHandler (e) {
                 let serialize = this.checkBoxStatus(e);
                 this.arrChecked = serialize.substr(1);
-
                 this.$root.$emit('resultChecked', this.arrChecked);
 
                 if (e.target.checked){
                     this.post();
-                }else {
+                } else {
                     this.clearResult();
                 }
 
+            },
+            changeSelect (e) {
+                let userId = e.target.value;
+
+                if (userId == 0) {
+                    this.arrChecked = [];
+                    this.clearResult();
+                    return false;
+                } else {
+                    this.arrChecked = userId;
+                }
+
+                this.post();
             },
             clearResult () {
                 this.post();
             },
             removeChecked () {
                 let uncheck = document.getElementsByTagName('input');
+
                 for (let i=0; i < uncheck.length; i++) {
 
                     if (uncheck[i].type == 'checkbox') {
                         uncheck[i].checked = false;
                     }
                 }
+
                 this.arrChecked = [];
                 this.clearResult();
             },
