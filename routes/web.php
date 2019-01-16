@@ -28,6 +28,7 @@ Route::group(['middleware' => ['jwt']], function () {
         Route::post('/add-like', 'LikesController@addLike')->name('add-like');
         Route::post('/remove-like', 'LikesController@removeLike')->name('remove-like');
         Route::post('/add-comment/{id}', 'ReviewIdeaController@addComment')->where('id', '[0-9]+')->name('add-comment');
+        Route::post('/comments/{id}', 'ReviewIdeaController@getComments')->where('id', '[0-9]+')->name('comments');
 
         //VueJS
         Route::any('/get-idea/all', 'Get\IdeasController@index')->name('get-idea/all');

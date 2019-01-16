@@ -67,6 +67,21 @@ class ReviewIdeaController extends Controller
 
     /**
      * @param Request $request
+     * @return array
+     */
+    public function getComments(Request $request)
+    {
+        /** @var \App\Models\Idea $idea */
+        $idea = Idea::findOrFail($request->route('id'));
+
+        return [
+            'count' => $idea->comments_count,
+            'comments' => $idea->comments
+        ];
+    }
+
+    /**
+     * @param Request $request
      * @return $this|\Illuminate\Http\RedirectResponse
      */
     public function approve(Request $request)
@@ -190,8 +205,10 @@ class ReviewIdeaController extends Controller
             return redirect()->back();
         }
 
-        $request->session()->flash('alert-success', 'Комментарий успешно добавлен.');
-        return redirect()->back();
+        return response()->json([
+            'status' => 'success',
+            'message'=>'Комментарий успешно добавлен'
+        ]);
     }
 
     /**
