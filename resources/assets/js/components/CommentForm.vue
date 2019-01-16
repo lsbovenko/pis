@@ -2,7 +2,10 @@
     <div>
 
         <form @submit.prevent="onSubmit">
-            <textarea class="form-control" placeholder="Добавить комментарий" v-model="body"></textarea>
+            <textarea class="form-control" placeholder="Добавить комментарий и отправить можно Ctrl + Enter"
+                      v-model="body"
+                      v-on:keyup.ctrl.enter="onSubmit"
+            ></textarea>
             <button type="submit" class="arrow button-comment"></button>
         </form>
 

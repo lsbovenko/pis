@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3 mobile-menu">
-                <main-filter-block :filters="filters"></main-filter-block>
+                <main-filter-block :filters="filters" :users="users"></main-filter-block>
             </div>
             <div class="col-md-9 main-content sameblock">
                     <main-content-block :statuses="statuses"></main-content-block>
@@ -27,6 +27,9 @@
                 },
                 resultFilter: {
                     data: []
+                },
+                users: {
+                    data: []
                 }
             }
         },
@@ -39,6 +42,7 @@
                     .then((res) => {
                         this.filters = res.data.filter;
                         this.statuses = res.data.status.status;
+                        this.users = res.data.users;
                     })
                     .catch( (error) => {} );
             }

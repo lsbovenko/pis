@@ -10380,6 +10380,10 @@ body .container .btn_.btn-outline-red:hover {
     margin-left: 10px;
 }
 
+.mg-left-0 {
+    margin-left: 0;
+}
+
 .no-border-shadow {
     border: beige;
     box-shadow: none;

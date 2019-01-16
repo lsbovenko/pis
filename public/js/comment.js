@@ -13560,6 +13560,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "CommentForm",
@@ -13702,9 +13705,23 @@ var render = function() {
             }
           ],
           staticClass: "form-control",
-          attrs: { placeholder: "Добавить комментарий" },
+          attrs: {
+            placeholder: "Добавить комментарий и отправить можно Ctrl + Enter"
+          },
           domProps: { value: _vm.body },
           on: {
+            keyup: function($event) {
+              if (
+                !("button" in $event) &&
+                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+              ) {
+                return null
+              }
+              if (!$event.ctrlKey) {
+                return null
+              }
+              return _vm.onSubmit($event)
+            },
             input: function($event) {
               if ($event.target.composing) {
                 return

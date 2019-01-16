@@ -130,7 +130,8 @@ class IdeasController extends Controller
     {
         return response()->json([
             'filter' => $this->getValuesForFilter(),
-            'status' => $this->availableStatuses()
+            'status' => $this->availableStatuses(),
+            'users' => $this->getActiveUsers()
         ]);
     }
 
@@ -187,6 +188,11 @@ class IdeasController extends Controller
             $query->orderBy('id', 'ASC');
         } else {
             $query->orderBy('id', 'DESC');
+        }
+
+        if (isset($input['user_id'])) {
+            $userId = $input['user_id'];
+            $query->where('user_id', '=', $userId);
         }
 
         return $query;
@@ -246,6 +252,13 @@ class IdeasController extends Controller
         return App::make('repository.user')->getTopUsers();
     }
 
+    /**
+     * @return mixed
+     */
+    protected function getActiveUsers()
+    {
+        return App::make('repository.user')->getTopUsers(Status::getActiveStatus(), null, 20);
+    }
     /**
      * @return mixed
      */
