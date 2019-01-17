@@ -5,12 +5,7 @@ namespace App\Service;
 use App\Models\Categories\Status;
 use App\Models\Auth\User;
 use App\Models\{Comment, Idea, Note};
-use App\Events\{
-    IdeaWasCreated,
-    IdeaWasApproved,
-    IdeaWasDeclined,
-    IdeaWasChangedStatus
-};
+use App\Events\{CommentAdded, IdeaWasCreated, IdeaWasApproved, IdeaWasDeclined, IdeaWasChangedStatus};
 
 /**
  * Class IdeaControl
@@ -227,6 +222,9 @@ class IdeaControl
         $comment->user_id = $userId;
         $comment->message = $message;
         $comment->save();
+
+        //send email
+        event(new CommentAdded($comment));
 
         return true;
     }
