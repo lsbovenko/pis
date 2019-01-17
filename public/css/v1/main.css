@@ -8608,8 +8608,8 @@ body .container .content-box .form-control {
 
 body .container .content-box textarea {
     resize: vertical;
-    min-height: 32px;
-    height: 32px;
+    min-height: 50px;
+    height: 50px;
 }
 
 body .container .content-box .navigate {
@@ -10388,4 +10388,8 @@ body .container .btn_.btn-outline-red:hover {
     border: beige;
     box-shadow: none;
     width: 62px;
+}
+
+.avatar-comment{
+    background-color: rgb(233, 119, 98);
 }
