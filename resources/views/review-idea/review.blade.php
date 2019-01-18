@@ -164,5 +164,5 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="{{ mix('js/comment.js') }}"></script>
+    <script src="{{ mix('js/comment.js') }}?v={{ config('app.version') }}"></script>
 @stop
