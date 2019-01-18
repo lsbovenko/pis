@@ -64,8 +64,7 @@
                         @else
                             <a data-toggle="dropdown" href="#">
                                 <em class="avatar user_avatar_name">
-                                    {{mb_substr(Auth::user()->name, 0 ,1)}}
-                                    {{mb_substr(Auth::user()->last_name, 0 ,1)}}
+                                    {{mb_substr(Auth::user()->name, 0 ,1)}}{{mb_substr(Auth::user()->last_name, 0 ,1)}}
                                 </em>
                                 {{ Auth::user()->name }}
                                 <span class="caret"></span>

@@ -17,7 +17,7 @@ class CreateLikeNotifiсationsTable extends Migration
      */
     public function up()
     {
-        Schema::table('like_notifiсations', function (Blueprint $table) {
+        Schema::create('like_notifiсations', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('idea_id')->unsigned();
@@ -32,6 +32,6 @@ class CreateLikeNotifiсationsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('like_notifiсations');
+        Schema::dropIfExists('like_notifiсations');
     }
 }
