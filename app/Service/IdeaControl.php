@@ -5,7 +5,7 @@ namespace App\Service;
 use App\Models\Categories\Status;
 use App\Models\Auth\User;
 use App\Models\{Comment, Idea, Note};
-use App\Events\{CommentAdded, IdeaWasCreated, IdeaWasApproved, IdeaWasDeclined, IdeaWasChangedStatus};
+use App\Events\{CommentAdded, IdeaWasCreated, IdeaWasApproved, IdeaWasDeclined, IdeaWasChangedStatus, Like\LikeAdded};
 
 /**
  * Class IdeaControl
@@ -178,7 +178,7 @@ class IdeaControl
             $idea->likes_num++;
             $idea->save();
 
-            $this->addLikeIdeasUser($idea->id, $user);
+            $this->addLikeIdeasUser($idea, $user);
         }
     }
 
@@ -234,9 +234,15 @@ class IdeaControl
      * @param $user
      * @return bool
      */
-    private function addLikeIdeasUser(int $ideaId, User $user) : bool
+    private function addLikeIdeasUser(Idea $idea, User $user) : bool
     {
-        $user->likedUserIdea()->attach($ideaId);
+        $user->likedUserIdea()->attach($idea->id);
+
+        if(!$user->getLikeNotification($idea->id)) {
+            $user->likeNotification()->attach($idea->id);
+
+            event(new LikeAdded($idea));
+        }
 
         return true;
     }

@@ -5,7 +5,7 @@ namespace App\Mail\IdeaChangedStatus;
 use App\Mail\AbstractMail;
 
 /**
- * Class ToAll
+ * Class ToUser
  * @package App\Mail\IdeaChangedStatus
  */
 class ToAll extends AbstractMail
