@@ -1,15 +1,17 @@
 <template>
     <div class="left-sidebar sameblock">
         <form action="">
-            <section class="item">
+            <section class="item mg-right-15">
                 <ul class="last-changes-list">
                     <li class="first">Автор</li>
                 </ul>
-                <div class="row mg-left-0">
-                    <select class="form-control col-lg-10" @change="changeSelect">
-                        <option value="0">Выбрать автора</option>
-                        <option :value="`user_id[]=${user.id}`" v-for="user in users">{{user.name}} {{user.last_name}} ({{user.number}})</option>
-                    </select>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <select class="form-control" @change="changeSelect">
+                            <option value="0">Выбрать автора</option>
+                            <option :value="`user_id[]=${user.id}`" v-for="user in users">{{user.name}} {{user.last_name}} ({{user.number}})</option>
+                        </select>
+                    </div>
                 </div>
             </section>
             <section id="departments" class="item">
