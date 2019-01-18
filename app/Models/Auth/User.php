@@ -140,4 +140,23 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class,'user_id');
     }
+
+    /**
+     * this connection ideas that the user like at least once
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function likeNotification()
+    {
+        return $this->belongsToMany(Idea::class, 'like_notifiсations');
+    }
+
+    /**
+     * @param int $ideaId
+     * @return mixed
+     */
+    public function getLikeNotification(int $ideaId)
+    {
+        return $this->likeNotification()->where('idea_id', $ideaId)->first();
+    }
 }
