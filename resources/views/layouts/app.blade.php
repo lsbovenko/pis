@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
 {{--    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">--}}
-    <link href="{{ asset('css/v1/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/v1/main.css') }}?v={{ config('app.version') }}" rel="stylesheet">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
@@ -89,7 +89,7 @@
 <script src="{{ asset('js/jquery.js') }}"></script>
 
 <script src="{{ asset('js/libs.min.js') }}"></script>
-<script src="{{ asset('js/common.js') }}"></script>
+<script src="{{ asset('js/common.js') }}?v={{ config('app.version') }}"></script>
 @yield('scripts')
 @yield('inline-scripts')
 </body>
