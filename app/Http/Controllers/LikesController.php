@@ -25,7 +25,9 @@ class LikesController extends Controller
     {
         $idea = Idea::findOrFail($request->id);
         try {
-            $this->getIdeaControl()->addPostLike($idea, Auth::user());
+            if ($idea->isApproved()) {
+                $this->getIdeaControl()->addPostLike($idea, Auth::user());
+            }
         } catch (\Throwable $e) {
             Log::error($e);
         }
@@ -38,7 +40,9 @@ class LikesController extends Controller
     {
         $idea = Idea::findOrFail($request->id);
         try {
-            $this->getIdeaControl()->removeLike($idea, Auth::user());
+            if ($idea->isApproved()) {
+                $this->getIdeaControl()->removeLike($idea, Auth::user());
+            }
         } catch (\Throwable $e) {
             Log::error($e);
         }

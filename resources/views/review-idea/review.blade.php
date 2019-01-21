@@ -53,12 +53,13 @@
                                         <span class="fa fa-check"></span> Принять
                                     </button>
                                 </form>
-                                <div class="reject popup-open">Отклонить</div>
+                                <div class="reject popup-open" data-toggle="modal" data-target="#myModal">Отклонить</div>
                             </div>
                             @endif
                             @endrole
                         @endif
                         <hr>
+                        @if ($idea->isApproved())
                         <div class="support">
                             <div class="support-name">
                                 <i class="zmdi zmdi-favorite"></i>
@@ -75,9 +76,11 @@
                              data-id="{{ $authUser['user']->id }}"
                              data-idea="{{ $idea->id }}"
                              id="{{ !empty($authUser['userLike']) ? 'remove_like_user' : 'add_like_user' }}">
-                            <div class="i-support {{ !empty($authUser['userLike']) ? 'btn_liked' : '' }}">Я поддерживаю</div>
+                            <div class="i-support {{ !empty($authUser['userLike']) ? 'btn_liked' : '' }}">
+                                {{ !empty($authUser['userLike']) ? 'Я не поддерживаю' : 'Я поддерживаю' }}
+                            </div>
                         </div>
-
+                        @endif
                         @include('review-idea.partials.pin-priority')
                         @include('edit-idea.partials.change-status')
                 </div>
@@ -132,33 +135,41 @@
                 <script>
                     const ideaId = {{ $idea->id }};
                 </script>
+
                 <div class="reviews col-md-12" id="comment">
+                    @if ($idea->isApproved())
                     <comment></comment>
+                    @endif
                 </div>
+
             </div>
         </div>
     </div>
-    <div class="modal-bg" style="display: none">
-        <div class="container">
-            <div class="content-box popup">
-                <div class="x-close"></div>
-                <div class="section-title">Отклонить идею</div>
-                <div class="description-grey">Идея "{!! $idea->description !!}"</div>
-                <form action="{{ route('review-idea', ['id' => $idea->id]) }}" method="post">
-                    {{ csrf_field() }}
-                    <div class="form-group">
-                        <label for="caption">Причина отказа</label>
-                        {{ Form::text('reason','', [
-                        'class'=>'form-control',
-                        'placeholder' => 'Укажите причину отклонения'
-                        ]) }}
-                    </div>
-                    <div class="row bottom-button reject-popup">
-                        <div class="col-md-12 col-sm-12 col-xs-12 text-right">
-                            <button value="2" name="status" type="submit" class="btn_ btn-blue last">Отклонить</button>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Отклонить идею</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('review-idea', ['id' => $idea->id]) }}" method="post">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <label for="caption">Причина отказа</label>
+                            {{ Form::text('reason','', [
+                            'class'=>'form-control',
+                            'placeholder' => 'Укажите причину отклонения'
+                            ]) }}
                         </div>
-                    </div>
-                </form>
+                        <div class="row bottom-button reject-popup">
+                            <div class="col-md-12 col-sm-12 col-xs-12 text-right">
+                                <button value="2" name="status" type="submit" class="btn btn-success">Отклонить</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

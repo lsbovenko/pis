@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul>
-            <li v-for="item in comments">
+            <li v-if="comments.data && comments.data.length" v-for="item in comments">
                 <div class="avatar-comment image" >
                     {{ item.user.name.substring(0,1) }}{{ item.user.last_name.substring(0,1) }}
                 </div>

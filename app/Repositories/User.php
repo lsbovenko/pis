@@ -64,9 +64,10 @@ class User extends AbstractRepository
      * @param Status|null $status
      * @param \DateTime|null $date
      * @param int $limit
+     * @param int $approve|null approved status. default 0, active 1
      * @return mixed
      */
-    public function getTopUsers(Status $status = null, \DateTime $date = null, int $limit = 3)
+    public function getTopUsers(Status $status = null, \DateTime $date = null, int $limit = 3, int $approve = null)
     {
         /** @var \Illuminate\Database\Query\Builder $query */
         $query = DB::table('users')
@@ -79,6 +80,11 @@ class User extends AbstractRepository
         if ($status) {
             $query->where('ideas.status_id', '=', $status->id);
         }
+
+        if (isset($approve)) {
+            $query->where('ideas.approve_status', '=', $approve);
+        }
+
         if ($date) {
             $query->where('ideas.created_at', '>', $date->format('Y-m-d H:i:s'));
         }
