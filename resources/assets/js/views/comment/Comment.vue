@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class="title">Комментариев: {{ query.count }}</div>
+        <div class="title">Комментариев: <span id="count_comment">{{ query.count }}</span></div>
         <comment-form></comment-form>
 
-        <comment-block :comments="comments"></comment-block>
+        <comment-block :comments="comments" :count="query.count"></comment-block>
     </div>
 </template>
 
@@ -25,11 +25,16 @@
             }
         },
         mounted () {
-            this.fetchComment()
+            this.fetchComment();
+            this.$root.$on('renderList', (res) => {
+                if (res == true) {
+                    this.fetchComment();
+                }
+            })
         },
         methods: {
             fetchComment() {
-                axios.post('/comments/'+ideaId)
+                axios.get('/comments/'+ideaId)
                     .then((result) => {
                         this.comments = result.data.comments;
                         this.query.count = result.data.count;

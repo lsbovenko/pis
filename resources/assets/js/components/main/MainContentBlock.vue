@@ -57,7 +57,11 @@
         <div class="row page-title">
             <div class="col-md-12">
                 <div class="pull-left">
-                    <div class="text">Идеи <span>({{ query.count }})</span></div>
+                    <div class="text" v-for="list in listMenu"
+                        v-if="list.name === pathUrl">
+                        {{list.value}}
+                        <span>({{ query.count }})</span>
+                    </div>
                     <div class="filter-row">
                         <ul>
                             <li v-for="(itemStatus, index) in statuses"
@@ -101,7 +105,7 @@
                             <p v-html="item.description"></p>
                             <a :href="`/review-idea/${item.id}`">Read more</a>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-9">
                                     <div class="user-info">
                                         <span class="avatar">
                                             {{ item.user.name.substring(0,1) }}{{ item.user.last_name.substring(0,1) }}
@@ -113,7 +117,7 @@
                                         <span class="date">{{ item.created_at }}</span>
                                     </div>
                                 </div>
-                                <div class="col-md-6 text-right statistics">
+                                <div class="col-md-3 text-right statistics">
                                     <span class="favorite"><i class="zmdi zmdi-favorite"></i> {{ item.likes_num }}</span>
                                     <span class="coomment"><i class="zmdi zmdi-comment-alt"></i> {{ item.comments_count}}</span>
                                 </div>
@@ -161,6 +165,7 @@
         },
         data() {
             return {
+                pathUrl: window.location.pathname,
                 isActive: false,
                 loading: true,
                 query: {
@@ -189,6 +194,13 @@
                     data: []
                 },
                 resultFilters: String,
+                listMenu: [
+                    { name: '/', value: 'Идеи' },
+                    { name: '/priority-board', value: 'Приоритетный список' },
+                    { name: '/my-ideas', value: 'Мои идеи' },
+                    { name: '/pending-review', value: 'Ожидающие' },
+                    { name: '/declined', value: 'Отклоненные' },
+                ]
             }
         },
         mounted() {
