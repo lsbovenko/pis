@@ -204,7 +204,9 @@ class ReviewIdeaController extends Controller
         $user = Auth::user();
 
         try {
-            $this->getIdeaControl()->increaseAmountComment($idea, $user->id, $data['message']);
+            if ($idea->isApproved()) {
+                $this->getIdeaControl()->increaseAmountComment($idea, $user->id, $data['message']);
+            }
         } catch (\Throwable $e) {
             Log::error($e);
             return redirect()->back();

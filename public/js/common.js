@@ -155,7 +155,8 @@ jQuery(document).on('click','#add_like_user', function () {
                 jQuery('.btn_like_' + id_idea)
                     .attr('id', 'remove_like_user')
                     .find('.i-support')
-                    .addClass('btn_liked');
+                    .addClass('btn_liked')
+                    .html('Я не поддерживаю');
                 jQuery('.liked_users_' + id_idea).html(name + ' ' + jQuery('.liked_users_' + id_idea).html());
             }
         });
@@ -182,7 +183,8 @@ jQuery(document).on('click', '#remove_like_user', function () {
                 jQuery('.btn_like_' + id_idea)
                     .attr('id', 'add_like_user')
                     .find('.i-support')
-                    .removeClass('btn_liked');
+                    .removeClass('btn_liked')
+                    .html('Я поддерживаю');
                 var str = jQuery('.liked_users_' + id_idea).html();
                 jQuery('.liked_users_' + id_idea).html(str.replace(name + '', ''));
             }

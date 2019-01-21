@@ -257,7 +257,7 @@ class IdeasController extends Controller
      */
     protected function getActiveUsers()
     {
-        return App::make('repository.user')->getTopUsers(Status::getActiveStatus(), null, 20);
+        return App::make('repository.user')->getTopUsers(Status::getActiveStatus(), null, 20, 1);
     }
     /**
      * @return mixed
