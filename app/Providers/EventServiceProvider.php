@@ -28,6 +28,12 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\IdeaWasChangedStatus' => [
             'App\Handlers\Events\IdeaChangedStatus@handle',
         ],
+        'App\Events\LikeAdded' => [
+            'App\Handlers\Events\IdeaLikeNotification@handle',
+        ],
+        'App\Events\CommentAdded' => [
+            'App\Handlers\Events\IdeaComment@handle',
+        ],
     ];
 
     /**

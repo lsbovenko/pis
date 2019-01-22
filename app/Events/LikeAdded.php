@@ -6,9 +6,12 @@
  * Time: 12:32
  */
 
-namespace App\Events\Like;
+namespace App\Events;
 
-
+/**
+ * Class LikeAdded
+ * @package App\Events
+ */
 class LikeAdded extends LikeAbstract
 {
 

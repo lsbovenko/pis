@@ -6,12 +6,12 @@
  * Time: 12:32
  */
 
-namespace App\Events\Like;
+namespace App\Events;
 
-use App\Models\Idea;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use App\Models\Idea;
 
 abstract class LikeAbstract
 {

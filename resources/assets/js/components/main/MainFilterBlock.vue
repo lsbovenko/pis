@@ -7,8 +7,8 @@
                 </ul>
                 <div class="row">
                     <div class="col-lg-12">
-                        <select class="form-control" @change="changeSelect">
-                            <option value="0">Выбрать автора</option>
+                        <select class="form-control" @change="changeSelect" v-model="selected">
+                            <option :value="undefined" disabled style="display:none">Выбрать автора</option>
                             <option :value="`user_id[]=${user.id}`" v-for="user in users">{{user.name}} {{user.last_name}} ({{user.number}})</option>
                         </select>
                     </div>
@@ -107,15 +107,16 @@
         props: ['filters', 'users'],
         data() {
             return {
+                selected:undefined,
                 checkedNames: [],
-                arrChecked: [],
+                inputChecked: String,
             }
         },
         methods: {
             post() {
                 //token = document.head.querySelector('meta[name="csrf-token"]');
                 //console.log(token.content);
-                axios.post('/get-idea/all', this.arrChecked,
+                axios.get('/get-idea/all?' + this.inputChecked,
                     {
                         headers: {
                             'X-CSRF-TOKEN': window.csrf_token
@@ -127,8 +128,8 @@
             },
             changeHandler (e) {
                 let serialize = this.checkBoxStatus(e);
-                this.arrChecked = serialize.substr(1);
-                this.$root.$emit('resultChecked', this.arrChecked);
+                this.inputChecked = serialize.substr(1);
+                this.$root.$emit('resultChecked', this.inputChecked);
 
                 if (e.target.checked){
                     this.post();
@@ -141,11 +142,11 @@
                 let userId = e.target.value;
 
                 if (userId == 0) {
-                    this.arrChecked = [];
+                    this.inputChecked = '';
                     this.clearResult();
                     return false;
                 } else {
-                    this.arrChecked = userId;
+                    this.inputChecked = userId;
                 }
 
                 this.post();
@@ -162,8 +163,8 @@
                         uncheck[i].checked = false;
                     }
                 }
-
-                this.arrChecked = [];
+                this.selected = undefined;
+                this.inputChecked = '';
                 this.clearResult();
             },
             checkBoxStatus (e) {

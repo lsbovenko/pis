@@ -5,7 +5,7 @@ namespace App\Service;
 use App\Models\Categories\Status;
 use App\Models\Auth\User;
 use App\Models\{Comment, Idea, Note};
-use App\Events\{CommentAdded, IdeaWasCreated, IdeaWasApproved, IdeaWasDeclined, IdeaWasChangedStatus, Like\LikeAdded};
+use App\Events\{CommentAdded, IdeaWasCreated, IdeaWasApproved, IdeaWasDeclined, IdeaWasChangedStatus, LikeAdded};
 
 /**
  * Class IdeaControl
@@ -185,9 +185,8 @@ class IdeaControl
     /**
      * @param Idea $idea
      * @param $user
-     * @return bool
      */
-    public function removeLike(Idea $idea, User $user) : bool
+    public function removeLike(Idea $idea, User $user)
     {
         if (!$this->isUserHasLike($user, $idea->id)) {
             $idea->likes_num--;

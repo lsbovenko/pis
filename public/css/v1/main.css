@@ -10303,3 +10303,8 @@ div .preloader:nth-child(4) {
     0% {left: 0%;}
     100% {left:100%;}
 }
+
+.item-block {
+    min-height: 118px;
+    height: 118px;
+}
