@@ -7,7 +7,9 @@
                 <div class="description col-md-9">
                     @if (Session::has('alert-success'))
                         <div class="alert alert-success alert-dismissable">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
                             {{ Session::get('alert-success') }}
                         </div>
                     @endif
@@ -135,7 +137,6 @@
                 <script>
                     const ideaId = {{ $idea->id }};
                 </script>
-
                 <div class="reviews col-md-12" id="comment">
                     @if ($idea->isApproved())
                     <comment></comment>

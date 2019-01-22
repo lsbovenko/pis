@@ -8864,7 +8864,7 @@ body .container .content-box .idea .information .block a {
 
 body .container .content-box .idea .reviews {
     padding: 0;
-    margin-top: 9px;
+    margin-top: 20px;
 }
 
 body .container .content-box .idea .reviews .title {
@@ -8915,7 +8915,7 @@ body .container .content-box .idea .reviews ul li .image {
     line-height: 34px;
     color: #fff;
     font-weight: 500;
-/*    background: 50% 50% url("../img/pic-5.png") no-repeat;
+/*    background: 50% 50% url("../images/pic-5.png") no-repeat;
     -webkit-background-size: 32px auto;
     background-size: 32px auto;*/
     -webkit-border-radius: 50%;
@@ -10267,4 +10267,39 @@ body .container .btn_.btn-outline-red:hover {
 
 .avatar-comment{
     background-color: rgb(233, 119, 98);
+}
+
+#block_preload {
+    padding: 10px 0 0;
+}
+
+div .preloader {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    background-color: #ccc;
+    border-radius: 50%;
+}
+
+div .preloader:nth-child(1) {
+    background-color: #FF5460;
+    animation: move 2s infinite cubic-bezier(.2,.64,.81,.23);
+}
+div .preloader:nth-child(2) {
+    background-color: #FF9D84;
+    animation: move 2s 150ms infinite cubic-bezier(.2,.64,.81,.23);
+}
+div .preloader:nth-child(3) {
+    background-color: #F0E797;
+    animation: move 2s 300ms infinite cubic-bezier(.2,.64,.81,.23);
+}
+div .preloader:nth-child(4) {
+    background-color: #75B08A;
+    animation: move 2s 450ms infinite cubic-bezier(.2,.64,.81,.23);
+}
+
+
+@keyframes move {
+    0% {left: 0%;}
+    100% {left:100%;}
 }
