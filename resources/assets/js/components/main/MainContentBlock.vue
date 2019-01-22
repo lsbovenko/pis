@@ -2,7 +2,7 @@
     <div class="content-idea">
         <div class="row info-row">
             <div class="col-md-3 col-sm-6">
-                <div class="item">
+                <div class="item item-block">
                     <ul>
                         <li>Всего</li>
                         <li v-if="topUser"
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="item">
+                <div class="item item-block">
                     <ul>
                         <li>Всего реализовано</li>
                         <li v-if="topUsersByCompletedIdeas"
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="item">
+                <div class="item item-block">
                     <ul>
                         <li>Всего за 90 дней</li>
                         <li v-if="topUsersLast3Month"
@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="item">
+                <div class="item item-block">
                     <ul>
                         <li>Всего за 90 дней</li>
                         <li v-if="topUsersByCompletedIdeasLast3Month"
@@ -65,8 +65,8 @@
                     <div class="filter-row">
                         <ul>
                             <li v-for="(itemStatus, index) in statuses"
-                                v-on:click="ideaStatus(`${index}`)"
-                                :class="{ active: isActive }"
+                                v-on:click="ideaStatus(`${index}`); selected = index"
+                                :class="{active:index == selected}"
                             >
                                 {{ itemStatus }}
                             </li>
@@ -144,9 +144,9 @@
             </div>
             <div class="col-md-3 col-sm-3 col-xs-6 text-right">
                 <ul>
-                    <li><a href="#">{{ collection.from }} - </a></li>
-                    <li><a href="#">{{ collection.to }}</a></li>
-                    <li><a href="#" title="total">({{ collection.total }})</a></li>
+                    <li>{{ collection.from }} - </li>
+                    <li>{{ collection.to }}</li>
+                    <li title="total">({{ collection.total }})</li>
                 </ul>
             </div>
         </div>
@@ -166,7 +166,7 @@
         data() {
             return {
                 pathUrl: window.location.pathname,
-                isActive: false,
+                selected: undefined,
                 loading: true,
                 query: {
                     limit: 15,
@@ -224,6 +224,7 @@
                 this.applyChange();
             },
             ideaStatus(param) {
+                this.active = 'active';
                 this.query.statusId = param;
                 this.applyChange();
             },

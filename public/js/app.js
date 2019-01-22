@@ -16718,8 +16718,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: ['filters', 'users'],
     data: function data() {
         return {
+            selected: undefined,
             checkedNames: [],
-            arrChecked: []
+            inputChecked: String
         };
     },
 
@@ -16729,7 +16730,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             //token = document.head.querySelector('meta[name="csrf-token"]');
             //console.log(token.content);
-            axios.post('/get-idea/all', this.arrChecked, {
+            axios.get('/get-idea/all?' + this.inputChecked, {
                 headers: {
                     'X-CSRF-TOKEN': window.csrf_token
                 }
@@ -16739,8 +16740,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         changeHandler: function changeHandler(e) {
             var serialize = this.checkBoxStatus(e);
-            this.arrChecked = serialize.substr(1);
-            this.$root.$emit('resultChecked', this.arrChecked);
+            this.inputChecked = serialize.substr(1);
+            this.$root.$emit('resultChecked', this.inputChecked);
 
             if (e.target.checked) {
                 this.post();
@@ -16752,11 +16753,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var userId = e.target.value;
 
             if (userId == 0) {
-                this.arrChecked = [];
+                this.inputChecked = '';
                 this.clearResult();
                 return false;
             } else {
-                this.arrChecked = userId;
+                this.inputChecked = userId;
             }
 
             this.post();
@@ -16773,8 +16774,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     uncheck[i].checked = false;
                 }
             }
-
-            this.arrChecked = [];
+            this.selected = undefined;
+            this.inputChecked = '';
             this.clearResult();
         },
         checkBoxStatus: function checkBoxStatus(e) {
@@ -16810,11 +16811,45 @@ var render = function() {
           _c("div", { staticClass: "col-lg-12" }, [
             _c(
               "select",
-              { staticClass: "form-control", on: { change: _vm.changeSelect } },
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.selected,
+                    expression: "selected"
+                  }
+                ],
+                staticClass: "form-control",
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.selected = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    _vm.changeSelect
+                  ]
+                }
+              },
               [
-                _c("option", { attrs: { value: "0" } }, [
-                  _vm._v("Выбрать автора")
-                ]),
+                _c(
+                  "option",
+                  {
+                    staticStyle: { display: "none" },
+                    attrs: { disabled: "" },
+                    domProps: { value: undefined }
+                  },
+                  [_vm._v("Выбрать автора")]
+                ),
                 _vm._v(" "),
                 _vm._l(_vm.users, function(user) {
                   return _c(
@@ -17303,7 +17338,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     data: function data() {
         return {
             pathUrl: window.location.pathname,
-            isActive: false,
+            selected: undefined,
             loading: true,
             query: {
                 limit: 15,
@@ -17358,6 +17393,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.applyChange();
         },
         ideaStatus: function ideaStatus(param) {
+            this.active = 'active';
             this.query.statusId = param;
             this.applyChange();
         },
@@ -17419,7 +17455,7 @@ var render = function() {
   return _c("div", { staticClass: "content-idea" }, [
     _c("div", { staticClass: "row info-row" }, [
       _c("div", { staticClass: "col-md-3 col-sm-6" }, [
-        _c("div", { staticClass: "item" }, [
+        _c("div", { staticClass: "item item-block" }, [
           _c(
             "ul",
             [
@@ -17447,7 +17483,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-3 col-sm-6" }, [
-        _c("div", { staticClass: "item" }, [
+        _c("div", { staticClass: "item item-block" }, [
           _c(
             "ul",
             [
@@ -17477,7 +17513,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-3 col-sm-6" }, [
-        _c("div", { staticClass: "item" }, [
+        _c("div", { staticClass: "item item-block" }, [
           _c(
             "ul",
             [
@@ -17505,7 +17541,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-3 col-sm-6" }, [
-        _c("div", { staticClass: "item" }, [
+        _c("div", { staticClass: "item item-block" }, [
           _c(
             "ul",
             [
@@ -17561,10 +17597,11 @@ var render = function() {
                   return _c(
                     "li",
                     {
-                      class: { active: _vm.isActive },
+                      class: { active: index == _vm.selected },
                       on: {
                         click: function($event) {
                           _vm.ideaStatus("" + index)
+                          _vm.selected = index
                         }
                       }
                     },
@@ -17816,22 +17853,12 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "col-md-3 col-sm-3 col-xs-6 text-right" }, [
         _c("ul", [
-          _c("li", [
-            _c("a", { attrs: { href: "#" } }, [
-              _vm._v(_vm._s(_vm.collection.from) + " - ")
-            ])
-          ]),
+          _c("li", [_vm._v(_vm._s(_vm.collection.from) + " - ")]),
           _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { href: "#" } }, [
-              _vm._v(_vm._s(_vm.collection.to))
-            ])
-          ]),
+          _c("li", [_vm._v(_vm._s(_vm.collection.to))]),
           _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { href: "#", title: "total" } }, [
-              _vm._v("(" + _vm._s(_vm.collection.total) + ")")
-            ])
+          _c("li", { attrs: { title: "total" } }, [
+            _vm._v("(" + _vm._s(_vm.collection.total) + ")")
           ])
         ])
       ])

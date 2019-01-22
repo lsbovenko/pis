@@ -31,7 +31,7 @@ Route::group(['middleware' => ['jwt']], function () {
         Route::get('/comments/{id}', 'ReviewIdeaController@getComments')->where('id', '[0-9]+')->name('comments');
 
         //VueJS
-        Route::any('/get-idea/all', 'Get\IdeasController@index')->name('get-idea/all');
+        Route::get('/get-idea/all', 'Get\IdeasController@index')->name('get-idea/all');
         Route::get('/get-idea/filter', 'Get\IdeasController@getFilter')->name('get-idea/filter');
         Route::get('/get-idea/change-filter', 'Get\IdeasController@getChangeFilter')->name('get-idea/change-filter');
         Route::get('/get-idea/priority-board', 'Get\IdeasController@priorityBoard')->name('/get-idea/priority-board');
