@@ -79,7 +79,7 @@
     </div>
     <!-- End Header -->
     <!-- Container -->
-    <div id="app">
+    <div id="app" v-cloak>
         <app></app>
         @yield('content')
     </div>

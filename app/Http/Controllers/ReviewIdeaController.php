@@ -209,7 +209,6 @@ class ReviewIdeaController extends Controller
             }
         } catch (\Throwable $e) {
             Log::error($e);
-            return redirect()->back();
         }
 
         return response()->json([

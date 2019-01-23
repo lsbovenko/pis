@@ -5,13 +5,15 @@
                 <ul class="last-changes-list">
                     <li class="first">Автор</li>
                 </ul>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <select class="form-control" @change="changeSelect" v-model="selected">
-                            <option :value="undefined" disabled style="display:none">Выбрать автора</option>
-                            <option :value="`user_id[]=${user.id}`" v-for="user in users">{{user.name}} {{user.last_name}} ({{user.number}})</option>
-                        </select>
-                    </div>
+                <div class="dropdown customer-select">
+                    <button class="btn btn-default dropdown-toggle home" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <em> Выбрать автора </em>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li class="active" @click="changeSelect(); active != active"><a class="pointer">Выбрать автора </a></li>
+                        <li @click="changeSelect(`user_id[]=${user.id}`); active != active" v-for="user in users" ><a class="pointer">{{user.name}} {{user.last_name}} ({{user.number}})</a></li>
+                    </ul>
                 </div>
             </section>
             <section id="departments" class="item">
@@ -107,21 +109,25 @@
         props: ['filters', 'users'],
         data() {
             return {
+                active: 'active',
                 selected:undefined,
                 checkedNames: [],
                 inputChecked: String,
+                query: {
+                    limit: 15,
+                    page: 1,
+                    count: 0,
+                }
             }
         },
         methods: {
             post() {
-                //token = document.head.querySelector('meta[name="csrf-token"]');
-                //console.log(token.content);
-                axios.get('/get-idea/all?' + this.inputChecked,
-                    {
-                        headers: {
-                            'X-CSRF-TOKEN': window.csrf_token
-                        }
-                    })
+                this.$root.$emit('preloaderPage', true);
+                const params = {
+                    ...this.query
+                };
+
+                axios.get('/get-idea/all/?'+this.inputChecked, {params: params})
                     .then( (res) => {
                         this.$root.$emit('resultFilter', res);
                     });
@@ -138,15 +144,13 @@
                 }
 
             },
-            changeSelect (e) {
-                let userId = e.target.value;
-
-                if (userId == 0) {
+            changeSelect (val) {
+                if (val === 'undefined') {
                     this.inputChecked = '';
                     this.clearResult();
                     return false;
                 } else {
-                    this.inputChecked = userId;
+                    this.inputChecked = val;
                 }
 
                 this.post();

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <preloader-page v-if="preloader"></preloader-page>
         <form @submit.prevent="onSubmit">
             <textarea class="form-control" placeholder="Добавить комментарий"
                       v-model="body"
@@ -7,12 +8,6 @@
             </textarea>
             <button type="submit" class="arrow button-comment" :disabled="disabled"></button>
         </form>
-        <div id="block_preload" v-if="preloader">
-            <div class="preloader"></div>
-            <div class="preloader"></div>
-            <div class="preloader"></div>
-            <div class="preloader"></div>
-        </div>
         <div v-if="result.status === 'success'">
             <div class="alert alert-success mg-top-10" v-show="visible">{{result.message}}</div>
         </div>
@@ -23,8 +18,11 @@
 </template>
 
 <script>
+    import PreloaderPage from './preloader/PreloaderPage';
+
     export default {
         name: "CommentForm",
+        components: {PreloaderPage},
         data(){
             return {
                 body: '',
@@ -47,17 +45,16 @@
                             this.result.status = result.data.status;
                             this.result.message = result.data.message;
                             this.visible = true;
-
-                            this.preloader = false;
                             this.body = '';
 
                             this.$root.$emit('renderList', true);
 
                             let cnt = document.getElementById('count_comment');
                             cnt.innerHTML = parseInt(cnt.innerHTML) + 1;
-                            this.disabled = false;
-                        }
 
+                            this.disabled = false;
+                            this.preloader = false;
+                        }
                     })
                     .catch(error => {
                         this.preloader = false;

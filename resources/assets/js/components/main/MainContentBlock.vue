@@ -85,13 +85,12 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" v-model="query.filter_match">
                             <li class="active" @click="orderSort(`${query.filterDesc}`)"><a href="#">Сначала новые </a></li>
-                            <li><a href="#" @click="orderSort(`${query.filterAsc}`)">Сначала старые</a></li>
+                            <li @click="orderSort(`${query.filterAsc}`)"><a href="#">Сначала старые</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-12">
                 <ul class="list-idea">
@@ -127,7 +126,7 @@
                 </ul>
             </div>
         </div>
-        <div class="row paginaton">
+        <div class="row paginaton" v-if="viewBlock">
             <div class="col-md-3 col-sm-3 col-xs-6">
                 <div class="dropdown customer-select">
                     <select class="form-control no-border-shadow" v-model="query.limit" :disabled="loading" @change="updateLimit">
@@ -138,9 +137,9 @@
                 </div>
             </div>
             <div class="col-md-6 col-sm-6 text-center hidden-xs">
-                <a href="#" class="btn btn-primary" :disabled="!collection.prev_page_url || loading" @click="prevPage"><i class="zmdi zmdi-long-arrow-left"></i> Назад</a>
+                <a class="btn btn-primary" :disabled="!collection.prev_page_url || loading" @click="prevPage"><i class="zmdi zmdi-long-arrow-left"></i> Назад</a>
                 <span class="btn btn-default current_page">{{ collection.current_page }}</span>
-                <a href="#" class="btn btn-primary" :disabled="!collection.next_page_url || loading" @click="nextPage">Далее <i class="zmdi zmdi-long-arrow-right"></i></a>
+                <a class="btn btn-primary" :disabled="!collection.next_page_url || loading" @click="nextPage">Далее <i class="zmdi zmdi-long-arrow-right"></i></a>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-6 text-right">
                 <ul>
@@ -160,7 +159,6 @@
         name: "MainContentBlock",
         reviewidea: null,
         props: {
-            url: String,
             statuses: Object,
         },
         data() {
@@ -168,6 +166,7 @@
                 pathUrl: window.location.pathname,
                 selected: undefined,
                 loading: true,
+                viewBlock: false,
                 query: {
                     limit: 15,
                     page: 1,
@@ -176,7 +175,6 @@
                     filterAsc: 'asc',
                     statusId: 1,
                     orderDir: '',
-                    currentRoute: window.location.pathname
                 },
                 collection: {
                     data: [],
@@ -200,19 +198,29 @@
                     { name: '/my-ideas', value: 'Мои идеи' },
                     { name: '/pending-review', value: 'Ожидающие' },
                     { name: '/declined', value: 'Отклоненные' },
-                ]
+                ],
+                url: (window.location.pathname === '/') ? '/get-idea/all' : '/get-idea' + this.query.currentRoute
             }
         },
         mounted() {
             this.fetch();
+
             this.$root.$on('resultFilter', (result) => {
-                this.collection = result.data.ideas;
+                this.viewBlock = false;
+                Vue.set(this.$data, 'collection', result.data.ideas);
+                this.query.page = result.data.ideas.current_page;
                 this.query.count = result.data.ideas.total;
+                this.filter = result.data.filter;
+
+                if (result.data.ideas.total > 15) {
+                    this.viewBlock = true;
+                }
+                this.$root.$emit('preloaderPage', false);
             });
 
             this.$root.$on('resultChecked', (result) => {
                 this.resultFilters = result;
-            })
+            });
         },
         methods: {
             orderSort(sort) {
@@ -243,26 +251,18 @@
                 }
             },
             nextPage() {
-                if(this.collection.next_page_url) {
+                if (this.collection.next_page_url){
                     this.query.page = Number(this.query.page) + 1;
                     this.applyChange();
                 }
             },
             fetch() {
+                this.$root.$emit('preloaderPage', true);
                 const params = {
                     ...this.query,
-                    ...this.resultFilters,
                 };
 
-                let url = '';
-
-                if (this.query.currentRoute === '/'){
-                    url = '/get-idea/all';
-                }else {
-                    url = '/get-idea' + this.query.currentRoute
-                }
-
-                axios.get(url, {params: params})
+                axios.get(this.url+'/?'+this.resultFilters, {params: params})
                     .then((res) => {
                         Vue.set(this.$data, 'collection', res.data.ideas);
                         Vue.set(this.$data, 'topUsers', res.data.topUsers);
@@ -271,19 +271,37 @@
                         Vue.set(this.$data, 'topUsersByCompletedIdeasLast3Month', res.data.topUsersByCompletedIdeasLast3Month);
                         this.query.page = res.data.ideas.current_page;
                         this.query.count = res.data.ideas.total;
-                    })
-                    .catch((error) => {
 
+                        if (this.query.count > 15) {
+                            this.viewBlock = true;
+                        }
+                        this.scrollUpTo();
+                        this.$root.$emit('preloaderPage', false);
                     })
+                    .catch((error) => {})
                     .finally(() => {
                         this.loading = false;
                     })
+            },
+            scrollUpTo() {
+                const scrollToTop = () => {
+                    const c = document.documentElement.scrollTop || document.body.scrollTop;
+                    if (c > 0) {
+                        window.requestAnimationFrame(scrollToTop);
+                        window.scrollTo(0, c - c / 8);
+                    }
+                };
+                scrollToTop();
             }
         }
     }
 </script>
 
 <style scoped>
+    [v-cloak] {
+        display:none;
+    }
+
 .current_page {
     min-width: 25px;
     height: 25px;
