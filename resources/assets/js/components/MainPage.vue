@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <preloader-page v-if="preloader"></preloader-page>
         <div class="row">
             <div class="col-md-3 mobile-menu">
                 <main-filter-block :filters="filters" :users="users"></main-filter-block>
@@ -14,9 +15,11 @@
 <script>
     import MainFilterBlock from './main/MainFilterBlock';
     import MainContentBlock from './main/MainContentBlock';
+    import PreloaderPage from './preloader/PreloaderPage';
+
     export default {
         name: "MainPage",
-        components: {MainContentBlock, MainFilterBlock},
+        components: {MainContentBlock, MainFilterBlock, PreloaderPage},
         data() {
             return {
                 filters: {
@@ -30,11 +33,15 @@
                 },
                 users: {
                     data: []
-                }
+                },
+                preloader: true
             }
         },
         mounted() {
             this.fetchFilter();
+            this.$root.$on('preloaderPage', (res) => {
+                this.preloader = res;
+            });
         },
         methods: {
             fetchFilter() {

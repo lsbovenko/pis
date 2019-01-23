@@ -6,6 +6,13 @@
         <div class="section-title">
             {{ $title }}
         </div>
+        <?php foreach ($errors->all() as $message):?>
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+            <?php echo $message?>
+        </div>
+        <?php endforeach?>
         <table class="table">
             <thead>
             <tr>
@@ -21,7 +28,7 @@
                         <a style="text-decoration: none;" href="{{ route($route . '.edit', ['id' => $item->id]) }}">
                             <span class="lnr lnr-pencil"></span>
                         </a>
-                        <a style="text-decoration: none;" href="{{ route('categories.type.delete', ['id' => $item->id]) }}">
+                        <a style="text-decoration: none;" href="{{ route($route . '.delete', ['id' => $item->id]) }}">
                             <span class="lnr lnr-trash"></span>
                         </a>
                     </td>
