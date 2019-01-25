@@ -6,13 +6,16 @@
                     <li class="first">Автор</li>
                 </ul>
                 <div class="dropdown customer-select">
-                    <button class="btn btn-default dropdown-toggle home" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <button class="btn btn-default dropdown-toggle home" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >
                         <em> Выбрать автора </em>
                         <span class="caret"></span>
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li class="active" @click="changeSelect(); active != active"><a class="pointer">Выбрать автора </a></li>
-                        <li @click="changeSelect(`user_id[]=${user.id}`); active != active" v-for="user in users" ><a class="pointer">{{user.name}} {{user.last_name}} ({{user.number}})</a></li>
+                    <ul class="dropdown-menu" id="menu_users" aria-labelledby="dropdownMenu1">
+                        <li @click="changeSelect()"><a class="pointer">Выбрать автора </a></li>
+                        <li v-for="user in users"
+                            @click="changeSelect(`user_id[]=${user.id}`)" >
+                            <a class="pointer">{{user.name}} {{user.last_name}} ({{user.number}})</a>
+                        </li>
                     </ul>
                 </div>
             </section>
@@ -110,14 +113,14 @@
         data() {
             return {
                 active: 'active',
-                selected:undefined,
-                checkedNames: [],
-                inputChecked: String,
+                selectUser: '',
+                inputChecked: '',
                 query: {
                     limit: 15,
                     page: 1,
                     count: 0,
-                }
+                },
+                url: (window.location.pathname === '/') ? '/get-idea/all' : '/get-idea' + pathUrl
             }
         },
         methods: {
@@ -127,7 +130,9 @@
                     ...this.query
                 };
 
-                axios.get('/get-idea/all/?'+this.inputChecked, {params: params})
+                let urlParams = (this.selectUser && !this.inputChecked) ? this.selectUser : this.inputChecked;
+
+                axios.get(this.url + '?' + urlParams, { params: params })
                     .then( (res) => {
                         this.$root.$emit('resultFilter', res);
                     });
@@ -135,6 +140,11 @@
             changeHandler (e) {
                 let serialize = this.checkBoxStatus(e);
                 this.inputChecked = serialize.substr(1);
+
+                if (this.selectUser) {
+                    this.inputChecked = this.inputChecked + '&' +this.selectUser
+                }
+
                 this.$root.$emit('resultChecked', this.inputChecked);
 
                 if (e.target.checked){
@@ -145,14 +155,14 @@
 
             },
             changeSelect (val) {
+
                 if (val === 'undefined') {
-                    this.inputChecked = '';
                     this.clearResult();
                     return false;
-                } else {
-                    this.inputChecked = val;
                 }
 
+                this.selectUser = val;
+                this.$root.$emit('resultChecked', this.selectUser);
                 this.post();
             },
             clearResult () {
@@ -167,7 +177,11 @@
                         uncheck[i].checked = false;
                     }
                 }
-                this.selected = undefined;
+
+                let userMenu = document.getElementById('dropdownMenu1');
+                userMenu.getElementsByTagName('em').innerHTML = 'Выбрать автора';
+
+                this.selectUser = '';
                 this.inputChecked = '';
                 this.clearResult();
             },

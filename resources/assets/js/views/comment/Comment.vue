@@ -1,9 +1,12 @@
 <template>
     <div>
         <div class="title">Комментариев: <span id="count_comment">{{ query.count }}</span></div>
-        <comment-form></comment-form>
 
         <comment-block :comments="comments" :count="query.count"></comment-block>
+        <hr>
+        <div class="mg-top-10">
+            <comment-form></comment-form>
+        </div>
     </div>
 </template>
 

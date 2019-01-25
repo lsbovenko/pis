@@ -10,7 +10,6 @@
     <title>{{ config('app.name', 'Ikantam') }}</title>
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/v1/main.css') }}?v={{ config('app.version') }}" rel="stylesheet">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
@@ -24,7 +23,8 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script type="text/javascript">
-        window.csrf_token = "{{ csrf_token() }}"
+        window.csrf_token = "{{ csrf_token() }}";
+        const pathUrl = window.location.pathname;
     </script>
 </head>
 <body class="sameblock with-menu">
@@ -37,27 +37,12 @@
                 <div class="col-md-2 col-sm-3 col-xs-2">
                     <a class="logo" href="/"><span>PIS</span>IKANTAM </a>
                 </div>
-                <!-- Search -->
-                <div class="col-md-5 col-sm-4 hidden-xs">
-                    {{--<form action="#" class="search">
-                        <input type="search" name="search" placeholder="Поиск">
-                        <i class="zmdi zmdi-search"></i>
-                    </form>--}}
-                </div>
-                <!-- End Search -->
-                <!-- Button Add Post -->
-                <div class="col-md-2 col-sm-2 col-xs-2 text-right button-block">
-                    @if(request()->route()->getAction()['as'] != 'add-idea')
-                        <button class="add"><a href="{{ route('add-idea') }}">+</a></button>
-                    @endif
-                </div>
-                <!-- End Button Add Post -->
-                <!-- User Panel -->
+                <div class="col-md-5 col-sm-4 hidden-xs"></div>
 
+                <div class="col-md-2 col-sm-2 col-xs-2 text-right button-block">
+                    <button class="add"><a href="{{ route('add-idea') }}">+</a></button>
+                </div>
                 <div class="col-md-3 col-sm-3 col-xs-8 text-center">
-                    {{--<i class="zmdi zmdi-notifications full">
-                        <span class="active"></span>
-                    </i>--}}
                     <div class="dropdown pull-right">
                         @if (Auth::guest())
                             <a href="{{ config('app.auth_url') }}">Login</a>
