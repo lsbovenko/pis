@@ -11,6 +11,7 @@ namespace App\Handlers\Events;
 use App\Events\CommentAdded;
 use App\Mail\IdeaComment\ToAll;
 use App\Models\Auth\User;
+use Illuminate\Support\Facades\Auth;
 
 class IdeaComment extends AbstractIdea
 {
@@ -20,8 +21,9 @@ class IdeaComment extends AbstractIdea
      * @param  CommentAdded $event
      * @return void
      */
-    public function handle(CommentAdded $event, User $user)
+    public function handle(CommentAdded $event)
     {
+        $user = Auth::user();
         $this->notifyAll($event, $user);
     }
 
@@ -31,11 +33,15 @@ class IdeaComment extends AbstractIdea
      */
     protected function notifyAll(CommentAdded $event, User $user)
     {
-        $users = array_diff($this->getRemoteUserRepository()->getAll(), [$user->email]);
+        $resultEmails = [];
+        foreach ($this->getRemoteUserRepository()->getAll() as $item) {
+            $resultEmails[] = $item['email'];
+        }
 
-        foreach ($users as $user) {
+        $userEmails = array_diff($resultEmails, [$user->email]);
 
-            $this->getQueueService()->add($user['email'], new ToAll($event->getComment()));
+        foreach ($userEmails as $email) {
+            $this->getQueueService()->add($email, new ToAll($event->getComment()));
         }
 
         return $this;

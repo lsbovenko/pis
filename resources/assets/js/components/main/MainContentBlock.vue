@@ -84,8 +84,8 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" v-model="query.filter_match">
-                            <li class="active" @click="orderSort(`${query.filterDesc}`)"><a href="#">Сначала новые </a></li>
-                            <li @click="orderSort(`${query.filterAsc}`)"><a href="#">Сначала старые</a></li>
+                            <li class="active" @click="orderSort(`${query.filterDesc}`)"><a class="pointer">Сначала новые </a></li>
+                            <li @click="orderSort(`${query.filterAsc}`)"><a class="pointer">Сначала старые</a></li>
                         </ul>
                     </div>
                 </div>
@@ -163,7 +163,7 @@
         },
         data() {
             return {
-                pathUrl: window.location.pathname,
+                pathUrl: pathUrl,
                 selected: undefined,
                 loading: true,
                 viewBlock: false,
@@ -191,7 +191,7 @@
                 topUsersByCompletedIdeasLast3Month: {
                     data: []
                 },
-                resultFilters: String,
+                resultFilters: '',
                 listMenu: [
                     { name: '/', value: 'Идеи' },
                     { name: '/priority-board', value: 'Приоритетный список' },
@@ -199,7 +199,7 @@
                     { name: '/pending-review', value: 'Ожидающие' },
                     { name: '/declined', value: 'Отклоненные' },
                 ],
-                url: (window.location.pathname === '/') ? '/get-idea/all' : '/get-idea' + this.query.currentRoute
+                url: (window.location.pathname === '/') ? '/get-idea/all' : '/get-idea' + pathUrl
             }
         },
         mounted() {
@@ -259,10 +259,10 @@
             fetch() {
                 this.$root.$emit('preloaderPage', true);
                 const params = {
-                    ...this.query,
+                    ...this.query
                 };
 
-                axios.get(this.url+'/?'+this.resultFilters, {params: params})
+                axios.get(this.url + '?' + this.resultFilters, {params: params})
                     .then((res) => {
                         Vue.set(this.$data, 'collection', res.data.ideas);
                         Vue.set(this.$data, 'topUsers', res.data.topUsers);
