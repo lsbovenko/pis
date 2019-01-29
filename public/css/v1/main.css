@@ -10277,3 +10277,7 @@ body .container .btn_.btn-outline-red:hover {
 .pointer {
     cursor: pointer;
 }
+
+.left {
+    float: left;
+}

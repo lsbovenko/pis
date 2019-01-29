@@ -179,7 +179,7 @@
                 }
 
                 let userMenu = document.getElementById('dropdownMenu1');
-                userMenu.getElementsByTagName('em').innerHTML = 'Выбрать автора';
+                userMenu.getElementsByTagName('em')[0].innerHTML = 'Выбрать автора';
 
                 this.selectUser = '';
                 this.inputChecked = '';

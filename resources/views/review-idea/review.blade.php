@@ -73,7 +73,7 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="buttons in-grid btn_like_{{ $idea->id }} add_like"
+                        <div class="buttons in-grid btn_like_{{ $idea->id }} add_like left"
                              data-name="{{ $authUser['user']->name }} {{ $authUser['user']->last_name }}"
                              data-id="{{ $authUser['user']->id }}"
                              data-idea="{{ $idea->id }}"
@@ -83,6 +83,14 @@
                             </div>
                         </div>
                         @endif
+                        @role('superadmin')
+                            @if(!$idea->isDeclined() and !$idea->isNew())
+                                <div class="buttons justify">
+                                    <div class="lnr lnr-pencil" onclick="window.location.href='{{ route('edit-idea', ['id' => $idea->id]) }}'"></div>
+                                </div>
+                            @endif
+                        @endrole
+
                         @include('review-idea.partials.pin-priority')
                         @include('edit-idea.partials.change-status')
                 </div>
@@ -91,7 +99,6 @@
                     <div class="block">
                         <b>{{ $user->getFullName() }}</b>
                         <div>{{ $user->position->name }}</div>
-                        <a>Все идеи автора({{ $countUserIdea }})</a>
                     </div>
                     <div class="block">
                         <b>Создана</b>
