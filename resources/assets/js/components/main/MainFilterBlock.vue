@@ -182,6 +182,7 @@
                 userMenu.getElementsByTagName('em')[0].innerHTML = 'Выбрать автора';
 
                 this.selectUser = '';
+                this.$root.$emit('resultChecked', '');
                 this.inputChecked = '';
                 this.clearResult();
             },
