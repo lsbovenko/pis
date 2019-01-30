@@ -13,55 +13,53 @@
                             {{ Session::get('alert-success') }}
                         </div>
                     @endif
+
                     @include('partials.errors')
-                        @if ($idea->isDeclined())
+
+                    @if ($idea->isDeclined())
                         <div class="idea-status">
                             <span class="rejected status">Откланено</span>
                         </div>
-                        @endif
+                    @endif
+
                     <div class="section-title">{{ $idea->title }}</div>
                     <div class="text">
                         {!! $idea->description !!}
                     </div>
-                        @if ($idea->isDeclined())
-                        <hr>
+                    @if ($idea->isDeclined())
                         <div class="answer">
-                            <div class="answer-name">
-                                Причина отказа
-                            </div>
+                            <div class="answer-name">Причина отказа</div>
                             <div class="answer-text">
                                 @if ($idea->getDeclineReason())
                                     {{ $idea->getDeclineReason()->text }}
                                 @endif
                             </div>
                         </div>
-                            <div class="buttons">
-                                <form action="{{ route('review-idea', ['id' => $idea->id]) }}" method="post">
-                                    {{ csrf_field() }}
-                                    <button  value="1" name="status" type="submit" class="accept">
-                                        <span class="fa fa-check"></span> Принять
-                                    </button>
-                                </form>
-                                <div class="lnr lnr-pencil" onclick="window.location.href='{{ route('edit-idea', ['id' => $idea->id]) }}'"></div>
-                            </div>
-                            @else
-                            @role('superadmin')
-                            @if ($idea->isNew())
+                        <div class="mg-top-10 buttons">
+                            <div class="lnr lnr-pencil"
+                                 onclick="window.location.href='{{ route('edit-idea', ['id' => $idea->id]) }}'"></div>
+                        </div>
+                    @else
+                        @role('superadmin')
+                        @if ($idea->isNew())
                             <div class="buttons justify">
-                                <div class="lnr lnr-pencil" onclick="window.location.href='{{ route('edit-idea', ['id' => $idea->id]) }}'"></div>
+                                <div class="lnr lnr-pencil"
+                                     onclick="window.location.href='{{ route('edit-idea', ['id' => $idea->id]) }}'"></div>
                                 <form action="{{ route('review-idea', ['id' => $idea->id]) }}" method="post">
                                     {{ csrf_field() }}
-                                    <button  value="1" name="status" type="submit" class="accept-blue">
+                                    <button value="1" name="status" type="submit" class="accept-blue">
                                         <span class="fa fa-check"></span> Принять
                                     </button>
                                 </form>
-                                <div class="reject popup-open" data-toggle="modal" data-target="#myModal">Отклонить</div>
+                                <div class="reject popup-open" data-toggle="modal" data-target="#myModal">Отклонить
+                                </div>
                             </div>
-                            @endif
-                            @endrole
                         @endif
+                        @endrole
+                    @endif
+
+                    @if ($idea->isApproved())
                         <hr>
-                        @if ($idea->isApproved())
                         <div class="support">
                             <div class="support-name">
                                 <i class="zmdi zmdi-favorite"></i>
@@ -69,30 +67,30 @@
                             </div>
                             <div class="support-text liked_users_{{ $idea->id }}">
                                 @foreach($authUser['listUsersLike'] as $userName)
-                                {{ $userName->name }} {{ $userName->last_name }}
+                                    {{ $userName->name }} {{ $userName->last_name }}
                                 @endforeach
                             </div>
                         </div>
-                        <div class="buttons in-grid btn_like_{{ $idea->id }} add_like left"
-                             data-name="{{ $authUser['user']->name }} {{ $authUser['user']->last_name }}"
-                             data-id="{{ $authUser['user']->id }}"
-                             data-idea="{{ $idea->id }}"
-                             id="{{ !empty($authUser['userLike']) ? 'remove_like_user' : 'add_like_user' }}">
-                            <div class="i-support {{ !empty($authUser['userLike']) ? 'btn_liked' : '' }}">
-                                {{ !empty($authUser['userLike']) ? 'Я не поддерживаю' : 'Я поддерживаю' }}
+                        <div class="mg-top-10">
+                            <div class="mg-top-0 buttons in-grid btn_like_{{ $idea->id }} add_like left"
+                                 data-name="{{ $authUser['user']->name }} {{ $authUser['user']->last_name }}"
+                                 data-id="{{ $authUser['user']->id }}"
+                                 data-idea="{{ $idea->id }}"
+                                 id="{{ !empty($authUser['userLike']) ? 'remove_like_user' : 'add_like_user' }}">
+                                <div class="i-support {{ !empty($authUser['userLike']) ? 'btn_liked' : '' }}">
+                                    {{ !empty($authUser['userLike']) ? 'Я не поддерживаю' : 'Я поддерживаю' }}
+                                </div>
                             </div>
-                        </div>
-                        @endif
-                        @role('superadmin')
+                            @role('superadmin')
                             @if(!$idea->isDeclined() and !$idea->isNew())
                                 <div class="buttons justify">
-                                    <div class="lnr lnr-pencil" onclick="window.location.href='{{ route('edit-idea', ['id' => $idea->id]) }}'"></div>
+                                    <div class="lnr lnr-pencil"
+                                         onclick="window.location.href='{{ route('edit-idea', ['id' => $idea->id]) }}'"></div>
                                 </div>
                             @endif
-                        @endrole
-
-                        @include('review-idea.partials.pin-priority')
-                        @include('edit-idea.partials.change-status')
+                            @endrole
+                        </div>
+                    @endif
                 </div>
                 <div class="information col-md-3">
                     <div data-user-name="{{ $user->getFullName() }}"><b>Автор</b></div>
@@ -146,10 +144,9 @@
                 </script>
                 <div class="reviews col-md-12" id="comment">
                     @if ($idea->isApproved())
-                    <comment></comment>
+                        <comment></comment>
                     @endif
                 </div>
-
             </div>
         </div>
     </div>

@@ -10281,3 +10281,11 @@ body .container .btn_.btn-outline-red:hover {
 .left {
     float: left;
 }
+
+.block_flex {
+    display: flex;
+}
+
+.mg-top-0 {
+    margin-top: 0 !important;
+}
