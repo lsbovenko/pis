@@ -120,7 +120,12 @@
                     page: 1,
                     count: 0,
                 },
-                url: (window.location.pathname === '/') ? '/get-idea/all' : '/get-idea' + pathUrl
+                url: (window.location.pathname === '/') ? '/get-idea/all' : '/get-idea' + pathUrl,
+                resetParam: {
+                    limit: 15,
+                    statusId: '',
+                    selected: ''
+                }
             }
         },
         methods: {
@@ -183,6 +188,7 @@
 
                 this.selectUser = '';
                 this.$root.$emit('resultChecked', '');
+                this.$root.$emit('resetAllFilterParams', this.resetParam);
                 this.inputChecked = '';
                 this.clearResult();
             },

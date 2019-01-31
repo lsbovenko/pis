@@ -126,27 +126,34 @@
                 </ul>
             </div>
         </div>
-        <div class="row paginaton" v-if="viewBlock">
-            <div class="col-md-3 col-sm-3 col-xs-6">
-                <div class="dropdown customer-select">
-                    <select class="form-control no-border-shadow" v-model="query.limit" :disabled="loading" @change="updateLimit">
-                        <option>15</option>
-                        <option>25</option>
-                        <option>50</option>
-                    </select>
+        <div class="row paginaton">
+            <div v-if="viewBlock">
+                <div class="col-md-3 col-sm-3 col-xs-6">
+                    <div class="dropdown customer-select">
+                        <select class="form-control no-border-shadow" v-model="query.limit" :disabled="loading" @change="updateLimit">
+                            <option>15</option>
+                            <option>25</option>
+                            <option>50</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 text-center hidden-xs">
+                    <div>
+                        <a class="btn btn-primary" :disabled="!collection.prev_page_url || loading" @click="prevPage"><i class="zmdi zmdi-long-arrow-left"></i> Назад</a>
+                        <span class="btn btn-default current_page">{{ collection.current_page }}</span>
+                        <a class="btn btn-primary" :disabled="!collection.next_page_url || loading" @click="nextPage">Далее <i class="zmdi zmdi-long-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-6 text-right">
+                    <ul>
+                        <li>{{ collection.from }} - </li>
+                        <li>{{ collection.to }}</li>
+                        <li title="total">({{ collection.total }})</li>
+                    </ul>
                 </div>
             </div>
-            <div class="col-md-6 col-sm-6 text-center hidden-xs">
-                <a class="btn btn-primary" :disabled="!collection.prev_page_url || loading" @click="prevPage"><i class="zmdi zmdi-long-arrow-left"></i> Назад</a>
-                <span class="btn btn-default current_page">{{ collection.current_page }}</span>
-                <a class="btn btn-primary" :disabled="!collection.next_page_url || loading" @click="nextPage">Далее <i class="zmdi zmdi-long-arrow-right"></i></a>
-            </div>
-            <div class="col-md-3 col-sm-3 col-xs-6 text-right">
-                <ul>
-                    <li>{{ collection.from }} - </li>
-                    <li>{{ collection.to }}</li>
-                    <li title="total">({{ collection.total }})</li>
-                </ul>
+            <div class="col-md-12" v-else>
+                <h4 class="text-center">Ничего не найдено</h4>
             </div>
         </div>
     </div>
@@ -173,7 +180,7 @@
                     count: 0,
                     filterDesc: 'desc',
                     filterAsc: 'asc',
-                    statusId: 1,
+                    statusId: '',
                     orderDir: '',
                 },
                 collection: {
@@ -221,6 +228,12 @@
             this.$root.$on('resultChecked', (result) => {
                 this.resultFilters = result;
             });
+
+            this.$root.$on('resetAllFilterParams', (result) => {
+                this.query.limit = result.limit;
+                this.query.statusId = result.statusId;
+                this.selected = result.selected;
+            })
         },
         methods: {
             orderSort(sort) {
@@ -229,9 +242,11 @@
                 }else {
                     this.query.orderDir = this.query.filterDesc;
                 }
+                this.query.page = 1;
                 this.applyChange();
             },
             ideaStatus(param) {
+                this.query.page = 1;
                 this.active = 'active';
                 this.query.statusId = param;
                 this.applyChange();
