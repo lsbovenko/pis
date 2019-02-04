@@ -89,6 +89,10 @@
                                 </div>
                             @endif
                             @endrole
+                            @include('review-idea.partials.approve')
+                            @include('review-idea.partials.pin-priority')
+                            @include('edit-idea.partials.change-status')
+                            @include('review-idea.partials.declined')
                         </div>
                     @endif
                 </div>
