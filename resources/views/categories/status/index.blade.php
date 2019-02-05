@@ -1,36 +1,49 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row page-header">
-        <div class="col-sm-8">
-            <h1>{{ $title }}</h1>
+<div class="container bottom-padding">
+    <div class="content-box admin-category">
+        <div class="section-title">
+            {{ $title }}
         </div>
-        <div class="col-sm-4">
-            <a href="{{ route($route . '.create') }}">
-                <button class="btn btn-primary h1" type="button">Добавить</button>
-            </a>
+        <?php foreach ($errors->all() as $message):?>
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+            <?php echo $message?>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Имя</th>
-                        <th>Действия</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($items as $item)
-                        <tr class="@if (!$item->is_active)danger @endif">
-                            <td>{{ $item->name }}</td>
-                            <td><a href="{{ route($route . '.edit', ['id' => $item->id]) }}">Редактировать</a></td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+        <?php endforeach?>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Имя</th>
+                <th class="text-right">Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($items as $item)
+                <tr class="@if (!$item->is_active)danger @endif">
+                    <td>{{ $item->name }}</td>
+                    <td>
+                        <a style="text-decoration: none;" href="{{ route($route . '.edit', ['id' => $item->id]) }}">
+                            <span class="lnr lnr-pencil"></span>
+                        </a>
+                        <a style="text-decoration: none;" href="{{ route($route . '.delete', ['id' => $item->id]) }}">
+                            <span class="lnr lnr-trash"></span>
+                        </a>
+                    </td>
+                </tr>
+            @endforeach
+            <tr>
+                <td></td>
+                <td>
+                    <a href="{{ route($route . '.create') }}">
+                        <button class="btn_ btn-blue last" type="button">Добавить</button>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
     <hr>
 </div>

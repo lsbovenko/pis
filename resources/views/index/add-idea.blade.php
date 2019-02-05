@@ -1,21 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row page-header">
-        <div class="col-sm-8">
-            <h1>Добавить идею</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+    <div class="container bottom-padding">
+        <div class="content-box add-new-idea">
+            <div class="section-title">Новая идея</div>
             @include('partials.errors')
-            <form method="POST" action="{{ route('add-idea') }}" class="js-disable-after-submit">
+            <form method="post" action="{{ route('add-idea') }}" class="js-disable-after-submit">
                 @include('index.partials.add-fields')
-                <button type="submit" class="btn btn-primary pull-right">Добавить</button>
+                <div class="row bottom-button">
+                    <div class="col-md-12 text-right"><button class="btn_ btn-blue last">Сохранить</button></div>
+                </div>
             </form>
+
         </div>
     </div>
-    <hr>
-</div>
 @endsection

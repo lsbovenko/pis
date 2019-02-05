@@ -3,15 +3,18 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Ikantam') }}</title>
-
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/v1/main.css') }}?v={{ config('app.version') }}" rel="stylesheet">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -19,75 +22,58 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script type="text/javascript">
+        window.csrf_token = "{{ csrf_token() }}";
+        const pathUrl = window.location.pathname;
+    </script>
 </head>
+<body class="sameblock with-menu">
+<div class="main-wrapper">
+    <div class="mobile-btn hidden-lg hidden-md"><i class="zmdi zmdi-view-toc"></i></div>
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 col-sm-3 col-xs-2">
+                    <a class="logo" href="/"><span>PIS</span>IKANTAM </a>
+                </div>
+                <div class="col-md-5 col-sm-4 hidden-xs"></div>
 
-<body>
-
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-
-            <!-- Collapsed Hamburger -->
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                <span class="sr-only">Toggle Navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-
-            <!-- Branding Image -->
-            <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Ikantam') }}
-            </a>
-        </div>
-
-        <div class="collapse navbar-collapse" id="app-navbar-collapse">
-            {!! Menu::main() !!}
-            <!-- Right Side Of Navbar -->
-            <ul class="nav navbar-nav navbar-right">
-                <!-- Authentication Links -->
-                @if (Auth::guest())
-                    <li><a href="{{ config('app.auth_url') }}">Login</a></li>
-                @else
-                    <li><a href="{{ route('about') }}">О системе</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ Auth::user()->name }} <span class="caret"></span>
-                        </a>
-
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="{{ config('app.auth_url') }}/profile">Профиль</a>
-                            </li>
-                            <li>
-                                <a href="{{ config('app.auth_url') }}/logout">Выйти</a>
-                            </li>
-                        </ul>
-                    </li>
-                @endif
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<!-- Page Content -->
-<div class="container">
-    @yield('content')
-
-    <!-- Footer -->
-    <footer>
-        <div class="row">
-            <div class="col-lg-12">
-
+                <div class="col-md-2 col-sm-2 col-xs-2 text-right button-block">
+                    <button class="add"><a href="{{ route('add-idea') }}">+</a></button>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-8 text-center">
+                    <div class="dropdown pull-right">
+                        @if (Auth::guest())
+                            <a href="{{ config('app.auth_url') }}">Login</a>
+                        @else
+                            <a data-toggle="dropdown" href="#">
+                                <em class="avatar user_avatar_name">
+                                    {{mb_substr(Auth::user()->name, 0 ,1)}}{{mb_substr(Auth::user()->last_name, 0 ,1)}}
+                                </em>
+                                {{ Auth::user()->name }}
+                                <span class="caret"></span>
+                            </a>
+                            {!! Menu::main() !!}
+                        @endif
+                    </div>
+                </div>
+                <!-- End User Panel -->
             </div>
         </div>
-    </footer>
+    </div>
+    <!-- End Header -->
+    <!-- Container -->
+    <div id="app" v-cloak>
+        <app></app>
+        @yield('content')
+    </div>
+    <!-- End Container -->
 </div>
-<!-- /.container -->
-
 <script src="{{ asset('js/jquery.js') }}"></script>
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('js/custom.js') }}"></script>
+
+<script src="{{ asset('js/libs.min.js') }}"></script>
+<script src="{{ asset('js/common.js') }}?v={{ config('app.version') }}"></script>
 @yield('scripts')
 @yield('inline-scripts')
 </body>

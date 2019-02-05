@@ -57,11 +57,11 @@ class Status extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function ideas()
     {
-        return $this->belongsToMany('App\Models\Idea');
+        return $this->hasMany('App\Models\Idea');
     }
 
     /**

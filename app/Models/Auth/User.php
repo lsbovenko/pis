@@ -2,6 +2,7 @@
 
 namespace App\Models\Auth;
 
+use App\Models\Comment;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
@@ -53,7 +54,7 @@ class User extends Authenticatable
      */
     public function getFullName() : string
     {
-        return $this->last_name . ' ' . $this->name;
+        return $this->name . ' ' . $this->last_name;
     }
     /**
      * @return int
@@ -113,5 +114,49 @@ class User extends Authenticatable
     public function ideas()
     {
         return $this->hasMany('App\Models\Idea');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function likedUserIdea()
+    {
+        return $this->belongsToMany('App\Models\Idea', 'idea_likes')->withTimestamps();
+    }
+
+    /**
+     * @param $ideaId
+     * @return mixed
+     */
+    public function checkUserLike($ideaId)
+    {
+        return $this->likedUserIdea()->where('idea_id', $ideaId)->first();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class,'user_id');
+    }
+
+    /**
+     * this connection ideas that the user like at least once
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function likeNotification()
+    {
+        return $this->belongsToMany(Idea::class, 'like_notifiсations');
+    }
+
+    /**
+     * @param int $ideaId
+     * @return mixed
+     */
+    public function getLikeNotification(int $ideaId)
+    {
+        return $this->likeNotification()->where('idea_id', $ideaId)->first();
     }
 }

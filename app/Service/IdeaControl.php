@@ -4,16 +4,8 @@ namespace App\Service;
 
 use App\Models\Categories\Status;
 use App\Models\Auth\User;
-use App\Models\{
-    Idea,
-    Note
-};
-use App\Events\{
-    IdeaWasCreated,
-    IdeaWasApproved,
-    IdeaWasDeclined,
-    IdeaWasChangedStatus
-};
+use App\Models\{Comment, Idea, Note};
+use App\Events\{CommentAdded, IdeaWasCreated, IdeaWasApproved, IdeaWasDeclined, IdeaWasChangedStatus, LikeAdded};
 
 /**
  * Class IdeaControl
@@ -174,5 +166,83 @@ class IdeaControl
         }
 
         return $idea;
+    }
+
+    /**
+     * @param Idea $idea
+     * @param $user
+     */
+    public function addPostLike(Idea $idea, User $user)
+    {
+        if ($this->isUserHasLike($user, $idea->id)) {
+            $idea->likes_num++;
+            $idea->save();
+
+            $this->addLikeIdeasUser($idea, $user);
+        }
+    }
+
+    /**
+     * @param Idea $idea
+     * @param $user
+     */
+    public function removeLike(Idea $idea, User $user)
+    {
+        if (!$this->isUserHasLike($user, $idea->id)) {
+            $idea->likes_num--;
+            $idea->save();
+            $user->likedUserIdea()->detach($idea->id);
+        }
+    }
+
+    /**
+     * @param User $user
+     * @param int $ideaId
+     * @return bool
+     */
+    public function isUserHasLike(User $user, int $ideaId) : bool
+    {
+        $likesUsers = $user->checkUserLike($ideaId);
+
+        return !$likesUsers;
+    }
+
+    /**
+     * @param Idea $idea
+     * @return bool
+     */
+    public function increaseAmountComment(Idea $idea, int $userId, string $message) : bool
+    {
+        $idea->comments_count++;
+        $idea->save();
+
+        $comment = new Comment;
+        $comment->idea_id = $idea->id;
+        $comment->user_id = $userId;
+        $comment->message = $message;
+        $comment->save();
+
+        //send email
+        event(new CommentAdded($comment));
+
+        return true;
+    }
+
+    /**
+     * @param int $ideaId
+     * @param $user
+     * @return bool
+     */
+    private function addLikeIdeasUser(Idea $idea, User $user) : bool
+    {
+        $user->likedUserIdea()->attach($idea->id);
+
+        if(!$user->getLikeNotification($idea->id)) {
+            $user->likeNotification()->attach($idea->id);
+
+            event(new LikeAdded($idea));
+        }
+
+        return true;
     }
 }

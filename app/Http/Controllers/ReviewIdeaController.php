@@ -40,6 +40,14 @@ class ReviewIdeaController extends Controller
             abort(404);
         }
 
+        $user = Auth::user();
+
+        $likedUserId = '';
+        $likedUser = $user->checkUserLike($idea->id);
+
+        if ($likedUser) {
+            $likedUserId = $likedUser->pivot->user_id;
+        }
 
         return view('review-idea.review', [
             'idea' => $idea,
@@ -47,7 +55,34 @@ class ReviewIdeaController extends Controller
             'priorityReason' => $idea->is_priority ? $idea->getPriorityReason() : null,
             'statuses' => App::make('reference')->getAllStatusesForSelect(),
             'status' => $idea->status,
+            'countUserIdea' => $user->ideas()->count(),
+            'authUser' => [
+                'user' => $user,
+                'userLike' => $likedUserId,
+                'listUsersLike' => $idea->users
+            ],
+            'comments' => $idea->comments
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function getComments(Request $request)
+    {
+        /** @var \App\Models\Idea $idea */
+        $idea = Idea::query()->where('id', '=', $request->route('id'))
+            ->with('comments', 'comments.user')
+            ->get()
+            ->first();
+
+        if (isset($idea)) {
+            return [
+                'count' => $idea->comments_count,
+                'comments' => $idea->comments
+            ];
+        }
     }
 
     /**
@@ -151,6 +186,35 @@ class ReviewIdeaController extends Controller
 
         $request->session()->flash('alert-success', 'Изменения успешно сохранены.');
         return redirect()->back();
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function addComment(Request $request)
+    {
+        /** @var \App\Models\Idea $idea */
+        $idea = Idea::findOrFail($request->route('id'));
+        $data = App::make('datacleaner')->cleanData($request->all(), ['message']);
+        $this->validate($request, [
+            'message' => 'required|min:2|max:10000'
+        ]);
+
+        $user = Auth::user();
+
+        try {
+            if ($idea->isApproved()) {
+                $this->getIdeaControl()->increaseAmountComment($idea, $user->id, $data['message']);
+            }
+        } catch (\Throwable $e) {
+            Log::error($e);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message'=>'Комментарий успешно добавлен'
+        ]);
     }
 
     /**
