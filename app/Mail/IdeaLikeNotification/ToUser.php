@@ -8,11 +8,36 @@
 
 namespace App\Mail\IdeaLikeNotify;
 
+use App\Models\Auth\User;
+use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+use App\Models\Idea;
 
-use App\Mail\AbstractMail;
-
-class ToUser extends AbstractMail
+class ToUser extends Mailable
 {
+    use Queueable, SerializesModels;
+
+    /**
+     * @var Idea
+     */
+    protected $idea;
+    /**
+     * @var User
+     */
+    private $likeAuthor;
+
+    /**
+     * ToUser constructor.
+     * @param Idea $idea
+     * @param User $likeAuthor
+     */
+    public function __construct(Idea $idea, User $likeAuthor)
+    {
+        $this->idea = $idea;
+        $this->likeAuthor = $likeAuthor;
+    }
+
     /**
      * Build the message.
      *
@@ -23,7 +48,8 @@ class ToUser extends AbstractMail
         return $this
             ->subject('Ваша идея понравилась в PIS')
             ->view('emails.like.to-user', [
-                'idea' => $this->idea
+                'idea' => $this->idea,
+                'likeAuthor' => $this->likeAuthor,
             ]);
     }
 }

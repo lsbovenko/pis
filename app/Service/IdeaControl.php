@@ -240,7 +240,7 @@ class IdeaControl
         if(!$user->getLikeNotification($idea->id)) {
             $user->likeNotification()->attach($idea->id);
 
-            event(new LikeAdded($idea));
+            event(new LikeAdded($idea, $user));
         }
 
         return true;

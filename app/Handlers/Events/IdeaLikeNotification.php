@@ -32,7 +32,7 @@ class IdeaLikeNotification extends AbstractIdea
     {
         $user = $event->getIdea()->user()->first();
         if ($user->is_active == 1) {
-            $this->getQueueService()->add($user->email, new ToUser($event->getIdea()));
+            $this->getQueueService()->add($user->email, new ToUser($event->getIdea(), $event->getLikeAuthor()));
         }
 
         return $this;

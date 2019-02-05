@@ -8,6 +8,7 @@
 
 namespace App\Events;
 
+use App\Models\Auth\User;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -21,15 +22,20 @@ abstract class LikeAbstract
      * @var Idea
      */
     protected $idea;
+    /**
+     * @var User
+     */
+    protected $likeAuthor;
 
     /**
-     * Create a new event instance.
-     *
-     * @return void
+     * LikeAbstract constructor.
+     * @param Idea $idea
+     * @param User $likeAuthor
      */
-    public function __construct(Idea $idea)
+    public function __construct(Idea $idea, User $likeAuthor)
     {
         $this->idea = $idea;
+        $this->likeAuthor = $likeAuthor;
     }
 
     /**
@@ -38,5 +44,13 @@ abstract class LikeAbstract
     public function getIdea() : Idea
     {
         return $this->idea;
+    }
+
+    /**
+     * @return User
+     */
+    public function getLikeAuthor()
+    {
+        return $this->likeAuthor;
     }
 }
