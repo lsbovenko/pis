@@ -21,9 +21,9 @@
                     <ul class="dropdown-menu-vue" v-if="showDropdown">
                         <li v-for="user in users">
                             <a href="javascript:void(0)"
-                               v-on:click="updateOption(user.name + ' ' + user.last_name + ' ('+user.number+')')"
+                               v-on:click="updateOption(user.name + ' ' + user.last_name)"
                                @click="changeSelect(`user_id[]=${user.id}`)">
-                                {{user.name}} {{user.last_name}} ({{user.number}})
+                                {{user.name}} {{user.last_name}}
                             </a>
                         </li>
                     </ul>
@@ -129,6 +129,8 @@
                     limit: 15,
                     page: 1,
                     count: 0,
+                    statusId: '',
+                    orderDir: 'desc',
                 },
                 url: (window.location.pathname === '/') ? '/get-idea/all' : '/get-idea' + pathUrl,
                 resetParam: {
@@ -150,6 +152,11 @@
             {
                 this.placeholderText = this.placeholder;
             }
+
+            this.$root.$on('checkOrderDir', (res) => {
+                this.query.statusId = res.statusId;
+                this.query.orderDir = res.orderDir;
+            });
         },
         methods: {
             updateOption(option) {
@@ -181,7 +188,7 @@
                     this.inputChecked = this.inputChecked + '&' +this.selectUser
                 }
 
-                this.$root.$emit('resultChecked', this.inputChecked);
+                this.$root.$emit('resultChecked', {data: this.inputChecked});
 
                 if (e.target.checked){
                     this.post();
@@ -204,7 +211,7 @@
                 this.selectUser = val;
                 this.inputChecked = this.inputChecked + '&' + this.selectUser;
 
-                this.$root.$emit('resultChecked', this.inputChecked);
+                this.$root.$emit('resultChecked', {data: this.inputChecked});
                 this.post();
             },
             clearResult () {
@@ -220,10 +227,11 @@
                     }
                 }
 
+                this.query.orderDir = 'desc';
                 this.removedClass();
                 this.selectedOptionName = '';
                 this.selectUser = '';
-                this.$root.$emit('resultChecked', '');
+                this.$root.$emit('resultChecked', {data: '', orderResult: 'removed'});
                 this.$root.$emit('resetAllFilterParams', this.resetParam);
                 this.inputChecked = '';
                 this.clearResult();
