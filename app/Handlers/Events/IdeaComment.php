@@ -23,16 +23,16 @@ class IdeaComment extends AbstractIdea
      */
     public function handle(CommentAdded $event)
     {
-        $this->notifyAuthor($event);
+        $this->notifyIdeaAuthor($event);
     }
 
     /**
      * @param CommentAdded $event
      * @return $this
      */
-    protected function notifyAuthor(CommentAdded $event)
+    protected function notifyIdeaAuthor(CommentAdded $event)
     {
-        $user = $event->getComment()->user()->first();
+        $user = $event->getComment()->idea()->first()->user;
         if ($user->is_active == 1) {
             $this->getQueueService()->add($user->email, new ToAll($event->getComment()));
         }
