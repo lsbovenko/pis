@@ -10351,7 +10351,7 @@ body .container .btn_.btn-outline-red:hover {
     background-clip: padding-box;
 }
 .dropdown-menu-vue > li > a {
-    padding: 10px 30px;
+    padding: 5px 20px;
     display: block;
     clear: both;
     font-weight: normal;

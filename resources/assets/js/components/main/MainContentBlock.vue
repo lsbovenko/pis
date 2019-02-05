@@ -75,7 +75,7 @@
                 </div>
                 <div class="pull-right">
                     <div class="dropdown customer-select">
-                        <button class="btn btn-default dropdown-toggle home" type="button" id="dropdownMenu1"
+                        <button class="btn btn-default dropdown-toggle home" type="button" id="dropdownMenuOrder"
                                 data-toggle="dropdown"
                                 aria-haspopup="true"
                                 aria-expanded="true"
@@ -83,9 +83,9 @@
                             <em> Сначала новые </em>
                             <span class="caret"></span>
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" v-model="query.filter_match">
-                            <li class="active" @click="orderSort(`${query.filterDesc}`)"><a class="pointer">Сначала новые </a></li>
-                            <li @click="orderSort(`${query.filterAsc}`)"><a class="pointer">Сначала старые</a></li>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuOrder" v-model="query.filter_match">
+                            <li class="order-list active" @click="orderSort(`${query.filterDesc}`)"><a class="pointer">Сначала новые </a></li>
+                            <li class="order-list" @click="orderSort(`${query.filterAsc}`)"><a class="pointer">Сначала старые</a></li>
                         </ul>
                     </div>
                 </div>
@@ -182,7 +182,7 @@
                     filterDesc: 'desc',
                     filterAsc: 'asc',
                     statusId: '',
-                    orderDir: '',
+                    orderDir: 'desc',
                 },
                 collection: {
                     data: [],
@@ -225,7 +225,15 @@
             });
 
             this.$root.$on('resultChecked', (result) => {
-                this.resultFilters = result;
+                this.resultFilters = result.data;
+
+                if (result.orderResult === 'removed'){
+                    let orderMenu = document.getElementById('dropdownMenuOrder');
+                    orderMenu.getElementsByTagName('em')[0].innerHTML = 'Сначала новые';
+                    this.querySelectorMenuOrder();
+                }
+
+                this.query.orderDir = '';
                 this.viewBlock = true;
                 this.ideaEmpty = false;
             });
@@ -243,6 +251,9 @@
                 }else {
                     this.query.orderDir = this.query.filterDesc;
                 }
+
+                this.$root.$emit('checkOrderDir', this.query);
+
                 this.query.page = 1;
                 this.applyChange();
             },
@@ -315,6 +326,23 @@
                 } else {
                     this.viewBlock = true;
                     this.ideaEmpty = false;
+                }
+            },
+            removedClassOrder(elements) {
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].classList.remove('active');
+                }
+            },
+            querySelectorMenuOrder() {
+                let elements = document.querySelectorAll('.order-list');
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i].classList.remove('active');
+                    elements[i].onclick = (event) => {
+                        this.removedClassOrder(elements);
+                        if (event.target.innerHTML === this.innerHTML) {
+                            this.classList.add("active");
+                        }
+                    };
                 }
             }
         }
