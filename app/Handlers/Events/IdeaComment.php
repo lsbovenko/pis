@@ -23,25 +23,18 @@ class IdeaComment extends AbstractIdea
      */
     public function handle(CommentAdded $event)
     {
-        $user = Auth::user();
-        $this->notifyAll($event, $user);
+        $this->notifyAuthor($event);
     }
 
     /**
      * @param CommentAdded $event
      * @return $this
      */
-    protected function notifyAll(CommentAdded $event, User $user)
+    protected function notifyAuthor(CommentAdded $event)
     {
-        $resultEmails = [];
-        foreach ($this->getRemoteUserRepository()->getAll() as $item) {
-            $resultEmails[] = $item['email'];
-        }
-
-        $userEmails = array_diff($resultEmails, [$user->email]);
-
-        foreach ($userEmails as $email) {
-            $this->getQueueService()->add($email, new ToAll($event->getComment()));
+        $user = $event->getComment()->user()->first();
+        if ($user->is_active == 1) {
+            $this->getQueueService()->add($user->email, new ToAll($event->getComment()));
         }
 
         return $this;
