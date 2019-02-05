@@ -2,7 +2,7 @@
 
 @section('content')
     <p>
-        {{ $comment->user->geFullName() }}
+        {{ $comment->user->getFullName() }}
         Добавил(а) новый комментарий к <a href="{{ route('review-idea', ['id' => $comment->idea->id]) }}">"{{ $comment->idea->title }}</a>".
     </p>
     <div>

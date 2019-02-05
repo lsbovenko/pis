@@ -32,9 +32,11 @@ class IdeaComment extends AbstractIdea
      */
     protected function notifyIdeaAuthor(CommentAdded $event)
     {
-        $user = $event->getComment()->idea()->first()->user;
-        if ($user->is_active == 1) {
-            $this->getQueueService()->add($user->email, new ToAll($event->getComment()));
+        $ideaAuthor = $event->getComment()->idea()->first()->user;
+        $commentAuthor = $event->getComment()->user()->first();
+
+        if ($ideaAuthor->is_active == 1 && $ideaAuthor->id !== $commentAuthor->id) {
+            $this->getQueueService()->add($ideaAuthor->email, new ToAll($event->getComment()));
         }
 
         return $this;
