@@ -128,7 +128,7 @@
                 ['style', ['bold', 'underline', 'italic']],
                 ['color', ['color']],
                 ['para', ['ul', 'ol', 'paragraph']],
-                ['insert', ['picture', 'link']]
+                ['insert', ['link']] //'picture',
             ]
         });
     });

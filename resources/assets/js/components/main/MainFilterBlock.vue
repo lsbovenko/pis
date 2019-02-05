@@ -5,21 +5,31 @@
                 <ul class="last-changes-list">
                     <li class="first">Автор</li>
                 </ul>
-                <div class="dropdown customer-select">
-                    <button class="btn btn-default dropdown-toggle home" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >
-                        <em> Выбрать автора </em>
+
+                <div class="btn-group-vue dropdown customer-select" id="customer-select">
+                    <div class="menu-overlay-vue" v-if="showDropdown" @click.stop="toggleMenu"></div>
+                    <li @click="toggleMenu()" class="dropdown-toggle-vue" v-if="selectedOptionName !== '' ">
+                        {{ selectedOptionName }}
                         <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" id="menu_users" aria-labelledby="dropdownMenu1">
-                        <li @click="changeSelect()"><a class="pointer">Выбрать автора </a></li>
-                        <li v-for="user in users"
-                            @click="changeSelect(`user_id[]=${user.id}`)" >
-                            <a class="pointer">{{user.name}} {{user.last_name}} ({{user.number}})</a>
+                    </li>
+
+                    <li @click="toggleMenu()" class="dropdown-toggle-vue" v-if="selectedOptionName === ''">
+                        {{placeholderText}}
+                        <span class="caret-menu"></span>
+                    </li>
+
+                    <ul class="dropdown-menu-vue" v-if="showDropdown">
+                        <li v-for="user in users">
+                            <a href="javascript:void(0)"
+                               v-on:click="updateOption(user.name + ' ' + user.last_name + ' ('+user.number+')')"
+                               @click="changeSelect(`user_id[]=${user.id}`)">
+                                {{user.name}} {{user.last_name}} ({{user.number}})
+                            </a>
                         </li>
                     </ul>
                 </div>
             </section>
-            <section id="departments" class="item">
+            <section id="departments" class="item mg-top-10">
                 <ul>
                     <li class="first">
                         Отдел
@@ -86,7 +96,7 @@
                     </li>
                 </ul>
             </section>
-            <section id="type" class="item">
+            <section id="type" class="item bottom-20">
                 <ul>
                     <li class="first">Тип</li>
                     <li v-for="(itemType, index) in filters.typesList">
@@ -125,10 +135,32 @@
                     limit: 15,
                     statusId: '',
                     selected: ''
-                }
+                },
+                selectedOption: {
+                    name: ''
+                },
+                selectedOptionName: '',
+                showDropdown: false,
+                placeholderText: 'Выбрать автора',
+            }
+        },
+        mounted() {
+            this.selectedOption = this.users;
+            if (this.placeholder)
+            {
+                this.placeholderText = this.placeholder;
             }
         },
         methods: {
+            updateOption(option) {
+                this.selectedOptionName = option;
+                this.showDropdown = false;
+                this.$emit('updateOption', this.selectedOption);
+            },
+            toggleMenu () {
+                this.showDropdown = !this.showDropdown;
+                this.removedClass();
+            },
             post() {
                 this.$root.$emit('preloaderPage', true);
                 const params = {
@@ -145,7 +177,6 @@
             changeHandler (e) {
                 let serialize = this.checkBoxStatus(e);
                 this.inputChecked = serialize.substr(1);
-
                 if (this.selectUser) {
                     this.inputChecked = this.inputChecked + '&' +this.selectUser
                 }
@@ -160,14 +191,20 @@
 
             },
             changeSelect (val) {
-
                 if (val === 'undefined') {
+                    this.selectUser = '';
                     this.clearResult();
                     return false;
                 }
 
+                if (this.inputChecked) {
+                    this.inputChecked = this.inputChecked.replace(/(\&|\?)user_id\[\]=(\d+)/gm, '');
+                }
+
                 this.selectUser = val;
-                this.$root.$emit('resultChecked', this.selectUser);
+                this.inputChecked = this.inputChecked + '&' + this.selectUser;
+
+                this.$root.$emit('resultChecked', this.inputChecked);
                 this.post();
             },
             clearResult () {
@@ -183,9 +220,8 @@
                     }
                 }
 
-                let userMenu = document.getElementById('dropdownMenu1');
-                userMenu.getElementsByTagName('em')[0].innerHTML = 'Выбрать автора';
-
+                this.removedClass();
+                this.selectedOptionName = '';
                 this.selectUser = '';
                 this.$root.$emit('resultChecked', '');
                 this.$root.$emit('resetAllFilterParams', this.resetParam);
@@ -204,6 +240,10 @@
                     }
                 }
                 return serialize;
+            },
+            removedClass() {
+                let userMenu = document.getElementById('customer-select');
+                userMenu.classList.remove('open');
             }
         },
     }

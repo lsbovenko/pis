@@ -127,7 +127,7 @@
             </div>
         </div>
         <div class="row paginaton">
-            <div v-if="viewBlock">
+                <div v-if="viewBlock">
                 <div class="col-md-3 col-sm-3 col-xs-6">
                     <div class="dropdown customer-select">
                         <select class="form-control no-border-shadow" v-model="query.limit" :disabled="loading" @change="updateLimit">
@@ -152,7 +152,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-12" v-else>
+            <div class="col-md-12" v-if="ideaEmpty">
                 <h4 class="text-center">Ничего не найдено</h4>
             </div>
         </div>
@@ -174,6 +174,7 @@
                 selected: undefined,
                 loading: true,
                 viewBlock: false,
+                ideaEmpty: false,
                 query: {
                     limit: 15,
                     page: 1,
@@ -213,20 +214,20 @@
             this.fetch();
 
             this.$root.$on('resultFilter', (result) => {
-                this.viewBlock = false;
                 Vue.set(this.$data, 'collection', result.data.ideas);
                 this.query.page = result.data.ideas.current_page;
                 this.query.count = result.data.ideas.total;
                 this.filter = result.data.filter;
 
-                if (result.data.ideas.total > 15) {
-                    this.viewBlock = true;
-                }
+                this.viewPaginateBlock(result.data.ideas.total);
+
                 this.$root.$emit('preloaderPage', false);
             });
 
             this.$root.$on('resultChecked', (result) => {
                 this.resultFilters = result;
+                this.viewBlock = true;
+                this.ideaEmpty = false;
             });
 
             this.$root.$on('resetAllFilterParams', (result) => {
@@ -287,9 +288,8 @@
                         this.query.page = res.data.ideas.current_page;
                         this.query.count = res.data.ideas.total;
 
-                        if (this.query.count > 15) {
-                            this.viewBlock = true;
-                        }
+                        this.viewPaginateBlock(this.query.count);
+
                         this.scrollUpTo();
                         this.$root.$emit('preloaderPage', false);
                     })
@@ -307,6 +307,15 @@
                     }
                 };
                 scrollToTop();
+            },
+            viewPaginateBlock (count) {
+                if (parseInt(count) === 0) {
+                    this.viewBlock = false;
+                    this.ideaEmpty = true;
+                } else {
+                    this.viewBlock = true;
+                    this.ideaEmpty = false;
+                }
             }
         }
     }
