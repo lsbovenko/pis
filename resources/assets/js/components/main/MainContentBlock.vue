@@ -43,7 +43,7 @@
             <div class="col-md-3 col-sm-6">
                 <div class="item item-block">
                     <ul>
-                        <li>Всего за 90 дней</li>
+                        <li>Реализованные за 90 дней</li>
                         <li v-if="topUsersByCompletedIdeasLast3Month"
                             v-for="topUsersByCompletedIdeasLast3M in topUsersByCompletedIdeasLast3Month">
                             {{ topUsersByCompletedIdeasLast3M.name }}
