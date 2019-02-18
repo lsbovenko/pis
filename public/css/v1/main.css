@@ -8670,6 +8670,7 @@ body .container .content-box .idea .description .text {
     font-size: 14px;
     line-height: 1.43;
     color: #424242;
+    word-break: break-word;
 }
 
 body .container .content-box .idea .description .answer {
