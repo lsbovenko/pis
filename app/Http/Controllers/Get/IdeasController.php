@@ -257,7 +257,7 @@ class IdeasController extends Controller
      */
     protected function getActiveUsers()
     {
-        return App::make('repository.user')->getTopUsers(Status::getActiveStatus(), null, 20, 1);
+        return App::make('repository.user')->getTopUsers(Status::getActiveStatus(), null, null, 20, 1);
     }
     /**
      * @return mixed
@@ -282,6 +282,6 @@ class IdeasController extends Controller
     protected function getTopUsersByCompletedIdeasLast3Month()
     {
         $date = new \DateTime('-3 month');
-        return App::make('repository.user')->getTopUsers(Status::getCompletedStatus(), $date);
+        return App::make('repository.user')->getTopUsers(Status::getCompletedStatus(), null, $date);
     }
 }
