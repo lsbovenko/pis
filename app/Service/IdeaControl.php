@@ -6,6 +6,7 @@ use App\Models\Categories\Status;
 use App\Models\Auth\User;
 use App\Models\{Comment, Idea, Note};
 use App\Events\{CommentAdded, IdeaWasCreated, IdeaWasApproved, IdeaWasDeclined, IdeaWasChangedStatus, LikeAdded};
+use Carbon\Carbon;
 
 /**
  * Class IdeaControl
@@ -159,6 +160,9 @@ class IdeaControl
             throw new \App\Exceptions\IdeaIsNotApproved('Вы не можете изменить статус неутвержденной идеи');
         }
         if ($idea->status_id !== $status->id) {
+            if ($status->slug == Status::SLUG_COMPLETED) {
+                $idea->completed_at = Carbon::now();
+            }
             $idea->status_id = $status->id;
             $idea->save();
 
