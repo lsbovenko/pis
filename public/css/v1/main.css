@@ -9473,6 +9473,13 @@ body .container .btn_.btn-outline-red:hover {
     top: -10px;
 }
 
+.idea .status {
+    position: relative;
+    display: inline-block;
+    margin: 0 0 10px 0;
+    top: 0;
+}
+
 @media (max-width: 767px) {
     .list-idea .item .title .approve_status {
         position: relative;
@@ -9488,7 +9495,7 @@ body .container .btn_.btn-outline-red:hover {
     }
 }
 
-.list-idea .item .title .active {
+.list-idea .item .title .active, .idea .active {
     -webkit-border-radius: 12.5px;
     border-radius: 12.5px;
     border: solid 1px #155724;
@@ -9501,12 +9508,12 @@ body .container .btn_.btn-outline-red:hover {
     transition: 0.2s ease;
 }
 
-.list-idea .item .title .active:hover {
+.list-idea .item .title .active:hover, .idea .active:hover {
     background: #2d683d;
     color: #fff;
 }
 
-.list-idea .item .title .completed, .list-idea .item .title .not_approved {
+.list-idea .item .title .completed, .list-idea .item .title .not_approved, .idea .completed {
     -webkit-border-radius: 12.5px;
     border-radius: 12.5px;
     border: solid 1px #f44336;
@@ -9519,12 +9526,12 @@ body .container .btn_.btn-outline-red:hover {
     transition: 0.2s ease;
 }
 
-.list-idea .item .title .completed:hover, .list-idea .item .title .not_approved:hover {
+.list-idea .item .title .completed:hover, .list-idea .item .title .not_approved:hover, .idea .completed:hover {
     background: #f44336;
     color: #fff;
 }
 
-.list-idea .item .title .frozen {
+.list-idea .item .title .frozen, .idea .frozen {
     -webkit-border-radius: 12.5px;
     border-radius: 12.5px;
     border: solid 1px #383d41;
@@ -9537,7 +9544,7 @@ body .container .btn_.btn-outline-red:hover {
     transition: 0.2s ease;
 }
 
-.list-idea .item .title .frozen:hover {
+.list-idea .item .title .frozen:hover, .idea .frozen:hover {
     background: #41464a;
     color: #fff;
 }

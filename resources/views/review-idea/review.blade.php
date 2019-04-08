@@ -23,6 +23,7 @@
                     @endif
 
                     <div class="section-title">{{ $idea->title }}</div>
+                    <div class="{{ $status->slug }} status">{{ $status->name }}</div>
                     <div class="text">
                         {!! $idea->description !!}
                     </div>
