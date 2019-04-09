@@ -9447,7 +9447,7 @@ body .container .btn_.btn-outline-red:hover {
 
 .list-idea .item .title .text {
     display: block;
-    max-width: 80%;
+    max-width: 70%;
 }
 
 @media (max-width: 767px) {
@@ -9461,6 +9461,12 @@ body .container .btn_.btn-outline-red:hover {
     text-decoration: underline;
 }
 
+.list-idea .item .title .approve_status {
+    position: absolute;
+    right: 15%;
+    top: -10px;
+}
+
 .list-idea .item .title .status {
     position: absolute;
     right: 0;
@@ -9468,6 +9474,12 @@ body .container .btn_.btn-outline-red:hover {
 }
 
 @media (max-width: 767px) {
+    .list-idea .item .title .approve_status {
+        position: relative;
+        display: inline-block;
+        margin: 15px 0 5px 15%;
+        top: 0;
+    }
     .list-idea .item .title .status {
         position: relative;
         display: inline-block;
@@ -9494,7 +9506,7 @@ body .container .btn_.btn-outline-red:hover {
     color: #fff;
 }
 
-.list-idea .item .title .completed {
+.list-idea .item .title .completed, .list-idea .item .title .not_approved {
     -webkit-border-radius: 12.5px;
     border-radius: 12.5px;
     border: solid 1px #f44336;
@@ -9507,7 +9519,7 @@ body .container .btn_.btn-outline-red:hover {
     transition: 0.2s ease;
 }
 
-.list-idea .item .title .completed:hover {
+.list-idea .item .title .completed:hover, .list-idea .item .title .not_approved:hover {
     background: #f44336;
     color: #fff;
 }
