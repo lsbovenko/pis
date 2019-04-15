@@ -107,7 +107,7 @@
                             <div class="row">
                                 <div class="col-md-9">
                                     <div class="user-info">
-                                        <span class="avatar">
+                                        <span class="avatar" v-bind:style="'background-color: ' + item.user.icon_color">
                                             {{ item.user.name.substring(0,1) }}{{ item.user.last_name.substring(0,1) }}
                                         </span>
                                         <span class="user-name">

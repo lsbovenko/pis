@@ -48,7 +48,7 @@
                             <a href="{{ config('app.auth_url') }}">Login</a>
                         @else
                             <a data-toggle="dropdown" href="#">
-                                <em class="avatar user_avatar_name">
+                                <em class="avatar user_avatar_name" style="background-color: {{ Auth::user()->icon_color }}">
                                     {{mb_substr(Auth::user()->name, 0 ,1)}}{{mb_substr(Auth::user()->last_name, 0 ,1)}}
                                 </em>
                                 {{ Auth::user()->name }}
@@ -74,7 +74,7 @@
 
 <script src="{{ asset('js/libs.min.js') }}"></script>
 <script src="{{ asset('js/common.js') }}?v={{ config('app.version') }}"></script>
-<script src="{{ asset('js/custom.js') }}"></script>
+<script src="{{ asset('js/custom.js') }}?v={{ config('app.version') }}"></script>
 @yield('scripts')
 @yield('inline-scripts')
 </body>

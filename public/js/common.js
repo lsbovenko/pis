@@ -94,23 +94,6 @@
 
         modal();
 
-        // avatarColor
-        function getRandomColor() {
-            var letters = "01234567890ABCDEF";
-            var color = "#";
-            for (var i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
-
-        function avatarColor(elem1) {
-            $(elem1).find('.avatar').each(function (index) {
-                $(this).css({'background-color': getRandomColor()});
-            })
-        }
-
-        avatarColor($('body'));
         /*$('.sameblock').matchHeight({
             byRow: true,
             property: 'height',
