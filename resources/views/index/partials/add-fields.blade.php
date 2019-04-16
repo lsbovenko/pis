@@ -19,9 +19,9 @@
         <label for="dropdownMenu1">Основная Компетенция</label>
         <div class="dropdown customer-select">
             {{ Form::select('core_competency_id[]', $coreCompetenciesList, isset($idea) ? $idea->coreCompetencies : '', [
-            'class'=>'btn form-control',
-            'placeholder' => 'Выберите',
-            'id' => 'idea_competency'
+            'class'=>'form-control',
+            'id' => 'idea_competency',
+            'multiple' => true
             ]) }}
         </div>
     </div>
@@ -29,9 +29,9 @@
         <label for="dropdownMenu2">Операционная Цель</label>
         <div class="dropdown customer-select">
             {{ Form::select('operational_goal_id[]', $operationalGoalsList, isset($idea) ? $idea->operationalGoals : '', [
-            'class'=>'btn form-control',
-            'placeholder' => 'Выберите',
-            'id' => 'idea_goal'
+            'class'=>'form-control',
+            'id' => 'idea_goal',
+            'multiple' => true
             ]) }}
         </div>
     </div>
@@ -41,9 +41,9 @@
         <label for="dropdownMenu3">Стратегическая Задача</label>
         <div class="dropdown customer-select">
             {{ Form::select('strategic_objective_id[]', $strategicObjectivesList, isset($idea) ? $idea->strategicObjectives : '', [
-            'class'=>'btn form-control',
-            'placeholder' => 'Выберите',
-            'id' => 'idea_task'
+            'class'=>'form-control',
+            'id' => 'idea_task',
+            'multiple' => true
             ]) }}
         </div>
     </div>
@@ -51,9 +51,9 @@
         <label for="dropdownMenu4">Отдел</label>
         <div class="dropdown customer-select">
             {{ Form::select('department_id[]', $departmentsList, isset($idea) ? $idea->departments : '', [
-            'class'=>'btn form-control',
-            'placeholder' => 'Выберите',
-            'id' => 'idea_depart'
+            'class'=>'form-control',
+            'id' => 'idea_depart',
+            'multiple' => true
             ]) }}
         </div>
     </div>
