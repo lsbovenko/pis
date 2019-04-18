@@ -50,6 +50,22 @@ class User extends Authenticatable
     ];
 
     /**
+     * @var array
+     */
+    protected $appends = [
+        'icon_color'
+    ];
+
+    /**
+     * @return string
+     */
+    public function getIconColorAttribute()
+    {
+        $hash =  md5($this->name . '_' . $this->last_name . '_' . $this->email);
+        return '#' . substr($hash, 0, 6);
+    }
+
+    /**
      * @return string
      */
     public function getFullName() : string

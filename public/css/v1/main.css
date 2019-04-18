@@ -8263,7 +8263,6 @@ body .dropdown .avatar {
     height: 32px;
     -webkit-border-radius: 100%;
     border-radius: 100%;
-    background: #ff5252;
     display: inline-block;
     text-align: center;
     color: #fff;
@@ -9593,7 +9592,6 @@ body .container .btn_.btn-outline-red:hover {
     height: 32px;
     -webkit-border-radius: 100%;
     border-radius: 100%;
-    background: #ff5252;
     display: inline-block;
     text-align: center;
     color: #fff;
