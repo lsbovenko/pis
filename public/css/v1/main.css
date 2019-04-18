@@ -8258,15 +8258,6 @@ body.gray-bg.transparent {
     }
 }
 
-body ul {
-    padding: 0;
-    margin: 0;
-}
-
-body ul li {
-    list-style: none;
-}
-
 body .dropdown .avatar {
     width: 32px;
     height: 32px;
@@ -10406,10 +10397,27 @@ body .container .btn_.btn-outline-red:hover {
     float: right;
 }
 
-li {
+.bottom-20 {
+    margin-bottom: 20px;
+}
+
+.without-list-style {
+    padding: 0;
+    margin: 0;
+}
+
+.list-idea {
+    margin-top: 20px;
+}
+
+.without-list-style li, #customer-select li {
     list-style: none;
 }
 
-.bottom-20 {
-    margin-bottom: 20px;
+.without-list-style li ul li {
+    list-style: disc;
+}
+
+.without-list-style li ol li {
+    list-style: decimal;
 }

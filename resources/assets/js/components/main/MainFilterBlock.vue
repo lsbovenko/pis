@@ -2,7 +2,7 @@
     <div class="left-sidebar sameblock">
         <form action="">
             <section class="item mg-right-15">
-                <ul class="last-changes-list">
+                <ul class="last-changes-list without-list-style">
                     <li class="first">Автор</li>
                 </ul>
 
@@ -30,7 +30,7 @@
                 </div>
             </section>
             <section id="departments" class="item mg-top-10">
-                <ul>
+                <ul class="without-list-style">
                     <li class="first">
                         Отдел
                         <span class="drop" @click="removeChecked">Сбросить</span>
@@ -49,7 +49,7 @@
                 </ul>
             </section>
             <section id="competenc" class="item">
-                <ul>
+                <ul class="without-list-style">
                     <li class="first">Основная компетенция</li>
                     <li v-for="(itemCompetenc, index) in filters.coreCompetenciesList">
                         <label class="inbtn">
@@ -65,7 +65,7 @@
                 </ul>
             </section>
             <section id="operational" class="item">
-                <ul>
+                <ul class="without-list-style">
                     <li class="first">Операционная цель</li>
                     <li v-for="(itemOperational, index) in filters.operationalGoalsList">
                         <label class="inbtn">
@@ -81,7 +81,7 @@
                 </ul>
             </section>
             <section id="strategic" class="item">
-                <ul>
+                <ul class="without-list-style">
                     <li class="first">Стратегическая задача</li>
                     <li v-for="(itemStrategic, index) in filters.strategicObjectivesList">
                         <label class="inbtn">
@@ -97,7 +97,7 @@
                 </ul>
             </section>
             <section id="type" class="item bottom-20">
-                <ul>
+                <ul class="without-list-style">
                     <li class="first">Тип</li>
                     <li v-for="(itemType, index) in filters.typesList">
                         <label class="inbtn">

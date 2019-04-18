@@ -3,7 +3,7 @@
         <div class="row info-row">
             <div class="col-md-3 col-sm-6">
                 <div class="item item-block">
-                    <ul>
+                    <ul class="without-list-style">
                         <li>Всего</li>
                         <li v-if="topUser"
                             v-for="topUser in topUsers">
@@ -16,7 +16,7 @@
             </div>
             <div class="col-md-3 col-sm-6">
                 <div class="item item-block">
-                    <ul>
+                    <ul class="without-list-style">
                         <li>Всего реализовано</li>
                         <li v-if="topUsersByCompletedIdeas"
                             v-for="topUsersByCompletedIdea in topUsersByCompletedIdeas">
@@ -29,7 +29,7 @@
             </div>
             <div class="col-md-3 col-sm-6">
                 <div class="item item-block">
-                    <ul>
+                    <ul class="without-list-style">
                         <li>Всего за 90 дней</li>
                         <li v-if="topUsersLast3Month"
                             v-for="topUsersLast3M in topUsersLast3Month">
@@ -42,7 +42,7 @@
             </div>
             <div class="col-md-3 col-sm-6">
                 <div class="item item-block">
-                    <ul>
+                    <ul class="without-list-style">
                         <li>Реализованные за 90 дней</li>
                         <li v-if="topUsersByCompletedIdeasLast3Month"
                             v-for="topUsersByCompletedIdeasLast3M in topUsersByCompletedIdeasLast3Month">
@@ -63,7 +63,7 @@
                         <span>({{ query.count }})</span>
                     </div>
                     <div class="filter-row">
-                        <ul>
+                        <ul class="without-list-style">
                             <li v-for="(itemStatus, index) in statuses"
                                 v-on:click="ideaStatus(`${index}`); selected = index"
                                 :class="{active:index == selected}"
@@ -93,7 +93,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <ul class="list-idea">
+                <ul class="list-idea without-list-style">
                     <li>
                         <div class="item" v-if="collection.data && collection.data.length"
                         v-for="item in collection.data">
