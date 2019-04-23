@@ -12,6 +12,7 @@ use App\Events\CommentAdded;
 use App\Mail\IdeaComment\ToAll;
 use App\Models\Auth\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
 
 class IdeaComment extends AbstractIdea
 {
@@ -23,20 +24,29 @@ class IdeaComment extends AbstractIdea
      */
     public function handle(CommentAdded $event)
     {
-        $this->notifyIdeaAuthor($event);
+        $this->notifySuperadminsAndIdeaAuthor($event);
     }
 
     /**
      * @param CommentAdded $event
      * @return $this
      */
-    protected function notifyIdeaAuthor(CommentAdded $event)
+    protected function notifySuperadminsAndIdeaAuthor(CommentAdded $event)
     {
         $ideaAuthor = $event->getComment()->idea()->first()->user;
         $commentAuthor = $event->getComment()->user()->first();
 
         if ($ideaAuthor->is_active == 1 && $ideaAuthor->id !== $commentAuthor->id) {
-            $this->getQueueService()->add($ideaAuthor->email, new ToAll($event->getComment()));
+            $users = App::make('repository.user')->getSuperadmins();
+            $emails = [];
+            foreach ($users as $user) {
+                $emails[] = $user->email;
+            }
+            if (!in_array($ideaAuthor->email, $emails)) {
+                $emails[] = $ideaAuthor->email;
+            }
+
+            $this->getQueueService()->add($emails, new ToAll($event->getComment()));
         }
 
         return $this;
