@@ -2,7 +2,7 @@
     <div>
         <ul class="without-list-style">
             <li v-if="count > 0" v-for="item in comments">
-                <div class="avatar-comment image" >
+                <div class="image" v-bind:style="'background-color: ' + item.user.icon_color">
                     {{ item.user.name.substring(0,1) }}{{ item.user.last_name.substring(0,1) }}
                 </div>
                 <div class="text-reviews">
