@@ -40,7 +40,9 @@ class IdeaComment extends AbstractIdea
             $users = App::make('repository.user')->getSuperadmins();
             $emails = [];
             foreach ($users as $user) {
-                $emails[] = $user->email;
+                if ($user->id !== $commentAuthor->id) {
+                    $emails[] = $user->email;
+                }
             }
             if (!in_array($ideaAuthor->email, $emails)) {
                 $emails[] = $ideaAuthor->email;
