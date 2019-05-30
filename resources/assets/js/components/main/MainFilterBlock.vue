@@ -28,6 +28,30 @@
                         </li>
                     </ul>
                 </div>
+
+                <ul class="last-changes-list without-list-style">
+                    <li class="first">Возраст идей</li>
+                </ul>
+                <div class="btn-group-vue dropdown customer-select" id="idea-age-select">
+                    <div class="menu-overlay-vue" v-if="showDropdownIdeaAge" @click.stop="toggleMenuIdeaAge"></div>
+                    <li @click="toggleMenuIdeaAge()" class="dropdown-toggle-vue" v-if="selectedOptionNameIdeaAge !== ''">
+                        {{selectedOptionNameIdeaAge}}
+                        <span class="caret"></span>
+                    </li>
+                    <li @click="toggleMenuIdeaAge()" class="dropdown-toggle-vue" v-if="selectedOptionNameIdeaAge === ''">
+                        {{placeholderTextIdeaAge}}
+                        <span class="caret-menu"></span>
+                    </li>
+                    <ul class="dropdown-menu-vue" v-if="showDropdownIdeaAge">
+                        <li v-for="ideaAge in ideaAges">
+                            <a href="javascript:void(0)"
+                               v-on:click="updateOptionIdeaAge(ideaAge.name)"
+                               @click="changeSelectIdeaAge(`idea_age=${ideaAge.value}`)">
+                                {{ideaAge.name}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </section>
             <section id="departments" class="item mg-top-10">
                 <ul class="without-list-style">
@@ -124,6 +148,7 @@
             return {
                 active: 'active',
                 selectUser: '',
+                selectIdeaAge: '',
                 inputChecked: '',
                 query: {
                     limit: 15,
@@ -141,13 +166,28 @@
                 selectedOption: {
                     name: ''
                 },
+                selectedOptionIdeaAge: {
+                    name: ''
+                },
                 selectedOptionName: '',
+                selectedOptionNameIdeaAge: '',
                 showDropdown: false,
+                showDropdownIdeaAge: false,
                 placeholderText: 'Выбрать автора',
+                placeholderTextIdeaAge: 'Выбрать возраст идей',
+                activeStatusId: '',
+                ideaAges: [
+                  { name: 'Добавленные >45 дней назад', value: 45 },
+                  { name: 'Добавленные >90 дней назад', value: 90 }
+                ]
             }
         },
         mounted() {
+            axios.get('/get-active-status-id').then((res) => {
+                this.activeStatusId = res.data.activeStatusId;
+            });
             this.selectedOption = this.users;
+            this.selectedOptionIdeaAge = this.ideaAges;
             if (this.placeholder)
             {
                 this.placeholderText = this.placeholder;
@@ -164,9 +204,18 @@
                 this.showDropdown = false;
                 this.$emit('updateOption', this.selectedOption);
             },
+            updateOptionIdeaAge(option) {
+                this.selectedOptionNameIdeaAge = option;
+                this.showDropdownIdeaAge = false;
+                this.$emit('updateOptionIdeaAge', this.selectedOptionIdeaAge);
+            },
             toggleMenu () {
                 this.showDropdown = !this.showDropdown;
                 this.removedClass();
+            },
+            toggleMenuIdeaAge () {
+                this.showDropdownIdeaAge = !this.showDropdownIdeaAge;
+                this.removedClassIdeaAge();
             },
             post() {
                 this.$root.$emit('preloaderPage', true);
@@ -174,7 +223,24 @@
                     ...this.query
                 };
 
-                let urlParams = (this.selectUser && !this.inputChecked) ? this.selectUser : this.inputChecked;
+                if (this.selectIdeaAge) {
+                    let ideaStatuses = document.getElementById('idea-status').childNodes;
+                    ideaStatuses.forEach(function (el, i) {
+                        if (i == 0) {
+                            el.classList.add('active');
+                        } else {
+                            el.classList.remove('active');
+                        }
+                    });
+                }
+                let urlParams;
+                if (this.selectUser && !this.inputChecked) {
+                    urlParams = this.selectUser;
+                } else if (this.selectIdeaAge && !this.inputChecked) {
+                    urlParams = this.selectIdeaAge;
+                } else {
+                    urlParams = this.inputChecked;
+                }
 
                 axios.get(this.url + '?' + urlParams, { params: params })
                     .then( (res) => {
@@ -186,6 +252,9 @@
                 this.inputChecked = serialize.substr(1);
                 if (this.selectUser) {
                     this.inputChecked = this.inputChecked + '&' +this.selectUser
+                }
+                if (this.selectIdeaAge) {
+                    this.inputChecked = this.inputChecked + '&' +this.selectIdeaAge
                 }
 
                 this.$root.$emit('resultChecked', {data: this.inputChecked});
@@ -214,6 +283,26 @@
                 this.$root.$emit('resultChecked', {data: this.inputChecked});
                 this.post();
             },
+            changeSelectIdeaAge (val) {
+                if (val === 'undefined') {
+                    this.selectIdeaAge = '';
+                    this.clearResult();
+                    return false;
+                }
+
+                this.query.statusId = this.activeStatusId;
+
+                if (this.inputChecked) {
+                    //remove from inputChecked string idea_age parameter
+                    this.inputChecked = this.inputChecked.replace(/(\&|\?)idea_age=(\d+)/gm, '');
+                }
+
+                this.selectIdeaAge = val;
+                this.inputChecked = this.inputChecked + '&' + this.selectIdeaAge;
+
+                this.$root.$emit('resultChecked', {data: this.inputChecked});
+                this.post();
+            },
             clearResult () {
                 this.post();
             },
@@ -227,10 +316,18 @@
                     }
                 }
 
+                let ideaStatuses = document.getElementById('idea-status').childNodes;
+                ideaStatuses.forEach(function (el) {
+                    el.classList.remove('active');
+                });
+                this.query.statusId = '';
                 this.query.orderDir = 'desc';
                 this.removedClass();
+                this.removedClassIdeaAge();
                 this.selectedOptionName = '';
+                this.selectedOptionNameIdeaAge = '';
                 this.selectUser = '';
+                this.selectIdeaAge = '';
                 this.$root.$emit('resultChecked', {data: '', orderResult: 'removed'});
                 this.$root.$emit('resetAllFilterParams', this.resetParam);
                 this.inputChecked = '';
@@ -251,6 +348,10 @@
             },
             removedClass() {
                 let userMenu = document.getElementById('customer-select');
+                userMenu.classList.remove('open');
+            },
+            removedClassIdeaAge() {
+                let userMenu = document.getElementById('idea-age-select');
                 userMenu.classList.remove('open');
             }
         },

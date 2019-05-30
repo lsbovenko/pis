@@ -36,6 +36,7 @@ Route::group(['middleware' => ['jwt']], function () {
         Route::get('/get-idea/change-filter', 'Get\IdeasController@getChangeFilter')->name('get-idea/change-filter');
         Route::get('/get-idea/priority-board', 'Get\IdeasController@priorityBoard')->name('/get-idea/priority-board');
         Route::get('/get-idea/my-ideas', 'Get\IdeasController@myIdeas')->name('/get-idea/my-ideas');
+        Route::get('/get-active-status-id', 'Categories\StatusController@getActiveStatusId')->name('/get-active-status-id');
 
         //superadmin or admin
         Route::group(['middleware' => ['role:admin|superadmin']], function() {
