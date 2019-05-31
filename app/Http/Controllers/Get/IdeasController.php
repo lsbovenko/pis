@@ -195,6 +195,12 @@ class IdeasController extends Controller
             $query->where('user_id', '=', $userId);
         }
 
+        if (isset($input['idea_age'])) {
+            $ideaAge = $input['idea_age'];
+            $date = new \DateTime("-$ideaAge days");
+            $query->where('created_at', '<', $date->format('Y-m-d H:i:s'));
+        }
+
         return $query;
     }
 

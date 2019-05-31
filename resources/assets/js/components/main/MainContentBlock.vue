@@ -63,7 +63,7 @@
                         <span>({{ query.count }})</span>
                     </div>
                     <div class="filter-row">
-                        <ul class="without-list-style">
+                        <ul class="without-list-style" id="idea-status" ref="ideaStatus">
                             <li v-for="(itemStatus, index) in statuses"
                                 v-on:click="ideaStatus(`${index}`); selected = index"
                                 :class="{active:index == selected}"
@@ -259,6 +259,15 @@
                 this.applyChange();
             },
             ideaStatus(param) {
+                let ideaStatuses = this.$refs.ideaStatus.childNodes;
+                ideaStatuses.forEach(function (el, i) {
+                    if (i == param-1) {
+                        el.classList.add('active');
+                    } else {
+                        el.classList.remove('active');
+                    }
+                });
+
                 this.query.page = 1;
                 this.active = 'active';
                 this.query.statusId = param;
