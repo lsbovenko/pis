@@ -151,19 +151,22 @@ class IdeaControl
     /**
      * @param Idea $idea
      * @param Status $status
+     * @param string|null $details
      * @return Idea
      * @throws \App\Exceptions\IdeaIsNotApproved
      */
-    public function changeStatus(Idea $idea, Status $status)
+    public function changeStatus(Idea $idea, Status $status, $details = null)
     {
         if (!$idea->isApproved()) {
             throw new \App\Exceptions\IdeaIsNotApproved('Вы не можете изменить статус неутвержденной идеи');
         }
-        if ($idea->status_id !== $status->id) {
+        if ($idea->status_id !== $status->id ||
+            ($idea->status_id === $status->id && $status->id != Status::getActiveStatus()->id)) {
             if ($status->slug == Status::SLUG_COMPLETED) {
                 $idea->completed_at = Carbon::now();
             }
             $idea->status_id = $status->id;
+            $idea->details = $details;
             $idea->save();
 
             event(new IdeaWasChangedStatus($idea));

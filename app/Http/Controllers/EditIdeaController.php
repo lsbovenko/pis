@@ -86,8 +86,15 @@ class EditIdeaController extends Controller
         $idea = Idea::findOrFail($request->route('id'));
         $data = App::make('datacleaner')->cleanData($request->all());
         $statusId = (int)$data['status_id'];
-        if ($statusId == $idea->status_id) {
+        if ($statusId == $idea->status_id && $statusId == Status::getActiveStatus()->id) {
             return redirect()->back();
+        } elseif ($statusId == Status::getCompletedStatus()->id || $statusId == Status::getFrozenStatus()->id) {
+            $this->validate($request, [
+                'details' => 'required|min:5',
+            ]);
+            $details = $data['details'];
+        } else {
+            $details = null;
         }
 
         try {
@@ -96,7 +103,7 @@ class EditIdeaController extends Controller
             if ($status === null) {
                 throw new \Exception('Такого статуса не существует');
             }
-            $this->getIdeaControl()->changeStatus($idea, $status);
+            $this->getIdeaControl()->changeStatus($idea, $status, $details);
         } catch (IdeaIsNotApproved $e){
             return redirect()->back()->withErrors([$e->getMessage()]);
         }  catch (\Exception $e) {

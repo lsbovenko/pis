@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\{
 use Zizaco\Entrust\EntrustFacade;
 use App\Models\Idea;
 use Illuminate\Http\Request;
+use App\Models\Categories\Status;
 
 /**
  * Class EdotIdeaController
@@ -61,7 +62,9 @@ class ReviewIdeaController extends Controller
                 'userLike' => $likedUserId,
                 'listUsersLike' => $idea->users
             ],
-            'comments' => $idea->comments
+            'comments' => $idea->comments,
+            'activeStatusId' => Status::getActiveStatus()->id,
+            'completedStatusId' => Status::getCompletedStatus()->id,
         ]);
     }
 
