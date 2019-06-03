@@ -24,6 +24,12 @@
 
                     <div class="section-title">{{ $idea->title }}</div>
                     <div class="{{ $status->slug }} status">{{ $status->name }}</div>
+                    @if ($status->id == $completedStatusId  && $idea->details)
+                        <div class="text">
+                            {{ $idea->details }}
+                        </div>
+                        <hr>
+                    @endif
                     <div class="text">
                         {!! $idea->description !!}
                     </div>
