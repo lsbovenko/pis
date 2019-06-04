@@ -130,14 +130,6 @@
                         </div>
                     </div>
                     <div class="block">
-                        <b>Стратегическая задача:</b>
-                        <div>
-                            @foreach ($idea->strategicObjectives as $strategicObjective)
-                                {{ $strategicObjective->name }}
-                            @endforeach
-                        </div>
-                    </div>
-                    <div class="block">
                         <b>Отдел:</b>
                         <div>
                             @foreach ($idea->departments as $department)
