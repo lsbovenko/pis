@@ -38,16 +38,6 @@
 </div>
 <div class="input-group-two">
     <div class="form-group">
-        <label for="dropdownMenu3">Стратегическая Задача</label>
-        <div class="dropdown customer-select">
-            {{ Form::select('strategic_objective_id[]', $strategicObjectivesList, isset($idea) ? $idea->strategicObjectives : '', [
-            'class'=>'form-control',
-            'id' => 'idea_task',
-            'multiple' => true
-            ]) }}
-        </div>
-    </div>
-    <div class="form-group">
         <label for="dropdownMenu4">Отдел</label>
         <div class="dropdown customer-select">
             {{ Form::select('department_id[]', $departmentsList, isset($idea) ? $idea->departments : '', [
@@ -57,8 +47,6 @@
             ]) }}
         </div>
     </div>
-</div>
-<div class="input-group-two last">
     <div class="form-group">
         <label for="dropdownMenu5">Тип</label>
         <div class="dropdown customer-select">

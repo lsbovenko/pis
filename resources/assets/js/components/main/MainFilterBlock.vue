@@ -104,22 +104,6 @@
                     </li>
                 </ul>
             </section>
-            <section id="strategic" class="item">
-                <ul class="without-list-style">
-                    <li class="first">Стратегическая задача</li>
-                    <li v-for="(itemStrategic, index) in filters.strategicObjectivesList">
-                        <label class="inbtn">
-                            <input type="checkbox"
-                                   name="strategic_objective_id[]"
-                                   :value="`${index}`"
-                                   @change="changeHandler"
-                            >
-                            <span class="inbtn__indicator"></span>
-                            <span class="data" id="data-4">{{ itemStrategic }}</span>
-                        </label>
-                    </li>
-                </ul>
-            </section>
             <section id="type" class="item bottom-20">
                 <ul class="without-list-style">
                     <li class="first">Тип</li>

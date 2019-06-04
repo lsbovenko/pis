@@ -46,11 +46,6 @@ class IdeaRequest extends FormRequest
                 'required',
                 'array',
             ],
-            'strategic_objective_id' => [
-                Rule::in(array_keys($reference->getAllStrategicObjectiveForSelect())),
-                'required',
-                'array',
-            ],
             'type_id' => [
                 Rule::in(array_keys($reference->getAllTypeForSelect())),
                 'required',
