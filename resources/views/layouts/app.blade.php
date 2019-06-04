@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Ikantam') }}</title>
+    <title>{{ config('app.name', 'Velmie') }}</title>
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/v1/main.css') }}?v={{ config('app.version') }}" rel="stylesheet">
@@ -35,7 +35,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-2 col-sm-3 col-xs-2">
-                    <a class="logo" href="/"><span>PIS</span>IKANTAM </a>
+                    <a class="logo" href="/"><span>PIS</span>VELMIE </a>
                 </div>
                 <div class="col-md-5 col-sm-4 hidden-xs"></div>
 

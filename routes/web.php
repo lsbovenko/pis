@@ -11,6 +11,10 @@
 |
 */
 
+if (App::environment('production')) {
+    URL::forceScheme('https');
+}
+
 /**
  * only auth users
  */
