@@ -113,14 +113,4 @@ class StatusController extends Controller
 
         return redirect()->route('categories.statuses.index');
     }
-
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getActiveStatusId()
-    {
-        return response()->json([
-            'activeStatusId' => Status::getActiveStatus()->id
-        ]);
-    }
 }
