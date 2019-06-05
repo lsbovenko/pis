@@ -3,7 +3,7 @@
         <preloader-page v-if="preloader"></preloader-page>
         <div class="row">
             <div class="col-md-3 mobile-menu">
-                <main-filter-block :filters="filters" :users="users"></main-filter-block>
+                <main-filter-block :filters="filters" :users="users" :activeStatusId="activeStatusId"></main-filter-block>
             </div>
             <div class="col-md-9 main-content sameblock">
                     <main-content-block :statuses="statuses"></main-content-block>
@@ -34,7 +34,8 @@
                 users: {
                     data: []
                 },
-                preloader: true
+                preloader: true,
+                activeStatusId: ''
             }
         },
         mounted() {
@@ -50,6 +51,7 @@
                         this.filters = res.data.filter;
                         this.statuses = res.data.status.status;
                         this.users = res.data.users;
+                        this.activeStatusId = Object.keys(this.statuses)[0];
                     })
                     .catch( (error) => {} );
             }

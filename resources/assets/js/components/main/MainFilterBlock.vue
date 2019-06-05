@@ -1,6 +1,7 @@
 <template>
     <div class="left-sidebar sameblock">
         <form action="">
+        <input type="hidden" :value="activeStatusId" ref="activeStatusId">
             <section class="item mg-right-15">
                 <ul class="last-changes-list without-list-style">
                     <li class="first">Автор</li>
@@ -127,7 +128,7 @@
 <script>
     export default {
         name: "MainFilterBlock",
-        props: ['filters', 'users'],
+        props: ['filters', 'users', 'activeStatusId'],
         data() {
             return {
                 active: 'active',
@@ -167,9 +168,7 @@
             }
         },
         mounted() {
-            axios.get('/get-active-status-id').then((res) => {
-                this.activeStatusId = res.data.activeStatusId;
-            });
+            this.activeStatusId = this.$refs.activeStatusId.value;
             this.selectedOption = this.users;
             this.selectedOptionIdeaAge = this.ideaAges;
             if (this.placeholder)
