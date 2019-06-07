@@ -227,6 +227,7 @@
 
             this.$root.$on('resultChecked', (result) => {
                 this.resultFilters = result.data;
+                this.query.statusId = result.statusId;
 
                 if (result.orderResult === 'removed'){
                     let orderMenu = document.getElementById('dropdownMenuOrder');

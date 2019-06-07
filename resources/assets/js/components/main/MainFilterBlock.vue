@@ -240,7 +240,7 @@
                     this.inputChecked = this.inputChecked + '&' +this.selectIdeaAge
                 }
 
-                this.$root.$emit('resultChecked', {data: this.inputChecked});
+                this.$root.$emit('resultChecked', {data: this.inputChecked, statusId: this.query.statusId});
 
                 if (e.target.checked){
                     this.post();
@@ -263,7 +263,7 @@
                 this.selectUser = val;
                 this.inputChecked = this.inputChecked + '&' + this.selectUser;
 
-                this.$root.$emit('resultChecked', {data: this.inputChecked});
+                this.$root.$emit('resultChecked', {data: this.inputChecked, statusId: this.query.statusId});
                 this.post();
             },
             changeSelectIdeaAge (val) {
@@ -283,7 +283,7 @@
                 this.selectIdeaAge = val;
                 this.inputChecked = this.inputChecked + '&' + this.selectIdeaAge;
 
-                this.$root.$emit('resultChecked', {data: this.inputChecked});
+                this.$root.$emit('resultChecked', {data: this.inputChecked, statusId: this.query.statusId});
                 this.post();
             },
             clearResult () {
