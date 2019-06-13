@@ -73,7 +73,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="pull-right">
+                <div class="pull-right" id="order-dir">
                     <div class="dropdown customer-select">
                         <button class="btn btn-default dropdown-toggle home" type="button" id="dropdownMenuOrder"
                                 data-toggle="dropdown"

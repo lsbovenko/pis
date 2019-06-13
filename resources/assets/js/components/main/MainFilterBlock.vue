@@ -2,6 +2,7 @@
     <div class="left-sidebar sameblock">
         <form action="">
         <input type="hidden" :value="activeStatusId" ref="activeStatusId">
+        <input type="hidden" ref="searchIdeaVuejs" id="search-idea-vuejs" @click="changeSearchIdea()">
             <section class="item mg-right-15">
                 <ul class="last-changes-list without-list-style">
                     <li class="first">Автор</li>
@@ -134,6 +135,7 @@
                 active: 'active',
                 selectUser: '',
                 selectIdeaAge: '',
+                searchIdea: '',
                 inputChecked: '',
                 query: {
                     limit: 15,
@@ -221,6 +223,8 @@
                     urlParams = this.selectUser;
                 } else if (this.selectIdeaAge && !this.inputChecked) {
                     urlParams = this.selectIdeaAge;
+                } else if (this.searchIdea && !this.inputChecked) {
+                    urlParams = this.searchIdea;
                 } else {
                     urlParams = this.inputChecked;
                 }
@@ -238,6 +242,9 @@
                 }
                 if (this.selectIdeaAge) {
                     this.inputChecked = this.inputChecked + '&' +this.selectIdeaAge
+                }
+                if (this.searchIdea) {
+                    this.inputChecked = this.inputChecked + '&' + this.searchIdea;
                 }
 
                 this.$root.$emit('resultChecked', {data: this.inputChecked, statusId: this.query.statusId});
@@ -286,6 +293,20 @@
                 this.$root.$emit('resultChecked', {data: this.inputChecked, statusId: this.query.statusId});
                 this.post();
             },
+            changeSearchIdea () {
+                let val = 'search_idea=' + this.$refs.searchIdeaVuejs.value;
+
+                if (this.inputChecked) {
+                    //remove from inputChecked string search_idea parameter
+                    this.inputChecked = this.inputChecked.replace(/(\&|\?)search_idea=([а-яА-Яa-zA-Z0-9ёЁ\s]*)/gmu, '');
+                }
+
+                this.searchIdea = val;
+                this.inputChecked = this.inputChecked + '&' + this.searchIdea;
+
+                this.$root.$emit('resultChecked', {data: this.inputChecked, statusId: this.query.statusId});
+                this.post();
+            },
             clearResult () {
                 this.post();
             },
@@ -307,10 +328,12 @@
                 this.query.orderDir = 'desc';
                 this.removedClass();
                 this.removedClassIdeaAge();
+                this.removedSearchIdea();
                 this.selectedOptionName = '';
                 this.selectedOptionNameIdeaAge = '';
                 this.selectUser = '';
                 this.selectIdeaAge = '';
+                this.searchIdea = '';
                 this.$root.$emit('resultChecked', {data: '', orderResult: 'removed'});
                 this.$root.$emit('resetAllFilterParams', this.resetParam);
                 this.inputChecked = '';
@@ -336,6 +359,10 @@
             removedClassIdeaAge() {
                 let userMenu = document.getElementById('idea-age-select');
                 userMenu.classList.remove('open');
+            },
+            removedSearchIdea() {
+                document.getElementById('search-idea').value = '';
+                this.$refs.searchIdeaVuejs.value = '';
             }
         },
     }

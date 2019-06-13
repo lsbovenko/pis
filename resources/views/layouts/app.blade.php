@@ -37,7 +37,15 @@
                 <div class="col-md-2 col-sm-3 col-xs-2">
                     <a class="logo" href="/"><span>PIS</span>VELMIE </a>
                 </div>
-                <div class="col-md-5 col-sm-4 hidden-xs"></div>
+                <div class="col-md-5 col-sm-4 hidden-xs">
+                    <form action="" class="search" id="form-search-idea">
+                        <div class="form-group" style="margin-top: 15px;">
+                            <i class="zmdi zmdi-search"></i>
+                            {{ Form::text('search_idea', '', ['class'=>'form-control', 'placeholder'=>'Поиск', 'id'=>'search-idea']) }}
+                        </div>
+                        <input type="submit" style="display: none;"/>
+                    </form>
+                </div>
 
                 <div class="col-md-2 col-sm-2 col-xs-2 text-right button-block">
                     <button class="add"><a href="{{ route('add-idea') }}">+</a></button>
