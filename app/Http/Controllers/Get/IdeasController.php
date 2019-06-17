@@ -15,7 +15,8 @@ use App\Models\Idea;
 use Illuminate\Support\Facades\{
     App,
     Input,
-    Auth
+    Auth,
+    DB
 };
 use App\Models\Categories\Status;
 
@@ -28,10 +29,12 @@ class IdeasController extends Controller
 
     public function index(Request $request)
     {
-        $ideas = $this->getChangeFilter($request)
-            ->where('approve_status', '=', Idea::APPROVED)
-            ->where('is_priority', '=', 0)
-            ->paginate($this->checkedLimit($request));
+        $filterParams = [
+            'approve_status' => Idea::APPROVED,
+            'is_priority' => 0
+        ];
+
+        $ideas = $this->getIdeas($request, $filterParams);
 
         return response()->json(array_merge([
                 'ideas' => $ideas->appends(Input::except('page')),
@@ -48,10 +51,12 @@ class IdeasController extends Controller
      */
     public function priorityBoard(Request $request)
     {
-        $ideas = $this->getChangeFilter($request)
-            ->where('approve_status', '=', Idea::APPROVED)
-            ->where('is_priority', '=', 1)
-            ->paginate($this->checkedLimit($request));
+        $filterParams = [
+            'approve_status' => Idea::APPROVED,
+            'is_priority' => 1
+        ];
+
+        $ideas = $this->getIdeas($request, $filterParams);
 
         return response()->json(array_merge([
                 'ideas' => $ideas->appends(Input::except('page')),
@@ -69,9 +74,11 @@ class IdeasController extends Controller
      */
     public function myIdeas(Request $request)
     {
-        $ideas = $this->getChangeFilter($request)
-            ->where('user_id', '=', Auth::user()->id)
-            ->paginate($this->checkedLimit($request));
+        $filterParams = [
+            'user_id' => Auth::user()->id
+        ];
+
+        $ideas = $this->getIdeas($request, $filterParams);
 
         return response()->json(array_merge([
                 'ideas' => $ideas->appends(Input::except('page')),
@@ -89,9 +96,11 @@ class IdeasController extends Controller
      */
     public function pendingReview(Request $request)
     {
-        $ideas = $this->getChangeFilter($request)
-            ->where('approve_status', '=', Idea::NEW)
-            ->paginate($this->checkedLimit($request));
+        $filterParams = [
+            'approve_status' => Idea::NEW
+        ];
+
+        $ideas = $this->getIdeas($request, $filterParams);
 
         return response()->json(array_merge([
                 'ideas' => $ideas->appends(Input::except('page')),
@@ -109,9 +118,11 @@ class IdeasController extends Controller
      */
     public function declined(Request $request)
     {
-        $ideas = $this->getChangeFilter($request)
-            ->where('approve_status', '=', Idea::DECLINED)
-            ->paginate($this->checkedLimit($request));
+        $filterParams = [
+            'approve_status' => Idea::DECLINED
+        ];
+
+        $ideas = $this->getIdeas($request, $filterParams);
 
         return response()->json(array_merge([
                 'ideas' => $ideas->appends(Input::except('page')),
@@ -137,13 +148,19 @@ class IdeasController extends Controller
 
     /**
      * @param Request $request
+     * @param array|null $filterParams
+     * @param \Illuminate\Database\Eloquent\Builder|null
      * @return Idea|\Illuminate\Database\Eloquent\Builder
      */
-    public function getChangeFilter(Request $request)
+    public function getChangeFilter(Request $request, $filterParams, $searchQueryTitle = null)
     {
         $input = $request->all();
 
         $query = Idea::with('user.position', 'status');
+
+        foreach ($filterParams as $key => $value) {
+            $query->where($key, '=', $value);
+        }
 
         if (isset($input['department_id'])) {
             $departmentId = $input['department_id'];
@@ -183,13 +200,6 @@ class IdeasController extends Controller
             $query->whereIn('type_id',  $typeId);
         }
 
-        $orderBy = (isset($input['orderDir'])) ? $input['orderDir'] : '';
-        if ($orderBy == 'asc') {
-            $query->orderBy('id', 'ASC');
-        } else {
-            $query->orderBy('id', 'DESC');
-        }
-
         if (isset($input['user_id'])) {
             $userId = $input['user_id'];
             $query->where('user_id', '=', $userId);
@@ -199,6 +209,26 @@ class IdeasController extends Controller
             $ideaAge = $input['idea_age'];
             $date = new \DateTime("-$ideaAge days");
             $query->where('created_at', '<', $date->format('Y-m-d H:i:s'));
+        }
+
+        if (isset($input['search_idea'])) {
+            $searchIdea = $input['search_idea'];
+            if (!$searchQueryTitle) {
+                $query->where('title', 'LIKE', "%$searchIdea%");
+
+                return $query;
+            } else {
+                $searchQueryDescription = $query->where('description','LIKE', "%$searchIdea%");
+
+                $query = $this->getSearchQuery($searchQueryTitle, $searchQueryDescription);
+            }
+        }
+
+        $orderBy = (isset($input['orderDir'])) ? $input['orderDir'] : '';
+        if ($orderBy == 'asc') {
+            $query->orderBy('id', 'ASC');
+        } else {
+            $query->orderBy('id', 'DESC');
         }
 
         return $query;
@@ -289,5 +319,112 @@ class IdeasController extends Controller
     {
         $date = new \DateTime('-3 month');
         return App::make('repository.user')->getTopUsers(Status::getCompletedStatus(), null, $date);
+    }
+
+    /**
+     * Get ideas with pagination
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param array|null $filterParams
+     * @return Idea
+     */
+    protected function getIdeas($request, $filterParams = null)
+    {
+        if ($request['search_idea']) {
+            $searchQueryTitle = $this->getChangeFilter($request, $filterParams);
+            $ideas = $this->getChangeFilter($request, $filterParams, $searchQueryTitle)
+                ->paginate($this->checkedLimit($request));
+
+            $ideas = $this->getSearchResponse($ideas);
+        } else {
+            $ideas = $this->getChangeFilter($request, $filterParams)
+                ->paginate($this->checkedLimit($request));
+        }
+
+        return $ideas;
+    }
+
+    /**
+     * Get structure of search response is the same as the structure of the other filter responses
+     *
+     * @param \Illuminate\Pagination\LengthAwarePaginator
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    protected function getSearchResponse($ideas)
+    {
+        foreach ($ideas as &$idea) {
+            $user = new \stdClass();
+            $user->id = $idea->user_id;
+            $user->name = $idea->user_name;
+            $user->email = $idea->user_email;
+            $user->created_at = $idea->user_created_at;
+            $user->updated_at = $idea->user_updated_at;
+            $user->department_id = $idea->user_department_id;
+            $user->position_id = $idea->user_position_id;
+            $user->is_active = $idea->user_is_active;
+            $user->last_name = $idea->user_last_name;
+            $idea->user = $user;
+
+            $position = new \stdClass();
+            $position->id = $idea->user_position_id;
+            $position->name = $idea->position_name;
+            $position->is_active = $idea->position_is_active;
+            $user->position = $position;
+
+            $status = new \stdClass();
+            $status->id = $idea->status_id;
+            $status->name = $idea->status_name;
+            $status->slug = $idea->status_slug;
+            $status->is_active = $idea->status_is_active;
+            $idea->status = $status;
+        }
+
+        return $ideas;
+    }
+
+    /**
+     * Get search query by priority (title, description)
+     *
+     * @param \Illuminate\Database\Eloquent\Builder
+     * @param \Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function getSearchQuery($searchQueryTitle, $searchQueryDescription)
+    {
+        $queryTitle = DB::table(DB::raw("({$searchQueryTitle->toSql()}) as a"))
+            ->mergeBindings($searchQueryTitle->getQuery())
+            ->selectRaw('a.*, 1 as priority');
+        $queryDescription = DB::table(DB::raw("({$searchQueryDescription->toSql()}) as b"))
+            ->mergeBindings($searchQueryDescription->getQuery())
+            ->selectRaw('b.*, 0 as priority');
+
+        $query = $queryTitle->union($queryDescription);
+
+        $query = DB::table(DB::raw("({$query->toSql()}) as c"))
+            ->mergeBindings($query)
+            ->selectRaw('
+                        c.id,
+                        any_value(c.created_at) as created_at, any_value(c.updated_at) as updated_at,
+                        any_value(c.title) as title, any_value(c.description) as description,
+                        any_value(c.type_id) as type_id, any_value(c.user_id) as user_id,
+                        any_value(c.status_id) as status_id, any_value(c.approve_status) as approve_status,
+                        any_value(c.is_priority) as is_priority, any_value(c.likes_num) as likes_num,
+                        any_value(c.comments_count) as comments_count, any_value(c.completed_at) as completed_at,
+                        any_value(c.details) as details,
+                        max(c.priority) as priority,
+                        any_value(u.name) as user_name, any_value(u.email) as user_email,
+                        any_value(u.created_at) as user_created_at, any_value(u.updated_at) as user_updated_at,
+                        any_value(u.department_id) as user_department_id, any_value(u.position_id) as user_position_id,
+                        any_value(u.is_active) as user_is_active, any_value(u.last_name) as user_last_name,
+                        any_value(p.name) as position_name, any_value(p.is_active) as position_is_active,
+                        any_value(s.name) as status_name, any_value(s.slug) as status_slug,
+                        any_value(s.is_active) as status_is_active')
+            ->join('users as u', 'c.user_id', '=', 'u.id')
+            ->join('positions as p', 'u.position_id', '=', 'p.id')
+            ->join('statuses as s', 'c.status_id', '=', 's.id')
+            ->groupBy('c.id')
+            ->orderBy('priority', 'DESC');
+
+        return $query;
     }
 }
