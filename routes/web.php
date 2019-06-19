@@ -33,6 +33,8 @@ Route::group(['middleware' => ['jwt']], function () {
         Route::post('/remove-like', 'LikesController@removeLike')->name('remove-like');
         Route::post('/add-comment/{id}', 'ReviewIdeaController@addComment')->where('id', '[0-9]+')->name('add-comment');
         Route::get('/comments/{id}', 'ReviewIdeaController@getComments')->where('id', '[0-9]+')->name('comments');
+        Route::get('/department/{id}/users', 'Categories\DepartmentController@getUsersByDepartment')->where('id', '[0-9]+');
+        Route::get('/departments/users', 'Categories\DepartmentController@getUsersByAllDepartments');
 
         //VueJS
         Route::get('/get-idea/all', 'Get\IdeasController@index')->name('get-idea/all');

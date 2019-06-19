@@ -162,6 +162,13 @@ class IdeasController extends Controller
             $query->where($key, '=', $value);
         }
 
+        if (isset($input['user_department_id'])) {
+            $userDepartmentId = $input['user_department_id'];
+            $query->whereHas('user', function ($q) use ($userDepartmentId) {
+                $q->where('department_id', $userDepartmentId);
+            });
+        }
+
         if (isset($input['department_id'])) {
             $departmentId = $input['department_id'];
             $query->whereHas('departments', function ($q) use ($departmentId) {
@@ -209,6 +216,16 @@ class IdeasController extends Controller
             $ideaAge = $input['idea_age'];
             $date = new \DateTime("-$ideaAge days");
             $query->where('created_at', '<', $date->format('Y-m-d H:i:s'));
+        }
+
+        if (isset($input['datepicker_dates'])) {
+            $datepickerDates = $input['datepicker_dates'];
+            $dates = explode(',', $datepickerDates);
+            if (count($dates) == 2) {
+                $beginDate = $dates[0] . ' 00:00:00';
+                $endDate = $dates[1] . ' 23:59:59';
+                $query->whereBetween('created_at', [$beginDate, $endDate]);
+            }
         }
 
         if (isset($input['search_idea'])) {

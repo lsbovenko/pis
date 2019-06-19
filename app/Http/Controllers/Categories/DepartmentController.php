@@ -114,4 +114,22 @@ class DepartmentController extends Controller
 
         return redirect()->route('categories.department.index');
     }
+
+    public function getUsersByDepartment($id)
+    {
+        $users = App::make('repository.user')->getDepartmentUsers($id);
+
+        return response()->json([
+            'users' => $users
+        ]);
+    }
+
+    public function getUsersByAllDepartments()
+    {
+        $users = App::make('repository.user')->getDepartmentUsers();
+
+        return response()->json([
+            'users' => $users
+        ]);
+    }
 }

@@ -38,5 +38,25 @@
         $('#form-search-idea').submit(function () {
             return false;
         });
+
+        var datepicker = $('#datepicker');
+        var datepickerDates = $('#datepicker-dates');
+        datepicker.datepicker({
+            range: true,
+            maxDate: new Date(),
+            dateFormat: 'yyyy-mm-dd',
+
+            onSelect: function(formattedDate, date, inst) {
+                //add value of datepicker to hidden field in filter
+                datepickerDates.val(formattedDate);
+                if (date.length === 2) {
+                    datepickerDates.click();
+                }
+            }
+        });
+
+        $('#reset-filters').on('click', function () {
+            datepicker.datepicker().data('datepicker').clear();
+        });
     });
 })(jQuery);
