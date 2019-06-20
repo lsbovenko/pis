@@ -6,6 +6,7 @@ use App\Models\Auth\User as ModelUser;
 use App\Models\Auth\Role as ModelRole;
 use Illuminate\Support\Facades\DB;
 use App\Models\Categories\Status;
+use App\Models\Idea;
 
 /**
  * Class User
@@ -96,6 +97,31 @@ class User extends AbstractRepository
 
         return $query
             ->limit($limit)
+            ->get();
+    }
+
+    /**
+     * @param int|null $department
+     * @return mixed
+     */
+    public function getDepartmentUsers(int $department = null)
+    {
+        /** @var \Illuminate\Database\Query\Builder $query */
+        $query = DB::table('users')
+            ->rightJoin('ideas', 'users.id', '=', 'ideas.user_id')
+            ->select(DB::raw('users.*, count(users.id) AS number'))
+            ->groupBy('users.id')
+            ->orderBy('number', 'DESC')
+            ->orderBy('users.id', 'asc');
+
+        $query->where('users.is_active', '=', 1);
+        $query->where('ideas.approve_status', '=', Idea::APPROVED);
+
+        if ($department) {
+            $query->where('users.department_id', '=', $department);
+        }
+
+        return $query
             ->get();
     }
 

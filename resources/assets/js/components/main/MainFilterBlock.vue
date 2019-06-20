@@ -3,7 +3,40 @@
         <form action="">
         <input type="hidden" :value="activeStatusId" ref="activeStatusId">
         <input type="hidden" ref="searchIdeaVuejs" id="search-idea-vuejs" @click="changeSearchIdea()">
+        <input type="hidden" ref="datepickerDates" id="datepicker-dates" @click="changeDatepickerDates()">
             <section class="item mg-right-15">
+                <ul class="last-changes-list without-list-style">
+                    <li class="first">
+                        Диапазон дат
+                        <span class="drop" @click="removeChecked" id="reset-filters">Сбросить</span>
+                    </li>
+                </ul>
+                <div style="margin-bottom: 20px;" id="datepicker"></div>
+
+                <ul class="last-changes-list without-list-style">
+                    <li class="first">Отдел автора</li>
+                </ul>
+                <div class="btn-group-vue dropdown customer-select" id="user-department-select">
+                    <div class="menu-overlay-vue" v-if="showDropdownUserDepartment" @click.stop="toggleMenuUserDepartment"></div>
+                    <li @click="toggleMenuUserDepartment()" class="dropdown-toggle-vue" v-if="selectedOptionNameUserDepartment !== ''">
+                        {{selectedOptionNameUserDepartment}}
+                        <span class="caret"></span>
+                    </li>
+                    <li @click="toggleMenuUserDepartment()" class="dropdown-toggle-vue" v-if="selectedOptionNameUserDepartment === ''">
+                        {{placeholderTextUserDepartment}}
+                        <span class="caret-menu"></span>
+                    </li>
+                    <ul class="dropdown-menu-vue" v-if="showDropdownUserDepartment">
+                        <li v-for="(itemDepartament, index) in filters.departmentsList">
+                            <a href="javascript:void(0)"
+                               v-on:click="updateOptionUserDepartment(itemDepartament)"
+                               @click="changeSelectUserDepartment(`user_department_id=${index}`)">
+                                {{itemDepartament}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
                 <ul class="last-changes-list without-list-style">
                     <li class="first">Автор</li>
                 </ul>
@@ -57,10 +90,7 @@
             </section>
             <section id="departments" class="item mg-top-10">
                 <ul class="without-list-style">
-                    <li class="first">
-                        Отдел
-                        <span class="drop" @click="removeChecked">Сбросить</span>
-                    </li>
+                    <li class="first">Отдел</li>
                     <li v-for="(itemDepartament, index) in filters.departmentsList">
                         <label class="inbtn">
                             <input type="checkbox"
@@ -134,8 +164,10 @@
             return {
                 active: 'active',
                 selectUser: '',
+                selectUserDepartment: '',
                 selectIdeaAge: '',
                 searchIdea: '',
+                datepickerDates: '',
                 inputChecked: '',
                 query: {
                     limit: 15,
@@ -153,14 +185,20 @@
                 selectedOption: {
                     name: ''
                 },
+                selectedOptionUserDepartment: {
+                    name: ''
+                },
                 selectedOptionIdeaAge: {
                     name: ''
                 },
                 selectedOptionName: '',
+                selectedOptionNameUserDepartment: '',
                 selectedOptionNameIdeaAge: '',
                 showDropdown: false,
+                showDropdownUserDepartment: false,
                 showDropdownIdeaAge: false,
                 placeholderText: 'Выбрать автора',
+                placeholderTextUserDepartment: 'Выбрать отдел',
                 placeholderTextIdeaAge: 'Выбрать возраст идей',
                 activeStatusId: '',
                 ideaAges: [
@@ -172,6 +210,7 @@
         mounted() {
             this.activeStatusId = this.$refs.activeStatusId.value;
             this.selectedOption = this.users;
+            this.selectedOptionUserDepartment = this.filters.departmentsList;
             this.selectedOptionIdeaAge = this.ideaAges;
             if (this.placeholder)
             {
@@ -189,6 +228,11 @@
                 this.showDropdown = false;
                 this.$emit('updateOption', this.selectedOption);
             },
+            updateOptionUserDepartment(option) {
+                this.selectedOptionNameUserDepartment = option;
+                this.showDropdownUserDepartment = false;
+                this.$emit('updateOptionUserDepartment', this.selectedOptionUserDepartment);
+            },
             updateOptionIdeaAge(option) {
                 this.selectedOptionNameIdeaAge = option;
                 this.showDropdownIdeaAge = false;
@@ -197,6 +241,10 @@
             toggleMenu () {
                 this.showDropdown = !this.showDropdown;
                 this.removedClass();
+            },
+            toggleMenuUserDepartment () {
+                this.showDropdownUserDepartment = !this.showDropdownUserDepartment;
+                this.removedClassUserDepartment();
             },
             toggleMenuIdeaAge () {
                 this.showDropdownIdeaAge = !this.showDropdownIdeaAge;
@@ -221,10 +269,14 @@
                 let urlParams;
                 if (this.selectUser && !this.inputChecked) {
                     urlParams = this.selectUser;
+                } else if (this.selectUserDepartment && !this.inputChecked) {
+                    urlParams = this.selectUserDepartment;
                 } else if (this.selectIdeaAge && !this.inputChecked) {
                     urlParams = this.selectIdeaAge;
                 } else if (this.searchIdea && !this.inputChecked) {
                     urlParams = this.searchIdea;
+                } else if (this.datepickerDates && !this.inputChecked) {
+                    urlParams = this.datepickerDates;
                 } else {
                     urlParams = this.inputChecked;
                 }
@@ -240,11 +292,17 @@
                 if (this.selectUser) {
                     this.inputChecked = this.inputChecked + '&' +this.selectUser
                 }
+                if (this.selectUserDepartment) {
+                    this.inputChecked = this.inputChecked + '&' + this.selectUserDepartment
+                }
                 if (this.selectIdeaAge) {
                     this.inputChecked = this.inputChecked + '&' +this.selectIdeaAge
                 }
                 if (this.searchIdea) {
                     this.inputChecked = this.inputChecked + '&' + this.searchIdea;
+                }
+                if (this.datepickerDates) {
+                    this.inputChecked = this.inputChecked + '&' + this.datepickerDates;
                 }
 
                 this.$root.$emit('resultChecked', {data: this.inputChecked, statusId: this.query.statusId});
@@ -269,6 +327,33 @@
 
                 this.selectUser = val;
                 this.inputChecked = this.inputChecked + '&' + this.selectUser;
+
+                this.$root.$emit('resultChecked', {data: this.inputChecked, statusId: this.query.statusId});
+                this.post();
+            },
+            changeSelectUserDepartment (val) {
+                if (val === 'undefined') {
+                    this.selectUserDepartment = '';
+                    this.clearResult();
+                    return false;
+                }
+
+                let department = val.replace('user_department_id=', '');
+                this.$root.$emit('changeUserSelect', {data: department});
+
+                this.selectedOptionName = '';
+                if (this.inputChecked) {
+                    //remove from inputChecked string user_id parameter
+                    this.inputChecked = this.inputChecked.replace(/(\&|\?)user_id\[\]=(\d+)/gm, '');
+                }
+
+                if (this.inputChecked) {
+                    //remove from inputChecked string user_department_id parameter
+                    this.inputChecked = this.inputChecked.replace(/(\&|\?)user_department_id=(\d+)/gm, '');
+                }
+
+                this.selectUserDepartment = val;
+                this.inputChecked = this.inputChecked + '&' + this.selectUserDepartment;
 
                 this.$root.$emit('resultChecked', {data: this.inputChecked, statusId: this.query.statusId});
                 this.post();
@@ -307,6 +392,20 @@
                 this.$root.$emit('resultChecked', {data: this.inputChecked, statusId: this.query.statusId});
                 this.post();
             },
+            changeDatepickerDates () {
+                let val = 'datepicker_dates=' + this.$refs.datepickerDates.value;
+
+                if (this.inputChecked) {
+                    //remove from inputChecked string datepicker_dates parameter
+                    this.inputChecked = this.inputChecked.replace(/(\&|\?)datepicker_dates=([\d\-\,]+)/gm, '');
+                }
+
+                this.datepickerDates = val;
+                this.inputChecked = this.inputChecked + '&' + this.datepickerDates;
+
+                this.$root.$emit('resultChecked', {data: this.inputChecked, statusId: this.query.statusId});
+                this.post();
+            },
             clearResult () {
                 this.post();
             },
@@ -327,13 +426,19 @@
                 this.query.statusId = '';
                 this.query.orderDir = 'desc';
                 this.removedClass();
+                this.removedClassUserDepartment();
                 this.removedClassIdeaAge();
                 this.removedSearchIdea();
+                this.removedDatepickerDates();
                 this.selectedOptionName = '';
+                this.selectedOptionNameUserDepartment = '';
                 this.selectedOptionNameIdeaAge = '';
                 this.selectUser = '';
+                this.selectUserDepartment = '';
                 this.selectIdeaAge = '';
                 this.searchIdea = '';
+                this.datepickerDates = '';
+                this.$root.$emit('changeUserSelect', {data: ''});
                 this.$root.$emit('resultChecked', {data: '', orderResult: 'removed'});
                 this.$root.$emit('resetAllFilterParams', this.resetParam);
                 this.inputChecked = '';
@@ -356,6 +461,10 @@
                 let userMenu = document.getElementById('customer-select');
                 userMenu.classList.remove('open');
             },
+            removedClassUserDepartment() {
+                let userDepartmentMenu = document.getElementById('user-department-select');
+                userDepartmentMenu.classList.remove('open');
+            },
             removedClassIdeaAge() {
                 let userMenu = document.getElementById('idea-age-select');
                 userMenu.classList.remove('open');
@@ -363,6 +472,9 @@
             removedSearchIdea() {
                 document.getElementById('search-idea').value = '';
                 this.$refs.searchIdeaVuejs.value = '';
+            },
+            removedDatepickerDates() {
+                this.$refs.datepickerDates.value = '';
             }
         },
     }

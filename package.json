@@ -14,6 +14,7 @@
     "laravel-mix": "^2.0"
   },
   "dependencies": {
+    "air-datepicker": "^2.2.3",
     "axios": "^0.18.0",
     "vue": "^2.5.22",
     "vue-router": "^3.0.2",

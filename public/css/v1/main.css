@@ -10404,7 +10404,7 @@ body .container .btn_.btn-outline-red:hover {
     margin-top: 20px;
 }
 
-.without-list-style li, #customer-select li, #idea-age-select li {
+.without-list-style li, #customer-select li, #user-department-select li, #idea-age-select li {
     list-style: none;
 }
 

@@ -13,6 +13,7 @@
 </template>
 
 <script>
+    import Vue from 'vue';
     import MainFilterBlock from './main/MainFilterBlock';
     import MainContentBlock from './main/MainContentBlock';
     import PreloaderPage from './preloader/PreloaderPage';
@@ -42,6 +43,19 @@
             this.fetchFilter();
             this.$root.$on('preloaderPage', (res) => {
                 this.preloader = res;
+            });
+            this.$root.$on('changeUserSelect', (result) => {
+                if (result.data) {
+                    axios.get('/department/' + result.data + '/users')
+                        .then((res) => {
+                            Vue.set(this.$data, 'users', res.data.users);
+                        });
+                } else {
+                    axios.get('/departments/users')
+                        .then((res) => {
+                            Vue.set(this.$data, 'users', res.data.users);
+                        });
+                }
             });
         },
         methods: {
