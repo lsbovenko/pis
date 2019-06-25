@@ -118,6 +118,7 @@
                         <div>
                             @foreach ($idea->coreCompetencies as $coreCompetency)
                                 {{ $coreCompetency->name }}
+                                <br>
                             @endforeach
                         </div>
                     </div>
@@ -126,6 +127,7 @@
                         <div>
                             @foreach ($idea->operationalGoals as $goal)
                                 {{ $goal->name }}
+                                <br>
                             @endforeach
                         </div>
                     </div>
@@ -134,6 +136,7 @@
                         <div>
                             @foreach ($idea->departments as $department)
                                 {{ $department->name }}
+                                <br>
                             @endforeach
                         </div>
                     </div>
@@ -141,6 +144,17 @@
                         <b>Тип:</b>
                         <div>{{ $idea->type->name }}</div>
                     </div>
+                    @if (count($idea->tags))
+                        <div class="block">
+                            <b>Тэг:</b>
+                            <div>
+                                @foreach ($idea->tags as $tag)
+                                    {{ $tag->name }}
+                                    <br>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
                 </div>
                 <script>
                     const ideaId = {{ $idea->id }};

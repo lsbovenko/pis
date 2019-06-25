@@ -197,6 +197,13 @@ class IdeasController extends Controller
             });
         }
 
+        if (!empty($input['tag_id'])) {
+            $tagId = $input['tag_id'];
+            $query->whereHas('tags', function ($q) use ($tagId) {
+                $q->whereIn('id', $tagId);
+            });
+        }
+
         if (isset($input['statusId'])) {
             $statusId = $input['statusId'];
             $query->where('status_id', '=',  $statusId);
@@ -281,6 +288,7 @@ class IdeasController extends Controller
             'operationalGoalsList' => $reference->getAllOperationalGoalForSelect(0, 'is_active', 'desc'),
             'strategicObjectivesList' => $reference->getAllStrategicObjectiveForSelect(0, 'is_active', 'desc'),
             'typesList' => $reference->getAllTypeForSelect(0, 'is_active', 'desc'),
+            'tagsList' => $reference->getAllTagForSelect(),
         ];
     }
 

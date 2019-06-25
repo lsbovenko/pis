@@ -95,4 +95,14 @@ class Reference
     {
         return (App::make('repository.position'))->getAllForSelect($isActive, $sortField, $order);
     }
+
+    /**
+     * @param string $sortField
+     * @param string $order
+     * @return array
+     */
+    public function getAllTagForSelect($sortField = 'name', $order = 'asc') : array
+    {
+        return (App::make('repository.tag'))->getAllForSelect(false, $sortField, $order);
+    }
 }

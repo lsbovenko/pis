@@ -58,9 +58,33 @@
         </div>
     </div>
 </div>
+<div class="input-group-two">
+    <div class="form-group">
+        <label for="tags_select">Доступные тэги</label>
+        <div class="dropdown customer-select">
+            {{ Form::select('tags_select[]', $tagsList, '', [
+            'class'=>'form-control',
+            'id' => 'tags_select',
+            'multiple' => true
+            ]) }}
+        </div>
+    </div>
+    <div class="form-group tagsinput">
+        <label for="tags">Добавленные тэги</label>
+        {{ Form::text('tags', '', [
+        'class'=>'form-control',
+        'id' => 'tags',
+        'placeholder' => 'Введите новый тэг либо выберите из списка'
+        ]) }}
+    </div>
+</div>
+{{ Form::hidden('tags_exclude', isset($tagsExclude) ? $tagsExclude : '', ['class'=>'form-control', 'id'=>'tags_exclude']) }}
 
 @section('scripts')
     <script src="{!! asset('/vendor/summernote/summernote.js') !!}"></script>
     <script src="{!! asset('/vendor/summernote/lang/summernote-ru-RU.js') !!}"></script>
+    <script src="{{ asset('/vendor/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
     <link href="{{ asset('/vendor/summernote/summernote.css') }}" rel="stylesheet">
+    <link href="{{ asset('/vendor/bootstrap-tagsinput/bootstrap-tagsinput.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/custom-add-fields.css') }}" rel="stylesheet">
 @stop

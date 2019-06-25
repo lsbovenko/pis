@@ -41,12 +41,22 @@ class EditIdeaController extends Controller
 
         /** @var \App\Service\Reference $reference */
         $reference = App::make('reference');
+
+        $tagsExclude = [];
+        $tags = $idea->tags()->get();
+        foreach ($tags as $tag)
+        {
+            $tagsExclude[$tag->id] = $tag->name;
+        }
+
         $data = [
             'coreCompetenciesList' => $reference->getAllCoreCompetencyForSelect(),
             'operationalGoalsList' => $reference->getAllOperationalGoalForSelect(),
             'strategicObjectivesList' => $reference->getAllStrategicObjectiveForSelect(),
             'typesList' => $reference->getAllTypeForSelect(),
             'departmentsList' => $reference->getAllDepartmentForSelect(),
+            'tagsList' => $reference->getAllTagForSelect(),
+            'tagsExclude' => json_encode($tagsExclude),
             'statuses' => App::make('reference')->getAllStatusesForSelect(),
             'idea' => $idea,
             'status' => $idea->status,
@@ -64,6 +74,7 @@ class EditIdeaController extends Controller
         /** @var \App\Models\Idea $idea */
         $idea = Idea::findOrFail($request->route('id'));
         try {
+            $request = App::make('idea.control')->addTagIds($request);
             $data = App::make('datacleaner')->cleanData($request->all(), ['description']);
             $this->getIdeaControl()->update($idea, $data);
         } catch (\Exception $e) {

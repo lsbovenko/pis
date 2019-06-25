@@ -136,7 +136,7 @@
                     </li>
                 </ul>
             </section>
-            <section id="type" class="item bottom-20">
+            <section id="type" class="item">
                 <ul class="without-list-style">
                     <li class="first">Тип</li>
                     <li v-for="(itemType, index) in filters.typesList">
@@ -147,7 +147,23 @@
                                    @change="changeHandler"
                             >
                             <span class="inbtn__indicator"></span>
-                            <span class="data" id="data-5">{{ itemType }}</span>
+                            <span class="data" id="data-4">{{ itemType }}</span>
+                        </label>
+                    </li>
+                </ul>
+            </section>
+            <section v-if="filters.tagsList && Object.keys(filters.tagsList).length" id="tag" class="item bottom-20">
+                <ul class="without-list-style">
+                    <li class="first">Тэг</li>
+                    <li v-for="(itemTag, index) in filters.tagsList">
+                        <label class="inbtn">
+                            <input type="checkbox"
+                                   name="tag_id[]"
+                                   :value="`${index}`"
+                                   @change="changeHandler"
+                            >
+                            <span class="inbtn__indicator"></span>
+                            <span class="data" id="data-5">{{ itemTag }}</span>
                         </label>
                     </li>
                 </ul>

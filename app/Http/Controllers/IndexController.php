@@ -40,6 +40,7 @@ class IndexController extends Controller
             'strategicObjectivesList' => $reference->getAllStrategicObjectiveForSelect(),
             'typesList' => $reference->getAllTypeForSelect(),
             'departmentsList' => $reference->getAllDepartmentForSelect(),
+            'tagsList' => $reference->getAllTagForSelect(),
         ];
         return view('index.add-idea', $data);
     }
@@ -51,6 +52,7 @@ class IndexController extends Controller
     public function createIdea(IdeaRequest $request)
     {
         try {
+            $request = App::make('idea.control')->addTagIds($request);
             $data = App::make('datacleaner')->cleanData($request->all(), ['description']);
             $status = App::make('repository.status')->getBySlug(Status::SLUG_ACTIVE);
             if (!isset($status)) {
