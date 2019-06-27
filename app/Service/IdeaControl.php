@@ -2,11 +2,14 @@
 
 namespace App\Service;
 
+use App\Http\Requests\IdeaRequest;
 use App\Models\Categories\Status;
 use App\Models\Auth\User;
+use App\Models\Categories\Tag;
 use App\Models\{Comment, Idea, Note};
 use App\Events\{CommentAdded, IdeaWasCreated, IdeaWasApproved, IdeaWasDeclined, IdeaWasChangedStatus, LikeAdded};
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 
 /**
  * Class IdeaControl
@@ -30,7 +33,9 @@ class IdeaControl
         $idea->coreCompetencies()->attach($data['core_competency_id']);
         $idea->departments()->attach($data['department_id']);
         $idea->operationalGoals()->attach($data['operational_goal_id']);
-        $idea->strategicObjectives()->attach($data['strategic_objective_id']);
+        if (isset($data['tag_id'])) {
+            $idea->tags()->attach($data['tag_id']);
+        }
 
         event(new IdeaWasCreated($idea));
 
@@ -48,7 +53,8 @@ class IdeaControl
         $idea->coreCompetencies()->sync($data['core_competency_id'], 1);
         $idea->departments()->sync($data['department_id'], 1);
         $idea->operationalGoals()->sync($data['operational_goal_id'], 1);
-        $idea->strategicObjectives()->sync($data['strategic_objective_id'], 1);
+        $tagIds = (isset($data['tag_id'])) ? $data['tag_id'] : [];
+        $idea->tags()->sync($tagIds, 1);
 
         return $idea;
     }
@@ -251,5 +257,41 @@ class IdeaControl
         }
 
         return true;
+    }
+
+    /**
+     * Add tag ids to request
+     *
+     * @param IdeaRequest $request
+     * @return IdeaRequest
+     */
+    public function addTagIds(IdeaRequest $request) : IdeaRequest
+    {
+        $tags = $request->get('tags');
+
+        if (!empty($tags)) {
+            $tagsAll = explode(",", $tags);
+            $tagsOldIds = array_keys(App::make('reference')->getAllTagForSelect());
+            $tagsNew = array_diff($tagsAll, $tagsOldIds);
+
+            foreach ($tagsNew as $tagNew) {
+                $count = Tag::where('name', $tagNew)->count();
+                if (!$count) {
+                    $tagsNewArray[] = [
+                        'name' => $tagNew,
+                    ];
+                }
+            }
+            if (!empty($tagsNewArray)) {
+                Tag::insert($tagsNewArray);
+            }
+
+            $tagIdArrayOld = array_intersect($tagsAll, $tagsOldIds);
+            $tagIdArrayNew = Tag::whereIn('name', $tagsNew)->pluck('id')->toArray();
+            $tagIdArrayAll = array_merge($tagIdArrayOld, $tagIdArrayNew);
+            $request->merge(['tag_id' => $tagIdArrayAll]);
+        }
+
+        return $request;
     }
 }

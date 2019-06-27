@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Categories\Tag;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -166,5 +167,13 @@ class Idea extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class,'idea_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'ideas_tags', 'idea_id', 'tag_id', 'id', 'id');
     }
 }
