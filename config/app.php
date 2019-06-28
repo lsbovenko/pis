@@ -210,6 +210,7 @@ return [
         App\Providers\JWTServiceProvider::class,
         App\Providers\AuthApiClientServiceProvider::class,
         App\Providers\UserCreatorServiceProvider::class,
+        App\Providers\WebhookServiceProvider::class,
     ],
 
     /*
@@ -267,4 +268,12 @@ return [
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ],
 
+    'webhook' => [
+        'local' => [
+            'secret_key' => env('WEBHOOK_SECRET_KEY', 's@Gn~/S3/l,Cfes)b%sapHSe(s4Jjj#v'),
+        ],
+        'production' => [
+            'secret_key' => env('WEBHOOK_SECRET_KEY', 'i52j+\'^wvrQ^}Jww:*-dC/.IdzJE9#S:'),
+        ],
+    ],
 ];
