@@ -105,8 +105,8 @@
                             <p v-html="item.description"></p>
                             <a :href="`/review-idea/${item.id}`">Read more</a>
                             <br><br>
-                            <div v-if="item.completed_at">Дата реализации идеи: {{ getCompletedAt(item.completed_at) }}</div>
-                            <div v-if="item.completed_at">Количество дней, затраченное для реализации идеи:
+                            <div v-if="item.completed_at"><strong>Дата реализации идеи:</strong> {{ getCompletedAt(item.completed_at) }}</div>
+                            <div v-if="item.completed_at"><strong>Реализовано за дней:</strong>
                                 {{ getCompletedDays(item.completed_at, item.created_at) }}</div>
                             <div class="row">
                                 <div class="col-md-9">
