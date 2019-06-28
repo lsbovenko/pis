@@ -104,6 +104,10 @@
                             </a>
                             <p v-html="item.description"></p>
                             <a :href="`/review-idea/${item.id}`">Read more</a>
+                            <br><br>
+                            <div v-if="item.completed_at">Дата реализации идеи: {{ getCompletedAt(item.completed_at) }}</div>
+                            <div v-if="item.completed_at">Количество дней, затраченное для реализации идеи:
+                                {{ getCompletedDays(item.completed_at, item.created_at) }}</div>
                             <div class="row">
                                 <div class="col-md-9">
                                     <div class="user-info">
@@ -355,6 +359,18 @@
                         }
                     };
                 }
+            },
+            getCompletedAt(completedAt) {
+                var items = completedAt.split(' ');
+
+                return items[0];
+            },
+            getCompletedDays(completedAt, createdAt) {
+                var dateCompleted = new Date(completedAt);
+                var dateCreated = new Date(createdAt);
+                var completedDays = Math.floor((dateCompleted.getTime() - dateCreated.getTime())/(24*60*60*1000));
+
+                return completedDays;
             }
         }
     }

@@ -24,6 +24,16 @@
 
                     <div class="section-title">{{ $idea->title }}</div>
                     <div class="{{ $status->slug }} status">{{ $status->name }}</div>
+                    @if ($status->id == $completedStatusId)
+                        <div class="text">
+                            Дата реализации идеи: {{ $idea->completed_at->format('Y-m-d') }}
+                        </div>
+                        <div class="text">
+                            Количество дней, затраченное для реализации идеи:
+                            {{ intdiv($idea->completed_at->timestamp - $idea->created_at->timestamp, 24*60*60) }}
+                        </div>
+                        <br>
+                    @endif
                     @if ($status->id == $completedStatusId  && $idea->details)
                         <div class="text">
                             {{ $idea->details }}
