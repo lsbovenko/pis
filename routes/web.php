@@ -15,6 +15,8 @@ if (App::environment('production')) {
     URL::forceScheme('https');
 }
 
+Route::post('/webhook/receive', 'Webhook@receive')->name('/webhook/receive');
+
 /**
  * only auth users
  */
