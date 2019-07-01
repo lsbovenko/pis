@@ -283,12 +283,12 @@ class IdeasController extends Controller
         /** @var \App\Service\Reference $reference */
         $reference = App::make('reference');
         return [
-            'departmentsList' => $reference->getAllDepartmentForSelect(0, 'is_active', 'desc'),
-            'coreCompetenciesList' => $reference->getAllCoreCompetencyForSelect(0, 'is_active', 'desc'),
-            'operationalGoalsList' => $reference->getAllOperationalGoalForSelect(0, 'is_active', 'desc'),
-            'strategicObjectivesList' => $reference->getAllStrategicObjectiveForSelect(0, 'is_active', 'desc'),
-            'typesList' => $reference->getAllTypeForSelect(0, 'is_active', 'desc'),
-            'tagsList' => $reference->getAllTagForSelect(),
+            'departmentsList' => $reference->getAllDepartmentForSelect(true),
+            'coreCompetenciesList' => $reference->getAllCoreCompetencyForSelect(true),
+            'operationalGoalsList' => $reference->getAllOperationalGoalForSelect(true),
+            'strategicObjectivesList' => $reference->getAllStrategicObjectiveForSelect(true),
+            'typesList' => $reference->getAllTypeForSelect(true),
+            'tagsList' => $reference->getAllTagForSelect(true),
         ];
     }
 
@@ -301,7 +301,7 @@ class IdeasController extends Controller
         $reference = App::make('reference');
 
         return [
-            'status' => $reference->getAllStatusesForSelect(0, 'is_active', 'desc')
+            'status' => $reference->getAllStatusesForSelect()
         ];
     }
 
@@ -318,7 +318,7 @@ class IdeasController extends Controller
      */
     protected function getActiveUsers()
     {
-        return App::make('repository.user')->getTopUsers(Status::getActiveStatus(), null, null, 20, 1);
+        return App::make('repository.user')->getActiveUsers(20);
     }
     /**
      * @return mixed

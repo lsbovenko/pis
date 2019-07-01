@@ -29,9 +29,9 @@
                     <ul class="dropdown-menu-vue" v-if="showDropdownUserDepartment">
                         <li v-for="(itemDepartament, index) in filters.departmentsList">
                             <a href="javascript:void(0)"
-                               v-on:click="updateOptionUserDepartment(itemDepartament)"
-                               @click="changeSelectUserDepartment(`user_department_id=${index}`)">
-                                {{itemDepartament}}
+                               v-on:click="updateOptionUserDepartment(itemDepartament.name)"
+                               @click="changeSelectUserDepartment(`user_department_id=${itemDepartament.id}`)">
+                                {{itemDepartament.name}}
                             </a>
                         </li>
                     </ul>
@@ -95,11 +95,11 @@
                         <label class="inbtn">
                             <input type="checkbox"
                                    name="department_id[]"
-                                   :value="`${index}`"
+                                   :value="`${itemDepartament.id}`"
                                    @change="changeHandler($event)"
                             >
                             <span class="inbtn__indicator"></span>
-                            <span class="data" id="data-1">{{ itemDepartament }}</span>
+                            <span class="data" id="data-1">{{itemDepartament.name}}</span>
                         </label>
                     </li>
                 </ul>
@@ -111,11 +111,11 @@
                         <label class="inbtn">
                             <input type="checkbox"
                                    name="core_competency_id[]"
-                                   :value="`${index}`"
+                                   :value="`${itemCompetenc.id}`"
                                    @change="changeHandler($event)"
                             >
                             <span class="inbtn__indicator"></span>
-                            <span class="data" id="data-2">{{ itemCompetenc }}</span>
+                            <span class="data" id="data-2">{{itemCompetenc.name}}</span>
                         </label>
                     </li>
                 </ul>
@@ -127,11 +127,11 @@
                         <label class="inbtn">
                             <input type="checkbox"
                                    name="operational_goal_id[]"
-                                   :value="`${index}`"
+                                   :value="`${itemOperational.id}`"
                                    @change="changeHandler"
                             >
                             <span class="inbtn__indicator"></span>
-                            <span class="data" id="data-3">{{ itemOperational }}</span>
+                            <span class="data" id="data-3">{{itemOperational.name}}</span>
                         </label>
                     </li>
                 </ul>
@@ -143,11 +143,11 @@
                         <label class="inbtn">
                             <input type="checkbox"
                                    name="type_id[]"
-                                   :value="`${index}`"
+                                   :value="`${itemType.id}`"
                                    @change="changeHandler"
                             >
                             <span class="inbtn__indicator"></span>
-                            <span class="data" id="data-4">{{ itemType }}</span>
+                            <span class="data" id="data-4">{{itemType.name}}</span>
                         </label>
                     </li>
                 </ul>
@@ -159,11 +159,11 @@
                         <label class="inbtn">
                             <input type="checkbox"
                                    name="tag_id[]"
-                                   :value="`${index}`"
+                                   :value="`${itemTag.id}`"
                                    @change="changeHandler"
                             >
                             <span class="inbtn__indicator"></span>
-                            <span class="data" id="data-5">{{ itemTag }}</span>
+                            <span class="data" id="data-5">{{itemTag.name}}</span>
                         </label>
                     </li>
                 </ul>

@@ -9,24 +9,28 @@ namespace App\Repositories;
 abstract class AbstractRepository
 {
     /**
-     * @param string $order
+     * @param bool $isFilter
+     * @param bool $isActiveFieldExists
      * @return array
      */
-    public function getAllForSelect($isActive = true, $sortField = 'id', $order = 'asc') : array
+    public function getAllForSelect(bool $isFilter, bool $isActiveFieldExists = true) : array
     {
         $res = [];
-        $query = ($this->getModelClass())::orderBy($sortField, $order);
-        if ($isActive) {
-            $query->where('is_active', '=', '1');
-        }
-        foreach ($query->get() as $model)
-        {
+        $query = ($isActiveFieldExists)
+            ? ($this->getModelClass())::orderBy('is_active', 'desc')->orderBy('name', 'asc')
+            : ($this->getModelClass())::orderBy('name', 'asc');
+        foreach ($query->get() as $model) {
             $name = $model->getDisplayNameField();
 
             if ($model->is_active === 0) {
                 $name .= ' (устаревш.)';
             }
-            $res[$model->id] = $name;
+
+            if ($isFilter) {
+                $res[] = ['id' => $model->id, 'name' => $name];
+            } else {
+                $res[$model->id] = $name;
+            }
         }
 
         return $res;

@@ -101,6 +101,28 @@ class User extends AbstractRepository
     }
 
     /**
+     * @param int $limit
+     * @return mixed
+     */
+    public function getActiveUsers(int $limit)
+    {
+        /** @var \Illuminate\Database\Query\Builder $query */
+        $query = DB::table('users')
+            ->rightJoin('ideas', 'users.id', '=', 'ideas.user_id')
+            ->select(DB::raw('users.*, count(users.id) AS number'))
+            ->groupBy('users.id')
+            ->orderBy('users.name', 'asc')
+            ->orderBy('users.last_name', 'asc');
+
+        $query->where('users.is_active', '=', 1);
+        $query->where('ideas.approve_status', '=', Idea::APPROVED);
+
+        return $query
+            ->limit($limit)
+            ->get();
+    }
+
+    /**
      * @param int|null $department
      * @return mixed
      */
@@ -111,8 +133,8 @@ class User extends AbstractRepository
             ->rightJoin('ideas', 'users.id', '=', 'ideas.user_id')
             ->select(DB::raw('users.*, count(users.id) AS number'))
             ->groupBy('users.id')
-            ->orderBy('number', 'DESC')
-            ->orderBy('users.id', 'asc');
+            ->orderBy('users.name', 'asc')
+            ->orderBy('users.last_name', 'asc');
 
         $query->where('users.is_active', '=', 1);
         $query->where('ideas.approve_status', '=', Idea::APPROVED);
