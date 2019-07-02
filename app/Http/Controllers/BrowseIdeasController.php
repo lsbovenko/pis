@@ -26,6 +26,6 @@ class BrowseIdeasController extends Controller
      */
     public function index()
     {
-        return view('browse-ideas.index');
+        return view('browse-ideas.index', ['isShowSearchIdeaBlock' => true]);
     }
 }
