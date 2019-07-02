@@ -26,4 +26,20 @@ class Status extends AbstractRepository
     {
         return ModelStatus::class;
     }
+
+    /**
+     * @param bool $isFilter
+     * @param bool $isActiveFieldExists
+     * @return array
+     */
+    public function getAllForSelect(bool $isFilter, bool $isActiveFieldExists = true) : array
+    {
+        $res = [];
+        $query = ($this->getModelClass())::where('is_active', '1')->orderBy('id', 'asc');
+        foreach ($query->get() as $model) {
+            $res[$model->id] = $model->getDisplayNameField();
+        }
+
+        return $res;
+    }
 }
