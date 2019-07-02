@@ -168,9 +168,7 @@ class IdeaControl
         }
         if ($idea->status_id !== $status->id ||
             ($idea->status_id === $status->id && $status->id != Status::getActiveStatus()->id)) {
-            if ($status->slug == Status::SLUG_COMPLETED) {
-                $idea->completed_at = Carbon::now();
-            }
+            $idea->completed_at = ($status->slug == Status::SLUG_COMPLETED) ? Carbon::now() : null;
             $idea->status_id = $status->id;
             $idea->details = $details;
             $idea->save();
