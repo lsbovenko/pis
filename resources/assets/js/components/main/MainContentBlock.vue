@@ -232,6 +232,7 @@
             this.$root.$on('resultChecked', (result) => {
                 this.resultFilters = result.data;
                 this.query.statusId = result.statusId;
+                this.query.orderDir = result.orderDir;
 
                 if (result.orderResult === 'removed'){
                     let orderMenu = document.getElementById('dropdownMenuOrder');
@@ -239,7 +240,6 @@
                     this.querySelectorMenuOrder();
                 }
 
-                this.query.orderDir = '';
                 this.viewBlock = true;
                 this.ideaEmpty = false;
             });
@@ -247,6 +247,7 @@
             this.$root.$on('resetAllFilterParams', (result) => {
                 this.query.limit = result.limit;
                 this.query.statusId = result.statusId;
+                this.query.orderDir = 'desc';
                 this.selected = result.selected;
             })
         },
@@ -258,7 +259,7 @@
                     this.query.orderDir = this.query.filterDesc;
                 }
 
-                this.$root.$emit('checkOrderDir', this.query);
+                this.$root.$emit('checkStatusIdAndOrderDir', this.query);
 
                 this.query.page = 1;
                 this.applyChange();
@@ -273,9 +274,11 @@
                     }
                 });
 
+                this.query.statusId = param;
+                this.$root.$emit('checkStatusIdAndOrderDir', this.query);
+
                 this.query.page = 1;
                 this.active = 'active';
-                this.query.statusId = param;
                 this.applyChange();
             },
             applyChange() {

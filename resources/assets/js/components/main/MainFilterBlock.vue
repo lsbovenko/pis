@@ -233,7 +233,7 @@
                 this.placeholderText = this.placeholder;
             }
 
-            this.$root.$on('checkOrderDir', (res) => {
+            this.$root.$on('checkStatusIdAndOrderDir', (res) => {
                 this.query.statusId = res.statusId;
                 this.query.orderDir = res.orderDir;
             });
@@ -321,7 +321,11 @@
                     this.inputChecked = this.inputChecked + '&' + this.datepickerDates;
                 }
 
-                this.$root.$emit('resultChecked', {data: this.inputChecked, statusId: this.query.statusId});
+                this.$root.$emit('resultChecked', {
+                    data: this.inputChecked,
+                    statusId: this.query.statusId,
+                    orderDir: this.query.orderDir
+                });
 
                 if (e.target.checked){
                     this.post();
@@ -344,7 +348,11 @@
                 this.selectUser = val;
                 this.inputChecked = this.inputChecked + '&' + this.selectUser;
 
-                this.$root.$emit('resultChecked', {data: this.inputChecked, statusId: this.query.statusId});
+                this.$root.$emit('resultChecked', {
+                    data: this.inputChecked,
+                    statusId: this.query.statusId,
+                    orderDir: this.query.orderDir
+                });
                 this.post();
             },
             changeSelectUserDepartment (val) {
@@ -371,7 +379,11 @@
                 this.selectUserDepartment = val;
                 this.inputChecked = this.inputChecked + '&' + this.selectUserDepartment;
 
-                this.$root.$emit('resultChecked', {data: this.inputChecked, statusId: this.query.statusId});
+                this.$root.$emit('resultChecked', {
+                    data: this.inputChecked,
+                    statusId: this.query.statusId,
+                    orderDir: this.query.orderDir
+                });
                 this.post();
             },
             changeSelectIdeaAge (val) {
@@ -391,7 +403,11 @@
                 this.selectIdeaAge = val;
                 this.inputChecked = this.inputChecked + '&' + this.selectIdeaAge;
 
-                this.$root.$emit('resultChecked', {data: this.inputChecked, statusId: this.query.statusId});
+                this.$root.$emit('resultChecked', {
+                    data: this.inputChecked,
+                    statusId: this.query.statusId,
+                    orderDir: this.query.orderDir
+                });
                 this.post();
             },
             changeSearchIdea () {
@@ -405,7 +421,11 @@
                 this.searchIdea = val;
                 this.inputChecked = this.inputChecked + '&' + this.searchIdea;
 
-                this.$root.$emit('resultChecked', {data: this.inputChecked, statusId: this.query.statusId});
+                this.$root.$emit('resultChecked', {
+                    data: this.inputChecked,
+                    statusId: this.query.statusId,
+                    orderDir: this.query.orderDir
+                });
                 this.post();
             },
             changeDatepickerDates () {
@@ -419,7 +439,11 @@
                 this.datepickerDates = val;
                 this.inputChecked = this.inputChecked + '&' + this.datepickerDates;
 
-                this.$root.$emit('resultChecked', {data: this.inputChecked, statusId: this.query.statusId});
+                this.$root.$emit('resultChecked', {data:
+                    this.inputChecked,
+                    statusId: this.query.statusId,
+                    orderDir: this.query.orderDir
+                });
                 this.post();
             },
             clearResult () {
