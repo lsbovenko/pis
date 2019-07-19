@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Get;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\Auth\User;
 use Illuminate\Http\Request;
 use App\Models\Idea;
 use Illuminate\Support\Facades\{
@@ -176,6 +177,12 @@ class IdeasController extends Controller
             });
         }
 
+        if (isset($input['executor_id'])) {
+            $executorId = $input['executor_id'];
+            $query->join('ideas_executors as ie', 'ideas.id', '=', 'ie.idea_id');
+            $query->where('ie.executor_id', $executorId);
+        }
+
         if (isset($input['core_competency_id'])) {
             $coreCompetencyId = $input['core_competency_id'];
             $query->whereHas('coreCompetencies', function($q) use ($coreCompetencyId) {
@@ -289,6 +296,7 @@ class IdeasController extends Controller
             'strategicObjectivesList' => $reference->getAllStrategicObjectiveForSelect(true),
             'typesList' => $reference->getAllTypeForSelect(true),
             'tagsList' => $reference->getAllTagForSelect(true),
+            'executorsList' => $reference->getAllExecutorsForSelect(true),
         ];
     }
 

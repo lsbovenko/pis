@@ -72,6 +72,15 @@ class User extends Authenticatable
     {
         return $this->name . ' ' . $this->last_name;
     }
+
+    /**
+     * @return string
+     */
+    public function getDisplayNameField() : string
+    {
+        return $this->getFullName();
+    }
+
     /**
      * @return int
      */
@@ -174,5 +183,13 @@ class User extends Authenticatable
     public function getLikeNotification(int $ideaId)
     {
         return $this->likeNotification()->where('idea_id', $ideaId)->first();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function ideasOfExecutor()
+    {
+        return $this->belongsToMany(Idea::class, 'ideas_executors', 'executor_id', 'idea_id', 'id', 'id');
     }
 }

@@ -10404,7 +10404,7 @@ body .container .btn_.btn-outline-red:hover {
     margin-top: 20px;
 }
 
-.without-list-style li, #customer-select li, #user-department-select li, #idea-age-select li {
+.without-list-style li, #customer-select li, #user-department-select li, #idea-age-select li, #executor-select li {
     list-style: none;
 }
 
@@ -10414,4 +10414,24 @@ body .container .btn_.btn-outline-red:hover {
 
 .without-list-style li ol li {
     list-style: decimal;
+}
+
+.executors-select .bootstrap-select {
+    width: 100% !important;
+}
+
+.executors-button {
+    padding: 0 12px;
+    font-size: 14px;
+}
+
+.executors-select .active {
+    background-color: #ffffff !important;
+    border: none;
+    padding: 3px 10px;
+    text-align: left;
+}
+
+.executors-select .glyphicon {
+    color: #000000;
 }

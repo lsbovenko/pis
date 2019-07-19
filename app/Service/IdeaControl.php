@@ -7,7 +7,8 @@ use App\Models\Categories\Status;
 use App\Models\Auth\User;
 use App\Models\Categories\Tag;
 use App\Models\{Comment, Idea, Note};
-use App\Events\{CommentAdded, IdeaWasCreated, IdeaWasApproved, IdeaWasDeclined, IdeaWasChangedStatus, LikeAdded};
+use App\Events\{CommentAdded, IdeaWasCreated, IdeaWasApproved, IdeaWasDeclined, IdeaWasChangedStatus, LikeAdded,
+    IdeaExecutorsWasAdded, IdeaExecutorsWasRemoved};
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 
@@ -55,6 +56,32 @@ class IdeaControl
         $idea->operationalGoals()->sync($data['operational_goal_id'], 1);
         $tagIds = (isset($data['tag_id'])) ? $data['tag_id'] : [];
         $idea->tags()->sync($tagIds, 1);
+
+        return $idea;
+    }
+
+    /**
+     * @param Idea $idea
+     * @param array $executorIds
+     * @return Idea
+     */
+    public function updateExecutors(Idea $idea, array $executorIds)
+    {
+        $oldExecutorIds = $idea->executors->pluck('id')->toArray();
+
+        $addExecutorIds = array_diff($executorIds, $oldExecutorIds);
+        $removeExecutorIds = array_diff($oldExecutorIds, $executorIds);
+
+        $idea->executors()->sync($executorIds, 1);
+
+        if ($addExecutorIds) {
+            $addExecutors = User::whereIn('id', $addExecutorIds)->get();
+            event(new IdeaExecutorsWasAdded($idea, $addExecutors));
+        }
+        if ($removeExecutorIds) {
+            $removeExecutors = User::whereIn('id', $removeExecutorIds)->get();
+            event(new IdeaExecutorsWasRemoved($idea, $removeExecutors));
+        }
 
         return $idea;
     }
