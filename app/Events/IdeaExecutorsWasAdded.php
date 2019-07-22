@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use Illuminate\Database\Eloquent\Collection;
 use App\Models\Idea;
 
 /**
@@ -12,7 +13,7 @@ class IdeaExecutorsWasAdded  extends IdeaWasAbstract
 {
     protected $executors;
 
-    public function __construct(Idea $idea, $executors)
+    public function __construct(Idea $idea, Collection $executors)
     {
         parent::__construct($idea);
         $this->executors = $executors;
