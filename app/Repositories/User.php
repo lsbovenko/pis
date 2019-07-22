@@ -148,6 +148,35 @@ class User extends AbstractRepository
     }
 
     /**
+     * @return mixed
+     */
+    public function getExecutorsForFilter()
+    {
+        /** @var \Illuminate\Database\Query\Builder $query */
+        $query = DB::table('ideas_executors as ie')
+            ->selectRaw('u.*')
+            ->join('users as u', 'ie.executor_id', '=', 'u.id')
+            ->where('u.is_active', '=', 1)
+            ->groupBy('u.id')
+            ->orderBy('u.name', 'asc')
+            ->orderBy('u.last_name', 'asc');
+
+        return $query->get();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActiveExecutors()
+    {
+        $executors = ModelUser::where('is_active', 1)
+            ->orderBy('name', 'asc')
+            ->orderBy('last_name', 'asc');
+
+        return $executors->get();
+    }
+
+    /**
      * @return string
      */
     protected function getModelClass(): string

@@ -89,4 +89,30 @@ class Reference
     {
         return (App::make('repository.tag'))->getAllForSelect($isFilter, false);
     }
+
+    /**
+     * @param bool $isFilter
+     * @return array
+     */
+    public function getAllExecutorsForSelect($isFilter = false) : array
+    {
+        $repository = App::make('repository.user');
+
+        if ($isFilter) {
+            $executors = $repository->getExecutorsForFilter();
+            foreach ($executors as $executor) {
+                $res[] = [
+                    'id' => $executor->id,
+                    'name' => $executor->name . ' ' . $executor->last_name //$executor instanceof \stdClass
+                ];
+            }
+        } else {
+            $executors = $repository->getActiveExecutors();
+            foreach ($executors as $executor) {
+                $res[$executor->id] = $executor->getFullName();
+            }
+        }
+
+        return (!empty($res)) ? $res : [];
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Auth\User;
 use App\Models\Categories\Tag;
 use Illuminate\Database\Eloquent\Model;
 
@@ -175,5 +176,13 @@ class Idea extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'ideas_tags', 'idea_id', 'tag_id', 'id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function executors()
+    {
+        return $this->belongsToMany(User::class, 'ideas_executors', 'idea_id', 'executor_id', 'id', 'id');
     }
 }

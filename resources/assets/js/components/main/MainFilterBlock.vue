@@ -65,6 +65,30 @@
                 </div>
 
                 <ul class="last-changes-list without-list-style">
+                    <li class="first">Исполнитель</li>
+                </ul>
+                <div class="btn-group-vue dropdown customer-select" id="executor-select">
+                    <div class="menu-overlay-vue" v-if="showDropdownExecutor" @click.stop="toggleMenuExecutor"></div>
+                    <li @click="toggleMenuExecutor()" class="dropdown-toggle-vue" v-if="selectedOptionNameExecutor !== ''">
+                        {{selectedOptionNameExecutor}}
+                        <span class="caret"></span>
+                    </li>
+                    <li @click="toggleMenuExecutor()" class="dropdown-toggle-vue" v-if="selectedOptionNameExecutor === ''">
+                        {{placeholderTextExecutor}}
+                        <span class="caret-menu"></span>
+                    </li>
+                    <ul class="dropdown-menu-vue" v-if="showDropdownExecutor">
+                        <li v-for="(itemExecutor, index) in filters.executorsList">
+                            <a href="javascript:void(0)"
+                               v-on:click="updateOptionExecutor(itemExecutor.name)"
+                               @click="changeSelectExecutor(`executor_id=${itemExecutor.id}`)">
+                                {{itemExecutor.name}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <ul class="last-changes-list without-list-style">
                     <li class="first">Возраст идей</li>
                 </ul>
                 <div class="btn-group-vue dropdown customer-select" id="idea-age-select">
@@ -182,6 +206,7 @@
                 selectUser: '',
                 selectUserDepartment: '',
                 selectIdeaAge: '',
+                selectExecutor: '',
                 searchIdea: '',
                 datepickerDates: '',
                 inputChecked: '',
@@ -207,15 +232,21 @@
                 selectedOptionIdeaAge: {
                     name: ''
                 },
+                selectedOptionExecutor: {
+                    name: ''
+                },
                 selectedOptionName: '',
                 selectedOptionNameUserDepartment: '',
                 selectedOptionNameIdeaAge: '',
+                selectedOptionNameExecutor: '',
                 showDropdown: false,
                 showDropdownUserDepartment: false,
                 showDropdownIdeaAge: false,
+                showDropdownExecutor: false,
                 placeholderText: 'Выбрать автора',
                 placeholderTextUserDepartment: 'Выбрать отдел',
                 placeholderTextIdeaAge: 'Выбрать возраст идей',
+                placeholderTextExecutor: 'Выбрать исполнителя',
                 activeStatusId: '',
                 ideaAges: [
                   { name: 'Добавленные >45 дней назад', value: 45 },
@@ -228,6 +259,7 @@
             this.selectedOption = this.users;
             this.selectedOptionUserDepartment = this.filters.departmentsList;
             this.selectedOptionIdeaAge = this.ideaAges;
+            this.selectedOptionExecutor = this.filters.executorsList;
             if (this.placeholder)
             {
                 this.placeholderText = this.placeholder;
@@ -254,6 +286,11 @@
                 this.showDropdownIdeaAge = false;
                 this.$emit('updateOptionIdeaAge', this.selectedOptionIdeaAge);
             },
+            updateOptionExecutor(option) {
+                this.selectedOptionNameExecutor = option;
+                this.showDropdownExecutor = false;
+                this.$emit('updateOptionExecutor', this.selectedOptionExecutor);
+            },
             toggleMenu () {
                 this.showDropdown = !this.showDropdown;
                 this.removedClass();
@@ -265,6 +302,10 @@
             toggleMenuIdeaAge () {
                 this.showDropdownIdeaAge = !this.showDropdownIdeaAge;
                 this.removedClassIdeaAge();
+            },
+            toggleMenuExecutor () {
+                this.showDropdownExecutor = !this.showDropdownExecutor;
+                this.removedClassExecutor();
             },
             post() {
                 this.$root.$emit('preloaderPage', true);
@@ -289,6 +330,8 @@
                     urlParams = this.selectUserDepartment;
                 } else if (this.selectIdeaAge && !this.inputChecked) {
                     urlParams = this.selectIdeaAge;
+                } else if (this.selectExecutor && !this.inputChecked) {
+                    urlParams = this.selectExecutor;
                 } else if (this.searchIdea && !this.inputChecked) {
                     urlParams = this.searchIdea;
                 } else if (this.datepickerDates && !this.inputChecked) {
@@ -313,6 +356,9 @@
                 }
                 if (this.selectIdeaAge) {
                     this.inputChecked = this.inputChecked + '&' +this.selectIdeaAge
+                }
+                if (this.selectExecutor) {
+                    this.inputChecked = this.inputChecked + '&' + this.selectExecutor;
                 }
                 if (this.searchIdea) {
                     this.inputChecked = this.inputChecked + '&' + this.searchIdea;
@@ -410,6 +456,28 @@
                 });
                 this.post();
             },
+            changeSelectExecutor (val) {
+                if (val === 'undefined') {
+                    this.selectExecutor = '';
+                    this.clearResult();
+                    return false;
+                }
+
+                if (this.inputChecked) {
+                    //remove from inputChecked string executor_id parameter
+                    this.inputChecked = this.inputChecked.replace(/(\&|\?)executor_id=(\d+)/gm, '');
+                }
+
+                this.selectExecutor = val;
+                this.inputChecked = this.inputChecked + '&' + this.selectExecutor;
+
+                this.$root.$emit('resultChecked', {
+                    data: this.inputChecked,
+                    statusId: this.query.statusId,
+                    orderDir: this.query.orderDir
+                });
+                this.post();
+            },
             changeSearchIdea () {
                 let val = 'search_idea=' + this.$refs.searchIdeaVuejs.value;
 
@@ -468,14 +536,17 @@
                 this.removedClass();
                 this.removedClassUserDepartment();
                 this.removedClassIdeaAge();
+                this.removedClassExecutor();
                 this.removedSearchIdea();
                 this.removedDatepickerDates();
                 this.selectedOptionName = '';
                 this.selectedOptionNameUserDepartment = '';
                 this.selectedOptionNameIdeaAge = '';
+                this.selectedOptionNameExecutor = '';
                 this.selectUser = '';
                 this.selectUserDepartment = '';
                 this.selectIdeaAge = '';
+                this.selectExecutor = '';
                 this.searchIdea = '';
                 this.datepickerDates = '';
                 this.$root.$emit('changeUserSelect', {data: ''});
@@ -508,6 +579,10 @@
             removedClassIdeaAge() {
                 let userMenu = document.getElementById('idea-age-select');
                 userMenu.classList.remove('open');
+            },
+            removedClassExecutor() {
+                let executorMenu = document.getElementById('executor-select');
+                executorMenu.classList.remove('open');
             },
             removedSearchIdea() {
                 document.getElementById('search-idea').value = '';

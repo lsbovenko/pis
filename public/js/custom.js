@@ -82,6 +82,17 @@
                 AddTagsAndHideTagsInTagListAtStart(tagsExclude, tags);
             }
         }
+
+        /**
+         * Disable 'Up/Down/Enter' buttons,
+         * because plugin 'bootstrap select' have a bug - buttons 'Up/Down' works incorrect when we use search
+         */
+        $('.executors-select').keydown(function (e) {
+            if (e.which == 38 || e.which == 40 || e.which == 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
     });
 
     function EnableDisableCtrlKeyForTagList(tagSelect) {

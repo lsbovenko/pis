@@ -50,11 +50,14 @@ class ReviewIdeaController extends Controller
             $likedUserId = $likedUser->pivot->user_id;
         }
 
+        /** @var \App\Service\Reference $reference */
+        $reference = App::make('reference');
+
         return view('review-idea.review', [
             'idea' => $idea,
             'user' => $idea->user,
             'priorityReason' => $idea->is_priority ? $idea->getPriorityReason() : null,
-            'statuses' => App::make('reference')->getAllStatusesForSelect(),
+            'statuses' => $reference->getAllStatusesForSelect(),
             'status' => $idea->status,
             'countUserIdea' => $user->ideas()->count(),
             'authUser' => [
@@ -65,6 +68,7 @@ class ReviewIdeaController extends Controller
             'comments' => $idea->comments,
             'activeStatusId' => Status::getActiveStatus()->id,
             'completedStatusId' => Status::getCompletedStatus()->id,
+            'executorsList' => $reference->getAllExecutorsForSelect(),
         ]);
     }
 

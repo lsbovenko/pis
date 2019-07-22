@@ -48,6 +48,33 @@
                         </div>
                     @else
                         @role('superadmin')
+                        <hr>
+                        <form action="{{ route('edit-idea-executors', ['id' => $idea->id]) }}" method="post">
+                            {{ csrf_field() }}
+                            <div class="row">
+                                <div class="col-lg-8 col-md-8 col-xs-5">
+                                    <div class="form-group executors-select">
+                                        <label for="executors_select">Исполнители</label>
+                                        <div class="dropdown customer-select">
+                                            {{ Form::select('executors_select[]', $executorsList, isset($idea) ? $idea->executors : '', [
+                                            'class'=>'selectpicker',
+                                            'id' => 'executors_select',
+                                            'multiple' => true,
+                                            'data-live-search' => 'true',
+                                            'data-none-selected-text' => 'Выберите исполнителей'
+                                            ]) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-6">
+                                    <div class="buttons justify executors-button">
+                                        <button type="submit" class="accept-blue">
+                                            Назначить исполнителей
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                         @if ($idea->isNew())
                             <div class="buttons justify">
                                 <div class="lnr lnr-pencil"
@@ -154,6 +181,17 @@
                         <b>Тип:</b>
                         <div>{{ $idea->type->name }}</div>
                     </div>
+                    @if (count($idea->executors))
+                        <div class="block">
+                            <b>Исполнители:</b>
+                            <div>
+                                @foreach ($idea->executors as $executor)
+                                    {{ $executor->getFullName() }}
+                                    <br>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
                     @if (count($idea->tags))
                         <div class="block">
                             <b>Тэг:</b>
@@ -208,4 +246,6 @@
 @endsection
 @section('scripts')
     <script src="{{ mix('js/comment.js') }}?v={{ config('app.version') }}"></script>
+    <script src="{{ asset('/vendor/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <link href="{{ asset('/vendor/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet">
 @stop

@@ -86,6 +86,26 @@ class EditIdeaController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function editExecutors(Request $request)
+    {
+        /** @var \App\Models\Idea $idea */
+        $idea = Idea::findOrFail($request->route('id'));
+        $executorIds = ($request->get('executors_select')) ? $request->get('executors_select') : [];
+
+        try {
+            $this->getIdeaControl()->updateExecutors($idea, $executorIds);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back();
+        }
+
+        $request->session()->flash('alert-success', 'Изменения успешно сохранены.');
+        return redirect()->back();
+    }
 
     /**
      * @param ChangeStatusRequest $request

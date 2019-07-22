@@ -60,6 +60,7 @@ Route::group(['middleware' => ['jwt']], function () {
             Route::post('/review-idea/{id}', 'ReviewIdeaController@approve')->where('id', '[0-9]+');
             Route::get('/pending-review', 'BrowseIdeasController@index')->name('pending-review');
             Route::get('/declined', 'BrowseIdeasController@index')->name('declined');
+            Route::post('/edit-idea-executors/{id}', 'EditIdeaController@editExecutors')->where('id', '[0-9]+')->name('edit-idea-executors');
 
             //VueJS
             Route::get('/get-idea/pending-review', 'Get\IdeasController@pendingReview')->name('/get-idea/pending-review');
