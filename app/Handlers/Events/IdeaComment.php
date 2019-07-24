@@ -13,6 +13,7 @@ use App\Mail\IdeaComment\ToAll;
 use App\Models\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
+use Illuminate\Database\Eloquent\Collection;
 
 class IdeaComment extends AbstractIdea
 {
@@ -24,33 +25,44 @@ class IdeaComment extends AbstractIdea
      */
     public function handle(CommentAdded $event)
     {
-        $this->notifySuperadminsAndIdeaAuthor($event);
+        $commentAuthor = $this->getCommentAuthor($event);
+        $ideaAuthor = $this->getIdeaAuthor($event);
+        $superAdmins = $this->getSuperAdmins();
+        $executors = $this->getExecutors($event);
+
+        $users = $ideaAuthor->merge($superAdmins)->merge($executors)->diff($commentAuthor);
+
+        $this->notifyUsers($event, $users);
     }
 
-    /**
-     * @param CommentAdded $event
-     * @return $this
-     */
-    protected function notifySuperadminsAndIdeaAuthor(CommentAdded $event)
+    protected function getCommentAuthor(CommentAdded $event)
     {
-        $ideaAuthor = $event->getComment()->idea()->first()->user;
-        $commentAuthor = $event->getComment()->user()->first();
+        $commentAuthorId = $event->getComment()->user_id;
 
-        if ($ideaAuthor->is_active == 1 && $ideaAuthor->id !== $commentAuthor->id) {
-            $users = App::make('repository.user')->getSuperadmins();
-            $emails = [];
-            foreach ($users as $user) {
-                if ($user->id !== $commentAuthor->id) {
-                    $emails[] = $user->email;
-                }
-            }
-            if (!in_array($ideaAuthor->email, $emails)) {
-                $emails[] = $ideaAuthor->email;
-            }
+        return User::where('id', $commentAuthorId)->get();
+    }
 
-            $this->getQueueService()->add($emails, new ToAll($event->getComment()));
+    protected function getIdeaAuthor(CommentAdded $event)
+    {
+        $ideaAuthorId = $event->getComment()->idea->user_id;
+
+        return User::where('id', $ideaAuthorId)->where('is_active', 1)->get();
+    }
+
+    protected function getSuperAdmins()
+    {
+        return App::make('repository.user')->getSuperadmins();
+    }
+
+    protected function getExecutors(CommentAdded $event)
+    {
+        return $event->getComment()->idea->executors->where('is_active', 1);
+    }
+
+    protected function notifyUsers(CommentAdded $event, Collection $users)
+    {
+        foreach ($users as $user) {
+            $this->getQueueService()->add($user->email, new ToAll($event->getComment()));
         }
-
-        return $this;
     }
 }
