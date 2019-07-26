@@ -46,7 +46,7 @@ class ToUser extends Mailable
     public function build()
     {
         return $this
-            ->subject('Ваша идея понравилась в PIS')
+            ->subject('Идея понравилась в PIS')
             ->view('emails.like.to-user', [
                 'idea' => $this->idea,
                 'likeAuthor' => $this->likeAuthor,
