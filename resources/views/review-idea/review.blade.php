@@ -100,8 +100,8 @@
                                 <span id="count_ideas_like">{{ $idea->likes_num }}</span> Поддерживают
                             </div>
                             <div class="support-text liked_users_{{ $idea->id }}">
-                                @foreach($authUser['listUsersLike'] as $userName)
-                                    {{ $userName->name }} {{ $userName->last_name }}
+                                @foreach($authUser['listUsersLike'] as $i => $userName)
+                                    {{ $userName->name }} {{ $userName->last_name }}@if($i + 1 != $idea->likes_num),@endif
                                 @endforeach
                             </div>
                         </div>
