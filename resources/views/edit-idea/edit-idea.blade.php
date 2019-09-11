@@ -3,9 +3,9 @@
 @section('content')
 <div class="container bottom-padding">
     <div class="content-box add-new-idea edit">
-        <div class="section-title">Редактировать идею</div>
+        <div class="section-title">{{ trans('ideas.edit_idea') }}</div>
         <div class="description-grey">
-            Создана :
+            {{ trans('ideas.created') }}:
             {{ $idea->created_at->format('d.m.Y') }},
             {{ $user->getFullName() }},
             {{ $user->position->name }}
@@ -22,7 +22,7 @@
             @include('index.partials.add-fields')
             <div class="row bottom-button">
                 <div class="col-md-12 text-right">
-                    <button type="submit" class="btn_ btn-blue last">Изменить</button>
+                    <button type="submit" class="btn_ btn-blue last">{{ trans('ideas.change') }}</button>
                 </div>
             </div>
         </form>

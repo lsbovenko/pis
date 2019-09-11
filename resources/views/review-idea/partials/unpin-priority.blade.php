@@ -5,7 +5,7 @@
             <form action="{{ route('unpin-priority', ['id' => $idea->id]) }}" method="post" class="js-disable-after-submit">
                 {{ csrf_field() }}
                 <div class="col-sm-3">
-                    <button type="submit" class="btn btn-danger pull-left">Не приоритетное</button>
+                    <button type="submit" class="btn btn-danger pull-left">{{ trans('ideas.not_priority') }}</button>
                 </div>
             </form>
         </div>

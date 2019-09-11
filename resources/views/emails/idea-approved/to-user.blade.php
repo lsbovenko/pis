@@ -2,6 +2,6 @@
 
 @section('content')
     <p>
-        Ваша идея "{{ $idea->title }}" опубликована.
+        {{ trans('ideas.idea_approved_to_user', ['ideaTitle' => $idea->title]) }}
     </p>
 @endsection

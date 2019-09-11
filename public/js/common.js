@@ -1,3 +1,6 @@
+var like;
+var dislike;
+
 (function ($) {
     "use strict";
     $(document).ready(function () {
@@ -103,10 +106,21 @@
         $('.mobile-btn').on('click', function () {
             $('.left-sidebar').toggleClass('open');
         })
+
+        var placeholder;
+        if ($.trim($('#lang').text()) == 'English') {
+            placeholder = 'Description';
+            like = 'Like';
+            dislike = 'I don\'t like';
+        } else {
+            placeholder = 'Описание';
+            like = 'Я поддерживаю';
+            dislike = 'Я не поддерживаю';
+        }
         //  Summernote
         $('#summernote').summernote({
             height: 144,
-            placeholder: 'Описание',
+            placeholder: placeholder,
             toolbar: [
                 ['style', ['bold', 'underline', 'italic']],
                 ['color', ['color']],
@@ -139,7 +153,7 @@ jQuery(document).on('click','#add_like_user', function () {
                     .attr('id', 'remove_like_user')
                     .find('.i-support')
                     .addClass('btn_liked')
-                    .html('Я не поддерживаю');
+                    .html(dislike);
                 jQuery('.liked_users_' + id_idea).html(name + ' ' + jQuery('.liked_users_' + id_idea).html());
             }
         });
@@ -167,7 +181,7 @@ jQuery(document).on('click', '#remove_like_user', function () {
                     .attr('id', 'add_like_user')
                     .find('.i-support')
                     .removeClass('btn_liked')
-                    .html('Я поддерживаю');
+                    .html(like);
                 var str = jQuery('.liked_users_' + id_idea).html();
                 jQuery('.liked_users_' + id_idea).html(str.replace(name + '', ''));
             }

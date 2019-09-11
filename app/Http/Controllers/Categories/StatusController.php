@@ -32,7 +32,7 @@ class StatusController extends Controller
     {
         return view('categories.status.index', [
             'items' => Status::all(),
-            'title' => 'Статусы',
+            'title' => trans('ideas.statuses'),
             'route' => 'categories.statuses'
         ]);
     }
@@ -47,7 +47,7 @@ class StatusController extends Controller
         $status = Status::findOrFail($request->route('id'));
         return view('categories.status.edit', [
             'item' => $status,
-            'title' => 'Редактировать статус',
+            'title' => trans('ideas.edit_status'),
             'route' => route('categories.statuses.edit', ['id' => $status->id]),
             'deleteRoute' => route('categories.statuses.delete', ['id' => $status->id]),
         ]);
@@ -75,7 +75,7 @@ class StatusController extends Controller
     public function create()
     {
         return view('categories.status.edit', [
-            'title' => 'Создать статус',
+            'title' => trans('ideas.create_status'),
             'route' => route('categories.statuses.create')
         ]);
     }
@@ -102,12 +102,12 @@ class StatusController extends Controller
         $status = Status::findOrFail($request->route('id'));
 
         if (in_array($status->id, [1,2,3])) {
-            return redirect()->back()->withErrors(['Это стандартный статус. Его нельзя удалить']);
+            return redirect()->back()->withErrors([trans('ideas.unable_delete_standard_status')]);
         }
 
         $ideasCount = $status->ideas()->count();
         if ($ideasCount) {
-            return redirect()->back()->withErrors(['Невозможно удалить статус. Существуют идеи с таким статусом']);
+            return redirect()->back()->withErrors([trans('ideas.unable_delete_ideas_with_status')]);
         }
         $status->delete();
 

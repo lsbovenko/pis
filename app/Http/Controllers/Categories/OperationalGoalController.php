@@ -32,7 +32,7 @@ class OperationalGoalController extends Controller
     {
         return view('categories.status.index', [
             'items' => OperationalGoal::all(),
-            'title' => 'Оператиные цели',
+            'title' => trans('ideas.operational_goals'),
             'route' => 'categories.operational-goal'
         ]);
     }
@@ -47,7 +47,7 @@ class OperationalGoalController extends Controller
         $item = OperationalGoal::findOrFail($request->route('id'));
         return view('categories.status.edit', [
             'item' => $item,
-            'title' => 'Редактировать элемент',
+            'title' => trans('ideas.edit_operational_goal'),
             'route' => route('categories.operational-goal.edit', ['id' => $item->id]),
             'deleteRoute' => route('categories.operational-goal.delete', ['id' => $item->id]),
         ]);
@@ -75,7 +75,7 @@ class OperationalGoalController extends Controller
     public function create()
     {
         return view('categories.status.edit', [
-            'title' => 'Создать Операционную цель',
+            'title' => trans('ideas.create_operational_goal'),
             'route' => route('categories.operational-goal.create')
         ]);
     }
@@ -103,7 +103,7 @@ class OperationalGoalController extends Controller
 
         $itemCount = $item->ideas()->count();
         if ($itemCount) {
-            return redirect()->back()->withErrors(['Невозможно удалить элемент. Существуют идеи с такой целью']);
+            return redirect()->back()->withErrors([trans('ideas.unable_delete_ideas_with_purpose')]);
         }
         $item->delete();
 

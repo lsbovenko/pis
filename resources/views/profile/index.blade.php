@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row page-header">
         <div class="col-sm-8">
-            <h1>Профиль</h1>
+            <h1>{{ trans('ideas.profile') }}</h1>
         </div>
     </div>
     <div class="row">
@@ -19,18 +19,18 @@
             <form method="POST" action="{{ route('profile.update') }}">
                 {{ csrf_field() }}
                 <div class="form-group">
-                    <label for="name">{{ trans('users.name') }}</label>
+                    <label for="name">{{ trans('ideas.name') }}</label>
                     {{ Form::text('name',$user->name, ['class'=>'form-control']) }}
                 </div>
                 <div class="form-group">
-                    <label for="name">Фамилия</label>
-                    {{ Form::text('last_name',$user->last_name, ['class'=>'form-control']) }}
+                    <label for="surname">{{ trans('ideas.surname') }}</label>
+                    {{ Form::text('surname',$user->last_name, ['class'=>'form-control']) }}
                 </div>
                 <div class="form-group">
-                    <label for="email">{{ trans('users.email') }}</label>
+                    <label for="email">{{ trans('ideas.email') }}</label>
                     {{ Form::text('email',$user->email, ['class'=>'form-control' , 'disabled' => true]) }}
                 </div>
-                <button type="submit" class="btn btn-primary pull-right">Сохранить</button>
+                <button type="submit" class="btn btn-primary pull-right">{{ trans('ideas.save') }}</button>
             </form>
         </div>
     </div>
@@ -40,14 +40,14 @@
             <form method="POST" action="{{ route('profile.change-pass') }}">
                 {{ csrf_field() }}
                 <div class="form-group">
-                    <label for="name">Новый пароль</label>
+                    <label for="password">{{ trans('ideas.new_password') }}</label>
                     <input class="form-control" name="password" type="password" value="">
                 </div>
                 <div class="form-group">
-                    <label for="email">Подтверждение пароля</label>
+                    <label for="password_confirmation">{{ trans('ideas.password_confirmation') }}</label>
                     <input class="form-control" name="password_confirmation" type="password" value="">
                 </div>
-                <button type="submit" class="btn btn-primary pull-right">Изменить пароль</button>
+                <button type="submit" class="btn btn-primary pull-right">{{ trans('ideas.change_password') }}</button>
             </form>
         </div>
     </div>

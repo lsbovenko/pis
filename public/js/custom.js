@@ -39,12 +39,20 @@
             return false;
         });
 
+        var lang;
+        if ($.trim($('#lang').text()) == 'English') {
+            lang = 'en';
+        } else {
+            lang = 'ru';
+        }
+
         var datepicker = $('#datepicker');
         var datepickerDates = $('#datepicker-dates');
         datepicker.datepicker({
             range: true,
             maxDate: new Date(),
             dateFormat: 'yyyy-mm-dd',
+            language: lang,
 
             onSelect: function(formattedDate, date, inst) {
                 //add value of datepicker to hidden field in filter

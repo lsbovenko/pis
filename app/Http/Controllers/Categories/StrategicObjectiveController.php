@@ -32,7 +32,7 @@ class StrategicObjectiveController extends Controller
     {
         return view('categories.status.index', [
             'items' => StrategicObjective::all(),
-            'title' => 'Стратегические задачи',
+            'title' => trans('ideas.strategic_objectives'),
             'route' => 'categories.strategic-objective'
         ]);
     }
@@ -47,7 +47,7 @@ class StrategicObjectiveController extends Controller
         $item = StrategicObjective::findOrFail($request->route('id'));
         return view('categories.status.edit', [
             'item' => $item,
-            'title' => 'Редактировать элемент',
+            'title' => trans('ideas.edit_strategic_objective'),
             'route' => route('categories.strategic-objective.edit', ['id' => $item->id]),
             'deleteRoute' => route('categories.strategic-objective.delete', ['id' => $item->id]),
         ]);
@@ -75,7 +75,7 @@ class StrategicObjectiveController extends Controller
     public function create()
     {
         return view('categories.status.edit', [
-            'title' => 'Создать Стратегическую задачу',
+            'title' => trans('ideas.create_strategic_objective'),
             'route' => route('categories.strategic-objective.create')
         ]);
     }
@@ -103,7 +103,7 @@ class StrategicObjectiveController extends Controller
 
         $itemCount = $item->ideas()->count();
         if ($itemCount) {
-            return redirect()->back()->withErrors(['Невозможно удалить элемент. Существуют идеи с такой целью']);
+            return redirect()->back()->withErrors([trans('ideas.unable_delete_ideas_with_task')]);
         }
         $item->delete();
 

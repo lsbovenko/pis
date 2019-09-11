@@ -11,7 +11,7 @@
             </div>
             <div class="col-lg-3 col-md-3 col-xs-6">
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success pull-left">Изменить статус</button>
+                    <button type="submit" class="btn btn-success pull-left">{{ trans('ideas.change_status') }}</button>
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
                 <div class="form-group">
                     {{ Form::textarea('details', $idea->details, [
                         'class'=>'form-control',
-                        'placeholder' => 'Укажите подробности',
+                        'placeholder' => trans('ideas.enter_details'),
                         'id' => 'textarea-details']) }}
                 </div>
             </div>

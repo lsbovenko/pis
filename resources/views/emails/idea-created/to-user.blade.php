@@ -2,6 +2,6 @@
 
 @section('content')
     <p>
-        Спасибо. Ваша идея успешно добавлена. В ближайшее время она будет промодерирована.
+        {{ trans('ideas.your_idea_successfully_added') }}
     </p>
 @endsection

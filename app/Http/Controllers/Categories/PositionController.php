@@ -32,7 +32,7 @@ class PositionController extends Controller
     {
         return view('categories.status.index', [
             'items' => Position::all(),
-            'title' => 'Должности',
+            'title' => trans('ideas.positions'),
             'route' => 'categories.position'
         ]);
     }
@@ -47,7 +47,7 @@ class PositionController extends Controller
         $item = Position::findOrFail($request->route('id'));
         return view('categories.status.edit', [
             'item' => $item,
-            'title' => 'Редактировать элемент',
+            'title' => trans('ideas.edit_position'),
             'route' => route('categories.position.edit', ['id' => $item->id]),
             'deleteRoute' => route('categories.position.delete', ['id' => $item->id]),
         ]);
@@ -75,7 +75,7 @@ class PositionController extends Controller
     public function create()
     {
         return view('categories.status.edit', [
-            'title' => 'Создать Должность',
+            'title' => trans('ideas.create_position'),
             'route' => route('categories.position.create')
         ]);
     }
@@ -103,7 +103,7 @@ class PositionController extends Controller
 
         $itemCount = User::where('position_id', '=', $item->id)->count();
         if ($itemCount) {
-            return redirect()->back()->withErrors(['Невозможно удалить элемент. Существуют пользователи с такой должностью']);
+            return redirect()->back()->withErrors([trans('ideas.unable_delete_users_with_position')]);
         }
         $item->delete();
 

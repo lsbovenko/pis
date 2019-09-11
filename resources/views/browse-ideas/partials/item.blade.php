@@ -7,11 +7,11 @@
                         {{ $idea->title }}
                         @if ($showApproveStatus)
                             @if ($idea->isDeclined())
-                                (Отклонена)
+                                ({{ trans('ideas.rejected_idea') }})
                             @elseif ($idea->isNew())
-                                (Еще не одобрена)
+                                ({{ trans('ideas.not_yet_approved') }})
                             @else
-                                (Одобрена)
+                                ({{ trans('ideas.approved') }})
                             @endif
                         @endif
                     </h3>
@@ -33,19 +33,19 @@
         </p>
         <div class="row">
             <div class="col-md-8">
-                Создана : {{ $idea->created_at->format('d.m.Y') }}, {{ $idea->user->getFullName() }}, {{ $idea->user->position->name }}
+                {{ trans('ideas.created') }}: {{ $idea->created_at->format('d.m.Y') }}, {{ $idea->user->getFullName() }}, {{ $idea->user->position->name }}
             </div>
             <div class="col-md-4">
                 <div class="row">
                     <div class="col-md-6">
                         @role('superadmin')
                             @if(!$idea->isDeclined())
-                                <a class="btn btn-primary pull-right" href="{{ route('edit-idea', ['id' => $idea->id]) }}">Редактировать</a>
+                                <a class="btn btn-primary pull-right" href="{{ route('edit-idea', ['id' => $idea->id]) }}">{{ trans('ideas.edit') }}</a>
                             @endif
                         @endrole
                     </div>
                     <div class="col-md-6">
-                        <a class="btn btn-primary pull-right" href="{{ route('review-idea', ['id' => $idea->id]) }}">Подробности</a>
+                        <a class="btn btn-primary pull-right" href="{{ route('review-idea', ['id' => $idea->id]) }}">{{ trans('ideas.details') }}</a>
                     </div>
                 </div>
             </div>

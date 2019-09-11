@@ -35,15 +35,31 @@
     <div class="header">
         <div class="container">
             <div class="row">
+                <div class="col-md-1 col-sm-1 hidden-xs">
+                    <li class="dropdown none-list-style">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="lang">
+                            {{ config('languages')[app()->getLocale()] }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            @foreach (config('languages') as $lang => $language)
+                                @if ($lang != app()->getLocale())
+                                    <li>
+                                        <a href="{{ route('lang', $lang) }}">{{ $language }}</a>
+                                    </li>
+                                @endif
+                            @endforeach
+                        </ul>
+                    </li>
+                </div>
                 <div class="col-md-2 col-sm-3 col-xs-2">
                     <a class="logo" href="/"><span>PIS</span>VELMIE </a>
                 </div>
-                <div class="col-md-5 col-sm-4 hidden-xs">
+                <div class="col-md-4 col-sm-3 hidden-xs">
                     @if (!empty($isShowSearchIdeaBlock))
                         <form action="" class="search" id="form-search-idea">
                             <div class="form-group" style="margin-top: 15px;">
                                 <i class="zmdi zmdi-search"></i>
-                                {{ Form::text('search_idea', '', ['class'=>'form-control', 'placeholder'=>'Поиск', 'id'=>'search-idea']) }}
+                                {{ Form::text('search_idea', '', ['class'=>'form-control', 'placeholder'=>trans('ideas.search'), 'id'=>'search-idea']) }}
                             </div>
                             <input type="submit" style="display: none;"/>
                         </form>
@@ -83,6 +99,7 @@
 </div>
 <script src="{{ asset('js/jquery.js') }}"></script>
 <script src="{{ asset('vendor/air-datepicker/js/datepicker.min.js') }}"></script>
+<script src="{{ asset('vendor/air-datepicker/js/datepicker.en.js') }}"></script>
 <script src="{{ asset('js/libs.min.js') }}"></script>
 <script src="{{ asset('js/common.js') }}?v={{ config('app.version') }}"></script>
 <script src="{{ asset('js/custom.js') }}?v={{ config('app.version') }}"></script>

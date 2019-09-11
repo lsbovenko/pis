@@ -2,7 +2,7 @@
 
 @section('content')
     <p>
-        Пользователю {{ $likeAuthor->getFullName() }} понравилась идея
+        {{ trans('ideas.like_to_user', ['likeAuthorFullName' => $likeAuthor->getFullName()]) }}
         <a href="{{ route('review-idea', ['id' => $idea->id]) }}">
             {{ $idea->title }}
         </a>

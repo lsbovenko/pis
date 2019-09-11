@@ -2,7 +2,7 @@
 
 @section('content')
     <p>
-        Для идеи "{{ $idea->title }}" был изменен статус : {{ $status->name }}.
+        {{ trans('ideas.idea_changed_status_to_user', ['ideaTitle' => $idea->title]) }}: {{ $status->name }}.
     </p>
     @if($idea->details)
         <div>

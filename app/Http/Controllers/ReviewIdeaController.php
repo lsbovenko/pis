@@ -87,7 +87,8 @@ class ReviewIdeaController extends Controller
         if (isset($idea)) {
             return [
                 'count' => $idea->comments_count,
-                'comments' => $idea->comments
+                'comments' => $idea->comments,
+                'ideas' => trans('ideas')
             ];
         }
     }
