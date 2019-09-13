@@ -13,14 +13,14 @@
                             $priorityReason !== null ? $priorityReason->text : '', [
                                     'class'=>'form-control',
                                     'placeholder' =>
-                                    'Пояснительная записка',
+                                    trans('ideas.explanatory_note'),
                                     'rows' => 5,
                                 ]
                             ) }}
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-success pull-left">Изменить записку</button>
-                                <a href="{{ route('unpin-priority', ['id' => $idea->id]) }}" class="btn btn-danger pull-left mg-left-10">Не приоритетное</a>
+                                <button type="submit" class="btn btn-success pull-left">{{ trans('ideas.change_note') }}</button>
+                                <a href="{{ route('unpin-priority', ['id' => $idea->id]) }}" class="btn btn-danger pull-left mg-left-10">{{ trans('ideas.not_priority') }}</a>
                             </div>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                                         $priorityReason !== null ? $priorityReason->text : '',
                                         [
                                             'class'=>'form-control',
-                                            'placeholder' => 'Пояснительная записка',
+                                            'placeholder' => trans('ideas.explanatory_note'),
                                             'style' => 'height:66px;'
                                         ]
                                     )
@@ -45,7 +45,7 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <button type="submit" class="btn btn-success pull-left">Закрепить как приоритетное</button>
+                                <button type="submit" class="btn btn-success pull-left">{{ trans('ideas.pin_as_priority') }}</button>
                             </div>
                         </div>
                     </div>

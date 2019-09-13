@@ -16,6 +16,7 @@ if (App::environment('production')) {
 }
 
 Route::post('/webhook/receive', 'Webhook@receive')->name('/webhook/receive');
+Route::get('lang/{lang}', 'IndexController@switchLanguage')->name('lang');
 
 /**
  * only auth users

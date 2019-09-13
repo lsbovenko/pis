@@ -10435,3 +10435,11 @@ body .container .btn_.btn-outline-red:hover {
 .executors-select .glyphicon {
     color: #000000;
 }
+
+.none-list-style {
+    list-style: none;
+}
+
+#lang {
+    color: #ffffff;
+}

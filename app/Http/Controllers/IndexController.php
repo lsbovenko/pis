@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\{
 
 use App\Http\Requests\IdeaRequest;
 use App\Models\Categories\Status;
+use Illuminate\Http\Request;
 
 /**
  * Class IndexController
@@ -74,5 +75,15 @@ class IndexController extends Controller
     public function success()
     {
         return view('index.success');
+    }
+
+    public function switchLanguage($lang, Request $request)
+    {
+        if (array_key_exists($lang, config('languages'))) {
+            $request->session()->put(['locale' => $lang]);
+            $request->session()->save();
+        }
+
+        return redirect()->back();
     }
 }

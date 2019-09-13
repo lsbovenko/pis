@@ -35,7 +35,7 @@
 
         <div class="col-md-3">
             <div class="form-group">
-                {{ Form::select('order_by', ['desc' => 'Сначала новые', 'asc' => 'Сначала старые'], '', ['class'=>'form-control']) }}
+                {{ Form::select('order_by', ['desc' => trans('ideas.new_first'), 'asc' => trans('ideas.old_first')], '', ['class'=>'form-control']) }}
             </div>
         </div>
     </div>

@@ -32,7 +32,7 @@ class TypeController extends Controller
     {
         return view('categories.status.index', [
             'items' => Type::all(),
-            'title' => 'Типы',
+            'title' => trans('ideas.types'),
             'route' => 'categories.type'
         ]);
     }
@@ -47,7 +47,7 @@ class TypeController extends Controller
         $item = Type::findOrFail($request->route('id'));
         return view('categories.status.edit', [
             'item' => $item,
-            'title' => 'Редактировать элемент',
+            'title' => trans('ideas.edit_type'),
             'route' => route('categories.type.edit', ['id' => $item->id]),
             'deleteRoute' => route('categories.type.delete', ['id' => $item->id]),
         ]);
@@ -75,7 +75,7 @@ class TypeController extends Controller
     public function create()
     {
         return view('categories.status.edit', [
-            'title' => 'Создать Тип',
+            'title' => trans('ideas.create_type'),
             'route' => route('categories.type.create')
         ]);
     }
@@ -103,7 +103,7 @@ class TypeController extends Controller
 
         $itemCount = Idea::where('type_id', '=', $item->id)->count();
         if ($itemCount) {
-            return redirect()->back()->withErrors(['Невозможно удалить элемент. Существуют идеи с таким типом']);
+            return redirect()->back()->withErrors([trans('ideas.unable_delete_ideas_with_type')]);
         }
         $item->delete();
 

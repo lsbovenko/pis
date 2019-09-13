@@ -2,6 +2,6 @@
 
 @section('content')
     <p>
-        Ваша идея "{{ $idea->title }}" была отклонена по причине : {{ $reason->text }}.
+        {{ trans('ideas.idea_declined_to_user', ['ideaTitle' => $idea->title]) }}: {{ $reason->text }}.
     </p>
 @endsection

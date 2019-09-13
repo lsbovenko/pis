@@ -7,14 +7,14 @@
             <section class="item mg-right-15">
                 <ul class="last-changes-list without-list-style">
                     <li class="first">
-                        Диапазон дат
-                        <span class="drop" @click="removeChecked" id="reset-filters">Сбросить</span>
+                        {{ideas.date_range}}
+                        <span class="drop" @click="removeChecked" id="reset-filters">{{ideas.clear}}</span>
                     </li>
                 </ul>
                 <div style="margin-bottom: 20px;" id="datepicker"></div>
 
                 <ul class="last-changes-list without-list-style">
-                    <li class="first">Отдел автора</li>
+                    <li class="first">{{ideas.department_of_the_author}}</li>
                 </ul>
                 <div class="btn-group-vue dropdown customer-select" id="user-department-select">
                     <div class="menu-overlay-vue" v-if="showDropdownUserDepartment" @click.stop="toggleMenuUserDepartment"></div>
@@ -23,7 +23,7 @@
                         <span class="caret"></span>
                     </li>
                     <li @click="toggleMenuUserDepartment()" class="dropdown-toggle-vue" v-if="selectedOptionNameUserDepartment === ''">
-                        {{placeholderTextUserDepartment}}
+                        {{ideas.choose_department}}
                         <span class="caret-menu"></span>
                     </li>
                     <ul class="dropdown-menu-vue" v-if="showDropdownUserDepartment">
@@ -38,7 +38,7 @@
                 </div>
 
                 <ul class="last-changes-list without-list-style">
-                    <li class="first">Автор</li>
+                    <li class="first">{{ideas.author}}</li>
                 </ul>
 
                 <div class="btn-group-vue dropdown customer-select" id="customer-select">
@@ -49,7 +49,7 @@
                     </li>
 
                     <li @click="toggleMenu()" class="dropdown-toggle-vue" v-if="selectedOptionName === ''">
-                        {{placeholderText}}
+                        {{ideas.choose_author}}
                         <span class="caret-menu"></span>
                     </li>
 
@@ -65,7 +65,7 @@
                 </div>
 
                 <ul class="last-changes-list without-list-style">
-                    <li class="first">Исполнитель</li>
+                    <li class="first">{{ideas.executor}}</li>
                 </ul>
                 <div class="btn-group-vue dropdown customer-select" id="executor-select">
                     <div class="menu-overlay-vue" v-if="showDropdownExecutor" @click.stop="toggleMenuExecutor"></div>
@@ -74,7 +74,7 @@
                         <span class="caret"></span>
                     </li>
                     <li @click="toggleMenuExecutor()" class="dropdown-toggle-vue" v-if="selectedOptionNameExecutor === ''">
-                        {{placeholderTextExecutor}}
+                        {{ideas.choose_executor}}
                         <span class="caret-menu"></span>
                     </li>
                     <ul class="dropdown-menu-vue" v-if="showDropdownExecutor">
@@ -89,7 +89,7 @@
                 </div>
 
                 <ul class="last-changes-list without-list-style">
-                    <li class="first">Возраст идей</li>
+                    <li class="first">{{ideas.age_of_ideas}}</li>
                 </ul>
                 <div class="btn-group-vue dropdown customer-select" id="idea-age-select">
                     <div class="menu-overlay-vue" v-if="showDropdownIdeaAge" @click.stop="toggleMenuIdeaAge"></div>
@@ -98,15 +98,15 @@
                         <span class="caret"></span>
                     </li>
                     <li @click="toggleMenuIdeaAge()" class="dropdown-toggle-vue" v-if="selectedOptionNameIdeaAge === ''">
-                        {{placeholderTextIdeaAge}}
+                        {{ideas.choose_age_of_ideas}}
                         <span class="caret-menu"></span>
                     </li>
                     <ul class="dropdown-menu-vue" v-if="showDropdownIdeaAge">
-                        <li v-for="ideaAge in ideaAges">
+                        <li v-for="(ideaAge, index) in ideas.idea_ages">
                             <a href="javascript:void(0)"
-                               v-on:click="updateOptionIdeaAge(ideaAge.name)"
-                               @click="changeSelectIdeaAge(`idea_age=${ideaAge.value}`)">
-                                {{ideaAge.name}}
+                               v-on:click="updateOptionIdeaAge(ideaAge)"
+                               @click="changeSelectIdeaAge(`idea_age=${ideaAges[index]}`)">
+                                {{ideaAge}}
                             </a>
                         </li>
                     </ul>
@@ -114,7 +114,7 @@
             </section>
             <section id="departments" class="item mg-top-10">
                 <ul class="without-list-style">
-                    <li class="first">Отдел</li>
+                    <li class="first">{{ideas.department}}</li>
                     <li v-for="(itemDepartament, index) in filters.departmentsList">
                         <label class="inbtn">
                             <input type="checkbox"
@@ -130,7 +130,7 @@
             </section>
             <section id="competenc" class="item">
                 <ul class="without-list-style">
-                    <li class="first">Основная компетенция</li>
+                    <li class="first">{{ideas.core_competency}}</li>
                     <li v-for="(itemCompetenc, index) in filters.coreCompetenciesList">
                         <label class="inbtn">
                             <input type="checkbox"
@@ -146,7 +146,7 @@
             </section>
             <section id="operational" class="item">
                 <ul class="without-list-style">
-                    <li class="first">Операционная цель</li>
+                    <li class="first">{{ideas.operational_goal}}</li>
                     <li v-for="(itemOperational, index) in filters.operationalGoalsList">
                         <label class="inbtn">
                             <input type="checkbox"
@@ -162,7 +162,7 @@
             </section>
             <section id="type" class="item">
                 <ul class="without-list-style">
-                    <li class="first">Тип</li>
+                    <li class="first">{{ideas.type}}</li>
                     <li v-for="(itemType, index) in filters.typesList">
                         <label class="inbtn">
                             <input type="checkbox"
@@ -178,7 +178,7 @@
             </section>
             <section v-if="filters.tagsList && Object.keys(filters.tagsList).length" id="tag" class="item bottom-20">
                 <ul class="without-list-style">
-                    <li class="first">Тэг</li>
+                    <li class="first">{{ideas.tag}}</li>
                     <li v-for="(itemTag, index) in filters.tagsList">
                         <label class="inbtn">
                             <input type="checkbox"
@@ -199,7 +199,7 @@
 <script>
     export default {
         name: "MainFilterBlock",
-        props: ['filters', 'users', 'activeStatusId'],
+        props: ['filters', 'users', 'activeStatusId', 'ideas'],
         data() {
             return {
                 active: 'active',
@@ -243,15 +243,8 @@
                 showDropdownUserDepartment: false,
                 showDropdownIdeaAge: false,
                 showDropdownExecutor: false,
-                placeholderText: 'Выбрать автора',
-                placeholderTextUserDepartment: 'Выбрать отдел',
-                placeholderTextIdeaAge: 'Выбрать возраст идей',
-                placeholderTextExecutor: 'Выбрать исполнителя',
                 activeStatusId: '',
-                ideaAges: [
-                  { name: 'Добавленные >45 дней назад', value: 45 },
-                  { name: 'Добавленные >90 дней назад', value: 90 }
-                ]
+                ideaAges: [45, 90]
             }
         },
         mounted() {
@@ -260,10 +253,6 @@
             this.selectedOptionUserDepartment = this.filters.departmentsList;
             this.selectedOptionIdeaAge = this.ideaAges;
             this.selectedOptionExecutor = this.filters.executorsList;
-            if (this.placeholder)
-            {
-                this.placeholderText = this.placeholder;
-            }
 
             this.$root.$on('checkStatusIdAndOrderDir', (res) => {
                 this.query.statusId = res.statusId;

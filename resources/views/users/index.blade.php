@@ -3,18 +3,18 @@
 @section('content')
 <div class="container">
     <div class="content-box admin-category">
-        <div class="section-title">Список пользователей</div>
-        <div class="description-grey">Пользователей: {{ $users->count() }}</div>
+        <div class="section-title">{{ trans('ideas.list_of_users') }}</div>
+        <div class="description-grey">{{ trans('ideas.users') }}: {{ $users->count() }}</div>
         <table class="table">
             <thead>
             <tr>
-                <th>{{ trans('users.name') }}</th>
-                <th>{{ trans('last_name') }}</th>
-                <th>{{ trans('users.email') }}</th>
-                <th>{{ trans('users.active_ideas') }}</th>
-                <th>{{ trans('users.frozen_ideas') }}</th>
-                <th>{{ trans('users.completed_ideas') }}</th>
-                <th>{{ trans('users.role') }}</th>
+                <th>{{ trans('ideas.name') }}</th>
+                <th>{{ trans('ideas.surname') }}</th>
+                <th>{{ trans('ideas.email') }}</th>
+                <th>{{ trans('ideas.active_ideas') }}</th>
+                <th>{{ trans('ideas.on_pause') }}</th>
+                <th>{{ trans('ideas.completed_ideas') }}</th>
+                <th>{{ trans('ideas.role') }}</th>
             </tr>
             </thead>
             <tbody>

@@ -16,8 +16,8 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Имя</th>
-                <th class="text-right">Действия</th>
+                <th>{{ trans('ideas.name') }}</th>
+                <th class="text-right">{{ trans('ideas.actions') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -38,7 +38,7 @@
                 <td></td>
                 <td>
                     <a href="{{ route($route . '.create') }}">
-                        <button class="btn_ btn-blue last" type="button">Добавить</button>
+                        <button class="btn_ btn-blue last" type="button">{{ trans('ideas.add') }}</button>
                     </a>
                 </td>
             </tr>

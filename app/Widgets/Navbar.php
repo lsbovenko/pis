@@ -23,19 +23,19 @@ class Navbar
             $user = Auth::user();
             if (isset($user)) {
                 $menu
-                    ->route('about', 'О системе')
-                    ->route('main', 'Идеи')
-                    ->route('priority-board', 'Приоритетный список')
-                    ->route('my-ideas', 'Мои идеи');
+                    ->route('about', trans('ideas.about_system'))
+                    ->route('main', trans('ideas.ideas'))
+                    ->route('priority-board', trans('ideas.priority_list'))
+                    ->route('my-ideas', trans('ideas.my_ideas'));
                 if ($user->hasRole(Role::ROLE_SUPERADMIN)) {
                     $menu
-                        ->route('pending-review', 'Ожидающие')
-                        ->route('declined', 'Отклоненные')
-                        ->route('users.index', 'Пользователи')
-                        ->route('categories.index', 'Категории');
+                        ->route('pending-review', trans('ideas.awaiting'))
+                        ->route('declined', trans('ideas.rejected_menu'))
+                        ->route('users.index', trans('ideas.users_menu'))
+                        ->route('categories.index', trans('ideas.categories'));
                 }
                 $menu
-                    ->route('add-idea', '+ Добавить идею')
+                    ->route('add-idea', '+ ' . trans('ideas.add_idea'))
                     ->setActiveFromRequest()
                     ->setAttributes([
                         'role' => 'menu',

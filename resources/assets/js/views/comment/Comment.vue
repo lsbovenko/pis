@@ -1,11 +1,11 @@
 <template>
     <div>
-        <div class="title">Комментариев: <span id="count_comment">{{ query.count }}</span></div>
+        <div class="title">{{ideas.comments}}: <span id="count_comment">{{ query.count }}</span></div>
 
         <comment-block :comments="comments" :count="query.count"></comment-block>
         <hr>
         <div class="mg-top-10">
-            <comment-form></comment-form>
+            <comment-form :ideas="ideas"></comment-form>
         </div>
     </div>
 </template>
@@ -24,7 +24,8 @@
                 },
                 query: {
                     count: 0
-                }
+                },
+                ideas: {}
             }
         },
         mounted () {
@@ -41,6 +42,7 @@
                     .then((result) => {
                         this.comments = result.data.comments;
                         this.query.count = result.data.count;
+                        this.ideas = result.data.ideas;
                     })
                     .catch((error) => { })
             }

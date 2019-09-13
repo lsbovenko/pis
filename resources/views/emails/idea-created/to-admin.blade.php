@@ -2,6 +2,6 @@
 
 @section('content')
     <p>
-        Добавлена новая идея "{{ $idea->title }}". Скоро ее промодерируют.
+        {{ trans('ideas.new_idea_added') }} "{{ $idea->title }}". {{ trans('ideas.moderated_soon') }}
     </p>
 @endsection

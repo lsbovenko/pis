@@ -4,7 +4,7 @@
             <div class="col-md-3 col-sm-6">
                 <div class="item item-block">
                     <ul class="without-list-style">
-                        <li>Всего</li>
+                        <li>{{ideas.total}}</li>
                         <li v-if="topUser"
                             v-for="topUser in topUsers">
                             {{ topUser.name }}
@@ -17,7 +17,7 @@
             <div class="col-md-3 col-sm-6">
                 <div class="item item-block">
                     <ul class="without-list-style">
-                        <li>Всего реализовано</li>
+                        <li>{{ideas.total_completed}}</li>
                         <li v-if="topUsersByCompletedIdeas"
                             v-for="topUsersByCompletedIdea in topUsersByCompletedIdeas">
                             {{ topUsersByCompletedIdea.name }}
@@ -30,7 +30,7 @@
             <div class="col-md-3 col-sm-6">
                 <div class="item item-block">
                     <ul class="without-list-style">
-                        <li>Всего за 90 дней</li>
+                        <li>{{ideas.total_for_90_days}}</li>
                         <li v-if="topUsersLast3Month"
                             v-for="topUsersLast3M in topUsersLast3Month">
                             {{ topUsersLast3M.name }}
@@ -43,7 +43,7 @@
             <div class="col-md-3 col-sm-6">
                 <div class="item item-block">
                     <ul class="without-list-style">
-                        <li>Реализованные за 90 дней</li>
+                        <li>{{ideas.completed_for_90_days}}</li>
                         <li v-if="topUsersByCompletedIdeasLast3Month"
                             v-for="topUsersByCompletedIdeasLast3M in topUsersByCompletedIdeasLast3Month">
                             {{ topUsersByCompletedIdeasLast3M.name }}
@@ -57,9 +57,9 @@
         <div class="row page-title">
             <div class="col-md-12">
                 <div class="pull-left">
-                    <div class="text" v-for="list in listMenu"
-                        v-if="list.name === pathUrl">
-                        {{list.value}}
+                    <div class="text" v-for="(list, index) in ideas.list_menu"
+                        v-if="listMenu[index] === pathUrl">
+                        {{list}}
                         <span>({{ query.count }})</span>
                     </div>
                     <div class="filter-row">
@@ -80,12 +80,12 @@
                                 aria-haspopup="true"
                                 aria-expanded="true"
                         >
-                            <em> Сначала новые </em>
+                            <em> {{ideas.new_first}} </em>
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuOrder" v-model="query.filter_match">
-                            <li class="order-list active" @click="orderSort(`${query.filterDesc}`)"><a class="pointer">Сначала новые </a></li>
-                            <li class="order-list" @click="orderSort(`${query.filterAsc}`)"><a class="pointer">Сначала старые</a></li>
+                            <li class="order-list active" @click="orderSort(`${query.filterDesc}`)"><a class="pointer">{{ideas.new_first}}</a></li>
+                            <li class="order-list" @click="orderSort(`${query.filterAsc}`)"><a class="pointer">{{ideas.old_first}}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -99,14 +99,14 @@
                         v-for="item in collection.data">
                             <a :href="`/review-idea/${item.id}`" class="title">
                                 <span class="text">{{ item.title}}</span>
-                                <span v-if="item.approve_status === 0" class="approve_status not_approved">Не утверждена</span>
+                                <span v-if="item.approve_status === 0" class="approve_status not_approved">{{ideas.not_approved}}</span>
                                 <span v-bind:class="item.status.slug" class="status">{{ item.status.name }}</span>
                             </a>
                             <p v-html="item.description"></p>
-                            <a :href="`/review-idea/${item.id}`">Read more</a>
+                            <a :href="`/review-idea/${item.id}`">{{ideas.read_more}}</a>
                             <br><br>
-                            <div v-if="item.completed_at"><strong>Дата реализации идеи:</strong> {{ getCompletedAt(item.completed_at) }}</div>
-                            <div v-if="item.completed_at"><strong>Реализовано за дней:</strong>
+                            <div v-if="item.completed_at"><strong>{{ideas.idea_implementation_date}}:</strong> {{ getCompletedAt(item.completed_at) }}</div>
+                            <div v-if="item.completed_at"><strong>{{ideas.implemented_in_days}}:</strong>
                                 {{ getCompletedDays(item.completed_at, item.created_at) }}</div>
                             <div class="row">
                                 <div class="col-md-9">
@@ -144,9 +144,9 @@
                 </div>
                 <div class="col-md-6 col-sm-6 text-center hidden-xs">
                     <div>
-                        <a class="btn btn-primary" :disabled="!collection.prev_page_url || loading" @click="prevPage"><i class="zmdi zmdi-long-arrow-left"></i> Назад</a>
+                        <a class="btn btn-primary" :disabled="!collection.prev_page_url || loading" @click="prevPage"><i class="zmdi zmdi-long-arrow-left"></i> {{ideas.previous}}</a>
                         <span class="btn btn-default current_page">{{ collection.current_page }}</span>
-                        <a class="btn btn-primary" :disabled="!collection.next_page_url || loading" @click="nextPage">Далее <i class="zmdi zmdi-long-arrow-right"></i></a>
+                        <a class="btn btn-primary" :disabled="!collection.next_page_url || loading" @click="nextPage">{{ideas.next}} <i class="zmdi zmdi-long-arrow-right"></i></a>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-6 text-right">
@@ -158,7 +158,7 @@
                 </div>
             </div>
             <div class="col-md-12" v-if="ideaEmpty">
-                <h4 class="text-center">Ничего не найдено</h4>
+                <h4 class="text-center">{{ideas.nothing_found}}</h4>
             </div>
         </div>
     </div>
@@ -170,9 +170,7 @@
     export default {
         name: "MainContentBlock",
         reviewidea: null,
-        props: {
-            statuses: Object,
-        },
+        props: ['statuses', 'ideas'],
         data() {
             return {
                 pathUrl: pathUrl,
@@ -205,13 +203,7 @@
                     data: []
                 },
                 resultFilters: '',
-                listMenu: [
-                    { name: '/', value: 'Идеи' },
-                    { name: '/priority-board', value: 'Приоритетный список' },
-                    { name: '/my-ideas', value: 'Мои идеи' },
-                    { name: '/pending-review', value: 'Ожидающие' },
-                    { name: '/declined', value: 'Отклоненные' },
-                ],
+                listMenu: ['/', '/priority-board', '/my-ideas', '/pending-review', '/declined'],
                 url: (window.location.pathname === '/') ? '/get-idea/all' : '/get-idea' + pathUrl
             }
         },
@@ -236,7 +228,7 @@
 
                 if (result.orderResult === 'removed'){
                     let orderMenu = document.getElementById('dropdownMenuOrder');
-                    orderMenu.getElementsByTagName('em')[0].innerHTML = 'Сначала новые';
+                    orderMenu.getElementsByTagName('em')[0].innerHTML = this.ideas.new_first;
                     this.querySelectorMenuOrder();
                 }
 

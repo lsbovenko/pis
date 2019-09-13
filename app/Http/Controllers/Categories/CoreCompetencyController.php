@@ -32,7 +32,7 @@ class CoreCompetencyController extends Controller
     {
         return view('categories.status.index', [
             'items' => CoreCompetency::all(),
-            'title' => 'Основные компетенции',
+            'title' => trans('ideas.core_competencies'),
             'route' => 'categories.core-competency'
         ]);
     }
@@ -47,7 +47,7 @@ class CoreCompetencyController extends Controller
         $item = CoreCompetency::findOrFail($request->route('id'));
         return view('categories.status.edit', [
             'item' => $item,
-            'title' => 'Редактировать элемент',
+            'title' => trans('ideas.edit_core_competency'),
             'route' => route('categories.core-competency.edit', ['id' => $item->id]),
             'deleteRoute' => route('categories.core-competency.delete', ['id' => $item->id]),
         ]);
@@ -75,7 +75,7 @@ class CoreCompetencyController extends Controller
     public function create()
     {
         return view('categories.status.edit', [
-            'title' => 'Создать Основную компетенцию',
+            'title' => trans('ideas.create_core_competency'),
             'route' => route('categories.core-competency.create')
         ]);
     }
@@ -103,7 +103,7 @@ class CoreCompetencyController extends Controller
 
         $itemCount = $item->ideas()->count();
         if ($itemCount) {
-            return redirect()->back()->withErrors(['Невозможно удалить элемент. Существуют идеи с такой компетенцией']);
+            return redirect()->back()->withErrors([trans('ideas.unable_delete_ideas_with_competence')]);
         }
         $item->delete();
 

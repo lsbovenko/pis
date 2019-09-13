@@ -33,7 +33,7 @@ class DepartmentController extends Controller
     {
         return view('categories.status.index', [
             'items' => Department::all(),
-            'title' => 'Отделы',
+            'title' => trans('ideas.departments'),
             'route' => 'categories.department'
         ]);
     }
@@ -48,7 +48,7 @@ class DepartmentController extends Controller
         $item = Department::findOrFail($request->route('id'));
         return view('categories.status.edit', [
             'item' => $item,
-            'title' => 'Редактировать элемент',
+            'title' => trans('ideas.edit_department'),
             'route' => route('categories.department.edit', ['id' => $item->id]),
             'deleteRoute' => route('categories.department.delete', ['id' => $item->id]),
         ]);
@@ -76,7 +76,7 @@ class DepartmentController extends Controller
     public function create()
     {
         return view('categories.status.edit', [
-            'title' => 'Создать Отдел',
+            'title' => trans('ideas.create_department'),
             'route' => route('categories.department.create')
         ]);
     }
@@ -104,11 +104,11 @@ class DepartmentController extends Controller
 
         $itemCount = $item->ideas()->count();
         if ($itemCount) {
-            return redirect()->back()->withErrors(['Невозможно удалить элемент. Существуют идеи с таким отделом']);
+            return redirect()->back()->withErrors([trans('ideas.unable_delete_ideas_with_department')]);
         }
         $itemCount = User::where('department_id', '=', $item->id)->count();
         if ($itemCount) {
-            return redirect()->back()->withErrors(['Невозможно удалить элемент. Существуют пользователи с таким отделом']);
+            return redirect()->back()->withErrors([trans('ideas.unable_delete_users_with_department')]);
         }
         $item->delete();
 

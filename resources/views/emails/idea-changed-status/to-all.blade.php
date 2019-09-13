@@ -2,8 +2,8 @@
 
 @section('content')
     <p>
-        Реализована очередная идея "{{ $idea->title }}".
-        <a href="{{ route('review-idea', ['id' => $idea->id]) }}">Смотреть целиком</a>.
+        {{ trans('ideas.idea_implemented') }} "{{ $idea->title }}".
+        <a href="{{ route('review-idea', ['id' => $idea->id]) }}">{{ trans('ideas.watch_whole') }}</a>.
     </p>
     @if($idea->details)
         <div>

@@ -2,7 +2,7 @@
     <div>
         <preloader-page v-if="preloader"></preloader-page>
         <form @submit.prevent="onSubmit">
-            <textarea class="form-control" placeholder="Добавить комментарий"
+            <textarea class="form-control" v-bind:placeholder="ideas.add_comment"
                       v-model="body"
                       v-on:keyup.ctrl.enter="onSubmit">
             </textarea>
@@ -23,6 +23,7 @@
     export default {
         name: "CommentForm",
         components: {PreloaderPage},
+        props: ['ideas'],
         data(){
             return {
                 body: '',

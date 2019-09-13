@@ -2,7 +2,6 @@
 
 @section('content')
     <p>
-        Для завершения процедуры восстановления пароля перейдите по
-        <a href="{{route('password.reset', ['token' => $token])}}">ссылке</a>.
+        {!! trans('ideas.reset_pass', ['route_password_reset' => route('password.reset', ['token' => $token])]) !!}
     </p>
 @endsection

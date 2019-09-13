@@ -18,7 +18,7 @@
 
                     @if ($idea->isDeclined())
                         <div class="idea-status">
-                            <span class="rejected status">Откланено</span>
+                            <span class="rejected status">{{ trans('ideas.rejected') }}</span>
                         </div>
                     @endif
 
@@ -35,7 +35,7 @@
                     </div>
                     @if ($idea->isDeclined())
                         <div class="answer">
-                            <div class="answer-name">Причина отказа</div>
+                            <div class="answer-name">{{ trans('ideas.rejection_reason') }}</div>
                             <div class="answer-text">
                                 @if ($idea->getDeclineReason())
                                     {{ $idea->getDeclineReason()->text }}
@@ -54,14 +54,14 @@
                             <div class="row">
                                 <div class="col-lg-8 col-md-8 col-xs-5">
                                     <div class="form-group executors-select">
-                                        <label for="executors_select">Исполнители</label>
+                                        <label for="executors_select">{{ trans('ideas.executors') }}</label>
                                         <div class="dropdown customer-select">
                                             {{ Form::select('executors_select[]', $executorsList, isset($idea) ? $idea->executors : '', [
                                             'class'=>'selectpicker',
                                             'id' => 'executors_select',
                                             'multiple' => true,
                                             'data-live-search' => 'true',
-                                            'data-none-selected-text' => 'Выберите исполнителей'
+                                            'data-none-selected-text' => trans('ideas.choose_executors')
                                             ]) }}
                                         </div>
                                     </div>
@@ -69,7 +69,7 @@
                                 <div class="col-lg-3 col-md-3 col-xs-6">
                                     <div class="buttons justify executors-button">
                                         <button type="submit" class="accept-blue">
-                                            Назначить исполнителей
+                                            {{ trans('ideas.assign_executors') }}
                                         </button>
                                     </div>
                                 </div>
@@ -82,10 +82,10 @@
                                 <form action="{{ route('review-idea', ['id' => $idea->id]) }}" method="post">
                                     {{ csrf_field() }}
                                     <button value="1" name="status" type="submit" class="accept-blue">
-                                        <span class="fa fa-check"></span> Принять
+                                        <span class="fa fa-check"></span> {{ trans('ideas.accept') }}
                                     </button>
                                 </form>
-                                <div class="reject popup-open" data-toggle="modal" data-target="#myModal">Отклонить
+                                <div class="reject popup-open" data-toggle="modal" data-target="#myModal">{{ trans('ideas.reject') }}
                                 </div>
                             </div>
                         @endif
@@ -97,7 +97,7 @@
                         <div class="support">
                             <div class="support-name">
                                 <i class="zmdi zmdi-favorite"></i>
-                                <span id="count_ideas_like">{{ $idea->likes_num }}</span> Поддерживают
+                                <span id="count_ideas_like">{{ $idea->likes_num }}</span> {{ trans('ideas.like') }}
                             </div>
                             <div class="support-text liked_users_{{ $idea->id }}">
                                 @foreach($authUser['listUsersLike'] as $i => $userName)
@@ -112,7 +112,7 @@
                                  data-idea="{{ $idea->id }}"
                                  id="{{ !empty($authUser['userLike']) ? 'remove_like_user' : 'add_like_user' }}">
                                 <div class="i-support {{ !empty($authUser['userLike']) ? 'btn_liked' : '' }}">
-                                    {{ !empty($authUser['userLike']) ? 'Я не поддерживаю' : 'Я поддерживаю' }}
+                                    {{ !empty($authUser['userLike']) ? trans('ideas.i_don\'t_like') : trans('ideas.i_like') }}
                                 </div>
                             </div>
                             @role('superadmin')
@@ -131,27 +131,27 @@
                     @endif
                 </div>
                 <div class="information col-md-3">
-                    <div data-user-name="{{ $user->getFullName() }}"><b>Автор</b></div>
+                    <div data-user-name="{{ $user->getFullName() }}"><b>{{ trans('ideas.author') }}</b></div>
                     <div class="block">
                         <b>{{ $user->getFullName() }}</b>
                         <div>{{ $user->position->name }}</div>
                     </div>
                     <div class="block">
-                        <b>Создана</b>
+                        <b>{{ trans('ideas.created') }}</b>
                         <div>{{ $idea->created_at->format('d.m.Y') }}</div>
                     </div>
                     @if ($status->id == $completedStatusId)
                         <div class="block">
-                            <b>Реализована</b>
+                            <b>{{ trans('ideas.implemented') }}</b>
                             <div>{{ $idea->completed_at->format('d.m.Y') }}</div>
                         </div>
                         <div class="block">
-                            <b>Реализована за дней</b>
+                            <b>{{ trans('ideas.implemented_in_days') }}</b>
                             <div>{{ intdiv($idea->completed_at->timestamp - $idea->created_at->timestamp, 24*60*60) }}</div>
                         </div>
                     @endif
                     <div class="block">
-                        <b>Основная компетенция:</b>
+                        <b>{{ trans('ideas.core_competency') }}:</b>
                         <div>
                             @foreach ($idea->coreCompetencies as $coreCompetency)
                                 {{ $coreCompetency->name }}
@@ -160,7 +160,7 @@
                         </div>
                     </div>
                     <div class="block">
-                        <b>Операционная цель:</b>
+                        <b>{{ trans('ideas.operational_goal') }}:</b>
                         <div>
                             @foreach ($idea->operationalGoals as $goal)
                                 {{ $goal->name }}
@@ -169,7 +169,7 @@
                         </div>
                     </div>
                     <div class="block">
-                        <b>Отдел:</b>
+                        <b>{{ trans('ideas.department') }}:</b>
                         <div>
                             @foreach ($idea->departments as $department)
                                 {{ $department->name }}
@@ -178,12 +178,12 @@
                         </div>
                     </div>
                     <div class="block">
-                        <b>Тип:</b>
+                        <b>{{ trans('ideas.type') }}:</b>
                         <div>{{ $idea->type->name }}</div>
                     </div>
                     @if (count($idea->executors))
                         <div class="block">
-                            <b>Исполнители:</b>
+                            <b>{{ trans('ideas.executors') }}:</b>
                             <div>
                                 @foreach ($idea->executors as $executor)
                                     {{ $executor->getFullName() }}
@@ -194,7 +194,7 @@
                     @endif
                     @if (count($idea->tags))
                         <div class="block">
-                            <b>Тэг:</b>
+                            <b>{{ trans('ideas.tag') }}:</b>
                             <div>
                                 @foreach ($idea->tags as $tag)
                                     {{ $tag->name }}
@@ -221,21 +221,21 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Отклонить идею</h4>
+                    <h4 class="modal-title" id="myModalLabel">{{ trans('ideas.reject_idea') }}</h4>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('review-idea', ['id' => $idea->id]) }}" method="post">
                         {{ csrf_field() }}
                         <div class="form-group">
-                            <label for="caption">Причина отказа</label>
+                            <label for="caption">{{ trans('ideas.rejection_reason') }}</label>
                             {{ Form::text('reason','', [
                             'class'=>'form-control',
-                            'placeholder' => 'Укажите причину отклонения'
+                            'placeholder' => trans('ideas.reason_for_rejection')
                             ]) }}
                         </div>
                         <div class="row bottom-button reject-popup">
                             <div class="col-md-12 col-sm-12 col-xs-12 text-right">
-                                <button value="2" name="status" type="submit" class="btn btn-success">Отклонить</button>
+                                <button value="2" name="status" type="submit" class="btn btn-success">{{ trans('ideas.reject') }}</button>
                             </div>
                         </div>
                     </form>

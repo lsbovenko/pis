@@ -143,7 +143,8 @@ class IdeasController extends Controller
         return response()->json([
             'filter' => $this->getValuesForFilter(),
             'status' => $this->availableStatuses(),
-            'users' => $this->getActiveUsers()
+            'users' => $this->getActiveUsers(),
+            'ideas' => trans('ideas')
         ]);
     }
 
