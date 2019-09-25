@@ -136,19 +136,25 @@
                         <b>{{ $user->getFullName() }}</b>
                         <div>{{ $user->position->name }}</div>
                     </div>
-                    <div class="block">
-                        <b>{{ trans('ideas.created') }}</b>
-                        <div>{{ $idea->created_at->format('d.m.Y') }}</div>
-                    </div>
+                    @if ($idea->created_at)
+                        <div class="block">
+                            <b>{{ trans('ideas.created') }}</b>
+                            <div>{{ $idea->created_at->format('d.m.Y') }}</div>
+                        </div>
+                    @endif
                     @if ($status->id == $completedStatusId)
-                        <div class="block">
-                            <b>{{ trans('ideas.implemented') }}</b>
-                            <div>{{ $idea->completed_at->format('d.m.Y') }}</div>
-                        </div>
-                        <div class="block">
-                            <b>{{ trans('ideas.implemented_in_days') }}</b>
-                            <div>{{ intdiv($idea->completed_at->timestamp - $idea->created_at->timestamp, 24*60*60) }}</div>
-                        </div>
+                        @if ($idea->completed_at)
+                            <div class="block">
+                                <b>{{ trans('ideas.implemented') }}</b>
+                                <div>{{ $idea->completed_at->format('d.m.Y') }}</div>
+                            </div>
+                            @if ($idea->created_at)
+                                <div class="block">
+                                    <b>{{ trans('ideas.implemented_in_days') }}</b>
+                                    <div>{{ intdiv($idea->completed_at->timestamp - $idea->created_at->timestamp, 24*60*60) }}</div>
+                                </div>
+                            @endif
+                        @endif
                     @endif
                     <div class="block">
                         <b>{{ trans('ideas.core_competency') }}:</b>
