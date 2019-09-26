@@ -24,8 +24,8 @@ class TypesTableSeeder extends Seeder
     protected function getItems()
     {
         return [
-            'Для компании',
-            'Для отдела',
+            'For company',
+            'For department',
         ];
     }
 }

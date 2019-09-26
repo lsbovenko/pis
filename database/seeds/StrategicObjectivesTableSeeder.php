@@ -24,9 +24,9 @@ class StrategicObjectivesTableSeeder extends Seeder
     protected function getItems()
     {
         return [
-            'Экспертиза в технологии',
-            'Экспертиза в отрасли',
-            'Другая',
+            'Expertise in technology',
+            'Expertise in the sphere',
+            'Other',
         ];
     }
 }

@@ -24,10 +24,10 @@ class CoreCompetenciesTableSeeder extends Seeder
     protected function getItems()
     {
         return [
-            'Кадры',
-            'Разработка',
-            'Продажи',
-            'Другая',
+            'Staff',
+            'Development',
+            'Sales',
+            'Other',
         ];
     }
 }

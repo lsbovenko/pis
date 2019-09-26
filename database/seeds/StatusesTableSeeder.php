@@ -26,15 +26,15 @@ class StatusesTableSeeder extends Seeder
     {
         return [
             [
-                'name' => 'Активный',
+                'name' => 'Active',
                 'slug' => Status::SLUG_ACTIVE
             ],
             [
-                'name' => 'Завершен',
+                'name' => 'Completed',
                 'slug' => Status::SLUG_COMPLETED
             ],
             [
-                'name' => 'Приостановлен',
+                'name' => 'Paused',
                 'slug' => Status::SLUG_FROZEN
             ],
         ];

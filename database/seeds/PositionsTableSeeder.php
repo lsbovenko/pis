@@ -24,14 +24,14 @@ class PositionsTableSeeder extends Seeder
     protected function getItems()
     {
         return [
-            'PHP разработчик',
-            'Ruby разработчик',
-            'UI/UX разработчик',
-            'Менеджер по продажам',
-            'Менеджер проектов',
-            'Frontend разработчик',
-            'Директор',
-            'Технический директор',
+            'PHP Developer',
+            'Ruby Developer',
+            'UI/UX Designer',
+            'Sales Manager',
+            'Project Manager',
+            'Front-end Developer',
+            'CEO',
+            'CTO',
         ];
     }
 }
