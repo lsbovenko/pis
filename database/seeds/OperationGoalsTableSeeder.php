@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\Categories\OperationalGoal;
 
-class OperationGoalsTableSeederTableSeeder extends Seeder
+class OperationGoalsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -24,10 +24,10 @@ class OperationGoalsTableSeederTableSeeder extends Seeder
     protected function getItems()
     {
         return [
-            'Вступление в ПВТ',
-            'Удовлетворенность клиентов',
-            'Удовлетворенность сотрудников',
-            'Другая',
+            'Joining the High Technologies Park',
+            'Client satisfaction',
+            'Staff satisfaction',
+            'Other',
         ];
     }
 }

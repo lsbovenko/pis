@@ -24,13 +24,13 @@ class DepartmentsTableSeeder extends Seeder
     protected function getDepartments()
     {
         return [
-            'PHP разработки',
-            'Ruby разработки',
-            'Frontend разработки',
-            'UI/UX',
-            'Маркетинга и продаж',
-            'Кадров',
-            'Другой',
+            'PHP Department',
+            'Ruby Department',
+            'Front-end Department',
+            'UX/UI Department',
+            'Sales Department',
+            'HR Department',
+            'Other',
         ];
     }
 }
