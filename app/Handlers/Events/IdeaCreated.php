@@ -31,7 +31,7 @@ class IdeaCreated extends AbstractIdea
     protected function notifyUser(IdeaWasCreated $event)
     {
         $user = $event->getIdea()->user()->first();
-        if ($user->is_active == 1) {
+        if (!empty($user) && $user->is_active == 1) {
             $this->getQueueService()->add($user->email, new ToUser($event->getIdea()));
         }
 

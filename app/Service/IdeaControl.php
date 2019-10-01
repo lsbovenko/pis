@@ -27,7 +27,9 @@ class IdeaControl
     public function create(User $user, array $data, Status $status)
     {
         $idea = (new Idea($data));
-        $idea->user_id = $user->id;
+        if (empty($data['is_anonymous'])) {
+            $idea->user_id = $user->id;
+        }
         $idea->status_id = $status->id;
         $idea->approve_status = Idea::NEW;
         $idea->save();

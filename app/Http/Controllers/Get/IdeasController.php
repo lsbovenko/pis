@@ -227,6 +227,10 @@ class IdeasController extends Controller
             $query->where('user_id', '=', $userId);
         }
 
+        if (isset($input['is_anonymous'])) {
+            $query->whereNull('user_id');
+        }
+
         if (isset($input['idea_age'])) {
             $ideaAge = $input['idea_age'];
             $date = new \DateTime("-$ideaAge days");

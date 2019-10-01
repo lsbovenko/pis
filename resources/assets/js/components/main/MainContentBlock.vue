@@ -110,7 +110,7 @@
                                 {{ getCompletedDays(item.completed_at, item.created_at) }}</div>
                             <div class="row">
                                 <div class="col-md-9">
-                                    <div class="user-info">
+                                    <div class="user-info" v-if="item.user">
                                         <span class="avatar" v-bind:style="'background-color: ' + item.user.icon_color">
                                             {{ item.user.name.substring(0,1) }}{{ item.user.last_name.substring(0,1) }}
                                         </span>
@@ -118,6 +118,9 @@
                                             {{ item.user.name }}
                                             {{ item.user.last_name }},
                                         </span>
+                                        <span class="date">{{ item.created_at }}</span>
+                                    </div>
+                                    <div class="user-info" v-else>
                                         <span class="date">{{ item.created_at }}</span>
                                     </div>
                                 </div>
