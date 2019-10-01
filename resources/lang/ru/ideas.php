@@ -219,4 +219,7 @@ return [
     'idea_approved_to_user' => 'Ваша идея :ideaTitle опубликована.',
     'new_idea_published' => 'Опубликована новая идея.',
     'new_comment' => 'Добавил(а) новый комментарий к',
+    'send_anonymously' => 'Отправить анонимно',
+    'anonymous' => 'Анонимные',
+    'anonym' => 'Аноним',
 ];

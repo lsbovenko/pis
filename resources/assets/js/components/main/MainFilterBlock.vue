@@ -13,6 +13,18 @@
                 </ul>
                 <div style="margin-bottom: 20px;" id="datepicker"></div>
 
+                <section class="item">
+                    <ul class="without-list-style">
+                        <li class="first">{{ideas.anonymous}}</li>
+                        <li>
+                            <label class="inbtn">
+                                <input type="checkbox" name="is_anonymous" :value="1" @change="changeHandler">
+                                <span class="inbtn__indicator"></span>
+                            </label>
+                        </li>
+                    </ul>
+                </section>
+
                 <ul class="last-changes-list without-list-style">
                     <li class="first">{{ideas.department_of_the_author}}</li>
                 </ul>

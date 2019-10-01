@@ -55,7 +55,7 @@ class ReviewIdeaController extends Controller
 
         return view('review-idea.review', [
             'idea' => $idea,
-            'user' => $idea->user,
+            'user' => (!empty($idea->user)) ? $idea->user : null,
             'priorityReason' => $idea->is_priority ? $idea->getPriorityReason() : null,
             'statuses' => $reference->getAllStatusesForSelect(),
             'status' => $idea->status,

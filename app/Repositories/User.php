@@ -73,7 +73,7 @@ class User extends AbstractRepository
     {
         /** @var \Illuminate\Database\Query\Builder $query */
         $query = DB::table('users')
-            ->rightJoin('ideas', 'users.id', '=', 'ideas.user_id')
+            ->join('ideas', 'users.id', '=', 'ideas.user_id')
             ->select(DB::raw('users.*, count(users.id) AS number'))
             ->groupBy('users.id')
             ->orderBy('number', 'DESC')

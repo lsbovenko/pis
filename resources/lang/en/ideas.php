@@ -219,4 +219,7 @@ return [
     'idea_approved_to_user' => 'Your idea :ideaTitle has been published.',
     'new_idea_published' => 'New idea published.',
     'new_comment' => 'Added a new comment to',
+    'send_anonymously' => 'Send anonymously',
+    'anonymous' => 'Anonymous',
+    'anonym' => 'Anonymous',
 ];

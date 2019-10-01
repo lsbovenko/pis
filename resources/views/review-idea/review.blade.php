@@ -131,11 +131,18 @@
                     @endif
                 </div>
                 <div class="information col-md-3">
-                    <div data-user-name="{{ $user->getFullName() }}"><b>{{ trans('ideas.author') }}</b></div>
-                    <div class="block">
-                        <b>{{ $user->getFullName() }}</b>
-                        <div>{{ $user->position->name }}</div>
-                    </div>
+                    @if ($user)
+                        <div class="block">
+                            <b>{{ trans('ideas.author') }}</b>
+                            <div><b>{{ $user->getFullName() }}</b></div>
+                            <div>{{ $user->position->name }}</div>
+                        </div>
+                    @else
+                        <div class="block">
+                            <b>{{ trans('ideas.author') }}</b>
+                            <div><b>{{ trans('ideas.anonym') }}</b></div>
+                        </div>
+                    @endif
                     @if ($idea->created_at)
                         <div class="block">
                             <b>{{ trans('ideas.created') }}</b>

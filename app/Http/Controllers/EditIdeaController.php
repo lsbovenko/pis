@@ -60,7 +60,7 @@ class EditIdeaController extends Controller
             'statuses' => App::make('reference')->getAllStatusesForSelect(),
             'idea' => $idea,
             'status' => $idea->status,
-            'user' => $idea->user,
+            'user' => (!empty($idea->user)) ? $idea->user : null,
         ];
         return view('edit-idea.edit-idea', $data);
     }

@@ -7,8 +7,10 @@
         <div class="description-grey">
             {{ trans('ideas.created') }}:
             {{ $idea->created_at->format('d.m.Y') }},
-            {{ $user->getFullName() }},
-            {{ $user->position->name }}
+            @if ($user)
+                {{ $user->getFullName() }},
+                {{ $user->position->name }}
+            @endif
         </div>
 
         @if (Session::has('alert-success'))
