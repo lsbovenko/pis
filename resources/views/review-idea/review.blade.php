@@ -205,6 +205,17 @@
                             </div>
                         </div>
                     @endif
+                    @if (count($idea->similarIdeas))
+                        <div class="block">
+                            <b>{{ trans('ideas.similar_ideas') }}:</b>
+                            <div>
+                                @foreach ($idea->similarIdeas as $similarIdea)
+                                    <a href="{{ route('review-idea', ['id' => $similarIdea->id]) }}">{{ $similarIdea->title }}</a>
+                                    <br>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
                     @if (count($idea->tags))
                         <div class="block">
                             <b>{{ trans('ideas.tag') }}:</b>

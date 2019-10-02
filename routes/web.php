@@ -46,6 +46,9 @@ Route::group(['middleware' => ['jwt']], function () {
         Route::get('/get-idea/priority-board', 'Get\IdeasController@priorityBoard')->name('/get-idea/priority-board');
         Route::get('/get-idea/my-ideas', 'Get\IdeasController@myIdeas')->name('/get-idea/my-ideas');
 
+        //JQuery
+        Route::get('/get-idea/similar', 'Get\IdeasController@getSimilarIdeas')->name('get-idea/similar');
+
         //superadmin or admin
         Route::group(['middleware' => ['role:admin|superadmin']], function() {
             Route::post('/pin-priority/{id}', 'ReviewIdeaController@pinToPriority')->where('id', '[0-9]+')->name('pin-priority');

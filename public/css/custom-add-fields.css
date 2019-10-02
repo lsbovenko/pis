@@ -1,3 +1,11 @@
 .tagsinput .bootstrap-tagsinput, .tagsinput .bootstrap-tagsinput input[type="text"] {
     width: 100%;
 }
+
+.similar_ideas_id .bootstrap-tagsinput input {
+    display: none;
+}
+
+.similar_ideas_id .bootstrap-tagsinput {
+    min-height: 40px;
+}

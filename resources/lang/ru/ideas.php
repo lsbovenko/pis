@@ -222,4 +222,8 @@ return [
     'send_anonymously' => 'Отправить анонимно',
     'anonymous' => 'Анонимные',
     'anonym' => 'Аноним',
+    'add_similar_ideas' => 'Добавить похожие идеи',
+    'similar_ideas' => 'Похожие идеи',
+    'added_similar_ideas' => 'Добавленные похожие идеи',
+    'similar_ideas_id_incorrect' => 'Передан не верный набор похожих идей',
 ];

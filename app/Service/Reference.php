@@ -115,4 +115,38 @@ class Reference
 
         return (!empty($res)) ? $res : [];
     }
+
+    /**
+     * @param string $searchSimilarIdea
+     * @param array $similarIdeaIds
+     * @param integer|null $ideaId
+     * @return array
+     */
+    public function getApprovedSearchIdeasForSelect(string $searchSimilarIdea, array $similarIdeaIds, int $ideaId=null) : array
+    {
+        $repository = App::make('repository.idea');
+
+        $approvedSearchIdeas = $repository->getApprovedSearchIdeas($searchSimilarIdea, $similarIdeaIds, $ideaId);
+        foreach ($approvedSearchIdeas as $approvedSearchIdea) {
+            $res[] = ['value' => $approvedSearchIdea->id, 'label' => $approvedSearchIdea->title];
+        }
+
+        return (!empty($res)) ? $res : [];
+    }
+
+    /**
+     * @param integer $ideaId
+     * @return array
+     */
+    public function getSimilarIdeasForList(int $ideaId) : array
+    {
+        $repository = App::make('repository.idea');
+
+        $similarIdeas = $repository->getSimilarIdeas($ideaId);
+        foreach ($similarIdeas as $similarIdea) {
+            $res[] = ['id' => $similarIdea->id, 'name' => $similarIdea->title];
+        }
+
+        return (!empty($res)) ? $res : [];
+    }
 }

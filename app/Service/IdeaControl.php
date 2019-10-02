@@ -39,6 +39,9 @@ class IdeaControl
         if (isset($data['tag_id'])) {
             $idea->tags()->attach($data['tag_id']);
         }
+        if (!empty($data['similar_ideas_id'])) {
+            $idea->similarIdeas()->attach(explode(',', $data['similar_ideas_id']));
+        }
 
         event(new IdeaWasCreated($idea));
 
@@ -58,6 +61,8 @@ class IdeaControl
         $idea->operationalGoals()->sync($data['operational_goal_id'], 1);
         $tagIds = (isset($data['tag_id'])) ? $data['tag_id'] : [];
         $idea->tags()->sync($tagIds, 1);
+        $similarIdeaIds = (!empty($data['similar_ideas_id'])) ? explode(',', $data['similar_ideas_id']) : [];
+        $idea->similarIdeas()->sync($similarIdeaIds, 1);
 
         return $idea;
     }

@@ -61,6 +61,7 @@ class EditIdeaController extends Controller
             'idea' => $idea,
             'status' => $idea->status,
             'user' => (!empty($idea->user)) ? $idea->user : null,
+            'similarIdeasInfo' => json_encode($reference->getSimilarIdeasForList($idea->id)),
         ];
         return view('edit-idea.edit-idea', $data);
     }

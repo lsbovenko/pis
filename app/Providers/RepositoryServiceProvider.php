@@ -66,6 +66,7 @@ class RepositoryServiceProvider extends ServiceProvider
             'status' => \App\Repositories\Status::class,
             'position' => \App\Repositories\Position::class,
             'tag' => \App\Repositories\Tag::class,
+            'idea' => \App\Repositories\Idea::class,
         ];
     }
 }

@@ -101,7 +101,67 @@
                 return false;
             }
         });
+
+        var similarIdeasId = $('#similar_ideas_id');
+        var similarIdeasInfo = $('#similar_ideas_info');
+        var searchSimilarIdea = $('#search_similar_idea');
+        if (similarIdeasId.length) {
+            similarIdeasId.tagsinput({itemValue: 'id', itemText: 'name'});
+            AddSimilarIdeasAtStart(similarIdeasId, similarIdeasInfo);
+            SearchSimilarIdeasAutocomplete(searchSimilarIdea, similarIdeasId, similarIdeasInfo);
+            RemoveSimilarIdea(similarIdeasId, similarIdeasInfo);
+        }
     });
+
+    function AddSimilarIdeasAtStart(similarIdeasId, similarIdeasInfo) {
+        if (similarIdeasInfo.val()) {
+            $.each($.parseJSON(similarIdeasInfo.val()), function (index, value) {
+                similarIdeasId.tagsinput('add', {id: value.id, name: value.name});
+            });
+        }
+    }
+
+    function SearchSimilarIdeasAutocomplete(searchSimilarIdea, similarIdeasId, similarIdeasInfo) {
+        var xhr;
+        $(searchSimilarIdea).autocomplete({
+            minLength: 3,
+            source: function(request, response) {
+                if (xhr) {
+                    xhr.abort();
+                }
+                xhr = $.get('/get-idea/similar?search_similar_idea=' + request.term
+                    + '&similar_idea_id=' + similarIdeasId.val()
+                    + '&idea_id=' + $('#idea_id').val(),
+                    function(similarIdeasResponse) {
+                    response(similarIdeasResponse);
+                })
+            },
+            select: function (event, ui) {
+                similarIdeasId.tagsinput('add', {id: ui.item.value, name: ui.item.label});
+                similarIdeasInfo.val(JSON.stringify(similarIdeasId.tagsinput('items')));
+                event.preventDefault();
+            },
+            focus: function (event) {
+                event.preventDefault();
+            }
+        });
+    }
+
+    function RemoveSimilarIdea(similarIdeasId, similarIdeasInfo) {
+        similarIdeasId.on('beforeItemRemove', function (event) {
+            var item;
+            var newSimilarIdeasInfo = [];
+            $.each($.parseJSON(similarIdeasInfo.val()), function (index, value) {
+                if (value.id != event.item.id) {
+                    item = {};
+                    item.id = value.id;
+                    item.name = value.name;
+                    newSimilarIdeasInfo.push(item);
+                }
+            });
+            similarIdeasInfo.val(JSON.stringify(newSimilarIdeasInfo));
+        });
+    }
 
     function EnableDisableCtrlKeyForTagList(tagSelect) {
         $(document).keydown(function (e) {
