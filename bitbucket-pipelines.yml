@@ -1,0 +1,18 @@
+clone:
+  depth: 2
+
+pipelines:
+  branches:
+    master:
+      - step:
+          image: rdoepner/docker-deployer:7.2
+          script:
+            - deployer --version
+      - step:
+          name: Deploy to production
+          image: rdoepner/docker-deployer:7.2
+          deployment: production
+          trigger: manual
+          script:
+            - eval "$(ssh-agent -s)"
+            - deployer deploy prod
