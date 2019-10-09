@@ -15,4 +15,5 @@ pipelines:
           trigger: manual
           script:
             - eval "$(ssh-agent -s)"
+            - ssh-add ~/.ssh/id_pipelines
             - deployer deploy prod
