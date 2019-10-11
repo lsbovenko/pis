@@ -30,7 +30,7 @@ class Idea
             $query = $query->where('id', '!=', $ideaId);
         }
 
-        return $query->orderBy('title', 'asc')->get();
+        return $query->orderBy('title', 'asc')->limit(ModelIdea::SEARCH_IDEAS_LIMIT)->get();
     }
 
     /**

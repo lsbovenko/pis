@@ -9,3 +9,9 @@
 .similar_ideas_id .bootstrap-tagsinput {
     min-height: 40px;
 }
+
+.loader-small {
+    width: 22px;
+    height: 22px;
+    display: none;
+}

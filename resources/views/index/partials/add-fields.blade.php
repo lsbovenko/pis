@@ -82,6 +82,7 @@
 
 <div class="form-group">
     <label for="search_similar_idea">{{ trans('ideas.add_similar_ideas') }}</label>
+    <img src='{{ asset('/images/loader.gif') }}' class='loader-small'>
     {{ Form::text('search_similar_idea', '', ['class'=>'form-control', 'placeholder'=>trans('ideas.search'), 'id'=>'search_similar_idea']) }}
 </div>
 
