@@ -46,6 +46,20 @@ class IdeasController extends Controller
         );
     }
 
+    public function getSimilarIdeas(Request $request)
+    {
+        $searchSimilarIdea = $request->get('search_similar_idea');
+        $similarIdeaIds = $request->get('similar_idea_id')
+            ? explode(',', $request->get('similar_idea_id'))
+            : [];
+        $ideaId = $request->get('idea_id');
+
+        /** @var \App\Service\Reference $reference */
+        $reference = App::make('reference');
+
+        return response()->json($reference->getApprovedSearchIdeasForSelect($searchSimilarIdea, $similarIdeaIds, $ideaId));
+    }
+
     /**
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

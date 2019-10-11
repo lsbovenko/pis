@@ -11,6 +11,7 @@
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/v1/main.css') }}?v={{ config('app.version') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/air-datepicker/css/datepicker.min.css') }}" rel="stylesheet">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
@@ -98,6 +99,7 @@
     <!-- End Container -->
 </div>
 <script src="{{ asset('js/jquery.js') }}"></script>
+<script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('vendor/air-datepicker/js/datepicker.min.js') }}"></script>
 <script src="{{ asset('vendor/air-datepicker/js/datepicker.en.js') }}"></script>
 <script src="{{ asset('js/libs.min.js') }}"></script>

@@ -222,4 +222,8 @@ return [
     'send_anonymously' => 'Send anonymously',
     'anonymous' => 'Anonymous',
     'anonym' => 'Anonymous',
+    'add_similar_ideas' => 'Add similar ideas',
+    'similar_ideas' => 'Similar ideas',
+    'added_similar_ideas' => 'Added similar ideas',
+    'similar_ideas_id_incorrect' => 'An incorrect set of similar ideas was conveyed',
 ];

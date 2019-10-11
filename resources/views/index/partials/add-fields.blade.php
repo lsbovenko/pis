@@ -80,6 +80,19 @@
 </div>
 {{ Form::hidden('tags_exclude', isset($tagsExclude) ? $tagsExclude : '', ['class'=>'form-control', 'id'=>'tags_exclude']) }}
 
+<div class="form-group">
+    <label for="search_similar_idea">{{ trans('ideas.add_similar_ideas') }}</label>
+    {{ Form::text('search_similar_idea', '', ['class'=>'form-control', 'placeholder'=>trans('ideas.search'), 'id'=>'search_similar_idea']) }}
+</div>
+
+<div class="form-group tagsinput similar_ideas_id">
+    <label for="similar_ideas_id">{{ trans('ideas.added_similar_ideas') }}</label>
+    {{ Form::text('similar_ideas_id', '', ['class'=>'form-control', 'id' => 'similar_ideas_id']) }}
+</div>
+
+{{ Form::hidden('similar_ideas_info', !empty($similarIdeasInfo) ? $similarIdeasInfo : '', ['class'=>'form-control', 'id'=>'similar_ideas_info']) }}
+{{ Form::hidden('idea_id', !empty($idea) ? $idea->id : '', ['class'=>'form-control', 'id'=>'idea_id']) }}
+
 @section('scripts')
     <script src="{!! asset('/vendor/summernote/summernote.js') !!}"></script>
     <script src="{!! asset('/vendor/summernote/lang/summernote-ru-RU.js') !!}"></script>

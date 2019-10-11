@@ -185,4 +185,12 @@ class Idea extends Model
     {
         return $this->belongsToMany(User::class, 'ideas_executors', 'idea_id', 'executor_id', 'id', 'id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function similarIdeas()
+    {
+        return $this->belongsToMany(self::class, 'ideas_similar_ideas', 'idea_id', 'similar_idea_id', 'id', 'id');
+    }
 }
