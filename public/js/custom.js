@@ -129,16 +129,27 @@
                 if (xhr) {
                     xhr.abort();
                 }
-                xhr = $.get('/get-idea/similar?search_similar_idea=' + request.term
-                    + '&similar_idea_id=' + similarIdeasId.val()
-                    + '&idea_id=' + $('#idea_id').val(),
-                    function(similarIdeasResponse) {
-                    response(similarIdeasResponse);
-                })
+                xhr = $.ajax({
+                    url: '/get-idea/similar',
+                    type: 'get',
+                    data: 'search_similar_idea=' + request.term
+                        + '&similar_idea_id=' + similarIdeasId.val()
+                        + '&idea_id=' + $('#idea_id').val(),
+                    beforeSend: function() {
+                        $('.loader-small').show();
+                    },
+                    success: function(similarIdeasResponse) {
+                        response(similarIdeasResponse);
+                    },
+                    complete: function() {
+                        $('.loader-small').hide();
+                    }
+                });
             },
             select: function (event, ui) {
                 similarIdeasId.tagsinput('add', {id: ui.item.value, name: ui.item.label});
                 similarIdeasInfo.val(JSON.stringify(similarIdeasId.tagsinput('items')));
+                searchSimilarIdea.val('');
                 event.preventDefault();
             },
             focus: function (event) {
