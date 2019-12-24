@@ -36,23 +36,7 @@
     <div class="header">
         <div class="container">
             <div class="row">
-                <div class="col-md-1 col-sm-1 hidden-xs">
-                    <li class="dropdown none-list-style">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="lang">
-                            {{ config('languages')[app()->getLocale()] }}
-                        </a>
-                        <ul class="dropdown-menu">
-                            @foreach (config('languages') as $lang => $language)
-                                @if ($lang != app()->getLocale())
-                                    <li>
-                                        <a href="{{ route('lang', $lang) }}">{{ $language }}</a>
-                                    </li>
-                                @endif
-                            @endforeach
-                        </ul>
-                    </li>
-                </div>
-                <div class="col-md-2 col-sm-3 col-xs-2">
+                <div class="col-md-3 col-sm-4 col-xs-2">
                     <a class="logo" href="/"><span>PIS</span>VELMIE </a>
                 </div>
                 <div class="col-md-4 col-sm-3 hidden-xs">
