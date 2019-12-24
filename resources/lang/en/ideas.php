@@ -27,7 +27,7 @@ return [
     'completed_for_90_days' => 'Completed for 90 days',
     'new_first' => 'New first',
     'old_first' => 'Old first',
-    'not_approved' => 'Not approved',
+    'pending' => 'Pending',
     'read_more' => 'Read more',
     'idea_implementation_date' => 'Idea implementation date',
     'implemented_in_days' => 'Implemented in days',

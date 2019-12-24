@@ -99,7 +99,7 @@
                         v-for="item in collection.data">
                             <a :href="`/review-idea/${item.id}`" class="title">
                                 <span class="text">{{ item.title}}</span>
-                                <span v-if="item.approve_status === 0" class="approve_status not_approved">{{ideas.not_approved}}</span>
+                                <span v-if="item.approve_status === 0" class="approve_status not_approved">{{ideas.pending}}</span>
                                 <span v-bind:class="item.status.slug" class="status">{{ item.status.name }}</span>
                             </a>
                             <p v-html="item.description"></p>

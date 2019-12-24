@@ -27,7 +27,7 @@ return [
     'completed_for_90_days' => 'Реализованные за 90 дней',
     'new_first' => 'Сначала новые',
     'old_first' => 'Сначала старые',
-    'not_approved' => 'Не утверждена',
+    'pending' => 'На рассмотрении',
     'read_more' => 'Подробнее',
     'idea_implementation_date' => 'Дата реализации идеи',
     'implemented_in_days' => 'Реализовано за дней',
