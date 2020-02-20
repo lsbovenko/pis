@@ -3,12 +3,12 @@
 return [
     'date_range' => 'Date range',
     'clear' => 'Clear',
-    'department_of_the_author' => 'Department of the author',
+    'department_of_the_author' => 'Submitter’s Department',
     'choose_department' => 'Choose department',
-    'author' => 'Author',
-    'choose_author' => 'Choose author',
-    'executor' => 'Executor',
-    'choose_executor' => 'Choose executor',
+    'author' => 'Submitter',
+    'choose_author' => 'Choose submitter',
+    'executor' => 'Owner',
+    'choose_executor' => 'Choose owner',
     'age_of_ideas' => 'Age of ideas',
     'choose_age_of_ideas' => 'Choose the age of ideas',
     'idea_ages' => [
@@ -60,13 +60,13 @@ return [
     'rejected_for_a_reason' => 'Rejected for a reason',
     'rejected' => 'Rejected',
     'rejection_reason' => 'Rejection reason',
-    'executors' => 'Executors',
-    'choose_executors' => 'Choose executors',
-    'assign_executors' => 'Assign executors',
+    'executors' => 'Owner',
+    'choose_executors' => 'Choose owner',
+    'assign_executors' => 'Assign',
     'like' => 'Like',
     'i_don\'t_like' => 'I don\'t like',
     'i_like' => 'I like',
-    'created' => 'Created',
+    'created' => 'Submitted',
     'implemented' => 'Implemented',
     'reject_idea' => 'Reject idea',
     'explanatory_note' => 'Explanatory note',
@@ -146,8 +146,8 @@ return [
         <b> Idea generation, categorization, prioritization, and implementation are the goals of the PIS system. </b>
         <br> <br>
         - Ideas are moderated before being published in the system. When an idea is published -
-        the author
-        receives a confirmation of activation by mail. In addition, the author receives notifications to the mailbox,
+        the submitter
+        receives a confirmation of activation by mail. In addition, the submitter receives notifications to the mailbox,
         if
         the idea was not accepted for publication (indicating the reason) and if its status was changed. <br> <br>
         - Ideas have 3 statuses - “active” (one might say, is under consideration), “paused” (ideas,
