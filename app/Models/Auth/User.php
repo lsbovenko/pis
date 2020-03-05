@@ -33,6 +33,18 @@ class User extends Authenticatable
     ];
 
     /**
+     * The attributes that are sync with auth.
+     *
+     * @var array
+     */
+    protected $syncItems = [
+        'name',
+        'last_name',
+        'email',
+        'is_active'
+    ];
+
+    /**
      * @var array
      */
     protected $guarded = [
@@ -63,6 +75,16 @@ class User extends Authenticatable
     {
         $hash =  md5($this->name . '_' . $this->last_name . '_' . $this->email);
         return '#' . substr($hash, 0, 6);
+    }
+
+    /**
+     * Get the attributes that are sync with auth.
+     *
+     * @return array
+     */
+    public function getSyncItems() : array
+    {
+        return $this->syncItems;
     }
 
     /**
