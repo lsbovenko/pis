@@ -21,7 +21,7 @@ class Webhook
         $user = User::where('email', $userData['email'])->first();
 
         if ($user) {
-            foreach ($user->getFillable() as $attribute) {
+            foreach ($user->getSyncItems() as $attribute) {
                 if (isset($userData[$attribute])) {
                     $user->{$attribute} = $userData[$attribute];
                 }
