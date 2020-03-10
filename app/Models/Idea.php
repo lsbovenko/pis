@@ -26,7 +26,8 @@ class Idea extends Model
         'title',
         'description',
         'type_id',
-        'details'
+        'details',
+        'estimated_time'
     ];
 
     protected $dates = [

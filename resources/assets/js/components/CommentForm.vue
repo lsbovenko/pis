@@ -2,11 +2,11 @@
     <div>
         <preloader-page v-if="preloader"></preloader-page>
         <form @submit.prevent="onSubmit">
+            <button type="submit" class="arrow button-comment" :disabled="disabled"></button>
             <textarea class="form-control" v-bind:placeholder="ideas.add_comment"
                       v-model="body"
                       v-on:keyup.ctrl.enter="onSubmit">
             </textarea>
-            <button type="submit" class="arrow button-comment" :disabled="disabled"></button>
         </form>
         <div v-if="result.status === 'success'">
             <div class="alert alert-success mg-top-10" v-show="visible">{{result.message}}</div>

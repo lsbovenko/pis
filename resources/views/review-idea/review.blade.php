@@ -205,6 +205,12 @@
                             </div>
                         </div>
                     @endif
+                    @if ($idea->estimated_time)
+                        <div class="block">
+                            <b>{{ trans('ideas.estimated_time') }}:</b>
+                            <div>{{ $idea->estimated_time }}</div>
+                        </div>
+                    @endif
                     @if (count($idea->similarIdeas))
                         <div class="block">
                             <b>{{ trans('ideas.similar_ideas') }}:</b>

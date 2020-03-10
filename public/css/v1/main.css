@@ -6045,6 +6045,30 @@ button.close {
     color: #999;
 }
 
+.htooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.htooltip .htooltiptext {
+    visibility: hidden;
+    width: 150px;
+    background-color: white;
+    color: black;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    border: 1px dotted black;
+    left: 15px;
+    bottom: 10px;
+    position: absolute;
+    z-index: 1;
+}
+
+.htooltip:hover .htooltiptext {
+    visibility: visible;
+}
+
 .tooltip {
     position: absolute;
     z-index: 1070;
@@ -8915,6 +8939,10 @@ body .container .content-box .idea .reviews ul li .image {
 
 .button-comment {
     border: 0;
+    z-index: 1;
+    position: relative;
+    top: 55px;
+    right: 10px;
 }
 
 body .container .content-box .idea .reviews ul li .text-reviews {

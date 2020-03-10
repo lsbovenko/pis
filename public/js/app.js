@@ -18140,7 +18140,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 page: 1,
                 count: 0,
                 statusId: '',
-                orderDir: 'desc'
+                orderDir: 'new'
             },
             url: window.location.pathname === '/' ? '/get-idea/all' : '/get-idea' + pathUrl,
             resetParam: {
@@ -18446,7 +18446,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 el.classList.remove('active');
             });
             this.query.statusId = '';
-            this.query.orderDir = 'desc';
+            this.query.orderDir = 'new';
             this.removedClass();
             this.removedClassUserDepartment();
             this.removedClassIdeaAge();
@@ -19519,6 +19519,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
 
 
 
@@ -19537,10 +19540,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 limit: 15,
                 page: 1,
                 count: 0,
-                filterDesc: 'desc',
-                filterAsc: 'asc',
+                newFirst: 'new',
+                oldFirst: 'old',
+                likes: 'likes',
+                comments: 'comments',
+                likesComments: 'likes_comments',
                 statusId: '',
-                orderDir: 'desc'
+                orderDir: 'new'
             },
             collection: {
                 data: []
@@ -19596,23 +19602,39 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         this.$root.$on('resetAllFilterParams', function (result) {
             _this.query.limit = result.limit;
             _this.query.statusId = result.statusId;
-            _this.query.orderDir = 'desc';
+            _this.query.orderDir = 'new';
             _this.selected = result.selected;
         });
     },
 
     methods: {
         orderSort: function orderSort(sort) {
-            if (sort === this.query.filterAsc) {
-                this.query.orderDir = this.query.filterAsc;
-            } else {
-                this.query.orderDir = this.query.filterDesc;
+            switch (sort) {
+                case this.query.oldFirst:
+                    this.query.orderDir = this.query.oldFirst;
+                    break;
+                case this.query.likes:
+                    this.query.orderDir = this.query.likes;
+                    this.ideaStatus(1);
+                    break;
+                case this.query.comments:
+                    this.query.orderDir = this.query.comments;
+                    this.ideaStatus(1);
+                    break;
+                case this.query.likesComments:
+                    this.query.orderDir = this.query.likesComments;
+                    this.ideaStatus(1);
+                    break;
+                default:
+                    this.query.orderDir = this.query.newFirst;
             }
 
-            this.$root.$emit('checkStatusIdAndOrderDir', this.query);
-
-            this.query.page = 1;
-            this.applyChange();
+            if (this.query.orderDir == this.query.oldFirst || this.query.orderDir == this.query.newFirst) {
+                // function ideaStatus() has this code for other options
+                this.$root.$emit('checkStatusIdAndOrderDir', this.query);
+                this.query.page = 1;
+                this.applyChange();
+            }
         },
         ideaStatus: function ideaStatus(param) {
             var ideaStatuses = this.$refs.ideaStatus.childNodes;
@@ -19953,7 +19975,7 @@ var render = function() {
                     staticClass: "order-list active",
                     on: {
                       click: function($event) {
-                        return _vm.orderSort("" + _vm.query.filterDesc)
+                        return _vm.orderSort("" + _vm.query.newFirst)
                       }
                     }
                   },
@@ -19970,13 +19992,64 @@ var render = function() {
                     staticClass: "order-list",
                     on: {
                       click: function($event) {
-                        return _vm.orderSort("" + _vm.query.filterAsc)
+                        return _vm.orderSort("" + _vm.query.oldFirst)
                       }
                     }
                   },
                   [
                     _c("a", { staticClass: "pointer" }, [
                       _vm._v(_vm._s(_vm.ideas.old_first))
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  {
+                    staticClass: "order-list",
+                    on: {
+                      click: function($event) {
+                        return _vm.orderSort("" + _vm.query.likes)
+                      }
+                    }
+                  },
+                  [
+                    _c("a", { staticClass: "pointer" }, [
+                      _vm._v(_vm._s(_vm.ideas.likes))
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  {
+                    staticClass: "order-list",
+                    on: {
+                      click: function($event) {
+                        return _vm.orderSort("" + _vm.query.comments)
+                      }
+                    }
+                  },
+                  [
+                    _c("a", { staticClass: "pointer" }, [
+                      _vm._v(_vm._s(_vm.ideas.commentaries))
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  {
+                    staticClass: "order-list",
+                    on: {
+                      click: function($event) {
+                        return _vm.orderSort("" + _vm.query.likesComments)
+                      }
+                    }
+                  },
+                  [
+                    _c("a", { staticClass: "pointer" }, [
+                      _vm._v(_vm._s(_vm.ideas.likes_comments))
                     ])
                   ]
                 )

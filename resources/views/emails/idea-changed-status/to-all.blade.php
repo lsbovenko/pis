@@ -3,14 +3,15 @@
 @section('content')
     <p>
         {{ trans('ideas.idea_implemented') }} "{{ $idea->title }}".
-        <a href="{{ route('review-idea', ['id' => $idea->id]) }}">{{ trans('ideas.watch_whole') }}</a>.
+        <a href="{{ route('review-idea', ['id' => $idea->id]) }}">{{ trans('ideas.view') }}</a>.
     </p>
-    @if($idea->details)
-        <div>
-            {{ $idea->details }}
-        </div>
-    @endif
     <div>
         {!! $idea->description !!}
     </div>
+    @if($idea->details)
+        <div style="font-weight: bold;">
+            <span>{{ trans('ideas.resolution') }}:</span><br><br>
+            <span style="font-style: italic;">{{ $idea->details }}</span>
+        </div>
+    @endif
 @endsection

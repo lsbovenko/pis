@@ -14963,6 +14963,11 @@ var render = function() {
           }
         },
         [
+          _c("button", {
+            staticClass: "arrow button-comment",
+            attrs: { type: "submit", disabled: _vm.disabled }
+          }),
+          _vm._v(" "),
           _c("textarea", {
             directives: [
               {
@@ -14995,11 +15000,6 @@ var render = function() {
                 _vm.body = $event.target.value
               }
             }
-          }),
-          _vm._v(" "),
-          _c("button", {
-            staticClass: "arrow button-comment",
-            attrs: { type: "submit", disabled: _vm.disabled }
           })
         ]
       ),
