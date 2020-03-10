@@ -172,7 +172,7 @@ class IdeasController extends Controller
     {
         $input = $request->all();
 
-        $query = Idea::with('user.position', 'status');
+        $query = Idea::with('user.position', 'status', 'executors');
 
         foreach ($filterParams as $key => $value) {
             $query->where($key, '=', $value);
