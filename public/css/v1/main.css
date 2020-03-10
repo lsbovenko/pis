@@ -9584,7 +9584,8 @@ body .container .btn_.btn-outline-red:hover {
 }
 
 .list-idea .item .user-info {
-    margin-top: 24px;
+    margin-top: 8px;
+
 }
 
 .list-idea .item .user-info .avatar {
