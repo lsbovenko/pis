@@ -212,7 +212,15 @@
 <script>
     export default {
         name: "MainFilterBlock",
-        props: ['filters', 'users', 'activeStatusId', 'ideas'],
+        props: {
+            filters: Object,
+            users: [Object, Array],
+            activeStatusId: {
+                type: String,
+                default: ''
+            },
+            ideas: Object
+        },
         data() {
             return {
                 active: 'active',
@@ -256,7 +264,6 @@
                 showDropdownUserDepartment: false,
                 showDropdownIdeaAge: false,
                 showDropdownExecutor: false,
-                activeStatusId: '',
                 ideaAges: [45, 90]
             }
         },
