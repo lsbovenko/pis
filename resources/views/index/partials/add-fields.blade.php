@@ -91,6 +91,15 @@
     {{ Form::text('similar_ideas_id', '', ['class'=>'form-control', 'id' => 'similar_ideas_id']) }}
 </div>
 
+<div class="form-group">
+    <label for="estimated_time">{{ trans('ideas.estimated_time') }}</label>
+    <div class="htooltip">
+        <i class="fa fa-question-circle"></i>
+        <span class="htooltiptext">{{ trans('ideas.estimated_description') }}</span>
+    </div>
+    {{ Form::text('estimated_time', isset($idea) ? $idea->estimated_time : '', ['class'=>'form-control', 'placeholder'=>trans('ideas.estimated_example'), 'id'=>'estimated_time']) }}
+</div>
+
 {{ Form::hidden('similar_ideas_info', !empty($similarIdeasInfo) ? $similarIdeasInfo : '', ['class'=>'form-control', 'id'=>'similar_ideas_info']) }}
 {{ Form::hidden('idea_id', !empty($idea) ? $idea->id : '', ['class'=>'form-control', 'id'=>'idea_id']) }}
 
@@ -98,6 +107,7 @@
     <script src="{!! asset('/vendor/summernote/summernote.js') !!}"></script>
     <script src="{!! asset('/vendor/summernote/lang/summernote-ru-RU.js') !!}"></script>
     <script src="{{ asset('/vendor/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{{ asset('/vendor/summernote/summernote.css') }}" rel="stylesheet">
     <link href="{{ asset('/vendor/bootstrap-tagsinput/bootstrap-tagsinput.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/custom-add-fields.css') }}" rel="stylesheet">

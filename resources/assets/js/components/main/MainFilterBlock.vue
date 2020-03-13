@@ -227,7 +227,7 @@
                     page: 1,
                     count: 0,
                     statusId: '',
-                    orderDir: 'desc',
+                    orderDir: 'new',
                 },
                 url: (window.location.pathname === '/') ? '/get-idea/all' : '/get-idea' + pathUrl,
                 resetParam: {
@@ -533,7 +533,7 @@
                     el.classList.remove('active');
                 });
                 this.query.statusId = '';
-                this.query.orderDir = 'desc';
+                this.query.orderDir = 'new';
                 this.removedClass();
                 this.removedClassUserDepartment();
                 this.removedClassIdeaAge();

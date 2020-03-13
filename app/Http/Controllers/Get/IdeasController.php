@@ -275,10 +275,22 @@ class IdeasController extends Controller
         }
 
         $orderBy = (isset($input['orderDir'])) ? $input['orderDir'] : '';
-        if ($orderBy == 'asc') {
-            $query->orderBy('id', 'ASC');
-        } else {
-            $query->orderBy('id', 'DESC');
+
+        switch ($orderBy) {
+            case 'old':
+                $query->orderBy('id', 'ASC');
+                break;
+            case 'likes':
+                $query->orderBy('likes_num', 'DESC');
+                break;
+            case 'comments':
+                $query->orderBy('comments_count', 'DESC');
+                break;
+            case 'likes_comments':
+                $query->orderBy(DB::raw("`likes_num` + `comments_count`"), 'DESC');
+                break;
+            default:
+                $query->orderBy('id', 'DESC');
         }
 
         return $query;

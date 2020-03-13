@@ -5,8 +5,9 @@
         {{ trans('ideas.idea_changed_status_to_user', ['ideaTitle' => $idea->title]) }}: {{ $status->name }}.
     </p>
     @if($idea->details)
-        <div>
-            {{ $idea->details }}
+        <div style="font-weight: bold;">
+            <span>{{ trans('ideas.resolution') }}:</span><br><br>
+            <span style="font-style: italic;">{{ $idea->details }}</span>
         </div>
     @endif
 @endsection

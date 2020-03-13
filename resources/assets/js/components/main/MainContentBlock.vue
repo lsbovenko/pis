@@ -84,8 +84,11 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuOrder" v-model="query.filter_match">
-                            <li class="order-list active" @click="orderSort(`${query.filterDesc}`)"><a class="pointer">{{ideas.new_first}}</a></li>
-                            <li class="order-list" @click="orderSort(`${query.filterAsc}`)"><a class="pointer">{{ideas.old_first}}</a></li>
+                            <li class="order-list active" @click="orderSort(`${query.newFirst}`)"><a class="pointer">{{ideas.new_first}}</a></li>
+                            <li class="order-list" @click="orderSort(`${query.oldFirst}`)"><a class="pointer">{{ideas.old_first}}</a></li>
+                            <li class="order-list" @click="orderSort(`${query.likes}`)"><a class="pointer">{{ideas.likes}}</a></li>
+                            <li class="order-list" @click="orderSort(`${query.comments}`)"><a class="pointer">{{ideas.commentaries}}</a></li>
+                            <li class="order-list" @click="orderSort(`${query.likesComments}`)"><a class="pointer">{{ideas.likes_comments}}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -204,10 +207,13 @@
                     limit: 15,
                     page: 1,
                     count: 0,
-                    filterDesc: 'desc',
-                    filterAsc: 'asc',
+                    newFirst: 'new',
+                    oldFirst: 'old',
+                    likes: 'likes',
+                    comments: 'comments',
+                    likesComments: 'likes_comments',
                     statusId: '',
-                    orderDir: 'desc',
+                    orderDir: 'new',
                 },
                 collection: {
                     data: [],
@@ -261,22 +267,37 @@
             this.$root.$on('resetAllFilterParams', (result) => {
                 this.query.limit = result.limit;
                 this.query.statusId = result.statusId;
-                this.query.orderDir = 'desc';
+                this.query.orderDir = 'new';
                 this.selected = result.selected;
             })
         },
         methods: {
             orderSort(sort) {
-                if (sort === this.query.filterAsc) {
-                    this.query.orderDir = this.query.filterAsc;
-                }else {
-                    this.query.orderDir = this.query.filterDesc;
+                switch (sort) {
+                    case this.query.oldFirst:
+                        this.query.orderDir = this.query.oldFirst;
+                        break;
+                    case this.query.likes:
+                        this.query.orderDir = this.query.likes;
+                        this.ideaStatus(1);
+                        break;
+                    case this.query.comments:
+                        this.query.orderDir = this.query.comments;
+                        this.ideaStatus(1);
+                        break;
+                    case this.query.likesComments:
+                        this.query.orderDir = this.query.likesComments;
+                        this.ideaStatus(1);
+                        break;
+                    default:
+                        this.query.orderDir = this.query.newFirst;
                 }
 
-                this.$root.$emit('checkStatusIdAndOrderDir', this.query);
-
-                this.query.page = 1;
-                this.applyChange();
+                if (this.query.orderDir == this.query.oldFirst || this.query.orderDir == this.query.newFirst) {  // function ideaStatus() has this code for other options
+                    this.$root.$emit('checkStatusIdAndOrderDir', this.query);
+                    this.query.page = 1;
+                    this.applyChange();
+                }
             },
             ideaStatus(param) {
                 let ideaStatuses = this.$refs.ideaStatus.childNodes;
