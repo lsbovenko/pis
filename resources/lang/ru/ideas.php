@@ -67,6 +67,7 @@ return [
     'choose_executors' => 'Выберите исполнителей',
     'assign_executors' => 'Назначить исполнителей',
     'likes' => 'Лайки',
+    'liked' => 'Понравившиеся',
     'commentaries' => 'Комментарии',
     'likes_comments' => 'Лайки + Комментарии',
     'like' => 'Поддерживают',

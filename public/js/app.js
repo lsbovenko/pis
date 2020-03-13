@@ -18121,6 +18121,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "MainFilterBlock",
@@ -18569,22 +18570,32 @@ var render = function() {
           attrs: { id: "datepicker" }
         }),
         _vm._v(" "),
-        _c("section", { staticClass: "item" }, [
-          _c("ul", { staticClass: "without-list-style" }, [
-            _c("li", { staticClass: "first" }, [
-              _vm._v(_vm._s(_vm.ideas.anonymous))
-            ]),
+        _c("section", { staticClass: "item inbtn" }, [
+          _c("label", { staticClass: "filter_checkbox" }, [
+            _c("input", {
+              attrs: { type: "checkbox", name: "is_anonymous" },
+              domProps: { value: 1 },
+              on: { change: _vm.changeHandler }
+            }),
             _vm._v(" "),
-            _c("li", [
-              _c("label", { staticClass: "inbtn" }, [
-                _c("input", {
-                  attrs: { type: "checkbox", name: "is_anonymous" },
-                  domProps: { value: 1 },
-                  on: { change: _vm.changeHandler }
-                }),
-                _vm._v(" "),
-                _c("span", { staticClass: "inbtn__indicator" })
-              ])
+            _c("span", { staticClass: "inbtn__indicator" }),
+            _vm._v(" "),
+            _c("span", { staticClass: "first" }, [
+              _vm._v(_vm._s(_vm.ideas.anonymous))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("label", { staticClass: "filter_checkbox" }, [
+            _c("input", {
+              attrs: { type: "checkbox", name: "is_liked" },
+              domProps: { value: 1 },
+              on: { change: _vm.changeHandler }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "inbtn__indicator" }),
+            _vm._v(" "),
+            _c("span", { staticClass: "first" }, [
+              _vm._v(_vm._s(_vm.ideas.liked))
             ])
           ])
         ]),
