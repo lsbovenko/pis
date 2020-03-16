@@ -238,17 +238,23 @@ class IdeasController extends Controller
 
         if (isset($input['user_id'])) {
             $userId = $input['user_id'];
-            $query->where('user_id', '=', $userId);
+            $query->where('ideas.user_id', '=', $userId);
         }
 
         if (isset($input['is_anonymous'])) {
-            $query->whereNull('user_id');
+            $query->whereNull('ideas.user_id');
+        }
+
+        if (isset($input['is_liked'])) {
+            $user = $request->user();
+            $query->join('idea_likes as il', 'ideas.id', '=', 'il.idea_id');
+            $query->where('il.user_id', $user->id);
         }
 
         if (isset($input['idea_age'])) {
             $ideaAge = $input['idea_age'];
             $date = new \DateTime("-$ideaAge days");
-            $query->where('created_at', '<', $date->format('Y-m-d H:i:s'));
+            $query->where('ideas.created_at', '<', $date->format('Y-m-d H:i:s'));
         }
 
         if (isset($input['datepicker_dates'])) {
@@ -257,7 +263,7 @@ class IdeasController extends Controller
             if (count($dates) == 2) {
                 $beginDate = $dates[0] . ' 00:00:00';
                 $endDate = $dates[1] . ' 23:59:59';
-                $query->whereBetween('created_at', [$beginDate, $endDate]);
+                $query->whereBetween('ideas.created_at', [$beginDate, $endDate]);
             }
         }
 
@@ -278,7 +284,7 @@ class IdeasController extends Controller
 
         switch ($orderBy) {
             case 'old':
-                $query->orderBy('id', 'ASC');
+                $query->orderBy('ideas.id', 'ASC');
                 break;
             case 'likes':
                 $query->orderBy('likes_num', 'DESC');
@@ -290,7 +296,7 @@ class IdeasController extends Controller
                 $query->orderBy(DB::raw("`likes_num` + `comments_count`"), 'DESC');
                 break;
             default:
-                $query->orderBy('id', 'DESC');
+                $query->orderBy('ideas.id', 'DESC');
         }
 
         return $query;

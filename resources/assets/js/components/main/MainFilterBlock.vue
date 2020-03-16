@@ -13,16 +13,17 @@
                 </ul>
                 <div style="margin-bottom: 20px;" id="datepicker"></div>
 
-                <section class="item">
-                    <ul class="without-list-style">
-                        <li class="first">{{ideas.anonymous}}</li>
-                        <li>
-                            <label class="inbtn">
-                                <input type="checkbox" name="is_anonymous" :value="1" @change="changeHandler">
-                                <span class="inbtn__indicator"></span>
-                            </label>
-                        </li>
-                    </ul>
+                <section class="item inbtn">
+                    <label class="filter_checkbox">
+                        <input type="checkbox" name="is_anonymous" :value="1" @change="changeHandler">
+                        <span class="inbtn__indicator"></span>
+                        <span class="first">{{ideas.anonymous}}</span>
+                    </label>
+                    <label class="filter_checkbox">
+                        <input type="checkbox" name="is_liked" :value="1" @change="changeHandler">
+                        <span class="inbtn__indicator"></span>
+                        <span class="first">{{ideas.liked}}</span>
+                    </label>
                 </section>
 
                 <ul class="last-changes-list without-list-style">

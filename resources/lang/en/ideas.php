@@ -67,6 +67,7 @@ return [
     'choose_executors' => 'Choose owner',
     'assign_executors' => 'Assign',
     'likes' => 'Likes',
+    'liked' => 'Liked ideas',
     'commentaries' => 'Comments',
     'likes_comments' => 'Likes + Comments',
     'like' => 'Like',

@@ -9303,7 +9303,7 @@ body .container .btn_.btn-outline-red:hover {
     align-items: end;
 }
 
-.left-sidebar ul li.first {
+.left-sidebar ul li.first, label span.first {
     font-family: GothamPro;
     font-size: 14px;
     font-weight: 500;
@@ -9925,6 +9925,11 @@ body .container .btn_.btn-outline-red:hover {
     height: 12px;
     left: 19px;
     top: 3px;
+}
+
+.filter_checkbox {
+    display: block;
+    margin-bottom: 8px;
 }
 
 .inbtn {
