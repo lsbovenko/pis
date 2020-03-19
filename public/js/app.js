@@ -18125,7 +18125,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "MainFilterBlock",
-    props: ['filters', 'users', 'activeStatusId', 'ideas'],
+    props: {
+        filters: Object,
+        users: [Object, Array],
+        activeStatusId: {
+            type: String,
+            default: ''
+        },
+        ideas: Object
+    },
     data: function data() {
         return {
             active: 'active',
@@ -18169,7 +18177,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             showDropdownUserDepartment: false,
             showDropdownIdeaAge: false,
             showDropdownExecutor: false,
-            activeStatusId: '',
             ideaAges: [45, 90]
         };
     },

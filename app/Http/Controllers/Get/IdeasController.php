@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Get;
 
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User;
+use App\Models\Idea as ModelIdea;
 use Illuminate\Http\Request;
 use App\Models\Idea;
 use Illuminate\Support\Facades\{
@@ -174,6 +175,8 @@ class IdeasController extends Controller
 
         $query = Idea::with('user.position', 'status', 'executors');
 
+        $query->select('ideas.*');
+
         foreach ($filterParams as $key => $value) {
             $query->where($key, '=', $value);
         }
@@ -282,21 +285,23 @@ class IdeasController extends Controller
 
         $orderBy = (isset($input['orderDir'])) ? $input['orderDir'] : '';
 
-        switch ($orderBy) {
-            case 'old':
-                $query->orderBy('ideas.id', 'ASC');
-                break;
-            case 'likes':
-                $query->orderBy('likes_num', 'DESC');
-                break;
-            case 'comments':
-                $query->orderBy('comments_count', 'DESC');
-                break;
-            case 'likes_comments':
-                $query->orderBy(DB::raw("`likes_num` + `comments_count`"), 'DESC');
-                break;
-            default:
-                $query->orderBy('ideas.id', 'DESC');
+        if (empty($input['search_idea'])) {
+            switch ($orderBy) {
+                case 'old':
+                    $query->orderBy('ideas.id', 'ASC');
+                    break;
+                case 'likes':
+                    $query->orderBy('likes_num', 'DESC');
+                    break;
+                case 'comments':
+                    $query->orderBy('comments_count', 'DESC');
+                    break;
+                case 'likes_comments':
+                    $query->orderBy(DB::raw("`likes_num` + `comments_count`"), 'DESC');
+                    break;
+                default:
+                    $query->orderBy('ideas.id', 'DESC');
+            }
         }
 
         return $query;
@@ -447,6 +452,7 @@ class IdeasController extends Controller
             $status->slug = $idea->status_slug;
             $status->is_active = $idea->status_is_active;
             $idea->status = $status;
+            $idea->executors = ModelIdea::where('id', $idea->id)->first()->executors;
         }
 
         return $ideas;
