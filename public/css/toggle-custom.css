@@ -1,0 +1,130 @@
+.can-toggle {
+  position: relative;
+  width: 56px;
+}
+.can-toggle *, .can-toggle *:before, .can-toggle *:after {
+  box-sizing: border-box;
+}
+.can-toggle input[type="checkbox"] {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.can-toggle input[type="checkbox"][disabled] ~ label {
+  pointer-events: none;
+}
+.can-toggle input[type="checkbox"][disabled] ~ label .can-toggle__switch {
+  opacity: 0.4;
+}
+.can-toggle input[type="checkbox"]:checked ~ label .can-toggle__switch:before {
+  content: attr(data-unchecked);
+  left: 0;
+}
+.can-toggle__switch:after{
+  content: '';
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+}
+.can-toggle input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
+  content: attr(data-checked);
+  transform: translate3d(24px, 0, 0);
+  background: #FF5252 center 60% url(../images/heart-small.svg) no-repeat;
+}
+.can-toggle label {
+  user-select: none;
+  position: relative;
+  display: flex !important;
+  align-items: center;
+  cursor: pointer;
+}
+.can-toggle label .can-toggle__label-text {
+  flex: 1;
+  padding-left: 32px;
+}
+.can-toggle label .can-toggle__switch {
+  position: relative;
+}
+.can-toggle label .can-toggle__switch:before {
+  content: attr(data-checked);
+  position: absolute;
+  top: 0;
+  text-align: center;
+}
+.can-toggle label .can-toggle__switch:after {
+  content: attr(data-unchecked);
+  position: absolute;
+  z-index: 5;
+  text-align: center;
+  background: #CFCFCF center 60% url(../images/heart-small.svg) no-repeat;
+  transform: translate3d(0, 0, 0);
+}
+.can-toggle input[type="checkbox"][disabled] ~ label {
+  color: rgba(247, 246, 246, 0.5);
+}
+.can-toggle input[type="checkbox"]:hover ~ label .can-toggle__switch {
+  background-color: #f7f6f6;
+}
+.can-toggle input[type="checkbox"]:hover ~ label .can-toggle__switch:after {
+  color: #dfdbdb;
+}
+.can-toggle input[type="checkbox"]:hover ~ label {
+  color: #ebe9e9;
+}
+.can-toggle input[type="checkbox"]:checked ~ label:hover {
+  color: #f0eeee;
+}
+.can-toggle input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
+  color: #fff;
+}
+.can-toggle input[type="checkbox"]:checked:hover ~ label .can-toggle__switch {
+  background-color: #f7f6f6;
+}
+.can-toggle input[type="checkbox"]:checked:hover ~ label .can-toggle__switch:after {
+  color: #dfdbdb;
+}
+.can-toggle label .can-toggle__label-text {
+  flex: 1;
+}
+.can-toggle label .can-toggle__switch {
+  transition: background-color 0.1s ease-in-out;
+  background: #f7f6f6;
+  border: 1px solid #E0E0E0;
+  border-radius: 24px
+}
+.can-toggle label .can-toggle__switch:before {
+  color: #333;
+}
+.can-toggle label .can-toggle__switch:after {
+  -webkit-transition: -webkit-transform 0.1s ease-in-out;
+  transition: transform 0.1s ease-in-out;
+  color: #fff;
+}
+.can-toggle input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
+  transform: translate3d(22px, 0, 0);
+}
+.can-toggle label {
+  font-size: 12px;
+}
+.can-toggle label .can-toggle__switch {
+  height: 32px;
+  flex: 0 0 56px;
+  background: #eee;
+  border: 0;
+}
+.can-toggle label .can-toggle__switch:before {
+  left: 32px;
+  font-size: 10px;
+  line-height: 21px;
+  width: 32px;
+  padding: 0 12px;
+}
+.can-toggle label .can-toggle__switch:after {
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  width: 32px;
+  line-height: 22px;
+  font-size: 10px;
+}

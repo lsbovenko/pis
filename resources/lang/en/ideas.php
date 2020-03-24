@@ -14,7 +14,7 @@ return [
     'idea_ages' => [
         'Added >45 days ago',
         'Added >90 days ago',
-        ],
+    ],
     'department' => 'Department',
     'core_competency' => 'Core competency',
     'operational_goal' => 'Operational goal',
@@ -110,6 +110,7 @@ return [
     'types' => 'Types',
     'rejected_idea' => 'Rejected',
     'not_yet_approved' => 'Not yet approved',
+    'not_approved' => 'Not approved',
     'approved' => 'Approved',
     'details' => 'Details',
     'about_system' => 'About system',

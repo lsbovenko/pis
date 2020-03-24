@@ -1,0 +1,118 @@
+.datepickers-container .datepicker, .datepicker-inline .datepicker {
+  width: 190px;
+  border: 0;
+  background: #fff;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+}
+.datepickers-container .datepicker--nav, .datepicker-inline .datepicker--nav {
+  border-bottom: 0;
+  padding: 12px 0;
+  line-height: 1;
+}
+.datepickers-container .datepicker--nav-title, .datepicker-inline .datepicker--nav-title {
+  color: #333;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 0 6px;
+}
+.datepickers-container .datepicker--nav-title i, .datepicker-inline .datepicker--nav-title i {
+  color: #333;
+  font-weight: 600;
+}
+.datepickers-container .datepicker--nav-action, .datepicker-inline .datepicker--nav-action {
+  position: absolute;
+  top: 1px;
+  right: -2px;
+}
+.datepickers-container .datepicker--nav-action:first-child, .datepicker-inline .datepicker--nav-action:first-child {
+  right: 22px;
+}
+.datepickers-container .datepicker--nav-action:hover, .datepicker-inline .datepicker--nav-action:hover {
+  background: transparent;
+}
+.datepickers-container .datepicker--nav-action:hover svg path, .datepicker-inline .datepicker--nav-action:hover svg path {
+  stroke: #333;
+}
+.datepickers-container .datepicker--nav-action svg path, .datepicker-inline .datepicker--nav-action svg path {
+  stroke: #999;
+}
+.datepickers-container .datepicker--day-name, .datepicker-inline .datepicker--day-name {
+  color: #999;
+  font-family: "Gotham Pro", Arial, sans-serif;
+  font-size: 10px;
+  line-height: 10px;
+  display: inline-block;
+  flex: 0;
+  width: 27px;
+  min-width: 27px;
+  margin: 2px 0;
+}
+.datepickers-container .datepicker--days-names, .datepicker-inline .datepicker--days-names {
+  margin-top: 0;
+}
+.datepickers-container .datepicker--content, .datepicker-inline .datepicker--content {
+  padding: 12px 0;
+}
+.datepickers-container .datepicker--cell, .datepicker-inline .datepicker--cell {
+  height: 27px;
+  border-radius: 50%;
+  color: #333;
+  font-size: 10px;
+  line-height: normal;
+  width: 27px;
+  min-width: 27px;
+  flex: 0;
+  margin: 2px 0;
+}
+.datepickers-container .datepicker--cell:hover, .datepicker-inline .datepicker--cell:hover {
+  background: #eee;
+}
+.datepickers-container .datepicker--cell.-selected-, .datepicker-inline .datepicker--cell.-selected- {
+  background: #333;
+  color: #fff;
+}
+.datepickers-container .datepicker--cell.-selected-.-range-from-, .datepicker-inline .datepicker--cell.-selected-.-range-from- {
+  background: #7493ff;
+  color: #333;
+}
+.datepickers-container .datepicker--cell.-selected-.-range-to-, .datepicker-inline .datepicker--cell.-selected-.-range-to- {
+  background: #7493ff;
+  color: #333;
+}
+.datepickers-container .datepicker--cell.-range-from-, .datepicker-inline .datepicker--cell.-range-from- {
+  border-radius: 16px 0 0 16px;
+}
+.datepickers-container .datepicker--cell.-range-from-.-focus-, .datepicker-inline .datepicker--cell.-range-from-.-focus- {
+  background: #aec0ff;
+}
+.datepickers-container .datepicker--cell.-range-to-, .datepicker-inline .datepicker--cell.-range-to- {
+  border-radius: 0 16px 16px 0;
+}
+.datepickers-container .datepicker--cell.-range-to-.-focus-, .datepicker-inline .datepicker--cell.-range-to-.-focus- {
+  background: #aec0ff;
+}
+.datepickers-container .datepicker--cell.-current-, .datepicker-inline .datepicker--cell.-current- {
+  background: #dce4ff;
+}
+.datepickers-container .datepicker--cell.-current-:hover, .datepicker-inline .datepicker--cell.-current-:hover {
+  background: #aec0ff;
+}
+.datepickers-container .datepicker--cell.-disabled-, .datepicker-inline .datepicker--cell.-disabled- {
+  color: #c4c4c4;
+}
+.datepickers-container .datepicker--cell.-in-range-, .datepicker-inline .datepicker--cell.-in-range- {
+  border-radius: 0;
+  background: #eef2ff;
+}
+.datepicker-inline .datepicker--nav {
+  padding: 0 0 12px;
+  position: relative;
+}
+.datepicker-inline .datepicker--nav-action {
+  top: -7px;
+  right: -3px;
+}
+.datepicker-inline .datepicker--nav-action:first-child {
+  right: 23px;
+}

@@ -22,8 +22,9 @@
                         </div>
                     @endif
 
-                    <div class="section-title">{{ $idea->title }}</div>
                     <div class="{{ $status->slug }} status">{{ $status->name }}</div>
+                    <div class="section-title">{{ $idea->title }}</div>
+
                     @if ($status->id == $completedStatusId  && $idea->details)
                         <div class="text">
                             {{ $idea->details }}
@@ -51,28 +52,22 @@
                         <hr>
                         <form action="{{ route('edit-idea-executors', ['id' => $idea->id]) }}" method="post">
                             {{ csrf_field() }}
-                            <div class="row">
-                                <div class="col-lg-8 col-md-8 col-xs-5">
-                                    <div class="form-group executors-select">
-                                        <label for="executors_select">{{ trans('ideas.executors') }}</label>
-                                        <div class="dropdown customer-select">
-                                            {{ Form::select('executors_select[]', $executorsList, isset($idea) ? $idea->executors : '', [
-                                            'class'=>'selectpicker',
-                                            'id' => 'executors_select',
-                                            'multiple' => true,
-                                            'data-live-search' => 'true',
-                                            'data-none-selected-text' => trans('ideas.choose_executors')
-                                            ]) }}
-                                        </div>
+                            <div class="flex-row">
+                                <div class="form-group executors-select calc-length">
+                                    <label for="executors_select">{{ trans('ideas.executors') }}</label>
+                                    <div class="dropdown customer-select">
+                                        {{ Form::select('executors_select[]', $executorsList, isset($idea) ? $idea->executors : '', [
+                                        'class'=>'selectpicker',
+                                        'id' => 'executors_select',
+                                        'multiple' => true,
+                                        'data-live-search' => 'true',
+                                        'data-none-selected-text' => trans('ideas.choose_executors')
+                                        ]) }}
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-xs-6">
-                                    <div class="buttons justify executors-button">
-                                        <button type="submit" class="accept-blue">
-                                            {{ trans('ideas.assign_executors') }}
-                                        </button>
-                                    </div>
-                                </div>
+                                <button type="submit" class="accept-blue icon-btn">
+                                    <i class="zmdi zmdi-check"></i>
+                                </button>
                             </div>
                         </form>
                         @if ($idea->isNew())
@@ -95,37 +90,39 @@
                     @if ($idea->isApproved())
                         <hr>
                         <div class="support">
-                            <div class="support-name">
-                                <i class="zmdi zmdi-favorite"></i>
-                                <span id="count_ideas_like">{{ $idea->likes_num }}</span> {{ trans('ideas.like') }}
+                            <div class="support-flex">
+                                <div class="btn_like_{{ $idea->id }}">
+                                    <div class="can-toggle">
+                                         <input
+                                         type="checkbox" id="set_like"
+                                         {{ !empty($authUser['userLike']) ? 'checked' : '' }}
+                                         data-name="{{ $authUser['user']->name }} {{ $authUser['user']->last_name }}"
+                                         data-id="{{ $authUser['user']->id }}"
+                                         data-idea="{{ $idea->id }}">
+                                         <label for="set_like">
+                                             <div class="can-toggle__switch"></div>
+                                         </label>
+                                    </div>
+                                   <!-- <div class="i-support {{ !empty($authUser['userLike']) ? 'btn_liked' : '' }}">
+                                        {{ !empty($authUser['userLike']) ? trans('ideas.i_don\'t_like') : trans('ideas.i_like') }}
+                                    </div> -->
+                                </div>
+                                <div class="support-name">
+                                   <!-- <i class="zmdi zmdi-favorite"></i> -->
+                                    <span id="count_ideas_like">{{ $idea->likes_num }}</span> {{ trans('ideas.like') }}
+                                </div>
                             </div>
+
                             <div class="support-text liked_users_{{ $idea->id }}">
                                 @foreach($authUser['listUsersLike'] as $i => $userName)
                                     {{ $userName->name }} {{ $userName->last_name }}@if($i + 1 != $idea->likes_num),@endif
                                 @endforeach
                             </div>
                         </div>
-                        <div class="mg-top-10">
-                            <div class="mg-top-0 buttons in-grid btn_like_{{ $idea->id }} add_like left"
-                                 data-name="{{ $authUser['user']->name }} {{ $authUser['user']->last_name }}"
-                                 data-id="{{ $authUser['user']->id }}"
-                                 data-idea="{{ $idea->id }}"
-                                 id="{{ !empty($authUser['userLike']) ? 'remove_like_user' : 'add_like_user' }}">
-                                <div class="i-support {{ !empty($authUser['userLike']) ? 'btn_liked' : '' }}">
-                                    {{ !empty($authUser['userLike']) ? trans('ideas.i_don\'t_like') : trans('ideas.i_like') }}
-                                </div>
-                            </div>
-                            @role('superadmin')
-                            @if(!$idea->isDeclined() and !$idea->isNew())
-                                <div class="buttons justify">
-                                    <div class="lnr lnr-pencil"
-                                         onclick="window.location.href='{{ route('edit-idea', ['id' => $idea->id]) }}'"></div>
-                                </div>
-                            @endif
-                            @endrole
+                        <div class="mg-top-24">
                             @include('review-idea.partials.approve')
-                            @include('review-idea.partials.pin-priority')
                             @include('edit-idea.partials.change-status')
+                            @include('review-idea.partials.pin-priority')
                             @include('review-idea.partials.declined')
                         </div>
                     @endif

@@ -1,5 +1,4 @@
 @if ($idea->isApproved() && Entrust::hasRole(['superadmin', 'admin']))
-    <br />
     <div class="row">
         <div class="col-lg-12">
             @if ($idea->is_priority === 1)
@@ -8,10 +7,11 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
+                                <label for="select-status-id">{{ trans('ideas.explanatory_note') }}</label>
                                 {{ Form::textarea(
                             'reason_priority',
                             $priorityReason !== null ? $priorityReason->text : '', [
-                                    'class'=>'form-control',
+                                    'class'=>'form-control custom-form-item',
                                     'placeholder' =>
                                     trans('ideas.explanatory_note'),
                                     'rows' => 5,
@@ -31,11 +31,12 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
+                                <label for="select-status-id">{{ trans('ideas.explanatory_note') }}</label>
                                 {{ Form::textarea(
                                         'reason_priority',
                                         $priorityReason !== null ? $priorityReason->text : '',
                                         [
-                                            'class'=>'form-control',
+                                            'class'=>'form-control custom-form-item',
                                             'placeholder' => trans('ideas.explanatory_note'),
                                             'style' => 'height:66px;'
                                         ]
@@ -43,10 +44,18 @@
                                 }}
                             </div>
                         </div>
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-success pull-left">{{ trans('ideas.pin_as_priority') }}</button>
-                            </div>
+                        <div class="button-in-line">
+                            @role('superadmin')
+                            @if(!$idea->isDeclined() and !$idea->isNew())
+                                    <div class="lnr lnr-pencil"
+                                         onclick="window.location.href='{{ route('edit-idea', ['id' => $idea->id]) }}'"></div>
+                            @endif
+                            @endrole
+
+                            <button type="submit" class="btn btn-outline-star pull-left">
+                                <i class="zmdi zmdi-star-outline"></i>
+                                <span>{{ trans('ideas.pin_as_priority') }}</span>
+                            </button>
                         </div>
                     </div>
                 </form>

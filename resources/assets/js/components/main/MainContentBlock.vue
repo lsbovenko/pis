@@ -108,7 +108,7 @@
                             <p v-html="item.description"></p>
                             <a :href="`/review-idea/${item.id}`">{{ideas.read_more}}</a>
                             <br><br>
-                            <div v-if="item.completed_at"><strong>{{ideas.idea_implementation_date}}:</strong> {{ getCompletedAt(item.completed_at) }}</div>
+                            <div class="mg-bottom-5" v-if="item.completed_at"><strong>{{ideas.idea_implementation_date}}:</strong> {{ getCompletedAt(item.completed_at) }}</div>
                             <div v-if="item.completed_at"><strong>{{ideas.implemented_in_days}}:</strong>
                                 {{ getCompletedDays(item.completed_at, item.created_at) }}</div>
                             <div class="row">
@@ -160,7 +160,7 @@
                 <div v-if="viewBlock">
                 <div class="col-md-3 col-sm-3 col-xs-6">
                     <div class="dropdown customer-select">
-                        <select class="form-control no-border-shadow" v-model="query.limit" :disabled="loading" @change="updateLimit">
+                        <select class="page-count-select form-control no-border-shadow" v-model="query.limit" :disabled="loading" @change="updateLimit">
                             <option>15</option>
                             <option>25</option>
                             <option>50</option>

@@ -1,3 +1,6 @@
+var like;
+var dislike;
+
 (function ($) {
     "use strict";
     $(document).ready(function () {
@@ -94,16 +97,32 @@
 
         modal();
 
-        /*$('.sameblock').matchHeight({
-            byRow: true,
-            property: 'height',
-            target: null,
-            remove: false
-        });*/
-        $('.mobile-btn').on('click', function () {
+        $('.mobile-btn').on('click', function (e) {
             $('.left-sidebar').toggleClass('open');
-        })
+            e.stopPropagation();
+        });
 
+        if (window.innerWidth < 992) {
+            $(document).on('click', function(event) {
+                let $target = $(event.target);
+                let $sidebar = $('.left-sidebar');
+                if(!$target.closest('.left-sidebar').length &&
+                  $sidebar.is(":visible")) {
+                    $sidebar.removeClass('open');
+                }
+            });
+        }
+
+        let placeholder;
+        if ($.trim($('#lang').text()) == 'English') {
+            placeholder = 'Description';
+            like = 'Like';
+            dislike = 'I don\'t like';
+        } else {
+            placeholder = 'Описание';
+            like = 'Я поддерживаю';
+            dislike = 'Я не поддерживаю';
+        }
         //  Summernote
         $('#summernote').summernote({
             height: 144,
@@ -118,15 +137,15 @@
     });
 })(jQuery);
 
-var token = jQuery('meta[name="csrf-token"]').attr('content');
-var count_like = jQuery('#count_ideas_like');
+let token = jQuery('meta[name="csrf-token"]').attr('content');
+let count_like = jQuery('#count_ideas_like');
 
-jQuery(document).on('click','#add_like_user', function () {
-    var name = jQuery(this).data('name'),
-        id = jQuery(this).data('id'),
-        id_idea = jQuery(this).data('idea');
+jQuery(document).on('change','#set_like', function (e) {
+    let name = jQuery(this).data('name');
+    let id = jQuery(this).data('id');
+    let id_idea = jQuery(this).data('idea');
 
-    if (name && id) {
+    if (jQuery('#set_like:checked').length > 0) {
         count_like.html(parseInt(count_like.html()) + 1);
         jQuery.ajax({
             url: '/add-like',
@@ -136,25 +155,10 @@ jQuery(document).on('click','#add_like_user', function () {
             },
             data: {id: id_idea, user_id: id},
             success: function () {
-                jQuery('.btn_like_' + id_idea)
-                    .attr('id', 'remove_like_user')
-                    .find('.i-support')
-                    .addClass('btn_liked')
-                    .html('I don\'t like');
-                jQuery('.liked_users_' + id_idea).html(name + ' ' + jQuery('.liked_users_' + id_idea).html());
+                jQuery('.liked_users_' + id_idea).html(name + ', ' + jQuery('.liked_users_' + id_idea).html());
             }
         });
-    }else{
-        console.log('error add like');
-    }
-});
-
-jQuery(document).on('click', '#remove_like_user', function () {
-    var name = jQuery(this).data('name'),
-        id = jQuery(this).data('id'),
-        id_idea = jQuery(this).data('idea');
-
-    if (name && id) {
+    } else {
         count_like.html(parseInt(count_like.html()) - 1);
         jQuery.ajax({
             url: '/remove-like',
@@ -164,16 +168,14 @@ jQuery(document).on('click', '#remove_like_user', function () {
             },
             data: {id: id_idea, user_id: id},
             success: function () {
-                jQuery('.btn_like_' + id_idea)
-                    .attr('id', 'add_like_user')
-                    .find('.i-support')
-                    .removeClass('btn_liked')
-                    .html('Like');
-                var str = jQuery('.liked_users_' + id_idea).html();
-                jQuery('.liked_users_' + id_idea).html(str.replace(name + '', ''));
+                let str = jQuery('.liked_users_' + id_idea).html();
+
+                if (str.indexOf(name + ',') != -1) {
+                    jQuery('.liked_users_' + id_idea).html(str.replace(name + ',', ''));
+                } else {
+                    jQuery('.liked_users_' + id_idea).html(str.replace(name, ''));
+                }
             }
         });
-    }else{
-        console.log('error add like');
     }
 });
