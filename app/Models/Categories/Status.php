@@ -14,6 +14,7 @@ class Status extends Model
     const SLUG_ACTIVE = 'active';
     const SLUG_FROZEN = 'frozen';
     const SLUG_COMPLETED = 'completed';
+    const SLUG_REJECTED = 'rejected';
 
     /**
      * @var $this
@@ -29,6 +30,11 @@ class Status extends Model
      * @var $this
      */
     protected static $activeStatus;
+
+    /**
+     * @var $this
+     */
+    protected static $rejectedStatus;
 
 
     /**
@@ -88,6 +94,18 @@ class Status extends Model
         }
 
         return self::$completedStatus;
+    }
+
+    /**
+     * @return Status
+     */
+    public static function getRejectedStatus()
+    {
+        if (!self::$rejectedStatus) {
+            self::$rejectedStatus = App::make('repository.status')->getBySlug(Status::SLUG_REJECTED);
+        }
+
+        return self::$rejectedStatus;
     }
 
     /**
