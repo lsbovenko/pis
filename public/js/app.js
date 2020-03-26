@@ -18117,11 +18117,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "MainFilterBlock",
@@ -18524,93 +18519,83 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "left-sidebar sameblock" }, [
-    _c("form", { attrs: { action: "" } }, [
-      _c("input", {
-        ref: "activeStatusId",
-        attrs: { type: "hidden" },
-        domProps: { value: _vm.activeStatusId }
-      }),
-      _vm._v(" "),
-      _c("input", {
-        ref: "searchIdeaVuejs",
-        attrs: { type: "hidden", id: "search-idea-vuejs" },
-        on: {
-          click: function($event) {
-            return _vm.changeSearchIdea()
-          }
+  return _c("form", { attrs: { action: "" } }, [
+    _c("input", {
+      ref: "activeStatusId",
+      attrs: { type: "hidden" },
+      domProps: { value: _vm.activeStatusId }
+    }),
+    _vm._v(" "),
+    _c("input", {
+      ref: "searchIdeaVuejs",
+      attrs: { type: "hidden", id: "search-idea-vuejs" },
+      on: {
+        click: function($event) {
+          return _vm.changeSearchIdea()
         }
-      }),
-      _vm._v(" "),
-      _c("input", {
-        ref: "datepickerDates",
-        attrs: { type: "hidden", id: "datepicker-dates" },
-        on: {
-          click: function($event) {
-            return _vm.changeDatepickerDates()
-          }
+      }
+    }),
+    _vm._v(" "),
+    _c("input", {
+      ref: "datepickerDates",
+      attrs: { type: "hidden", id: "datepicker-dates" },
+      on: {
+        click: function($event) {
+          return _vm.changeDatepickerDates()
         }
-      }),
+      }
+    }),
+    _vm._v(" "),
+    _c("section", { staticClass: "item mg-right-12" }, [
+      _c("div", { attrs: { id: "datepicker" } }),
       _vm._v(" "),
-      _c("section", { staticClass: "item mg-right-15" }, [
-        _c("ul", { staticClass: "last-changes-list without-list-style" }, [
-          _c("li", { staticClass: "first" }, [
-            _vm._v(
-              "\n                    " +
-                _vm._s(_vm.ideas.date_range) +
-                "\n                    "
-            ),
-            _c(
-              "span",
-              {
-                staticClass: "drop",
-                attrs: { id: "reset-filters" },
-                on: { click: _vm.removeChecked }
-              },
-              [_vm._v(_vm._s(_vm.ideas.clear))]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", {
-          staticStyle: { "margin-bottom": "20px" },
-          attrs: { id: "datepicker" }
-        }),
-        _vm._v(" "),
-        _c("section", { staticClass: "item inbtn" }, [
-          _c("label", { staticClass: "filter_checkbox" }, [
-            _c("input", {
-              attrs: { type: "checkbox", name: "is_anonymous" },
-              domProps: { value: 1 },
-              on: { change: _vm.changeHandler }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "inbtn__indicator" }),
-            _vm._v(" "),
-            _c("span", { staticClass: "first" }, [
-              _vm._v(_vm._s(_vm.ideas.anonymous))
-            ])
-          ]),
+      _c(
+        "div",
+        {
+          staticClass: "reset-btn",
+          attrs: { id: "reset-filters" },
+          on: { click: _vm.removeChecked }
+        },
+        [
+          _c("i", [_vm._v("×")]),
           _vm._v(" "),
-          _c("label", { staticClass: "filter_checkbox" }, [
-            _c("input", {
-              attrs: { type: "checkbox", name: "is_liked" },
-              domProps: { value: 1 },
-              on: { change: _vm.changeHandler }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "inbtn__indicator" }),
-            _vm._v(" "),
-            _c("span", { staticClass: "first" }, [
-              _vm._v(_vm._s(_vm.ideas.liked))
-            ])
+          _c("span", [_vm._v(_vm._s(_vm.ideas.clear))])
+        ]
+      ),
+      _vm._v(" "),
+      _c("section", { staticClass: "item inbtn sidebar-section" }, [
+        _c("label", { staticClass: "filter_checkbox" }, [
+          _c("input", {
+            attrs: { type: "checkbox", name: "is_anonymous" },
+            domProps: { value: 1 },
+            on: { change: _vm.changeHandler }
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "inbtn__indicator" }),
+          _vm._v(" "),
+          _c("span", { staticClass: "first" }, [
+            _vm._v(_vm._s(_vm.ideas.anonymous))
           ])
         ]),
         _vm._v(" "),
-        _c("ul", { staticClass: "last-changes-list without-list-style" }, [
-          _c("li", { staticClass: "first" }, [
-            _vm._v(_vm._s(_vm.ideas.department_of_the_author))
+        _c("label", { staticClass: "filter_checkbox" }, [
+          _c("input", {
+            attrs: { type: "checkbox", name: "is_liked" },
+            domProps: { value: 1 },
+            on: { change: _vm.changeHandler }
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "inbtn__indicator" }),
+          _vm._v(" "),
+          _c("span", { staticClass: "first" }, [
+            _vm._v(_vm._s(_vm.ideas.liked))
           ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("section", { staticClass: "sidebar-section" }, [
+        _c("h4", { staticClass: "block-subtitle" }, [
+          _vm._v(_vm._s(_vm.ideas.department_of_the_author))
         ]),
         _vm._v(" "),
         _c(
@@ -18718,10 +18703,12 @@ var render = function() {
                 )
               : _vm._e()
           ]
-        ),
-        _vm._v(" "),
-        _c("ul", { staticClass: "last-changes-list without-list-style" }, [
-          _c("li", { staticClass: "first" }, [_vm._v(_vm._s(_vm.ideas.author))])
+        )
+      ]),
+      _vm._v(" "),
+      _c("section", { staticClass: "sidebar-section" }, [
+        _c("h4", { staticClass: "block-subtitle" }, [
+          _vm._v(_vm._s(_vm.ideas.author))
         ]),
         _vm._v(" "),
         _c(
@@ -18826,12 +18813,12 @@ var render = function() {
                 )
               : _vm._e()
           ]
-        ),
-        _vm._v(" "),
-        _c("ul", { staticClass: "last-changes-list without-list-style" }, [
-          _c("li", { staticClass: "first" }, [
-            _vm._v(_vm._s(_vm.ideas.executor))
-          ])
+        )
+      ]),
+      _vm._v(" "),
+      _c("section", { staticClass: "sidebar-section" }, [
+        _c("h4", { staticClass: "block-subtitle" }, [
+          _vm._v(_vm._s(_vm.ideas.executor))
         ]),
         _vm._v(" "),
         _c(
@@ -18939,12 +18926,12 @@ var render = function() {
                 )
               : _vm._e()
           ]
-        ),
-        _vm._v(" "),
-        _c("ul", { staticClass: "last-changes-list without-list-style" }, [
-          _c("li", { staticClass: "first" }, [
-            _vm._v(_vm._s(_vm.ideas.age_of_ideas))
-          ])
+        )
+      ]),
+      _vm._v(" "),
+      _c("section", { staticClass: "sidebar-section" }, [
+        _c("h4", { staticClass: "block-subtitle" }, [
+          _vm._v(_vm._s(_vm.ideas.age_of_ideas))
         ]),
         _vm._v(" "),
         _c(
@@ -19048,53 +19035,58 @@ var render = function() {
               : _vm._e()
           ]
         )
-      ]),
-      _vm._v(" "),
-      _c(
-        "section",
-        { staticClass: "item mg-top-10", attrs: { id: "departments" } },
-        [
-          _c(
-            "ul",
-            { staticClass: "without-list-style" },
-            [
-              _c("li", { staticClass: "first" }, [
-                _vm._v(_vm._s(_vm.ideas.department))
-              ]),
-              _vm._v(" "),
-              _vm._l(_vm.filters.departmentsList, function(
-                itemDepartament,
-                index
-              ) {
-                return _c("li", [
-                  _c("label", { staticClass: "inbtn" }, [
-                    _c("input", {
-                      attrs: { type: "checkbox", name: "department_id[]" },
-                      domProps: { value: "" + itemDepartament.id },
-                      on: {
-                        change: function($event) {
-                          return _vm.changeHandler($event)
-                        }
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "section",
+      {
+        staticClass: "item mg-top-10 sidebar-section",
+        attrs: { id: "departments" }
+      },
+      [
+        _c(
+          "ul",
+          { staticClass: "without-list-style" },
+          [
+            _c("li", { staticClass: "first" }, [
+              _vm._v(_vm._s(_vm.ideas.department))
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.filters.departmentsList, function(
+              itemDepartament,
+              index
+            ) {
+              return _c("li", [
+                _c("label", { staticClass: "inbtn" }, [
+                  _c("input", {
+                    attrs: { type: "checkbox", name: "department_id[]" },
+                    domProps: { value: "" + itemDepartament.id },
+                    on: {
+                      change: function($event) {
+                        return _vm.changeHandler($event)
                       }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "inbtn__indicator" }),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      { staticClass: "data", attrs: { id: "data-1" } },
-                      [_vm._v(_vm._s(itemDepartament.name))]
-                    )
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "inbtn__indicator" }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "data", attrs: { id: "data-1" } }, [
+                    _vm._v(_vm._s(itemDepartament.name))
                   ])
                 ])
-              })
-            ],
-            2
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("section", { staticClass: "item", attrs: { id: "competenc" } }, [
+              ])
+            })
+          ],
+          2
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "section",
+      { staticClass: "item sidebar-section", attrs: { id: "competenc" } },
+      [
         _c(
           "ul",
           { staticClass: "without-list-style" },
@@ -19130,9 +19122,13 @@ var render = function() {
           ],
           2
         )
-      ]),
-      _vm._v(" "),
-      _c("section", { staticClass: "item", attrs: { id: "operational" } }, [
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "section",
+      { staticClass: "item sidebar-section", attrs: { id: "operational" } },
+      [
         _c(
           "ul",
           { staticClass: "without-list-style" },
@@ -19164,9 +19160,13 @@ var render = function() {
           ],
           2
         )
-      ]),
-      _vm._v(" "),
-      _c("section", { staticClass: "item", attrs: { id: "type" } }, [
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "section",
+      { staticClass: "item sidebar-section", attrs: { id: "type" } },
+      [
         _c(
           "ul",
           { staticClass: "without-list-style" },
@@ -19195,47 +19195,50 @@ var render = function() {
           ],
           2
         )
-      ]),
-      _vm._v(" "),
-      _vm.filters.tagsList && Object.keys(_vm.filters.tagsList).length
-        ? _c(
-            "section",
-            { staticClass: "item bottom-20", attrs: { id: "tag" } },
-            [
-              _c(
-                "ul",
-                { staticClass: "without-list-style" },
-                [
-                  _c("li", { staticClass: "first" }, [
-                    _vm._v(_vm._s(_vm.ideas.tag))
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(_vm.filters.tagsList, function(itemTag, index) {
-                    return _c("li", [
-                      _c("label", { staticClass: "inbtn" }, [
-                        _c("input", {
-                          attrs: { type: "checkbox", name: "tag_id[]" },
-                          domProps: { value: "" + itemTag.id },
-                          on: { change: _vm.changeHandler }
-                        }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "inbtn__indicator" }),
-                        _vm._v(" "),
-                        _c(
-                          "span",
-                          { staticClass: "data", attrs: { id: "data-5" } },
-                          [_vm._v(_vm._s(itemTag.name))]
-                        )
-                      ])
+      ]
+    ),
+    _vm._v(" "),
+    _vm.filters.tagsList && Object.keys(_vm.filters.tagsList).length
+      ? _c(
+          "section",
+          {
+            staticClass: "item bottom-20 sidebar-section",
+            attrs: { id: "tag" }
+          },
+          [
+            _c(
+              "ul",
+              { staticClass: "without-list-style" },
+              [
+                _c("li", { staticClass: "first" }, [
+                  _vm._v(_vm._s(_vm.ideas.tag))
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.filters.tagsList, function(itemTag, index) {
+                  return _c("li", [
+                    _c("label", { staticClass: "inbtn" }, [
+                      _c("input", {
+                        attrs: { type: "checkbox", name: "tag_id[]" },
+                        domProps: { value: "" + itemTag.id },
+                        on: { change: _vm.changeHandler }
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "inbtn__indicator" }),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        { staticClass: "data", attrs: { id: "data-5" } },
+                        [_vm._v(_vm._s(itemTag.name))]
+                      )
                     ])
-                  })
-                ],
-                2
-              )
-            ]
-          )
-        : _vm._e()
-    ])
+                  ])
+                })
+              ],
+              2
+            )
+          ]
+        )
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -20125,7 +20128,7 @@ var render = function() {
                     _c("br"),
                     _vm._v(" "),
                     item.completed_at
-                      ? _c("div", [
+                      ? _c("div", { staticClass: "mg-bottom-5" }, [
                           _c("strong", [
                             _vm._v(
                               _vm._s(_vm.ideas.idea_implementation_date) + ":"
@@ -20318,7 +20321,8 @@ var render = function() {
                         expression: "query.limit"
                       }
                     ],
-                    staticClass: "form-control no-border-shadow",
+                    staticClass:
+                      "page-count-select form-control no-border-shadow",
                     attrs: { disabled: _vm.loading },
                     on: {
                       change: [
@@ -20444,14 +20448,14 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container" },
+    { staticClass: "custom-container" },
     [
       _vm.preloader ? _c("preloader-page") : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "main-wrapper" }, [
         _c(
           "div",
-          { staticClass: "col-md-3 mobile-menu" },
+          { staticClass: "mobile-menu left-sidebar" },
           [
             _c("main-filter-block", {
               attrs: {
@@ -20467,7 +20471,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "col-md-9 main-content sameblock" },
+          { staticClass: "main-content" },
           [
             _c("main-content-block", {
               attrs: { statuses: _vm.statuses, ideas: _vm.ideas }

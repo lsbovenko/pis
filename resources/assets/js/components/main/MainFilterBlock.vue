@@ -1,34 +1,30 @@
 <template>
-    <div class="left-sidebar sameblock">
-        <form action="">
+    <form action="">
         <input type="hidden" :value="activeStatusId" ref="activeStatusId">
         <input type="hidden" ref="searchIdeaVuejs" id="search-idea-vuejs" @click="changeSearchIdea()">
         <input type="hidden" ref="datepickerDates" id="datepicker-dates" @click="changeDatepickerDates()">
-            <section class="item mg-right-15">
-                <ul class="last-changes-list without-list-style">
-                    <li class="first">
-                        {{ideas.date_range}}
-                        <span class="drop" @click="removeChecked" id="reset-filters">{{ideas.clear}}</span>
-                    </li>
-                </ul>
-                <div style="margin-bottom: 20px;" id="datepicker"></div>
+        <section class="item mg-right-12">
+            <div id="datepicker"></div>
+            <div @click="removeChecked" id="reset-filters" class="reset-btn">
+                <i>×</i>
+                <span>{{ideas.clear}}</span>
+            </div>
 
-                <section class="item inbtn">
-                    <label class="filter_checkbox">
-                        <input type="checkbox" name="is_anonymous" :value="1" @change="changeHandler">
-                        <span class="inbtn__indicator"></span>
-                        <span class="first">{{ideas.anonymous}}</span>
-                    </label>
-                    <label class="filter_checkbox">
-                        <input type="checkbox" name="is_liked" :value="1" @change="changeHandler">
-                        <span class="inbtn__indicator"></span>
-                        <span class="first">{{ideas.liked}}</span>
-                    </label>
-                </section>
+            <section class="item inbtn sidebar-section">
+                <label class="filter_checkbox">
+                    <input type="checkbox" name="is_anonymous" :value="1" @change="changeHandler">
+                    <span class="inbtn__indicator"></span>
+                    <span class="first">{{ideas.anonymous}}</span>
+                </label>
+                <label class="filter_checkbox">
+                    <input type="checkbox" name="is_liked" :value="1" @change="changeHandler">
+                    <span class="inbtn__indicator"></span>
+                    <span class="first">{{ideas.liked}}</span>
+                </label>
+            </section>
 
-                <ul class="last-changes-list without-list-style">
-                    <li class="first">{{ideas.department_of_the_author}}</li>
-                </ul>
+            <section class="sidebar-section">
+                <h4 class="block-subtitle">{{ideas.department_of_the_author}}</h4>
                 <div class="btn-group-vue dropdown customer-select" id="user-department-select">
                     <div class="menu-overlay-vue" v-if="showDropdownUserDepartment" @click.stop="toggleMenuUserDepartment"></div>
                     <li @click="toggleMenuUserDepartment()" class="dropdown-toggle-vue" v-if="selectedOptionNameUserDepartment !== ''">
@@ -49,11 +45,10 @@
                         </li>
                     </ul>
                 </div>
+            </section>
 
-                <ul class="last-changes-list without-list-style">
-                    <li class="first">{{ideas.author}}</li>
-                </ul>
-
+            <section class="sidebar-section">
+                <h4 class="block-subtitle">{{ideas.author}}</h4>
                 <div class="btn-group-vue dropdown customer-select" id="customer-select">
                     <div class="menu-overlay-vue" v-if="showDropdown" @click.stop="toggleMenu"></div>
                     <li @click="toggleMenu()" class="dropdown-toggle-vue" v-if="selectedOptionName !== '' ">
@@ -76,10 +71,10 @@
                         </li>
                     </ul>
                 </div>
+            </section>
 
-                <ul class="last-changes-list without-list-style">
-                    <li class="first">{{ideas.executor}}</li>
-                </ul>
+            <section class="sidebar-section">
+                <h4 class="block-subtitle">{{ideas.executor}}</h4>
                 <div class="btn-group-vue dropdown customer-select" id="executor-select">
                     <div class="menu-overlay-vue" v-if="showDropdownExecutor" @click.stop="toggleMenuExecutor"></div>
                     <li @click="toggleMenuExecutor()" class="dropdown-toggle-vue" v-if="selectedOptionNameExecutor !== ''">
@@ -100,10 +95,10 @@
                         </li>
                     </ul>
                 </div>
+            </section>
 
-                <ul class="last-changes-list without-list-style">
-                    <li class="first">{{ideas.age_of_ideas}}</li>
-                </ul>
+            <section class="sidebar-section">
+                <h4 class="block-subtitle">{{ideas.age_of_ideas}}</h4>
                 <div class="btn-group-vue dropdown customer-select" id="idea-age-select">
                     <div class="menu-overlay-vue" v-if="showDropdownIdeaAge" @click.stop="toggleMenuIdeaAge"></div>
                     <li @click="toggleMenuIdeaAge()" class="dropdown-toggle-vue" v-if="selectedOptionNameIdeaAge !== ''">
@@ -125,88 +120,88 @@
                     </ul>
                 </div>
             </section>
-            <section id="departments" class="item mg-top-10">
-                <ul class="without-list-style">
-                    <li class="first">{{ideas.department}}</li>
-                    <li v-for="(itemDepartament, index) in filters.departmentsList">
-                        <label class="inbtn">
-                            <input type="checkbox"
-                                   name="department_id[]"
-                                   :value="`${itemDepartament.id}`"
-                                   @change="changeHandler($event)"
-                            >
-                            <span class="inbtn__indicator"></span>
-                            <span class="data" id="data-1">{{itemDepartament.name}}</span>
-                        </label>
-                    </li>
-                </ul>
-            </section>
-            <section id="competenc" class="item">
-                <ul class="without-list-style">
-                    <li class="first">{{ideas.core_competency}}</li>
-                    <li v-for="(itemCompetenc, index) in filters.coreCompetenciesList">
-                        <label class="inbtn">
-                            <input type="checkbox"
-                                   name="core_competency_id[]"
-                                   :value="`${itemCompetenc.id}`"
-                                   @change="changeHandler($event)"
-                            >
-                            <span class="inbtn__indicator"></span>
-                            <span class="data" id="data-2">{{itemCompetenc.name}}</span>
-                        </label>
-                    </li>
-                </ul>
-            </section>
-            <section id="operational" class="item">
-                <ul class="without-list-style">
-                    <li class="first">{{ideas.operational_goal}}</li>
-                    <li v-for="(itemOperational, index) in filters.operationalGoalsList">
-                        <label class="inbtn">
-                            <input type="checkbox"
-                                   name="operational_goal_id[]"
-                                   :value="`${itemOperational.id}`"
-                                   @change="changeHandler"
-                            >
-                            <span class="inbtn__indicator"></span>
-                            <span class="data" id="data-3">{{itemOperational.name}}</span>
-                        </label>
-                    </li>
-                </ul>
-            </section>
-            <section id="type" class="item">
-                <ul class="without-list-style">
-                    <li class="first">{{ideas.type}}</li>
-                    <li v-for="(itemType, index) in filters.typesList">
-                        <label class="inbtn">
-                            <input type="checkbox"
-                                   name="type_id[]"
-                                   :value="`${itemType.id}`"
-                                   @change="changeHandler"
-                            >
-                            <span class="inbtn__indicator"></span>
-                            <span class="data" id="data-4">{{itemType.name}}</span>
-                        </label>
-                    </li>
-                </ul>
-            </section>
-            <section v-if="filters.tagsList && Object.keys(filters.tagsList).length" id="tag" class="item bottom-20">
-                <ul class="without-list-style">
-                    <li class="first">{{ideas.tag}}</li>
-                    <li v-for="(itemTag, index) in filters.tagsList">
-                        <label class="inbtn">
-                            <input type="checkbox"
-                                   name="tag_id[]"
-                                   :value="`${itemTag.id}`"
-                                   @change="changeHandler"
-                            >
-                            <span class="inbtn__indicator"></span>
-                            <span class="data" id="data-5">{{itemTag.name}}</span>
-                        </label>
-                    </li>
-                </ul>
-            </section>
-        </form>
-    </div>
+        </section>
+        <section id="departments" class="item mg-top-10 sidebar-section">
+            <ul class="without-list-style">
+                <li class="first">{{ideas.department}}</li>
+                <li v-for="(itemDepartament, index) in filters.departmentsList">
+                    <label class="inbtn">
+                        <input type="checkbox"
+                               name="department_id[]"
+                               :value="`${itemDepartament.id}`"
+                               @change="changeHandler($event)"
+                        >
+                        <span class="inbtn__indicator"></span>
+                        <span class="data" id="data-1">{{itemDepartament.name}}</span>
+                    </label>
+                </li>
+            </ul>
+        </section>
+        <section id="competenc" class="item sidebar-section">
+            <ul class="without-list-style">
+                <li class="first">{{ideas.core_competency}}</li>
+                <li v-for="(itemCompetenc, index) in filters.coreCompetenciesList">
+                    <label class="inbtn">
+                        <input type="checkbox"
+                               name="core_competency_id[]"
+                               :value="`${itemCompetenc.id}`"
+                               @change="changeHandler($event)"
+                        >
+                        <span class="inbtn__indicator"></span>
+                        <span class="data" id="data-2">{{itemCompetenc.name}}</span>
+                    </label>
+                </li>
+            </ul>
+        </section>
+        <section id="operational" class="item sidebar-section">
+            <ul class="without-list-style">
+                <li class="first">{{ideas.operational_goal}}</li>
+                <li v-for="(itemOperational, index) in filters.operationalGoalsList">
+                    <label class="inbtn">
+                        <input type="checkbox"
+                               name="operational_goal_id[]"
+                               :value="`${itemOperational.id}`"
+                               @change="changeHandler"
+                        >
+                        <span class="inbtn__indicator"></span>
+                        <span class="data" id="data-3">{{itemOperational.name}}</span>
+                    </label>
+                </li>
+            </ul>
+        </section>
+        <section id="type" class="item sidebar-section">
+            <ul class="without-list-style">
+                <li class="first">{{ideas.type}}</li>
+                <li v-for="(itemType, index) in filters.typesList">
+                    <label class="inbtn">
+                        <input type="checkbox"
+                               name="type_id[]"
+                               :value="`${itemType.id}`"
+                               @change="changeHandler"
+                        >
+                        <span class="inbtn__indicator"></span>
+                        <span class="data" id="data-4">{{itemType.name}}</span>
+                    </label>
+                </li>
+            </ul>
+        </section>
+        <section v-if="filters.tagsList && Object.keys(filters.tagsList).length" id="tag" class="item bottom-20 sidebar-section">
+            <ul class="without-list-style">
+                <li class="first">{{ideas.tag}}</li>
+                <li v-for="(itemTag, index) in filters.tagsList">
+                    <label class="inbtn">
+                        <input type="checkbox"
+                               name="tag_id[]"
+                               :value="`${itemTag.id}`"
+                               @change="changeHandler"
+                        >
+                        <span class="inbtn__indicator"></span>
+                        <span class="data" id="data-5">{{itemTag.name}}</span>
+                    </label>
+                </li>
+            </ul>
+        </section>
+    </form>
 </template>
 
 <script>

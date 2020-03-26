@@ -10,7 +10,10 @@
     <title>{{ config('app.name', 'Velmie') }}</title>
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/header.css') }}?v={{ config('app.version') }}" rel="stylesheet">
+    <link href="{{ asset('css/toggle-custom.css') }}?v={{ config('app.version') }}" rel="stylesheet">
     <link href="{{ asset('css/v1/main.css') }}?v={{ config('app.version') }}" rel="stylesheet">
+    <link href="{{ asset('css/datepicker-custom.css') }}?v={{ config('app.version') }}" rel="stylesheet">
     <link href="{{ asset('vendor/jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/air-datepicker/css/datepicker.min.css') }}" rel="stylesheet">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
@@ -34,49 +37,50 @@
     <div class="mobile-btn hidden-lg hidden-md"><i class="zmdi zmdi-view-toc"></i></div>
     <!-- Header -->
     <div class="header">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-4 col-xs-2">
-                    <a class="logo" href="/"><span>PIS</span>VELMIE </a>
-                </div>
-                <div class="col-md-4 col-sm-3 hidden-xs">
-                    @if (!empty($isShowSearchIdeaBlock))
-                        <form action="" class="search" id="form-search-idea">
-                            <div class="form-group" style="margin-top: 15px;">
-                                <i class="zmdi zmdi-search"></i>
-                                {{ Form::text('search_idea', '', ['class'=>'form-control', 'placeholder'=>trans('ideas.search'), 'id'=>'search-idea']) }}
-                            </div>
-                            <input type="submit" style="display: none;"/>
-                        </form>
+        <div class="custom-container">
+            <div class="logo-content">
+                <div class="v-logo"></div>
+                <div class="page-name-arrow"></div>
+                <a class="logo" href="/"><span>PIS</span> </a>
+            </div>
+            <div class="hidden-xs search-container">
+                @if (!empty($isShowSearchIdeaBlock))
+                    <form action="" class="search" id="form-search-idea">
+                        <div class="form-group" style="margin-top: 15px;">
+                            <i class="zmdi zmdi-search"></i>
+                            {{ Form::text('search_idea', '', ['class'=>'form-control', 'placeholder'=>trans('ideas.search'), 'id'=>'search-idea']) }}
+                        </div>
+                        <input type="submit" style="display: none;"/>
+                    </form>
+                @endif
+            </div>
+
+            <div class="text-right button-block">
+                <button class="add"><a href="{{ route('add-idea') }}">+</a></button>
+            </div>
+
+            <div class="flex">
+                <div class="dropdown user-settings">
+                    @if (Auth::guest())
+                        <a href="{{ config('app.auth_url') }}">Login</a>
+                    @else
+                        <a data-toggle="dropdown" href="#">
+                            <em class="avatar user_avatar_name" style="background-color: {{ Auth::user()->icon_color }}">
+                                {{mb_substr(Auth::user()->name, 0 ,1)}}{{mb_substr(Auth::user()->last_name, 0 ,1)}}
+                            </em>
+                            {{ Auth::user()->name }}
+                            <span class="caret"></span>
+                        </a>
+                        {!! Menu::main() !!}
                     @endif
                 </div>
-
-                <div class="col-md-2 col-sm-2 col-xs-2 text-right button-block">
-                    <button class="add"><a href="{{ route('add-idea') }}">+</a></button>
-                </div>
-                <div class="col-md-3 col-sm-3 col-xs-8 text-center">
-                    <div class="dropdown pull-right">
-                        @if (Auth::guest())
-                            <a href="{{ config('app.auth_url') }}">Login</a>
-                        @else
-                            <a data-toggle="dropdown" href="#">
-                                <em class="avatar user_avatar_name" style="background-color: {{ Auth::user()->icon_color }}">
-                                    {{mb_substr(Auth::user()->name, 0 ,1)}}{{mb_substr(Auth::user()->last_name, 0 ,1)}}
-                                </em>
-                                {{ Auth::user()->name }}
-                                <span class="caret"></span>
-                            </a>
-                            {!! Menu::main() !!}
-                        @endif
-                    </div>
-                </div>
-                <!-- End User Panel -->
             </div>
+            <!-- End User Panel -->
         </div>
     </div>
     <!-- End Header -->
     <!-- Container -->
-    <div id="app" v-cloak>
+    <div class="app-container" id="app" v-cloak>
         <app></app>
         @yield('content')
     </div>

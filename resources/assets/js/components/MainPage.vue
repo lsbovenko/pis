@@ -1,11 +1,11 @@
 <template>
-    <div class="container">
+    <div class="custom-container">
         <preloader-page v-if="preloader"></preloader-page>
-        <div class="row">
-            <div class="col-md-3 mobile-menu">
+        <div class="main-wrapper">
+            <div class="mobile-menu left-sidebar">
                 <main-filter-block :filters="filters" :users="users" :activeStatusId="activeStatusId" :ideas="ideas"></main-filter-block>
             </div>
-            <div class="col-md-9 main-content sameblock">
+            <div class="main-content">
                 <main-content-block :statuses="statuses" :ideas="ideas"></main-content-block>
             </div>
         </div>
