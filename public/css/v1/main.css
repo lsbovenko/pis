@@ -9576,6 +9576,25 @@ body .container .btn_.btn-outline-red:hover {
     color: #7CDF8B;
 }
 
+.list-idea .item .title .rejected, .idea .rejected {
+    -webkit-border-radius: 12.5px;
+    border-radius: 12.5px;
+    border: solid 1px #000000;
+    background: #000000;
+    padding: 6px 12px;
+    text-align: center;
+    color: #fff;
+    font-size: 11px;
+    -webkit-transition: 0.2s ease;
+    -o-transition: 0.2s ease;
+    transition: 0.2s ease;
+}
+
+.list-idea .item .title .rejected:hover, .idea .rejected:hover {
+    background: #fff;
+    color: #000000;
+}
+
 .list-idea .item .title .frozen, .idea .frozen {
     -webkit-border-radius: 12.5px;
     border-radius: 12.5px;
