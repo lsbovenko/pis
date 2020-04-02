@@ -8,13 +8,14 @@ use Carbon\Carbon;
 
 /**
  * Class EmailQueueCreator
+ *
  * @package App\Service
  */
 class EmailQueueCreator
 {
     /**
      * @param string|array $email
-     * @param Mailable $message
+     * @param Mailable     $message
      */
     public function add($email, Mailable $message)
     {
@@ -33,10 +34,12 @@ class EmailQueueCreator
                 EmailQueue::insert($emailQueueArray);
             }
         } else {
-            EmailQueue::create([
+            EmailQueue::create(
+                [
                 'email' => $email,
                 'payload' => serialize($message),
-            ]);
+                ]
+            );
         }
     }
 }

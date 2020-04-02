@@ -6,6 +6,7 @@ use App\Models\Categories\Department as ModelDepartment;
 
 /**
  * Class Department
+ *
  * @package App\Repositories
  */
 class Department extends AbstractRepository

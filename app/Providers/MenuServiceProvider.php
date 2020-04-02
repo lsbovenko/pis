@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\View;
 
 /**
  * Class MenuServiceProvider
+ *
  * @package App\Providers
  */
 class MenuServiceProvider extends ServiceProvider
@@ -20,6 +21,5 @@ class MenuServiceProvider extends ServiceProvider
 
     public function register()
     {
-
     }
 }

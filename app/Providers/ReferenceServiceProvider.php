@@ -6,6 +6,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 
 /**
  * Class ReferenceServiceProvider
+ *
  * @package App\Providers
  */
 class ReferenceServiceProvider extends ServiceProvider
@@ -34,8 +35,11 @@ class ReferenceServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('reference', function ($app) {
-            return new \App\Service\Reference();
-        });
+        $this->app->singleton(
+            'reference',
+            function ($app) {
+                return new \App\Service\Reference();
+            }
+        );
     }
 }

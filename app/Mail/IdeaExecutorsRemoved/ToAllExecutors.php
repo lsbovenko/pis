@@ -6,6 +6,7 @@ use App\Mail\AbstractMail;
 
 /**
  * Class ToAllExecutors
+ *
  * @package App\Mail\IdeaExecutorsRemoved
  */
 class ToAllExecutors extends AbstractMail
@@ -22,4 +23,3 @@ class ToAllExecutors extends AbstractMail
             ->view('emails.idea-executors-removed.to-all-executors', ['idea' => $this->idea]);
     }
 }
-

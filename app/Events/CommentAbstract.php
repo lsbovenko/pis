@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: valeriy
@@ -15,7 +16,9 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 
 abstract class CommentAbstract
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     /**
      * @var Comment
@@ -35,7 +38,7 @@ abstract class CommentAbstract
     /**
      * @return Comment
      */
-    public function getComment() : Comment
+    public function getComment(): Comment
     {
         return $this->comment;
     }

@@ -17,3 +17,12 @@ pipelines:
             - eval "$(ssh-agent -s)"
             - ssh-add ~/.ssh/id_pipelines
             - deployer deploy prod
+
+  pull-requests:
+    develop:
+      - step:
+          name: Check codestyle
+          image: "herloct/phpcs"
+          script:
+            - "php -v"
+            - "phpcs --standard=PSR12 app/"

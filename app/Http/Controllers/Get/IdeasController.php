@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: valeriy
@@ -8,23 +9,19 @@
 
 namespace App\Http\Controllers\Get;
 
-
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User;
 use App\Models\Idea as ModelIdea;
 use Illuminate\Http\Request;
 use App\Models\Idea;
-use Illuminate\Support\Facades\{
-    App,
-    Input,
-    Auth,
-    DB
-};
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Categories\Status;
 
 class IdeasController extends Controller
 {
-
     const QUANTITY_ITEMS_ON_PAGE = 15;
 
     const DEFAULT_LIMIT = 50;
@@ -38,10 +35,12 @@ class IdeasController extends Controller
 
         $ideas = $this->getIdeas($request, $filterParams);
 
-        return response()->json(array_merge([
+        return response()->json(
+            array_merge(
+                [
                 'ideas' => $ideas->appends(Input::except('page')),
                 'showApproveStatus' => false,
-            ],
+                ],
                 $this->getValuesTopUsers()
             )
         );
@@ -58,7 +57,9 @@ class IdeasController extends Controller
         /** @var \App\Service\Reference $reference */
         $reference = App::make('reference');
 
-        return response()->json($reference->getApprovedSearchIdeasForSelect($searchSimilarIdea, $similarIdeaIds, $ideaId));
+        return response()->json(
+            $reference->getApprovedSearchIdeasForSelect($searchSimilarIdea, $similarIdeaIds, $ideaId)
+        );
     }
 
     /**
@@ -74,11 +75,13 @@ class IdeasController extends Controller
 
         $ideas = $this->getIdeas($request, $filterParams);
 
-        return response()->json(array_merge([
+        return response()->json(
+            array_merge(
+                [
                 'ideas' => $ideas->appends(Input::except('page')),
                 'title' => 'Приоритетный список',
                 'showApproveStatus' => false,
-            ],
+                ],
                 $this->getValuesTopUsers()
             )
         );
@@ -96,11 +99,13 @@ class IdeasController extends Controller
 
         $ideas = $this->getIdeas($request, $filterParams);
 
-        return response()->json(array_merge([
+        return response()->json(
+            array_merge(
+                [
                 'ideas' => $ideas->appends(Input::except('page')),
                 'title' => 'Мои идеи',
                 'showApproveStatus' => true
-            ],
+                ],
                 $this->getValuesTopUsers()
             )
         );
@@ -118,11 +123,13 @@ class IdeasController extends Controller
 
         $ideas = $this->getIdeas($request, $filterParams);
 
-        return response()->json(array_merge([
+        return response()->json(
+            array_merge(
+                [
                 'ideas' => $ideas->appends(Input::except('page')),
                 'title' => 'Ожидают утверждения',
                 'showApproveStatus' => false,
-            ],
+                ],
                 $this->getValuesTopUsers()
             )
         );
@@ -140,11 +147,13 @@ class IdeasController extends Controller
 
         $ideas = $this->getIdeas($request, $filterParams);
 
-        return response()->json(array_merge([
+        return response()->json(
+            array_merge(
+                [
                 'ideas' => $ideas->appends(Input::except('page')),
                 'title' => 'Отклоненные идеи',
                 'showApproveStatus' => false,
-            ],
+                ],
                 $this->getValuesTopUsers()
             )
         );
@@ -155,17 +164,19 @@ class IdeasController extends Controller
      */
     public function getFilter()
     {
-        return response()->json([
+        return response()->json(
+            [
             'filter' => $this->getValuesForFilter(),
             'status' => $this->availableStatuses(),
             'users' => $this->getActiveUsers(),
             'ideas' => trans('ideas')
-        ]);
+            ]
+        );
     }
 
     /**
-     * @param Request $request
-     * @param array|null $filterParams
+     * @param Request                                    $request
+     * @param array|null                                 $filterParams
      * @param \Illuminate\Database\Eloquent\Builder|null
      * @return Idea|\Illuminate\Database\Eloquent\Builder
      */
@@ -183,16 +194,22 @@ class IdeasController extends Controller
 
         if (isset($input['user_department_id'])) {
             $userDepartmentId = $input['user_department_id'];
-            $query->whereHas('user', function ($q) use ($userDepartmentId) {
-                $q->where('department_id', $userDepartmentId);
-            });
+            $query->whereHas(
+                'user',
+                function ($q) use ($userDepartmentId) {
+                    $q->where('department_id', $userDepartmentId);
+                }
+            );
         }
 
         if (isset($input['department_id'])) {
             $departmentId = $input['department_id'];
-            $query->whereHas('departments', function ($q) use ($departmentId) {
-                $q->whereIn('id', $departmentId);
-            });
+            $query->whereHas(
+                'departments',
+                function ($q) use ($departmentId) {
+                    $q->whereIn('id', $departmentId);
+                }
+            );
         }
 
         if (isset($input['executor_id'])) {
@@ -203,40 +220,52 @@ class IdeasController extends Controller
 
         if (isset($input['core_competency_id'])) {
             $coreCompetencyId = $input['core_competency_id'];
-            $query->whereHas('coreCompetencies', function($q) use ($coreCompetencyId) {
-                $q->whereIn('id', $coreCompetencyId);
-            });
+            $query->whereHas(
+                'coreCompetencies',
+                function ($q) use ($coreCompetencyId) {
+                    $q->whereIn('id', $coreCompetencyId);
+                }
+            );
         }
 
         if (isset($input['operational_goal_id'])) {
             $operationalGoalId = $input['operational_goal_id'];
-            $query->whereHas('operationalGoals', function ($q) use ($operationalGoalId) {
-                $q->whereIn('id', $operationalGoalId);
-            });
+            $query->whereHas(
+                'operationalGoals',
+                function ($q) use ($operationalGoalId) {
+                    $q->whereIn('id', $operationalGoalId);
+                }
+            );
         }
 
         if (isset($input['strategic_objective_id'])) {
             $strategicObjectiveId = $input['strategic_objective_id'];
-            $query->whereHas('strategicObjectives', function($q) use ($strategicObjectiveId) {
-                $q->whereIn('id', $strategicObjectiveId);
-            });
+            $query->whereHas(
+                'strategicObjectives',
+                function ($q) use ($strategicObjectiveId) {
+                    $q->whereIn('id', $strategicObjectiveId);
+                }
+            );
         }
 
         if (!empty($input['tag_id'])) {
             $tagId = $input['tag_id'];
-            $query->whereHas('tags', function ($q) use ($tagId) {
-                $q->whereIn('id', $tagId);
-            });
+            $query->whereHas(
+                'tags',
+                function ($q) use ($tagId) {
+                    $q->whereIn('id', $tagId);
+                }
+            );
         }
 
         if (isset($input['statusId'])) {
             $statusId = $input['statusId'];
-            $query->where('status_id', '=',  $statusId);
+            $query->where('status_id', '=', $statusId);
         }
 
         if (isset($input['type_id'])) {
             $typeId = $input['type_id'];
-            $query->whereIn('type_id',  $typeId);
+            $query->whereIn('type_id', $typeId);
         }
 
         if (isset($input['user_id'])) {
@@ -277,7 +306,7 @@ class IdeasController extends Controller
 
                 return $query;
             } else {
-                $searchQueryDescription = $query->where('description','LIKE', "%$searchIdea%");
+                $searchQueryDescription = $query->where('description', 'LIKE', "%$searchIdea%");
 
                 $query = $this->getSearchQuery($searchQueryTitle, $searchQueryDescription);
             }
@@ -312,7 +341,7 @@ class IdeasController extends Controller
         return [
             'topUsers' => $this->getTopUsers(),
             'topUsersByCompletedIdeas' => $this->getTopUsersByCompletedIdeas(),
-            'topUsersLast3Month' =>$this->getTopUsersLast3Month(),
+            'topUsersLast3Month' => $this->getTopUsersLast3Month(),
             'topUsersByCompletedIdeasLast3Month' => $this->getTopUsersByCompletedIdeasLast3Month(),
         ];
     }
@@ -327,7 +356,7 @@ class IdeasController extends Controller
     /**
      * @return array
      */
-    protected function getValuesForFilter() : array
+    protected function getValuesForFilter(): array
     {
         /** @var \App\Service\Reference $reference */
         $reference = App::make('reference');
@@ -345,7 +374,7 @@ class IdeasController extends Controller
     /**
      * @return array
      */
-    protected function availableStatuses() : array
+    protected function availableStatuses(): array
     {
         /** @var \App\Service\Reference $reference */
         $reference = App::make('reference');
@@ -399,8 +428,8 @@ class IdeasController extends Controller
     /**
      * Get ideas with pagination
      *
-     * @param \Illuminate\Http\Request $request
-     * @param array|null $filterParams
+     * @param  \Illuminate\Http\Request $request
+     * @param  array|null               $filterParams
      * @return Idea
      */
     protected function getIdeas($request, $filterParams = null)
@@ -422,7 +451,7 @@ class IdeasController extends Controller
     /**
      * Get structure of search response is the same as the structure of the other filter responses
      *
-     * @param \Illuminate\Pagination\LengthAwarePaginator
+     * @param  \Illuminate\Pagination\LengthAwarePaginator
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     protected function getSearchResponse($ideas)
@@ -461,8 +490,8 @@ class IdeasController extends Controller
     /**
      * Get search query by priority (title, description)
      *
-     * @param \Illuminate\Database\Eloquent\Builder
-     * @param \Illuminate\Database\Eloquent\Builder
+     * @param  \Illuminate\Database\Eloquent\Builder
+     * @param  \Illuminate\Database\Eloquent\Builder
      * @return \Illuminate\Database\Eloquent\Builder
      */
     protected function getSearchQuery($searchQueryTitle, $searchQueryDescription)
@@ -478,7 +507,8 @@ class IdeasController extends Controller
 
         $query = DB::table(DB::raw("({$query->toSql()}) as c"))
             ->mergeBindings($query)
-            ->selectRaw('
+            ->selectRaw(
+                '
                         c.id,
                         any_value(c.created_at) as created_at, any_value(c.updated_at) as updated_at,
                         any_value(c.title) as title, any_value(c.description) as description,
@@ -494,7 +524,8 @@ class IdeasController extends Controller
                         any_value(u.is_active) as user_is_active, any_value(u.last_name) as user_last_name,
                         any_value(p.name) as position_name, any_value(p.is_active) as position_is_active,
                         any_value(s.name) as status_name, any_value(s.slug) as status_slug,
-                        any_value(s.is_active) as status_is_active')
+                        any_value(s.is_active) as status_is_active'
+            )
             ->join('users as u', 'c.user_id', '=', 'u.id')
             ->join('positions as p', 'u.position_id', '=', 'p.id')
             ->join('statuses as s', 'c.status_id', '=', 's.id')

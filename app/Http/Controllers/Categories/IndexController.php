@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 /**
  * Class IndexController
+ *
  * @package App\Http\Controllers
  */
 class IndexController extends Controller
@@ -17,12 +18,10 @@ class IndexController extends Controller
      */
     public function __construct()
     {
-
     }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
      */
     public function index()
     {

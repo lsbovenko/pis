@@ -7,18 +7,22 @@ use App\Models\Idea as ModelIdea;
 
 /**
  * Class Idea
+ *
  * @package App\Repositories
  */
 class Idea
 {
     /**
-     * @param string $searchSimilarIdea
-     * @param array $similarIdeaIds
+     * @param string       $searchSimilarIdea
+     * @param array        $similarIdeaIds
      * @param integer|null $ideaId
      * @return Collection
      */
-    public function getApprovedSearchIdeas(string $searchSimilarIdea, array $similarIdeaIds, int $ideaId=null) : Collection
-    {
+    public function getApprovedSearchIdeas(
+        string $searchSimilarIdea,
+        array $similarIdeaIds,
+        int $ideaId = null
+    ): Collection {
         $query = ModelIdea::where('approve_status', ModelIdea::APPROVED);
         if ($searchSimilarIdea) {
             $query = $query->where('title', 'LIKE', "%$searchSimilarIdea%");
@@ -37,7 +41,7 @@ class Idea
      * @param integer $ideaId
      * @return Collection
      */
-    public function getSimilarIdeas(int $ideaId) : Collection
+    public function getSimilarIdeas(int $ideaId): Collection
     {
         $idea = ModelIdea::where('id', $ideaId)->first();
         $similarIdeas = $idea->similarIdeas();

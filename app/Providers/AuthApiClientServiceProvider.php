@@ -7,6 +7,7 @@ use GuzzleHttp\Client;
 
 /**
  * Class AuthApiClientServiceProvider
+ *
  * @package App\Providers
  */
 class AuthApiClientServiceProvider extends ServiceProvider
@@ -35,8 +36,11 @@ class AuthApiClientServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('auth.api.client', function ($app) {
-            return new \App\Service\AuthApiClient(new Client());
-        });
+        $this->app->singleton(
+            'auth.api.client',
+            function ($app) {
+                return new \App\Service\AuthApiClient(new Client());
+            }
+        );
     }
 }

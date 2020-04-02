@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Idea
+ *
  * @package App\Models
  */
 class Idea extends Model
@@ -169,7 +170,7 @@ class Idea extends Model
      */
     public function comments()
     {
-        return $this->hasMany(Comment::class,'idea_id');
+        return $this->hasMany(Comment::class, 'idea_id');
     }
 
     /**

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class EmailQueue
+ *
  * @package App\Models
  */
 class EmailQueue extends Model

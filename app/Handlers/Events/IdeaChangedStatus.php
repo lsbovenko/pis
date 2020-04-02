@@ -6,15 +6,14 @@ use App\Events\IdeaWasChangedStatus;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\Categories\Status;
-use App\Mail\IdeaChangedStatus\{
-    ToUser,
-    ToAll
-};
+use App\Mail\IdeaChangedStatus\ToUser;
+use App\Mail\IdeaChangedStatus\ToAll;
 
 use Illuminate\Support\Facades\App;
 
 /**
  * Class IdeaChangedStatus
+ *
  * @package App\Handlers\Events
  */
 class IdeaChangedStatus extends AbstractIdea

@@ -13,7 +13,6 @@ class UsersController extends Controller
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -21,8 +20,11 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return view('users.index', [
+        return view(
+            'users.index',
+            [
             'users' => User::where('id', '>', 0)->paginate(15),
-        ]);
+            ]
+        );
     }
 }

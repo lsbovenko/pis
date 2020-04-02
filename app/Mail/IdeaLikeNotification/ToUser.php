@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: valeriy
@@ -16,7 +17,8 @@ use App\Models\Idea;
 
 class ToUser extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * @var Idea
@@ -29,6 +31,7 @@ class ToUser extends Mailable
 
     /**
      * ToUser constructor.
+     *
      * @param Idea $idea
      * @param User $likeAuthor
      */
@@ -47,9 +50,12 @@ class ToUser extends Mailable
     {
         return $this
             ->subject('Идея понравилась в PIS')
-            ->view('emails.like.to-user', [
+            ->view(
+                'emails.like.to-user',
+                [
                 'idea' => $this->idea,
                 'likeAuthor' => $this->likeAuthor,
-            ]);
+                ]
+            );
     }
 }

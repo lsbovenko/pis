@@ -6,6 +6,7 @@ use Zizaco\Entrust\EntrustRole;
 
 /**
  * Class Role
+ *
  * @package App\Models\Auth
  */
 class Role extends EntrustRole

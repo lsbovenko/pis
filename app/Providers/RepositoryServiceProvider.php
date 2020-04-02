@@ -42,11 +42,13 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         foreach ($this->getRepositoriesList() as $name => $className) {
             $className = "\\" . $className;
-            $this->app->singleton('repository.' . $name, function ($app) use ($className) {
-                return new $className();
-            });
+            $this->app->singleton(
+                'repository.' . $name,
+                function ($app) use ($className) {
+                    return new $className();
+                }
+            );
         }
-
     }
 
     /**

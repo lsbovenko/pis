@@ -11,6 +11,7 @@ use App\Models\Idea;
 
 /**
  * Class CoreCompetencyController
+ *
  * @package App\Http\Controllers
  */
 class CoreCompetencyController extends Controller
@@ -22,7 +23,6 @@ class CoreCompetencyController extends Controller
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -30,11 +30,14 @@ class CoreCompetencyController extends Controller
      */
     public function index()
     {
-        return view('categories.status.index', [
+        return view(
+            'categories.status.index',
+            [
             'items' => CoreCompetency::all(),
             'title' => trans('ideas.core_competencies'),
             'route' => 'categories.core-competency'
-        ]);
+            ]
+        );
     }
 
     /**
@@ -45,12 +48,15 @@ class CoreCompetencyController extends Controller
     {
         /** @var \App\Models\Categories\CoreCompetency $item */
         $item = CoreCompetency::findOrFail($request->route('id'));
-        return view('categories.status.edit', [
+        return view(
+            'categories.status.edit',
+            [
             'item' => $item,
             'title' => trans('ideas.edit_core_competency'),
             'route' => route('categories.core-competency.edit', ['id' => $item->id]),
             'deleteRoute' => route('categories.core-competency.delete', ['id' => $item->id]),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -74,10 +80,13 @@ class CoreCompetencyController extends Controller
      */
     public function create()
     {
-        return view('categories.status.edit', [
+        return view(
+            'categories.status.edit',
+            [
             'title' => trans('ideas.create_core_competency'),
             'route' => route('categories.core-competency.create')
-        ]);
+            ]
+        );
     }
 
     /**

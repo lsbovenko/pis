@@ -7,9 +7,10 @@ use App\Models\Idea;
 
 /**
  * Class IdeaExecutorsWasRemoved
+ *
  * @package App\Events
  */
-class IdeaExecutorsWasRemoved  extends IdeaWasAbstract
+class IdeaExecutorsWasRemoved extends IdeaWasAbstract
 {
     protected $executors;
 

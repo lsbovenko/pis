@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\App;
 
 /**
  * Class RemoteUser
+ *
  * @package App\Repositories
  */
 class RemoteUser

@@ -8,8 +8,6 @@
 
 namespace App\Events;
 
-
 class CommentAdded extends CommentAbstract
 {
-
 }

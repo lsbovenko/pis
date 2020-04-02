@@ -8,6 +8,7 @@ class Type extends Model
 {
     /**
      * disable update timestamp fields
+     *
      * @var bool
      */
     public $timestamps = false;

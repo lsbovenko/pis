@@ -9,11 +9,13 @@ use App\Models\Idea;
 
 /**
  * Class AbstractMail
+ *
  * @package App\Mail\IdeaApproved
  */
 abstract class AbstractMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * @var Idea
@@ -22,6 +24,7 @@ abstract class AbstractMail extends Mailable
 
     /**
      * ToAll constructor.
+     *
      * @param Idea $idea
      */
     public function __construct(Idea $idea)

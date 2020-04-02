@@ -6,6 +6,7 @@ use App\Mail\AbstractMail;
 
 /**
  * Class ToUser
+ *
  * @package App\Mail\IdeaChangedStatus
  */
 class ToAll extends AbstractMail
@@ -19,8 +20,11 @@ class ToAll extends AbstractMail
     {
         return $this
             ->subject('Реализована очередная идея PIS.')
-            ->view('emails.idea-changed-status.to-all', [
+            ->view(
+                'emails.idea-changed-status.to-all',
+                [
                 'idea' => $this->idea,
-            ]);
+                ]
+            );
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 
 /**
  * Class JWTServiceProvider
+ *
  * @package App\Providers
  */
 class JWTServiceProvider extends ServiceProvider
@@ -34,8 +35,11 @@ class JWTServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('jwt_service', function ($app) {
-            return new \App\Service\JWTService();
-        });
+        $this->app->singleton(
+            'jwt_service',
+            function ($app) {
+                return new \App\Service\JWTService();
+            }
+        );
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 
 /**
  * Class DataCleanerServiceProvider
+ *
  * @package App\Providers
  */
 class DataCleanerServiceProvider extends ServiceProvider
@@ -34,8 +35,11 @@ class DataCleanerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('datacleaner', function ($app) {
-            return new \App\Service\InputCleaner();
-        });
+        $this->app->singleton(
+            'datacleaner',
+            function ($app) {
+                return new \App\Service\InputCleaner();
+            }
+        );
     }
 }

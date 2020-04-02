@@ -12,6 +12,7 @@ use App\Models\Auth\User;
 
 /**
  * Class DepartmentController
+ *
  * @package App\Http\Controllers
  */
 class DepartmentController extends Controller
@@ -23,7 +24,6 @@ class DepartmentController extends Controller
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -31,11 +31,14 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        return view('categories.status.index', [
+        return view(
+            'categories.status.index',
+            [
             'items' => Department::all(),
             'title' => trans('ideas.departments'),
             'route' => 'categories.department'
-        ]);
+            ]
+        );
     }
 
     /**
@@ -46,12 +49,15 @@ class DepartmentController extends Controller
     {
         /** @var \App\Models\Categories\Department $item */
         $item = Department::findOrFail($request->route('id'));
-        return view('categories.status.edit', [
+        return view(
+            'categories.status.edit',
+            [
             'item' => $item,
             'title' => trans('ideas.edit_department'),
             'route' => route('categories.department.edit', ['id' => $item->id]),
             'deleteRoute' => route('categories.department.delete', ['id' => $item->id]),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -75,10 +81,13 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        return view('categories.status.edit', [
+        return view(
+            'categories.status.edit',
+            [
             'title' => trans('ideas.create_department'),
             'route' => route('categories.department.create')
-        ]);
+            ]
+        );
     }
 
     /**
@@ -119,17 +128,21 @@ class DepartmentController extends Controller
     {
         $users = App::make('repository.user')->getDepartmentUsers($id);
 
-        return response()->json([
+        return response()->json(
+            [
             'users' => $users
-        ]);
+            ]
+        );
     }
 
     public function getUsersByAllDepartments()
     {
         $users = App::make('repository.user')->getDepartmentUsers();
 
-        return response()->json([
+        return response()->json(
+            [
             'users' => $users
-        ]);
+            ]
+        );
     }
 }

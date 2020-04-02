@@ -8,11 +8,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\{
-    App,
-    Log,
-    Auth
-};
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Idea;
 use Illuminate\Http\Request;
 
@@ -55,5 +53,4 @@ class LikesController extends Controller
     {
         return App::make('idea.control');
     }
-
 }

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-
 /**
  * Class BrowseIdeasController
+ *
  * @package App\Http\Controllers
  */
 class BrowseIdeasController extends Controller
@@ -18,7 +18,6 @@ class BrowseIdeasController extends Controller
      */
     public function __construct()
     {
-
     }
 
     /**

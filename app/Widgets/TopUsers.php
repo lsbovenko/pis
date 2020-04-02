@@ -7,15 +7,17 @@ use Illuminate\Support\Facades\App;
 
 /**
  * Class TopUsers
+ *
  * @package App\Widgets
  */
-class TopUsers {
+class TopUsers
+{
 
     /**
      * @param View $view
      */
-    public function compose(View $view){
-
+    public function compose(View $view)
+    {
         $view->with('topUsers', $this);
     }
 

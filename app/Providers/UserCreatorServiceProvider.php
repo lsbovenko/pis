@@ -6,6 +6,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 
 /**
  * Class UserCreatorServiceProvider
+ *
  * @package App\Providers
  */
 class UserCreatorServiceProvider extends ServiceProvider
@@ -34,8 +35,11 @@ class UserCreatorServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('user_creator', function ($app) {
-            return new \App\Service\UserCreator();
-        });
+        $this->app->singleton(
+            'user_creator',
+            function ($app) {
+                return new \App\Service\UserCreator();
+            }
+        );
     }
 }

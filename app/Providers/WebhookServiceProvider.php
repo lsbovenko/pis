@@ -15,10 +15,13 @@ class WebhookServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(Webhook::class, function ($app) {
-            $encrypter = new Encrypter(config('app.webhook.' . config('app.env') . '.secret_key'), 'AES-256-CBC');
+        $this->app->singleton(
+            Webhook::class,
+            function ($app) {
+                $encrypter = new Encrypter(config('app.webhook.' . config('app.env') . '.secret_key'), 'AES-256-CBC');
 
-            return new Webhook($encrypter);
-        });
+                return new Webhook($encrypter);
+            }
+        );
     }
 }

@@ -6,6 +6,7 @@ use App\Models\Categories\StrategicObjective as ModelStrategicObjective;
 
 /**
  * Class Role
+ *
  * @package App\Repositories
  */
 class StrategicObjective extends AbstractRepository

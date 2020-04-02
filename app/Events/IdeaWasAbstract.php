@@ -13,7 +13,9 @@ use App\Models\Idea;
 
 abstract class IdeaWasAbstract
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     /**
      * @var Idea
@@ -43,7 +45,7 @@ abstract class IdeaWasAbstract
     /**
      * @return Idea
      */
-    public function getIdea() : Idea
+    public function getIdea(): Idea
     {
         return $this->idea;
     }

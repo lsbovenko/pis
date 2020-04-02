@@ -11,6 +11,7 @@ use App\Models\Idea;
 
 /**
  * Class TypeController
+ *
  * @package App\Http\Controllers
  */
 class TypeController extends Controller
@@ -22,7 +23,6 @@ class TypeController extends Controller
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -30,11 +30,14 @@ class TypeController extends Controller
      */
     public function index()
     {
-        return view('categories.status.index', [
+        return view(
+            'categories.status.index',
+            [
             'items' => Type::all(),
             'title' => trans('ideas.types'),
             'route' => 'categories.type'
-        ]);
+            ]
+        );
     }
 
     /**
@@ -45,12 +48,15 @@ class TypeController extends Controller
     {
         /** @var \App\Models\Categories\Type $item */
         $item = Type::findOrFail($request->route('id'));
-        return view('categories.status.edit', [
+        return view(
+            'categories.status.edit',
+            [
             'item' => $item,
             'title' => trans('ideas.edit_type'),
             'route' => route('categories.type.edit', ['id' => $item->id]),
             'deleteRoute' => route('categories.type.delete', ['id' => $item->id]),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -74,10 +80,13 @@ class TypeController extends Controller
      */
     public function create()
     {
-        return view('categories.status.edit', [
+        return view(
+            'categories.status.edit',
+            [
             'title' => trans('ideas.create_type'),
             'route' => route('categories.type.create')
-        ]);
+            ]
+        );
     }
 
     /**

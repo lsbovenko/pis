@@ -2,15 +2,14 @@
 
 namespace App\Service;
 
-use App\Models\Auth\{
-    User,
-    Role
-};
+use App\Models\Auth\User;
+use App\Models\Auth\Role;
 use App\Models\Categories\Department;
 use App\Models\Categories\Position;
 
 /**
  * Class UserCreator
+ *
  * @package App\Service
  */
 class UserCreator
