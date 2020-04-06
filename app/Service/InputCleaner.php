@@ -4,6 +4,7 @@ namespace App\Service;
 
 /**
  * Class Reference
+ *
  * @package App\Service
  */
 class InputCleaner
@@ -13,8 +14,8 @@ class InputCleaner
     /**
      * Method to strip tags globally.
      *
-     * @param array $data
-     * @param array $onlyStripScript -  only 'script' tag strip in these fields
+     * @param  array $data
+     * @param  array $onlyStripScript -  only 'script' tag strip in these fields
      * @return array
      */
     public function cleanData(array $data, array $onlyStripScript = [])

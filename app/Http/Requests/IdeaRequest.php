@@ -15,7 +15,7 @@ class IdeaRequest extends FormRequest
         parent::__construct();
         $validationFactory->extend(
             'similar_ideas_id_validation',
-            function($attribute, $value, $parameters) {
+            function ($attribute, $value, $parameters) {
                 if ($value) {
                     $similarIdeasId = array_unique(explode(',', $value));
 

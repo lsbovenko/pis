@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: valeriy
@@ -8,7 +9,6 @@
 
 namespace App\Mail;
 
-
 use App\Models\Comment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -16,7 +16,8 @@ use Illuminate\Queue\SerializesModels;
 
 class AbstractComment extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * @var $comment
@@ -25,6 +26,7 @@ class AbstractComment extends Mailable
 
     /**
      * ToAll constructor.
+     *
      * @param Comment $comment
      */
     public function __construct(Comment $comment)

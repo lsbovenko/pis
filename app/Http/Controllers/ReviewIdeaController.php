@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\{
-    App,
-    Log,
-    Auth
-};
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Zizaco\Entrust\EntrustFacade;
 use App\Models\Idea;
 use Illuminate\Http\Request;
@@ -14,6 +12,7 @@ use App\Models\Categories\Status;
 
 /**
  * Class EdotIdeaController
+ *
  * @package App\Http\Controllers
  */
 class ReviewIdeaController extends Controller
@@ -25,7 +24,6 @@ class ReviewIdeaController extends Controller
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -53,7 +51,9 @@ class ReviewIdeaController extends Controller
         /** @var \App\Service\Reference $reference */
         $reference = App::make('reference');
 
-        return view('review-idea.review', [
+        return view(
+            'review-idea.review',
+            [
             'idea' => $idea,
             'user' => (!empty($idea->user)) ? $idea->user : null,
             'priorityReason' => $idea->is_priority ? $idea->getPriorityReason() : null,
@@ -69,7 +69,8 @@ class ReviewIdeaController extends Controller
             'activeStatusId' => Status::getActiveStatus()->id,
             'completedStatusId' => Status::getCompletedStatus()->id,
             'executorsList' => $reference->getAllExecutorsForSelect(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -105,9 +106,12 @@ class ReviewIdeaController extends Controller
         $status = (int)$data['status'];
 
         if ($status === Idea::DECLINED) {
-            $this->validate($request, [
+            $this->validate(
+                $request,
+                [
                 'reason' => 'required|min:5',
-            ]);
+                ]
+            );
         }
 
         try {
@@ -136,9 +140,12 @@ class ReviewIdeaController extends Controller
         /** @var \App\Models\Idea $idea */
         $idea = Idea::findOrFail($request->route('id'));
         $data = App::make('datacleaner')->cleanData($request->all());
-        $this->validate($request, [
+        $this->validate(
+            $request,
+            [
             'reason_priority' => 'required|min:5',
-        ]);
+            ]
+        );
 
         try {
             $this->getIdeaControl()->pinToPriority($idea, $data['reason_priority']);
@@ -179,9 +186,12 @@ class ReviewIdeaController extends Controller
         /** @var \App\Models\Idea $idea */
         $idea = Idea::findOrFail($request->route('id'));
         $data = App::make('datacleaner')->cleanData($request->all());
-        $this->validate($request, [
+        $this->validate(
+            $request,
+            [
             'reason_priority' => 'required|min:5',
-        ]);
+            ]
+        );
 
         try {
             $this->getIdeaControl()->changePriorityReason($idea, $data['reason_priority']);
@@ -205,9 +215,12 @@ class ReviewIdeaController extends Controller
         /** @var \App\Models\Idea $idea */
         $idea = Idea::findOrFail($request->route('id'));
         $data = App::make('datacleaner')->cleanData($request->all(), ['message']);
-        $this->validate($request, [
+        $this->validate(
+            $request,
+            [
             'message' => 'required|min:2|max:10000'
-        ]);
+            ]
+        );
 
         $user = Auth::user();
 
@@ -219,10 +232,12 @@ class ReviewIdeaController extends Controller
             Log::error($e);
         }
 
-        return response()->json([
+        return response()->json(
+            [
             'status' => 'success',
-            'message'=>'Комментарий успешно добавлен'
-        ]);
+            'message' => 'Комментарий успешно добавлен'
+            ]
+        );
     }
 
     /**

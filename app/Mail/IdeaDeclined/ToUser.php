@@ -6,6 +6,7 @@ use App\Mail\AbstractMail;
 
 /**
  * Class ToUser
+ *
  * @package App\Mail\IdeaCreated
  */
 class ToUser extends AbstractMail
@@ -19,9 +20,12 @@ class ToUser extends AbstractMail
     {
         return $this
             ->subject('Идея отклонена.')
-            ->view('emails.idea-declined.to-user', [
+            ->view(
+                'emails.idea-declined.to-user',
+                [
                 'idea' => $this->idea,
                 'reason' => $this->idea->getDeclineReason(),
-            ]);
+                ]
+            );
     }
 }

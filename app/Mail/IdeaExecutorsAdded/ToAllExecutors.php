@@ -6,6 +6,7 @@ use App\Mail\AbstractMail;
 
 /**
  * Class ToAllExecutors
+ *
  * @package App\Mail\IdeaExecutorsAdded
  */
 class ToAllExecutors extends AbstractMail

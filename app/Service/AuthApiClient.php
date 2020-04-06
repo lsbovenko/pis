@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 
 /**
  * Class AuthApiClient
+ *
  * @package App\Service
  */
 class AuthApiClient
@@ -22,9 +23,10 @@ class AuthApiClient
 
     /**
      * AuthApiClient constructor.
+     *
      * @param Client $httpClient
      */
-    function __construct(Client $httpClient)
+    public function __construct(Client $httpClient)
     {
         $this->httpClient = $httpClient;
         $this->setApiKey();
@@ -77,7 +79,7 @@ class AuthApiClient
     /**
      * @param string $endpoint
      * @param string $method
-     * @param array $options
+     * @param array  $options
      * @return mixed|\Psr\Http\Message\ResponseInterface
      */
     protected function sendRequest(string $endpoint, string $method, array $options = [])

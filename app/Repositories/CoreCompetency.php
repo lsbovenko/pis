@@ -6,6 +6,7 @@ use App\Models\Categories\CoreCompetency as ModelCoreCompetency;
 
 /**
  * Class Role
+ *
  * @package App\Repositories
  */
 class CoreCompetency extends AbstractRepository

@@ -5,13 +5,12 @@ namespace App\Service;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
 use App\Models\Auth\User;
-use Illuminate\Support\Facades\{
-    Auth,
-    App
-};
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
 
 /**
  * Class JWTService
+ *
  * @package App\Service
  */
 class JWTService
@@ -51,7 +50,6 @@ class JWTService
         }
 
         if (JWTAuth::getToken()) {
-
             $user = $this->getUserFromToken();
             $this->authenticateUser($user);
         }

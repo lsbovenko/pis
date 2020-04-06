@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\{
-    App,
-    Log
-};
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 use App\Models\Idea;
 use App\Models\Categories\Status;
 use Illuminate\Http\Request;
@@ -13,9 +11,9 @@ use App\Http\Requests\IdeaRequest;
 use App\Http\Requests\ChangeStatusRequest;
 use App\Exceptions\IdeaIsNotApproved;
 
-
 /**
  * Class EditIdeaController
+ *
  * @package App\Http\Controllers
  */
 class EditIdeaController extends Controller
@@ -27,7 +25,6 @@ class EditIdeaController extends Controller
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -44,8 +41,7 @@ class EditIdeaController extends Controller
 
         $tagsExclude = [];
         $tags = $idea->tags()->get();
-        foreach ($tags as $tag)
-        {
+        foreach ($tags as $tag) {
             $tagsExclude[$tag->id] = $tag->name;
         }
 
@@ -121,9 +117,12 @@ class EditIdeaController extends Controller
         if ($statusId == $idea->status_id && $statusId == Status::getActiveStatus()->id) {
             return redirect()->back();
         } elseif ($statusId == Status::getCompletedStatus()->id || $statusId == Status::getFrozenStatus()->id) {
-            $this->validate($request, [
+            $this->validate(
+                $request,
+                [
                 'details' => 'required|min:5',
-            ]);
+                ]
+            );
             $details = $data['details'];
         } else {
             $details = null;
@@ -136,9 +135,9 @@ class EditIdeaController extends Controller
                 throw new \Exception('Такого статуса не существует');
             }
             $this->getIdeaControl()->changeStatus($idea, $status, $details);
-        } catch (IdeaIsNotApproved $e){
+        } catch (IdeaIsNotApproved $e) {
             return redirect()->back()->withErrors([$e->getMessage()]);
-        }  catch (\Exception $e) {
+        } catch (\Exception $e) {
             Log::error($e);
             return redirect()->back();
         }

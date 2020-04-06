@@ -11,6 +11,7 @@ use App\Models\Idea;
 
 /**
  * Class StrategicObjectiveController
+ *
  * @package App\Http\Controllers
  */
 class StrategicObjectiveController extends Controller
@@ -22,7 +23,6 @@ class StrategicObjectiveController extends Controller
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -30,11 +30,14 @@ class StrategicObjectiveController extends Controller
      */
     public function index()
     {
-        return view('categories.status.index', [
+        return view(
+            'categories.status.index',
+            [
             'items' => StrategicObjective::all(),
             'title' => trans('ideas.strategic_objectives'),
             'route' => 'categories.strategic-objective'
-        ]);
+            ]
+        );
     }
 
     /**
@@ -45,12 +48,15 @@ class StrategicObjectiveController extends Controller
     {
         /** @var \App\Models\Categories\StrategicObjective $item */
         $item = StrategicObjective::findOrFail($request->route('id'));
-        return view('categories.status.edit', [
+        return view(
+            'categories.status.edit',
+            [
             'item' => $item,
             'title' => trans('ideas.edit_strategic_objective'),
             'route' => route('categories.strategic-objective.edit', ['id' => $item->id]),
             'deleteRoute' => route('categories.strategic-objective.delete', ['id' => $item->id]),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -74,10 +80,13 @@ class StrategicObjectiveController extends Controller
      */
     public function create()
     {
-        return view('categories.status.edit', [
+        return view(
+            'categories.status.edit',
+            [
             'title' => trans('ideas.create_strategic_objective'),
             'route' => route('categories.strategic-objective.create')
-        ]);
+            ]
+        );
     }
 
     /**

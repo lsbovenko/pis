@@ -9,6 +9,7 @@ use App\Models\EmailQueue;
 
 /**
  * Class SendEmails
+ *
  * @package App\Console\Commands
  */
 class SendEmails extends Command

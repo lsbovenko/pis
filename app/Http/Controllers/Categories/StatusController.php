@@ -11,6 +11,7 @@ use App\Models\Idea;
 
 /**
  * Class StatusController
+ *
  * @package App\Http\Controllers
  */
 class StatusController extends Controller
@@ -22,7 +23,6 @@ class StatusController extends Controller
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -30,11 +30,14 @@ class StatusController extends Controller
      */
     public function index()
     {
-        return view('categories.status.index', [
+        return view(
+            'categories.status.index',
+            [
             'items' => Status::all(),
             'title' => trans('ideas.statuses'),
             'route' => 'categories.statuses'
-        ]);
+            ]
+        );
     }
 
     /**
@@ -45,12 +48,15 @@ class StatusController extends Controller
     {
         /** @var \App\Models\Categories\Status $status */
         $status = Status::findOrFail($request->route('id'));
-        return view('categories.status.edit', [
+        return view(
+            'categories.status.edit',
+            [
             'item' => $status,
             'title' => trans('ideas.edit_status'),
             'route' => route('categories.statuses.edit', ['id' => $status->id]),
             'deleteRoute' => route('categories.statuses.delete', ['id' => $status->id]),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -74,10 +80,13 @@ class StatusController extends Controller
      */
     public function create()
     {
-        return view('categories.status.edit', [
+        return view(
+            'categories.status.edit',
+            [
             'title' => trans('ideas.create_status'),
             'route' => route('categories.statuses.create')
-        ]);
+            ]
+        );
     }
 
     /**

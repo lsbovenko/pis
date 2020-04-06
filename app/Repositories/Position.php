@@ -6,6 +6,7 @@ use App\Models\Categories\Position as ModelPosition;
 
 /**
  * Class Position
+ *
  * @package App\Repositories
  */
 class Position extends AbstractRepository

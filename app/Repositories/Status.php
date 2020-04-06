@@ -6,6 +6,7 @@ use App\Models\Categories\Status as ModelStatus;
 
 /**
  * Class Role
+ *
  * @package App\Repositories
  */
 class Status extends AbstractRepository

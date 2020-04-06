@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Class PasswordRequest
+ *
  * @package App\Http\Requests\User
  */
 class PasswordRequest extends FormRequest

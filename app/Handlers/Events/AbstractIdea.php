@@ -8,6 +8,7 @@ use App\Service\EmailQueueCreator;
 
 /**
  * Class IdeaApproved
+ *
  * @package App\Handlers\Events
  */
 abstract class AbstractIdea

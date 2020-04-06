@@ -3,13 +3,12 @@
 namespace App\Handlers\Events;
 
 use App\Events\IdeaWasCreated;
-use App\Mail\IdeaCreated\{
-    ToUser,
-    ToSuperadmin
-};
+use App\Mail\IdeaCreated\ToUser;
+use App\Mail\IdeaCreated\ToSuperadmin;
 
 /**
  * Class IdeaCreated
+ *
  * @package App\Handlers\Events
  */
 class IdeaCreated extends AbstractIdea

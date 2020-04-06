@@ -6,6 +6,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 
 /**
  * Class IdeaControlServiceProvider
+ *
  * @package App\Providers
  */
 class IdeaControlServiceProvider extends ServiceProvider
@@ -34,8 +35,11 @@ class IdeaControlServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('idea.control', function ($app) {
-            return new \App\Service\IdeaControl();
-        });
+        $this->app->singleton(
+            'idea.control',
+            function ($app) {
+                return new \App\Service\IdeaControl();
+            }
+        );
     }
 }

@@ -9,6 +9,7 @@ use App\Mail\IdeaDeclined\ToUser;
 
 /**
  * Class IdeaDeclined
+ *
  * @package App\Handlers\Events
  */
 class IdeaDeclined extends AbstractIdea
@@ -16,7 +17,7 @@ class IdeaDeclined extends AbstractIdea
     /**
      * Handle the event.
      *
-     * @param  IdeaWasDeclined  $event
+     * @param  IdeaWasDeclined $event
      * @return void
      */
     public function handle(IdeaWasDeclined $event)

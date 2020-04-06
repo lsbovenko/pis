@@ -8,7 +8,6 @@
 
 namespace App\Mail\IdeaComment;
 
-
 use App\Mail\AbstractComment;
 
 class ToAll extends AbstractComment
@@ -22,8 +21,11 @@ class ToAll extends AbstractComment
     {
         return $this
             ->subject('Добавлен новый комментарий в PIS')
-            ->view('emails.comments.to-all', [
+            ->view(
+                'emails.comments.to-all',
+                [
                 'comment' => $this->comment
-            ]);
+                ]
+            );
     }
 }

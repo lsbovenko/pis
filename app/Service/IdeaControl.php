@@ -6,21 +6,30 @@ use App\Http\Requests\IdeaRequest;
 use App\Models\Categories\Status;
 use App\Models\Auth\User;
 use App\Models\Categories\Tag;
-use App\Models\{Comment, Idea, Note};
-use App\Events\{CommentAdded, IdeaWasCreated, IdeaWasApproved, IdeaWasDeclined, IdeaWasChangedStatus, LikeAdded,
-    IdeaExecutorsWasAdded, IdeaExecutorsWasRemoved};
+use App\Models\Comment;
+use App\Models\Idea;
+use App\Models\Note;
+use App\Events\CommentAdded;
+use App\Events\IdeaWasCreated;
+use App\Events\IdeaWasApproved;
+use App\Events\IdeaWasDeclined;
+use App\Events\IdeaWasChangedStatus;
+use App\Events\LikeAdded;
+use App\Events\IdeaExecutorsWasAdded;
+use App\Events\IdeaExecutorsWasRemoved;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 
 /**
  * Class IdeaControl
+ *
  * @package App\Service
  */
 class IdeaControl
 {
     /**
-     * @param User $user
-     * @param array $data
+     * @param User   $user
+     * @param array  $data
      * @param Status $status
      * @return Idea
      */
@@ -68,7 +77,7 @@ class IdeaControl
     }
 
     /**
-     * @param Idea $idea
+     * @param Idea  $idea
      * @param array $executorIds
      * @return Idea
      */
@@ -123,18 +132,20 @@ class IdeaControl
         $idea->approve_status = Idea::DECLINED;
         $idea->save();
 
-        Note::create([
+        Note::create(
+            [
             'text' => $reason,
             'idea_id' => $idea->id,
             'type' => Note::TYPE_DECLINED_REASON,
-        ]);
+            ]
+        );
         event(new IdeaWasDeclined($idea));
 
         return $idea;
     }
 
     /**
-     * @param Idea $idea
+     * @param Idea   $idea
      * @param string $reason
      * @return Idea
      */
@@ -145,11 +156,13 @@ class IdeaControl
 
         $reasonModel = $idea->getPriorityReason();
         if ($reasonModel === null) {
-            Note::create([
+            Note::create(
+                [
                 'text' => $reason,
                 'idea_id' => $idea->id,
                 'type' => Note::TYPE_PRIORITY_REASON,
-            ]);
+                ]
+            );
         } else {
             $reasonModel->text = $reason;
             $reasonModel->save();
@@ -171,7 +184,7 @@ class IdeaControl
     }
 
     /**
-     * @param Idea $idea
+     * @param Idea   $idea
      * @param string $text
      * @return Idea
      * @throws \App\Exceptions\PriorityReasonNotFound
@@ -189,8 +202,8 @@ class IdeaControl
     }
 
     /**
-     * @param Idea $idea
-     * @param Status $status
+     * @param Idea        $idea
+     * @param Status      $status
      * @param string|null $details
      * @return Idea
      * @throws \App\Exceptions\IdeaIsNotApproved
@@ -200,8 +213,8 @@ class IdeaControl
         if (!$idea->isApproved()) {
             throw new \App\Exceptions\IdeaIsNotApproved('Вы не можете изменить статус неутвержденной идеи');
         }
-        if ($idea->status_id !== $status->id ||
-            ($idea->status_id === $status->id && $status->id != Status::getActiveStatus()->id)) {
+        $activeStatusId = Status::getActiveStatus()->id;
+        if ($idea->status_id !== $status->id || ($idea->status_id === $status->id && $status->id != $activeStatusId)) {
             $idea->completed_at = ($status->slug == Status::SLUG_COMPLETED) ? Carbon::now() : null;
             $idea->status_id = $status->id;
             $idea->details = $details;
@@ -242,10 +255,10 @@ class IdeaControl
 
     /**
      * @param User $user
-     * @param int $ideaId
+     * @param int  $ideaId
      * @return bool
      */
-    public function isUserHasLike(User $user, int $ideaId) : bool
+    public function isUserHasLike(User $user, int $ideaId): bool
     {
         $likesUsers = $user->checkUserLike($ideaId);
 
@@ -256,12 +269,12 @@ class IdeaControl
      * @param Idea $idea
      * @return bool
      */
-    public function increaseAmountComment(Idea $idea, int $userId, string $message) : bool
+    public function increaseAmountComment(Idea $idea, int $userId, string $message): bool
     {
         $idea->comments_count++;
         $idea->save();
 
-        $comment = new Comment;
+        $comment = new Comment();
         $comment->idea_id = $idea->id;
         $comment->user_id = $userId;
         $comment->message = $message;
@@ -274,15 +287,15 @@ class IdeaControl
     }
 
     /**
-     * @param int $ideaId
+     * @param int  $ideaId
      * @param $user
      * @return bool
      */
-    private function addLikeIdeasUser(Idea $idea, User $user) : bool
+    private function addLikeIdeasUser(Idea $idea, User $user): bool
     {
         $user->likedUserIdea()->attach($idea->id);
 
-        if(!$user->getLikeNotification($idea->id)) {
+        if (!$user->getLikeNotification($idea->id)) {
             $user->likeNotification()->attach($idea->id);
 
             event(new LikeAdded($idea, $user));
@@ -294,10 +307,10 @@ class IdeaControl
     /**
      * Add tag ids to request
      *
-     * @param IdeaRequest $request
+     * @param  IdeaRequest $request
      * @return IdeaRequest
      */
-    public function addTagIds(IdeaRequest $request) : IdeaRequest
+    public function addTagIds(IdeaRequest $request): IdeaRequest
     {
         $tags = $request->get('tags');
 

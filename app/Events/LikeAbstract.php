@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: valeriy
@@ -16,7 +17,9 @@ use App\Models\Idea;
 
 abstract class LikeAbstract
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     /**
      * @var Idea
@@ -29,6 +32,7 @@ abstract class LikeAbstract
 
     /**
      * LikeAbstract constructor.
+     *
      * @param Idea $idea
      * @param User $likeAuthor
      */
@@ -41,7 +45,7 @@ abstract class LikeAbstract
     /**
      * @return Idea
      */
-    public function getIdea() : Idea
+    public function getIdea(): Idea
     {
         return $this->idea;
     }

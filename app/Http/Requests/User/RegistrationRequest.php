@@ -4,6 +4,7 @@ namespace App\Http\Requests\User;
 
 /**
  * Class RegistrationRequest
+ *
  * @package App\Http\Requests\User
  */
 class RegistrationRequest extends AbstractRequest

@@ -7,6 +7,7 @@ use App\Mail\IdeaApproved\ToAll;
 
 /**
  * Class IdeaApproved
+ *
  * @package App\Handlers\Events
  */
 class IdeaApproved extends AbstractIdea

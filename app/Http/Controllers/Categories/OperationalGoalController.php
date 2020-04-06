@@ -11,6 +11,7 @@ use App\Models\Idea;
 
 /**
  * Class OperationalGoalController
+ *
  * @package App\Http\Controllers
  */
 class OperationalGoalController extends Controller
@@ -22,7 +23,6 @@ class OperationalGoalController extends Controller
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -30,11 +30,14 @@ class OperationalGoalController extends Controller
      */
     public function index()
     {
-        return view('categories.status.index', [
+        return view(
+            'categories.status.index',
+            [
             'items' => OperationalGoal::all(),
             'title' => trans('ideas.operational_goals'),
             'route' => 'categories.operational-goal'
-        ]);
+            ]
+        );
     }
 
     /**
@@ -45,12 +48,15 @@ class OperationalGoalController extends Controller
     {
         /** @var \App\Models\Categories\OperationalGoal $item */
         $item = OperationalGoal::findOrFail($request->route('id'));
-        return view('categories.status.edit', [
+        return view(
+            'categories.status.edit',
+            [
             'item' => $item,
             'title' => trans('ideas.edit_operational_goal'),
             'route' => route('categories.operational-goal.edit', ['id' => $item->id]),
             'deleteRoute' => route('categories.operational-goal.delete', ['id' => $item->id]),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -74,10 +80,13 @@ class OperationalGoalController extends Controller
      */
     public function create()
     {
-        return view('categories.status.edit', [
+        return view(
+            'categories.status.edit',
+            [
             'title' => trans('ideas.create_operational_goal'),
             'route' => route('categories.operational-goal.create')
-        ]);
+            ]
+        );
     }
 
     /**

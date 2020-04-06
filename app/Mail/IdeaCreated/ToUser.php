@@ -6,6 +6,7 @@ use App\Mail\AbstractMail;
 
 /**
  * Class ToUser
+ *
  * @package App\Mail\IdeaCreated
  */
 class ToUser extends AbstractMail

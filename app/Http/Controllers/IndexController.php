@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\{
-    App,
-    Auth,
-    Log
-};
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 use App\Http\Requests\IdeaRequest;
 use App\Models\Categories\Status;
@@ -14,6 +12,7 @@ use Illuminate\Http\Request;
 
 /**
  * Class IndexController
+ *
  * @package App\Http\Controllers
  */
 class IndexController extends Controller
@@ -25,7 +24,6 @@ class IndexController extends Controller
      */
     public function __construct()
     {
-
     }
 
     /**

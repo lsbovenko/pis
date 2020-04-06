@@ -6,6 +6,7 @@ use App\Mail\AbstractMail;
 
 /**
  * Class ToSuperadmin
+ *
  * @package App\Mail\IdeaCreated
  */
 class ToSuperadmin extends AbstractMail

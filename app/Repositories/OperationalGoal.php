@@ -6,6 +6,7 @@ use App\Models\Categories\OperationalGoal as ModelOperationalGoal;
 
 /**
  * Class Role
+ *
  * @package App\Repositories
  */
 class OperationalGoal extends AbstractRepository

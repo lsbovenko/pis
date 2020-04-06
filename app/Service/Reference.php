@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\App;
 
 /**
  * Class Reference
+ *
  * @package App\Service
  */
 class Reference
@@ -14,7 +15,7 @@ class Reference
      * @param bool $isFilter
      * @return array
      */
-    public function getAllCoreCompetencyForSelect($isFilter = false) : array
+    public function getAllCoreCompetencyForSelect($isFilter = false): array
     {
         return (App::make('repository.coreCompetency'))->getAllForSelect($isFilter);
     }
@@ -23,7 +24,7 @@ class Reference
      * @param bool $isFilter
      * @return array
      */
-    public function getAllOperationalGoalForSelect($isFilter = false) : array
+    public function getAllOperationalGoalForSelect($isFilter = false): array
     {
         return (App::make('repository.operationalGoal'))->getAllForSelect($isFilter);
     }
@@ -32,7 +33,7 @@ class Reference
      * @param bool $isFilter
      * @return array
      */
-    public function getAllStrategicObjectiveForSelect($isFilter = false) : array
+    public function getAllStrategicObjectiveForSelect($isFilter = false): array
     {
         return (App::make('repository.strategicObjective'))->getAllForSelect($isFilter);
     }
@@ -41,7 +42,7 @@ class Reference
      * @param bool $isFilter
      * @return array
      */
-    public function getAllTypeForSelect($isFilter = false) : array
+    public function getAllTypeForSelect($isFilter = false): array
     {
         return (App::make('repository.type'))->getAllForSelect($isFilter);
     }
@@ -50,7 +51,7 @@ class Reference
      * @param bool $isFilter
      * @return array
      */
-    public function getAllDepartmentForSelect($isFilter = false) : array
+    public function getAllDepartmentForSelect($isFilter = false): array
     {
         return (App::make('repository.department'))->getAllForSelect($isFilter);
     }
@@ -59,7 +60,7 @@ class Reference
      * @param bool $isFilter
      * @return array
      */
-    public function getAllRolesForSelect($isFilter = false) : array
+    public function getAllRolesForSelect($isFilter = false): array
     {
         return (App::make('repository.role'))->getAllForSelect($isFilter, false);
     }
@@ -67,7 +68,7 @@ class Reference
     /**
      * @return array
      */
-    public function getAllStatusesForSelect($isFilter = false) : array
+    public function getAllStatusesForSelect($isFilter = false): array
     {
         return (App::make('repository.status'))->getAllForSelect($isFilter);
     }
@@ -76,7 +77,7 @@ class Reference
      * @param bool $isFilter
      * @return array
      */
-    public function getAllPositionsForSelect($isFilter = false) : array
+    public function getAllPositionsForSelect($isFilter = false): array
     {
         return (App::make('repository.position'))->getAllForSelect($isFilter);
     }
@@ -85,7 +86,7 @@ class Reference
      * @param bool $isFilter
      * @return array
      */
-    public function getAllTagForSelect($isFilter = false) : array
+    public function getAllTagForSelect($isFilter = false): array
     {
         return (App::make('repository.tag'))->getAllForSelect($isFilter, false);
     }
@@ -94,7 +95,7 @@ class Reference
      * @param bool $isFilter
      * @return array
      */
-    public function getAllExecutorsForSelect($isFilter = false) : array
+    public function getAllExecutorsForSelect($isFilter = false): array
     {
         $repository = App::make('repository.user');
 
@@ -117,13 +118,16 @@ class Reference
     }
 
     /**
-     * @param string $searchSimilarIdea
-     * @param array $similarIdeaIds
+     * @param string       $searchSimilarIdea
+     * @param array        $similarIdeaIds
      * @param integer|null $ideaId
      * @return array
      */
-    public function getApprovedSearchIdeasForSelect(string $searchSimilarIdea, array $similarIdeaIds, int $ideaId=null) : array
-    {
+    public function getApprovedSearchIdeasForSelect(
+        string $searchSimilarIdea,
+        array $similarIdeaIds,
+        int $ideaId = null
+    ): array {
         $repository = App::make('repository.idea');
 
         $approvedSearchIdeas = $repository->getApprovedSearchIdeas($searchSimilarIdea, $similarIdeaIds, $ideaId);
@@ -138,7 +142,7 @@ class Reference
      * @param integer $ideaId
      * @return array
      */
-    public function getSimilarIdeasForList(int $ideaId) : array
+    public function getSimilarIdeasForList(int $ideaId): array
     {
         $repository = App::make('repository.idea');
 

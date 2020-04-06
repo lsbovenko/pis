@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\App;
 
 /**
  * Class Status
+ *
  * @package App\Models\Categories
  */
 class Status extends Model
@@ -39,6 +40,7 @@ class Status extends Model
 
     /**
      * disable update timestamp fields
+     *
      * @var bool
      */
     public $timestamps = false;

@@ -7,6 +7,7 @@ use App\Mail\IdeaExecutorsRemoved\ToAllExecutors;
 
 /**
  * Class IdeaExecutorsRemoved
+ *
  * @package App\Handlers\Events
  */
 class IdeaExecutorsRemoved extends AbstractIdea

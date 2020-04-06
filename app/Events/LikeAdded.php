@@ -10,9 +10,9 @@ namespace App\Events;
 
 /**
  * Class LikeAdded
+ *
  * @package App\Events
  */
 class LikeAdded extends LikeAbstract
 {
-
 }

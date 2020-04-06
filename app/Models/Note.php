@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Note
+ *
  * @package App\Models
  */
 class Note extends Model
@@ -15,6 +16,7 @@ class Note extends Model
 
     /**
      * disable update timestamp fields
+     *
      * @var bool
      */
     public $timestamps = false;

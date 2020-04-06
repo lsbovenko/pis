@@ -3,15 +3,14 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\{
-    Auth,
-    App,
-    Log
-};
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 use App\Models\Auth\User;
 
 /**
  * Class CheckUser
+ *
  * @package App\Http\Middleware
  */
 class CheckUser
@@ -20,7 +19,7 @@ class CheckUser
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \Closure $next
+     * @param  \Closure                 $next
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -57,7 +56,7 @@ class CheckUser
     }
 
     /**
-     * @param User $user
+     * @param User  $user
      * @param array $remoteUser
      */
     protected function updateUser(User $user, array $remoteUser)
