@@ -100,8 +100,68 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'email' => [
+            'required' => 'Add Email',
+            'email' => 'Add correct email',
+            'unique' => 'A user with this email already exists'
+        ],
+        'name' => [
+            'required' => 'Add Name',
+        ],
+        'last_name' => [
+            'required' => 'Add Last Name',
+        ],
+        'reason' => [
+            'required' => 'Add Reason for Rejection',
+            'min' => 'The Reason must be at least :min characters.'
+        ],
+        'reason_priority' => [
+            'required' => 'Add Explanatory note',
+            'min' => 'The Explanatory note must be at least :min characters.'
+        ],
+        'title' => [
+            'required' => 'Add Title',
+            'min' => 'The Title must be at least :min characters.'
+        ],
+        'description' => [
+            'required' => 'Add Description',
+            'min' => 'The Description must be at least :min characters.'
+        ],
+        'role_id' => [
+            'required' => 'Add Role',
+            'in' => 'Select Role from the list'
+        ],
+        'department_id' => [
+            'required' => 'Add Department',
+            'in' => 'Select Department from the list'
+        ],
+        'position_id' => [
+            'required' => 'Add Position',
+            'in' => 'Select Position from the list'
+        ],
+        'core_competency_id' => [
+            'required' => 'Add Competency',
+            'in' => 'Select Competency from the list'
+        ],
+        'operational_goal_id' => [
+            'required' => 'Add Operational Goal',
+            'in' => 'Select Operatioanl Goal from the list'
+        ],
+        'type_id' => [
+            'required' => 'Add Type',
+            'in' => 'Select Type from the list'
+        ],
+        'strategic_objective_id' => [
+            'required' => 'Add Strategic Objective',
+            'in' => 'Select Strategic Objective from the list'
+        ],
+        'status_id' => [
+            'required' => 'Add Status',
+            'in' => 'Select Status from the list'
+        ],
+        'details' => [
+            'required' => 'Add Details',
+            'min' => 'The Details must be at least :min characters.'
         ],
     ],
 

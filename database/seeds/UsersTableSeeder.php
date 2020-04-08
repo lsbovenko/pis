@@ -21,14 +21,14 @@ class UsersTableSeeder extends Seeder
             Role::ROLE_ADMIN => Role::where('name', '=', Role::ROLE_ADMIN)->first(),
             Role::ROLE_SUPERADMIN => Role::where('name', '=', Role::ROLE_SUPERADMIN)->first(),
         ];
-        $department = Department::where('name', '=', 'Другой')->first();
+        $department = Department::where('name', '=', 'Other')->first();
 
         foreach ($this->getUsers() as $user) {
             $userModel = User::create(
                 [
                     'email' => $user['email'],
                     'name' => $user['name'],
-                    'password' => bcrypt($user['pass']),
+//                    'password' => bcrypt($user['pass']),
                     'department_id' => $department->id,
                     'position_id' => 1,
                     'is_active' => 1,
