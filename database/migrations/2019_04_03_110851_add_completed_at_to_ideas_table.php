@@ -21,7 +21,7 @@ class AddCompletedAtToIdeasTable extends Migration
         });
 
         $date = Carbon::now()->subMonths(3);
-        $ideas = Status::getCompletedStatus()->ideas->where('updated_at', '>=', $date);
+        $ideas = Status::getCompletedStatus() ? Status::getCompletedStatus()->ideas->where('updated_at', '>=', $date) : [];
         foreach ($ideas as $idea) {
             Idea::where('id', $idea->id)->update(['completed_at' => $idea->updated_at]);
         }
