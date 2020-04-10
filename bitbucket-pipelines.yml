@@ -18,6 +18,14 @@ pipelines:
             - ssh-add ~/.ssh/id_pipelines
             - deployer deploy prod
 
+    develop:
+      - step:
+          name: Check codestyle
+          image: "herloct/phpcs"
+          script:
+            - "php -v"
+            - "phpcs --standard=PSR12 app/"
+
   pull-requests:
     develop:
       - step:
