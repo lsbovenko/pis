@@ -116,7 +116,7 @@ class EditIdeaController extends Controller
         $statusId = (int)$data['status_id'];
         if ($statusId == $idea->status_id && $statusId == Status::getActiveStatus()->id) {
             return redirect()->back();
-        } elseif ($statusId == Status::getCompletedStatus()->id || $statusId == Status::getFrozenStatus()->id) {
+        } elseif ($statusId != Status::getActiveStatus()->id) {
             $this->validate(
                 $request,
                 [
