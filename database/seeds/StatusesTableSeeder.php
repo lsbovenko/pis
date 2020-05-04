@@ -37,6 +37,10 @@ class StatusesTableSeeder extends Seeder
                 'name' => 'Paused',
                 'slug' => Status::SLUG_FROZEN
             ],
+            [
+                'name' => 'Rejected',
+                'slug' => Status::SLUG_REJECTED
+            ],
         ];
     }
 }
