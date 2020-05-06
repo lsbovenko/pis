@@ -13,3 +13,4 @@ npm-debug.log
 composer.lock
 sandbox.php
 node_modules
+.DS_Store

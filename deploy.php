@@ -8,13 +8,13 @@ require 'recipe/laravel.php';
 set('application', 'Velmie-PIS');
 
 // Project repository
-set('repository', 'git@bitbucket.org:ikantam/pis.ikantam.com.git');
+set('repository', 'git@bitbucket.org:velmie/pis.ikantam.com.git');
 
-// Shared files/dirs between deploys 
+// Shared files/dirs between deploys
 add('shared_files', ['.env']);
 add('shared_dirs', ['vendor', 'storage']);
 
-// Writable dirs by web server 
+// Writable dirs by web server
 add('writable_dirs', []);
 
 set('allow_anonymous_stats', false);
