@@ -307,8 +307,23 @@ class IdeasController extends Controller
                 return $query;
             } else {
                 $searchQueryDescription = $query->where('description', 'LIKE', "%$searchIdea%");
+                $searchQueryResult = $this->getSearchQuery($searchQueryTitle, $searchQueryDescription);
+                $searchedIds = [];
 
-                $query = $this->getSearchQuery($searchQueryTitle, $searchQueryDescription);
+                foreach ($searchQueryResult as $idea) {
+                    $searchedIds[] = $idea->id;
+                }
+
+                $searchQuery = Idea::with('user.position', 'status', 'executors');
+                $searchQuery->select('ideas.*');
+                $searchQuery->whereIn('ideas.id', $searchedIds);
+
+                $searchedIdsStr = implode(",", $searchedIds);
+
+                //sort ideas by list of searched and ordered ids
+                $searchQuery->orderByRaw(DB::raw("FIELD(ideas.id, $searchedIdsStr) ASC"));
+
+                return $searchQuery;
             }
         }
 
@@ -438,8 +453,6 @@ class IdeasController extends Controller
             $searchQueryTitle = $this->getChangeFilter($request, $filterParams);
             $ideas = $this->getChangeFilter($request, $filterParams, $searchQueryTitle)
                 ->paginate($this->checkedLimit($request));
-
-            $ideas = $this->getSearchResponse($ideas);
         } else {
             $ideas = $this->getChangeFilter($request, $filterParams)
                 ->paginate($this->checkedLimit($request));
@@ -449,50 +462,11 @@ class IdeasController extends Controller
     }
 
     /**
-     * Get structure of search response is the same as the structure of the other filter responses
-     *
-     * @param  \Illuminate\Pagination\LengthAwarePaginator
-     * @return \Illuminate\Pagination\LengthAwarePaginator
-     */
-    protected function getSearchResponse($ideas)
-    {
-        foreach ($ideas as &$idea) {
-            $user = new \stdClass();
-            $user->id = $idea->user_id;
-            $user->name = $idea->user_name;
-            $user->email = $idea->user_email;
-            $user->created_at = $idea->user_created_at;
-            $user->updated_at = $idea->user_updated_at;
-            $user->department_id = $idea->user_department_id;
-            $user->position_id = $idea->user_position_id;
-            $user->is_active = $idea->user_is_active;
-            $user->last_name = $idea->user_last_name;
-            $idea->user = $user;
-
-            $position = new \stdClass();
-            $position->id = $idea->user_position_id;
-            $position->name = $idea->position_name;
-            $position->is_active = $idea->position_is_active;
-            $user->position = $position;
-
-            $status = new \stdClass();
-            $status->id = $idea->status_id;
-            $status->name = $idea->status_name;
-            $status->slug = $idea->status_slug;
-            $status->is_active = $idea->status_is_active;
-            $idea->status = $status;
-            $idea->executors = ModelIdea::where('id', $idea->id)->first()->executors;
-        }
-
-        return $ideas;
-    }
-
-    /**
-     * Get search query by priority (title, description)
+     * Get searched ideas(id and priority) by priority (title, description)
      *
      * @param  \Illuminate\Database\Eloquent\Builder
      * @param  \Illuminate\Database\Eloquent\Builder
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return array
      */
     protected function getSearchQuery($searchQueryTitle, $searchQueryDescription)
     {
@@ -509,29 +483,15 @@ class IdeasController extends Controller
             ->mergeBindings($query)
             ->selectRaw(
                 '
-                        c.id,
-                        any_value(c.created_at) as created_at, any_value(c.updated_at) as updated_at,
-                        any_value(c.title) as title, any_value(c.description) as description,
-                        any_value(c.type_id) as type_id, any_value(c.user_id) as user_id,
-                        any_value(c.status_id) as status_id, any_value(c.approve_status) as approve_status,
-                        any_value(c.is_priority) as is_priority, any_value(c.likes_num) as likes_num,
-                        any_value(c.comments_count) as comments_count, any_value(c.completed_at) as completed_at,
-                        any_value(c.details) as details,
-                        max(c.priority) as priority,
-                        any_value(u.name) as user_name, any_value(u.email) as user_email,
-                        any_value(u.created_at) as user_created_at, any_value(u.updated_at) as user_updated_at,
-                        any_value(u.department_id) as user_department_id, any_value(u.position_id) as user_position_id,
-                        any_value(u.is_active) as user_is_active, any_value(u.last_name) as user_last_name,
-                        any_value(p.name) as position_name, any_value(p.is_active) as position_is_active,
-                        any_value(s.name) as status_name, any_value(s.slug) as status_slug,
-                        any_value(s.is_active) as status_is_active'
+                    c.id,
+                    max(c.priority) as priority
+                '
             )
-            ->join('users as u', 'c.user_id', '=', 'u.id')
-            ->join('positions as p', 'u.position_id', '=', 'p.id')
-            ->join('statuses as s', 'c.status_id', '=', 's.id')
             ->groupBy('c.id')
             ->orderBy('priority', 'DESC');
 
-        return $query;
+        $searchedItems = $query->get();
+
+        return $searchedItems;
     }
 }
