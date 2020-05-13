@@ -113,7 +113,7 @@ return [
     'not_approved' => 'Not approved',
     'approved' => 'Approved',
     'details' => 'Details',
-    'about_system' => 'About system',
+    'about_system' => 'FAQ',
     'ideas' => 'Ideas',
     'priority_list' => 'Priority list',
     'my_ideas' => 'My ideas',
@@ -149,22 +149,26 @@ return [
     'unable_delete_ideas_with_task' => 'Unable to delete item. There are ideas with such a task.',
     'unable_delete_ideas_with_type' => 'Unable to delete item. There are ideas with this type.',
 
-    'about_title' => 'Improvement and Innovation System (PIS) at IKantem',
+    'about_title' => 'Performance Improvement and Innovation System (PIS) at Velmie',
     'about_text' => '
-        <b> Idea generation, categorization, prioritization, and implementation are the goals of the PIS system. </b>
-        <br> <br>
-        - Ideas are moderated before being published in the system. When an idea is published -
-        the submitter
-        receives a confirmation of activation by mail. In addition, the submitter receives notifications to the mailbox,
-        if
-        the idea was not accepted for publication (indicating the reason) and if its status was changed. <br> <br>
-        - Ideas have 3 statuses - “active” (one might say, is under consideration), “paused” (ideas,
-        which can
-        be included in the implementation plan in the near future, but for now, work on their possible implementation
-        suspended) and “implemented” (the idea was implemented). <br> <br>
-        - The form for adding an idea (<a href=":route_add_idea">:route_add_idea</a>) has certain fields for
-        classifications that
-        allows you to do more precise processing of offers: <br> <br>
+        <b> Idea generation, categorization, prioritization, and implementation ARE the goals of the PIS system. 
+        Ideas generally fall into TWO CATEGORIES:<br><br>
+        - Related to work conditions (office improvements, etc) and <br>
+        - Related to business processes/ flows. <br><br>
+        </b>
+        - Ideas are moderated (usually, on a weekly basis) before being published in the system. When an idea is 
+        published - the submitter receives an activation confirmation e-mail. In addition, the submitter receives
+         notifications to the mailbox, if the idea was not accepted for publication (indicating the reason) and if 
+         its status was changed. <br> <br>
+        - Ideas are assigned to the owner. Together with the idea submitter they can/ should communicate discussing 
+        possible implementation solutions.  <br> <br>
+        - The owner prioritizes ideas assigned to him to implement at his own discretion  <br> <br>
+        - Ideas have 4 statuses - “active” (one might say, is under consideration), “paused” (ideas, which can be 
+        included in the implementation plan in the future, but for now, work on their possible implementation 
+        suspended), “completed” (the idea was implemented) and “rejected” (with the reason explained) <br> <br>
+
+        - <a href=":route_add_idea">Idea submission form</a> has certain fields that allow you to do more precise 
+        processing of initiatives: <br> <br>
         <ul class = "without-list-style">
             <li>
                 <b> Core competency </b> - a list of company competencies in the drop-down list. To
@@ -179,7 +183,7 @@ return [
                 -> Vision and goals -> Operational goals
             </li>
             <li>
-                <b> Strategic objective </b> - these are the current strategic objectives of Ikantem. They can
+                <b> Strategic objective </b> - these are the current strategic objectives of Velmie. They can
                 also
                 look at Wiki -> Vision and goals -> Strategic tasks
             </li>
@@ -190,7 +194,7 @@ return [
         </ul>
         <br>
         You can select multiple competencies, goals, tasks, or departments (using CTRL).
-        Do not worry about the correct selection of the above fields, as the idea will be
+        <b>Do not worry about the correct selection of the above fields</b>, as the idea will be
         undergo moderation and, if necessary, the categories will be corrected.
         <hr>
         Important ideas for implementing operational goals and strategic objectives fall into <strong> Priority Boards </strong>

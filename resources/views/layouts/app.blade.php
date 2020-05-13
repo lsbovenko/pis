@@ -59,6 +59,10 @@
                 <button class="add"><a href="{{ route('add-idea') }}">+</a></button>
             </div>
 
+            <div class="faq">
+                <a href="{{ route('faq') }}">FAQ</a>
+            </div>
+
             <div class="flex">
                 <div class="dropdown user-settings">
                     @if (Auth::guest())

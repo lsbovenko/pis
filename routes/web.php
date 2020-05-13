@@ -31,7 +31,7 @@ Route::group(['middleware' => ['jwt']], function () {
         Route::post('/add-idea', 'IndexController@createIdea');
         Route::get('/success', 'IndexController@success')->name('add-idea-success');
         Route::get('/review-idea/{id}', 'ReviewIdeaController@index')->where('id', '[0-9]+')->name('review-idea');
-        Route::get('/about', 'AboutController@index')->name('about');
+        Route::get('/faq', 'AboutController@index')->name('faq');
         Route::post('/add-like', 'LikesController@addLike')->name('add-like');
         Route::post('/remove-like', 'LikesController@removeLike')->name('remove-like');
         Route::post('/add-comment/{id}', 'ReviewIdeaController@addComment')->where('id', '[0-9]+')->name('add-comment');
