@@ -151,6 +151,16 @@
   transition: 0.2s ease;
 }
 
+.header .faq {
+  position: relative;
+  left: 30px;
+}
+
+.header .faq a {
+  color: #c7f4f9;
+  text-decoration: none;
+}
+
 .header .dropdown {
   min-height: 65px;
   font-size: 14px;

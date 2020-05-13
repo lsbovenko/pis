@@ -26,7 +26,6 @@ class Navbar
                 $user = Auth::user();
                 if (isset($user)) {
                     $menu
-                        ->route('faq', trans('ideas.about_system'))
                         ->route('main', trans('ideas.ideas'))
                         ->route('priority-board', trans('ideas.priority_list'))
                         ->route('my-ideas', trans('ideas.my_ideas'));
