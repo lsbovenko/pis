@@ -412,7 +412,7 @@ class IdeasController extends Controller
      */
     protected function getActiveUsers()
     {
-        return App::make('repository.user')->getActiveUsers(20);
+        return App::make('repository.user')->getActiveUsers();
     }
     /**
      * @return mixed

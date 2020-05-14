@@ -106,10 +106,9 @@ class User extends AbstractRepository
     }
 
     /**
-     * @param int $limit
      * @return mixed
      */
-    public function getActiveUsers(int $limit)
+    public function getActiveUsers()
     {
         /** @var \Illuminate\Database\Query\Builder $query */
         $query = DB::table('users')
@@ -122,9 +121,7 @@ class User extends AbstractRepository
         $query->where('users.is_active', '=', 1);
         $query->where('ideas.approve_status', '=', Idea::APPROVED);
 
-        return $query
-            ->limit($limit)
-            ->get();
+        return $query->get();
     }
 
     /**
