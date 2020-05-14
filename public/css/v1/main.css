@@ -9005,6 +9005,7 @@ body .container .content-box .idea .reviews ul li .text-reviews {
     line-height: 1.57;
     color: #000000;
     width: 90%;
+    word-wrap: break-word;
 }
 
 body .container .content-box .idea .reviews ul li .text-reviews b {
