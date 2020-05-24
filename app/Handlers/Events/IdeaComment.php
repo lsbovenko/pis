@@ -29,10 +29,34 @@ class IdeaComment extends AbstractIdea
         $ideaAuthor = $this->getIdeaAuthor($event);
         $superAdmins = $this->getSuperAdmins();
         $executors = $this->getExecutors($event);
+        $notifiedUsers = $this->getNotifiedUsers($event);
 
-        $users = $ideaAuthor->merge($superAdmins)->merge($executors)->diff($commentAuthor);
+        $users = $ideaAuthor->merge($superAdmins)->merge($executors)->merge($notifiedUsers)->diff($commentAuthor);
 
         $this->notifyUsers($event, $users);
+    }
+
+    protected function getNotifiedUsers(CommentAdded $event)
+    {
+        $message = $event->getComment()->message;
+        $notifiedUsersFullnames = '';
+        $pattern = '/<span class="[a-zA-Z0-9-_\s]*js-mention[a-zA-Z0-9-_\s]*">@([A-Za-z\s.]+)/';
+
+        preg_match_all($pattern, $message, $matches, PREG_SET_ORDER);
+
+        foreach ($matches as $match) {
+            if (empty($notifiedUsersFullnames)) {
+                $notifiedUsersFullnames .= "'" . $match[1] . "'";
+            } else {
+                $notifiedUsersFullnames .= ", '" . $match[1] . "'";
+            }
+        }
+
+        if ($notifiedUsersFullnames) {
+            return User::whereRaw("CONCAT(name, ' ', last_name) in ($notifiedUsersFullnames)")->get();
+        } else {
+            return [];
+        }
     }
 
     protected function getCommentAuthor(CommentAdded $event)

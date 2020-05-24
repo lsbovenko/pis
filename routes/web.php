@@ -42,6 +42,7 @@ Route::group(['middleware' => ['jwt']], function () {
         //VueJS
         Route::get('/get-idea/all', 'Get\IdeasController@index')->name('get-idea/all');
         Route::get('/get-idea/filter', 'Get\IdeasController@getFilter')->name('get-idea/filter');
+        Route::get('/active-users', 'Get\IdeasController@getUsers')->name('active-users');
         Route::get('/get-idea/change-filter', 'Get\IdeasController@getChangeFilter')->name('get-idea/change-filter');
         Route::get('/get-idea/priority-board', 'Get\IdeasController@priorityBoard')->name('/get-idea/priority-board');
         Route::get('/get-idea/my-ideas', 'Get\IdeasController@myIdeas')->name('/get-idea/my-ideas');

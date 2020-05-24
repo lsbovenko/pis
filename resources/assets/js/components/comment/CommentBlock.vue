@@ -10,7 +10,7 @@
                         {{ item.user.name }}
                         {{ item.user.last_name }}
                     </b>
-                    {{ item.message }}.
+                    <span v-html="item.message + '.'"></span>
                     <i>{{ item.created_at }}</i>
                 </div>
             </li>
