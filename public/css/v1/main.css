@@ -2116,6 +2116,34 @@ output {
     color: #555555;
 }
 
+.comment-area {
+    overflow-y: auto;
+    height: 60px !important;
+    line-height: 1.6 !important;
+}
+
+.js-mention {
+    background-color: #c5deed;
+    color: #1264a3;
+    padding: 3px;
+    border-radius: 10px;
+}
+
+.mention-logo {
+    width: 30px;
+    height: 30px;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+    display: inline-block;
+    text-align: center;
+    color: #fff;
+    line-height: 30px;
+    vertical-align: middle;
+    margin-right: 5px;
+    font-size: 15px;
+    text-transform: uppercase;
+}
+
 .form-control {
     display: block;
     width: 100%;
@@ -8998,6 +9026,21 @@ body .container .content-box .idea .reviews ul li .image {
     position: relative;
     top: 55px;
     right: 10px;
+}
+
+.atwho-view {
+    max-width: 190px !important;
+}
+
+.atwho-ul {
+    margin-top: 0px !important;
+    max-height: 200px !important;
+}
+
+.atwho-li{
+    margin-top: 0px !important;
+    height: 40px !important;
+    padding-left: 5px !important;
 }
 
 body .container .content-box .idea .reviews ul li .text-reviews {

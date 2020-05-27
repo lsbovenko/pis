@@ -111,6 +111,19 @@ class User extends AbstractRepository
     public function getActiveUsers()
     {
         /** @var \Illuminate\Database\Query\Builder $query */
+        $query = ModelUser::where('is_active', 1)
+            ->orderBy('name', 'asc')
+            ->orderBy('last_name', 'asc');
+
+        return $query->get();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActiveIdeaUsers()
+    {
+        /** @var \Illuminate\Database\Query\Builder $query */
         $query = DB::table('users')
             ->rightJoin('ideas', 'users.id', '=', 'ideas.user_id')
             ->select(DB::raw('users.*, count(users.id) AS number'))

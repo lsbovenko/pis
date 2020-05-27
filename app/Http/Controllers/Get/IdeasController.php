@@ -168,8 +168,20 @@ class IdeasController extends Controller
             [
             'filter' => $this->getValuesForFilter(),
             'status' => $this->availableStatuses(),
-            'users' => $this->getActiveUsers(),
+            'users' => $this->getActiveIdeaUsers(),
             'ideas' => trans('ideas')
+            ]
+        );
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getUsers()
+    {
+        return response()->json(
+            [
+                'users' => $this->getActiveUsers()
             ]
         );
     }
@@ -405,6 +417,14 @@ class IdeasController extends Controller
     protected function getTopUsers()
     {
         return App::make('repository.user')->getTopUsers();
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getActiveIdeaUsers()
+    {
+        return App::make('repository.user')->getActiveIdeaUsers();
     }
 
     /**
