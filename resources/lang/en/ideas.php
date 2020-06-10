@@ -152,9 +152,10 @@ return [
     'about_title' => 'Performance Improvement and Innovation System (PIS) at Velmie',
     'about_text' => '
         <b> Idea generation, categorization, prioritization, and implementation ARE the goals of the PIS system. 
-        Ideas generally fall into TWO CATEGORIES:<br><br>
-        - Related to work conditions (office improvements, etc) and <br>
-        - Related to business processes/ flows. <br><br>
+        Ideas generally fall into THREE CATEGORIES:<br><br>
+        - Related to work conditions (office improvements, etc)<br>
+        - Related to business processes/ flows. <br>
+        - Related to product development. <br><br>
         </b>
         - Ideas are moderated (usually, on a weekly basis) before being published in the system. When an idea is 
         published - the submitter receives an activation confirmation e-mail. In addition, the submitter receives
