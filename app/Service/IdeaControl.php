@@ -48,8 +48,9 @@ class IdeaControl
         if (isset($data['tag_id'])) {
             $idea->tags()->attach($data['tag_id']);
         }
-        if (!empty($data['similar_ideas_id'])) {
-            $idea->similarIdeas()->attach(explode(',', $data['similar_ideas_id']));
+        if (!empty($data['similar_ideas'])) {
+            $similarIdeaIds = $this->getSimilarIdeaIds($data['similar_ideas']);
+            $idea->similarIdeas()->attach($similarIdeaIds);
         }
 
         event(new IdeaWasCreated($idea));
@@ -70,10 +71,27 @@ class IdeaControl
         $idea->operationalGoals()->sync($data['operational_goal_id'], 1);
         $tagIds = (isset($data['tag_id'])) ? $data['tag_id'] : [];
         $idea->tags()->sync($tagIds, 1);
-        $similarIdeaIds = (!empty($data['similar_ideas_id'])) ? explode(',', $data['similar_ideas_id']) : [];
-        $idea->similarIdeas()->sync($similarIdeaIds, 1);
+        if (!empty($data['similar_ideas'])) {
+            $similarIdeaIds = $this->getSimilarIdeaIds($data['similar_ideas']);
+            $idea->similarIdeas()->sync($similarIdeaIds, 1);
+        }
 
         return $idea;
+    }
+
+    /**
+     * @param string $similarIdeasJson
+     * @return array
+     */
+    private function getSimilarIdeaIds(string $similarIdeasJson)
+    {
+        $similarIdeas = json_decode($similarIdeasJson);
+        $similarIdeaIds = [];
+        foreach ($similarIdeas as $similarIdea) {
+            $similarIdeaIds[] = $similarIdea->id;
+        }
+
+        return $similarIdeaIds;
     }
 
     /**
@@ -312,26 +330,28 @@ class IdeaControl
      */
     public function addTagIds(IdeaRequest $request): IdeaRequest
     {
-        $tags = $request->get('tags');
+        $tags = json_decode($request->get('tags'));
 
         if (!empty($tags)) {
-            $tagsAll = explode(",", $tags);
-            $tagsOldIds = array_keys(App::make('reference')->getAllTagForSelect());
-            $tagsNew = array_diff($tagsAll, $tagsOldIds);
+            $tagIdArrayOld = [];
+            $tagsNew = [];
+            $tagsNewArray = [];
 
-            foreach ($tagsNew as $tagNew) {
-                $count = Tag::where('name', $tagNew)->count();
-                if (!$count) {
-                    $tagsNewArray[] = [
-                        'name' => $tagNew,
-                    ];
+            foreach ($tags as $tag) {
+                if (!empty($tag->id)) {
+                    $tagIdArrayOld[] = $tag->id;
+                } elseif ($currentTag = Tag::where('name', $tag->text)->first()) {
+                    $tagIdArrayOld[] = $currentTag->id;
+                } else {
+                    $tagsNew[] = $tag->text;
+                    $tagsNewArray[] = ['name' => $tag->text];
                 }
             }
+
             if (!empty($tagsNewArray)) {
                 Tag::insert($tagsNewArray);
             }
 
-            $tagIdArrayOld = array_intersect($tagsAll, $tagsOldIds);
             $tagIdArrayNew = Tag::whereIn('name', $tagsNew)->pluck('id')->toArray();
             $tagIdArrayAll = array_merge($tagIdArrayOld, $tagIdArrayNew);
             $request->merge(['tag_id' => $tagIdArrayAll]);

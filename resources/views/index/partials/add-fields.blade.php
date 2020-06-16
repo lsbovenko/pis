@@ -58,37 +58,14 @@
         </div>
     </div>
 </div>
-<div class="input-group-two">
-    <div class="form-group">
-        <label for="tags_select">{{ trans('ideas.available_tags') }}</label>
-        <div class="dropdown customer-select">
-            {{ Form::select('tags_select[]', $tagsList, '', [
-            'class'=>'form-control',
-            'id' => 'tags_select',
-            'multiple' => true
-            ]) }}
-        </div>
-    </div>
-    <div class="form-group tagsinput">
-        <label for="tags">{{ trans('ideas.added_tags') }}</label>
-        {{ Form::text('tags', '', [
-        'class'=>'form-control',
-        'id' => 'tags',
-        'placeholder' => trans('ideas.enter_new_tag')
-        ]) }}
-    </div>
+<div id="event_bus" class="form-group">
+    <label for="tag">Tags</label>
+    <div id="popular_tag"></div>
+    <div id="tag"></div>
 </div>
-{{ Form::hidden('tags_exclude', isset($tagsExclude) ? $tagsExclude : '', ['class'=>'form-control', 'id'=>'tags_exclude']) }}
-
 <div class="form-group">
-    <label for="search_similar_idea">{{ trans('ideas.add_similar_ideas') }}</label>
-    <img src='{{ asset('/images/loader.gif') }}' class='loader-small'>
-    {{ Form::text('search_similar_idea', '', ['class'=>'form-control', 'placeholder'=>trans('ideas.search'), 'id'=>'search_similar_idea']) }}
-</div>
-
-<div class="form-group tagsinput similar_ideas_id">
-    <label for="similar_ideas_id">{{ trans('ideas.added_similar_ideas') }}</label>
-    {{ Form::text('similar_ideas_id', '', ['class'=>'form-control', 'id' => 'similar_ideas_id']) }}
+    <label for="similar_idea">Similar ideas</label>
+    <div id="similar_idea"></div>
 </div>
 
 <div class="form-group">
@@ -100,8 +77,10 @@
     {{ Form::text('estimated_time', isset($idea) ? $idea->estimated_time : '', ['class'=>'form-control', 'placeholder'=>trans('ideas.estimated_example'), 'id'=>'estimated_time']) }}
 </div>
 
-{{ Form::hidden('similar_ideas_info', !empty($similarIdeasInfo) ? $similarIdeasInfo : '', ['class'=>'form-control', 'id'=>'similar_ideas_info']) }}
 {{ Form::hidden('idea_id', !empty($idea) ? $idea->id : '', ['class'=>'form-control', 'id'=>'idea_id']) }}
+{{ Form::hidden('popular_tags', '', ['class'=>'form-control', 'id'=>'popular_tags']) }}
+{{ Form::hidden('tags', '', ['class'=>'form-control', 'id'=>'tags']) }}
+{{ Form::hidden('similar_ideas', '', ['class'=>'form-control', 'id'=>'similar_ideas']) }}
 
 @section('scripts')
     <script src="{!! asset('/vendor/summernote/summernote.js') !!}"></script>

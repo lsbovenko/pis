@@ -16,7 +16,8 @@
                 </div>
                 <div class="row bottom-button">
                     <div class="col-md-12 text-right">
-                        <button type="submit" class="btn_ btn-blue last">{{ trans('ideas.save') }}</button>
+                        <button type="button" class="btn_ btn-blue last" @click.prevent="onClickAddIdea" id="add_idea_button">{{ trans('ideas.save') }}</button>
+                        <button type="submit" hidden="hidden" id="add_idea_submit"></button>
                     </div>
                 </div>
             </form>

@@ -16,7 +16,7 @@ class Idea extends Model
     const NEW = 0;
     const APPROVED = 1;
     const DECLINED = 2;
-    const SEARCH_IDEAS_LIMIT = 10;
+    const SEARCH_IDEAS_LIMIT = 5;
 
     /**
      * The attributes that are mass assignable.
