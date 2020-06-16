@@ -67,6 +67,7 @@
                             <li v-for="(itemStatus, index) in statuses"
                                 v-on:click="ideaStatus(`${index}`); selected = index"
                                 :class="{active:index == selected}"
+                                v-bind:data-slug="index"
                             >
                                 {{ itemStatus }}
                             </li>
@@ -199,7 +200,7 @@
         data() {
             return {
                 pathUrl: pathUrl,
-                selected: undefined,
+                selected: 'active',
                 loading: true,
                 viewBlock: false,
                 ideaEmpty: false,
@@ -212,7 +213,7 @@
                     likes: 'likes',
                     comments: 'comments',
                     likesComments: 'likes_comments',
-                    statusId: '',
+                    statusId: 'active',
                     orderDir: 'new',
                 },
                 collection: {
@@ -279,15 +280,15 @@
                         break;
                     case this.query.likes:
                         this.query.orderDir = this.query.likes;
-                        this.ideaStatus(1);
+                        this.ideaStatus('active');
                         break;
                     case this.query.comments:
                         this.query.orderDir = this.query.comments;
-                        this.ideaStatus(1);
+                        this.ideaStatus('active');
                         break;
                     case this.query.likesComments:
                         this.query.orderDir = this.query.likesComments;
-                        this.ideaStatus(1);
+                        this.ideaStatus('active');
                         break;
                     default:
                         this.query.orderDir = this.query.newFirst;
@@ -302,7 +303,7 @@
             ideaStatus(param) {
                 let ideaStatuses = this.$refs.ideaStatus.childNodes;
                 ideaStatuses.forEach(function (el, i) {
-                    if (i == param-1) {
+                    if (el.dataset.slug == param) {
                         el.classList.add('active');
                     } else {
                         el.classList.remove('active');

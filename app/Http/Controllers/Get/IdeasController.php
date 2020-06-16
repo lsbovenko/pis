@@ -272,7 +272,8 @@ class IdeasController extends Controller
 
         if (isset($input['statusId'])) {
             $statusId = $input['statusId'];
-            $query->where('status_id', '=', $statusId);
+            $query->join('statuses as st', 'ideas.status_id', '=', 'st.id');
+            $query->where('st.slug', '=', $statusId);
         }
 
         if (isset($input['type_id'])) {
@@ -407,7 +408,7 @@ class IdeasController extends Controller
         $reference = App::make('reference');
 
         return [
-            'status' => $reference->getAllStatusesForSelect()
+            'status' => $reference->getAllStatusesForSelect(true)
         ];
     }
 
