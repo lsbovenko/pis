@@ -38,7 +38,11 @@ class Status extends AbstractRepository
         $res = [];
         $query = ($this->getModelClass())::where('is_active', '1')->orderBy('id', 'asc');
         foreach ($query->get() as $model) {
-            $res[$model->id] = $model->getDisplayNameField();
+            if ($isFilter) {
+                $res[$model->slug] = $model->getDisplayNameField();
+            } else {
+                $res[$model->id] = $model->getDisplayNameField();
+            }
         }
 
         return $res;
