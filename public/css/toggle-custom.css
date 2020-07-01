@@ -128,3 +128,21 @@
   line-height: 22px;
   font-size: 10px;
 }
+
+.like-checkbox {
+  display: none;
+}
+
+.like-label{
+  display: flex;
+  width: 17px;
+  height: 17px;
+  background-image: url(../images/heart-grey.svg);
+  background-repeat: no-repeat;
+  background-color: #ffffff;
+  background-size: contain;
+}
+
+.like-checkbox:checked + label.like-label {
+  background-image: url(../images/heart-red.svg);
+}
