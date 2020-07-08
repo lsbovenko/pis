@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Zizaco\Entrust\EntrustFacade;
@@ -85,11 +86,21 @@ class ReviewIdeaController extends Controller
             ->get()
             ->first();
 
+        /** @var \App\Models\CommentLike $commentLikes */
+        $commentLikes = DB::table('comment_likes')
+            ->join('comments', 'comments.id', '=', 'comment_likes.comment_id')
+            ->select(DB::raw('comment_likes.*'))
+            ->where('comment_likes.is_removed', 0)
+            ->where('comments.idea_id', $request->id)
+            ->get();
+
         if (isset($idea)) {
             return [
                 'count' => $idea->comments_count,
                 'comments' => $idea->comments,
-                'ideas' => trans('ideas')
+                'ideas' => trans('ideas'),
+                'commentsLikes' => $commentLikes,
+                'currentUserId' => Auth::user()->id
             ];
         }
     }

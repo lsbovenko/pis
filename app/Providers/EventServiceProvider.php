@@ -34,6 +34,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\CommentAdded' => [
             'App\Handlers\Events\IdeaComment@handle',
         ],
+        'App\Events\CommentLikeAdded' => [
+            'App\Handlers\Events\IdeaCommentLike@handle',
+        ],
         'App\Events\IdeaExecutorsWasAdded' => [
             'App\Handlers\Events\IdeaExecutorsAdded@handle',
         ],
