@@ -143,6 +143,10 @@
   background-size: contain;
 }
 
+.like-label:hover {
+  cursor: pointer;
+}
+
 .like-checkbox:checked + label.like-label {
   background-image: url(../images/heart-red.svg);
 }
