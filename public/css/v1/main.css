@@ -9385,10 +9385,11 @@ body .container .btn_.btn-outline-red:hover {
     text-align: left;
     color: #000000;
     margin: 0 0 16px;
+    position: relative;
 }
 
 .left-sidebar .block-subtitle {
-    margin-bottom: 6px;
+    margin-bottom: 7px;
 }
 
 .left-sidebar ul li.last {
@@ -10388,6 +10389,26 @@ body .container .btn_.btn-outline-red:hover {
     height: 18px;
 }
 
+.left-sidebar ul li.first .reset-filter {
+    right: 12px;
+}
+
+.reset-filter {
+    display: inline-block;
+    font-size: 18px;
+    color: #fff;
+    background: #eee;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    font-style: normal;
+    line-height: 18px;
+    position: absolute;
+    right: 0px;
+    cursor: pointer;
+}
+
 .left-sidebar .reset-btn {
     margin-bottom: 32px;
     display: flex;
@@ -10406,12 +10427,12 @@ body .container .btn_.btn-outline-red:hover {
 
 .left-sidebar .reset-btn i {
     display: inline-block;
-    font-size: 20px;
+    font-size: 18px;
     color: #fff;
     background: #eee;
     border-radius: 50%;
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     text-align: center;
     font-style: normal;
     line-height: 20px;

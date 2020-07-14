@@ -3,6 +3,7 @@
 return [
     'date_range' => 'Диапазон дат',
     'clear' => 'Сбросить',
+    'clear_all_filters' => 'Сбросить все фильтры',
     'department_of_the_author' => 'Отдел автора',
     'choose_department' => 'Выбрать отдел',
     'author' => 'Автор',
