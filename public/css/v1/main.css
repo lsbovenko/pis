@@ -10409,6 +10409,12 @@ body .container .btn_.btn-outline-red:hover {
     cursor: pointer;
 }
 
+@-moz-document url-prefix() {
+    .reset-filter {
+        font-size: 16px;
+    }
+}
+
 .left-sidebar .reset-btn {
     margin-bottom: 32px;
     display: flex;
