@@ -7,7 +7,7 @@
             <div id="datepicker"></div>
             <div @click="removeChecked" id="reset-filters" class="reset-btn">
                 <i>×</i>
-                <span>{{ideas.clear}}</span>
+                <span>{{ideas.clear_all_filters}}</span>
             </div>
 
             <section class="item inbtn sidebar-section">
@@ -24,7 +24,9 @@
             </section>
 
             <section class="sidebar-section">
-                <h4 class="block-subtitle">{{ideas.department_of_the_author}}</h4>
+                <h4 class="block-subtitle">{{ideas.department_of_the_author}}
+                    <i @click="clearDepartment" class="reset-filter">×</i>
+                </h4>
                 <div class="btn-group-vue dropdown customer-select" id="user-department-select">
                     <div class="menu-overlay-vue" v-if="showDropdownUserDepartment" @click.stop="toggleMenuUserDepartment"></div>
                     <li @click="toggleMenuUserDepartment()" class="dropdown-toggle-vue" v-if="selectedOptionNameUserDepartment !== ''">
@@ -48,7 +50,9 @@
             </section>
 
             <section class="sidebar-section">
-                <h4 class="block-subtitle">{{ideas.author}}</h4>
+                <h4 @click="clearSubmitter" class="block-subtitle">{{ideas.author}}
+                    <i class="reset-filter">×</i>
+                </h4>
                 <div class="btn-group-vue dropdown customer-select" id="customer-select">
                     <div class="menu-overlay-vue" v-if="showDropdown" @click.stop="toggleMenu"></div>
                     <li @click="toggleMenu()" class="dropdown-toggle-vue" v-if="selectedOptionName !== '' ">
@@ -74,7 +78,9 @@
             </section>
 
             <section class="sidebar-section">
-                <h4 class="block-subtitle">{{ideas.executor}}</h4>
+                <h4 class="block-subtitle">{{ideas.executor}}
+                    <i @click="clearExecutor" class="reset-filter">×</i>
+                </h4>
                 <div class="btn-group-vue dropdown customer-select" id="executor-select">
                     <div class="menu-overlay-vue" v-if="showDropdownExecutor" @click.stop="toggleMenuExecutor"></div>
                     <li @click="toggleMenuExecutor()" class="dropdown-toggle-vue" v-if="selectedOptionNameExecutor !== ''">
@@ -98,7 +104,9 @@
             </section>
 
             <section class="sidebar-section">
-                <h4 class="block-subtitle">{{ideas.age_of_ideas}}</h4>
+                <h4 class="block-subtitle">{{ideas.age_of_ideas}}
+                    <i @click="clearIdeaAge" class="reset-filter">×</i>
+                </h4>
                 <div class="btn-group-vue dropdown customer-select" id="idea-age-select">
                     <div class="menu-overlay-vue" v-if="showDropdownIdeaAge" @click.stop="toggleMenuIdeaAge"></div>
                     <li @click="toggleMenuIdeaAge()" class="dropdown-toggle-vue" v-if="selectedOptionNameIdeaAge !== ''">
@@ -123,13 +131,15 @@
         </section>
         <section id="departments" class="item mg-top-10 sidebar-section">
             <ul class="without-list-style">
-                <li class="first">{{ideas.department}}</li>
+                <li class="first">{{ideas.department}}
+                    <i @click="clearCheckboxFilter('department_id[]')" class="reset-filter">×</i>
+                </li>
                 <li v-for="(itemDepartament, index) in filters.departmentsList">
                     <label class="inbtn">
                         <input type="checkbox"
                                name="department_id[]"
                                :value="`${itemDepartament.id}`"
-                               @change="changeHandler($event)"
+                               @change="changeHandler"
                         >
                         <span class="inbtn__indicator"></span>
                         <span class="data" id="data-1">{{itemDepartament.name}}</span>
@@ -139,13 +149,15 @@
         </section>
         <section id="competenc" class="item sidebar-section">
             <ul class="without-list-style">
-                <li class="first">{{ideas.core_competency}}</li>
+                <li class="first">{{ideas.core_competency}}
+                    <i @click="clearCheckboxFilter('core_competency_id[]')" class="reset-filter">×</i>
+                </li>
                 <li v-for="(itemCompetenc, index) in filters.coreCompetenciesList">
                     <label class="inbtn">
                         <input type="checkbox"
                                name="core_competency_id[]"
                                :value="`${itemCompetenc.id}`"
-                               @change="changeHandler($event)"
+                               @change="changeHandler"
                         >
                         <span class="inbtn__indicator"></span>
                         <span class="data" id="data-2">{{itemCompetenc.name}}</span>
@@ -155,7 +167,9 @@
         </section>
         <section id="operational" class="item sidebar-section">
             <ul class="without-list-style">
-                <li class="first">{{ideas.operational_goal}}</li>
+                <li class="first">{{ideas.operational_goal}}
+                    <i @click="clearCheckboxFilter('operational_goal_id[]')" class="reset-filter">×</i>
+                </li>
                 <li v-for="(itemOperational, index) in filters.operationalGoalsList">
                     <label class="inbtn">
                         <input type="checkbox"
@@ -171,7 +185,9 @@
         </section>
         <section id="type" class="item sidebar-section">
             <ul class="without-list-style">
-                <li class="first">{{ideas.type}}</li>
+                <li class="first">{{ideas.type}}
+                    <i @click="clearCheckboxFilter('type_id[]')" class="reset-filter">×</i>
+                </li>
                 <li v-for="(itemType, index) in filters.typesList">
                     <label class="inbtn">
                         <input type="checkbox"
@@ -187,7 +203,9 @@
         </section>
         <section v-if="filters.tagsList && Object.keys(filters.tagsList).length" id="tag" class="item bottom-20 sidebar-section">
             <ul class="without-list-style">
-                <li class="first">{{ideas.tag}}</li>
+                <li class="first">{{ideas.tag}}
+                    <i @click="clearCheckboxFilter('tag_id[]')" class="reset-filter">×</i>
+                </li>
                 <li v-for="(itemTag, index) in filters.tagsList">
                     <label class="inbtn">
                         <input type="checkbox"
@@ -230,7 +248,7 @@
                     limit: 15,
                     page: 1,
                     count: 0,
-                    statusId: '',
+                    statusId: 'active',
                     orderDir: 'new',
                 },
                 url: (window.location.pathname === '/') ? '/get-idea/all' : '/get-idea' + pathUrl,
@@ -275,6 +293,32 @@
             });
         },
         methods: {
+            clearDepartment() {
+                this.updateOptionUserDepartment('');
+                this.changeSelectUserDepartment('');
+            },
+            clearSubmitter() {
+                this.updateOption('');
+                this.changeSelect('');
+            },
+            clearExecutor() {
+                this.updateOptionExecutor('');
+                this.changeSelectExecutor('');
+            },
+            clearIdeaAge() {
+                this.updateOptionIdeaAge('');
+                this.changeSelectIdeaAge('');
+            },
+            clearCheckboxFilter(checkboxName) {
+                let selector = 'input[name="' + checkboxName +'"]';
+                let checkboxes = document.querySelectorAll(selector);
+                checkboxes.forEach(function (checkbox) {
+                    if(checkbox.checked) {
+                        checkbox.checked = false;
+                    }
+                });
+                this.changeHandler();
+            },
             updateOption(option) {
                 this.selectedOptionName = option;
                 this.showDropdown = false;
@@ -349,8 +393,8 @@
                         this.$root.$emit('resultFilter', res);
                     });
             },
-            changeHandler (e) {
-                let serialize = this.checkBoxStatus(e);
+            changeHandler() {
+                let serialize = this.checkBoxStatus();
                 this.inputChecked = serialize.substr(1);
                 if (this.selectUser) {
                     this.inputChecked = this.inputChecked + '&' +this.selectUser
@@ -377,26 +421,20 @@
                     orderDir: this.query.orderDir
                 });
 
-                if (e.target.checked){
-                    this.post();
-                } else {
-                    this.clearResult();
-                }
+                this.post();
 
             },
             changeSelect (val) {
-                if (val === 'undefined') {
-                    this.selectUser = '';
-                    this.clearResult();
-                    return false;
-                }
-
                 if (this.inputChecked) {
                     this.inputChecked = this.inputChecked.replace(/(\&|\?)user_id\[\]=(\d+)/gm, '');
                 }
 
-                this.selectUser = val;
-                this.inputChecked = this.inputChecked + '&' + this.selectUser;
+                if (val === '') {
+                    this.selectUser = '';
+                } else {
+                    this.selectUser = val;
+                    this.inputChecked = this.inputChecked + '&' + this.selectUser;
+                }
 
                 this.$root.$emit('resultChecked', {
                     data: this.inputChecked,
@@ -406,12 +444,6 @@
                 this.post();
             },
             changeSelectUserDepartment (val) {
-                if (val === 'undefined') {
-                    this.selectUserDepartment = '';
-                    this.clearResult();
-                    return false;
-                }
-
                 let department = val.replace('user_department_id=', '');
                 this.$root.$emit('changeUserSelect', {data: department});
 
@@ -426,8 +458,13 @@
                     this.inputChecked = this.inputChecked.replace(/(\&|\?)user_department_id=(\d+)/gm, '');
                 }
 
-                this.selectUserDepartment = val;
-                this.inputChecked = this.inputChecked + '&' + this.selectUserDepartment;
+                if (val === '') {
+                    this.selectUserDepartment = '';
+                    this.selectUser = '';
+                } else {
+                    this.selectUserDepartment = val;
+                    this.inputChecked = this.inputChecked + '&' + this.selectUserDepartment;
+                }
 
                 this.$root.$emit('resultChecked', {
                     data: this.inputChecked,
@@ -437,12 +474,6 @@
                 this.post();
             },
             changeSelectIdeaAge (val) {
-                if (val === 'undefined') {
-                    this.selectIdeaAge = '';
-                    this.clearResult();
-                    return false;
-                }
-
                 this.query.statusId = this.activeStatusId;
 
                 if (this.inputChecked) {
@@ -450,8 +481,12 @@
                     this.inputChecked = this.inputChecked.replace(/(\&|\?)idea_age=(\d+)/gm, '');
                 }
 
-                this.selectIdeaAge = val;
-                this.inputChecked = this.inputChecked + '&' + this.selectIdeaAge;
+                if (val === '') {
+                    this.selectIdeaAge = '';
+                } else {
+                    this.selectIdeaAge = val;
+                    this.inputChecked = this.inputChecked + '&' + this.selectIdeaAge;
+                }
 
                 this.$root.$emit('resultChecked', {
                     data: this.inputChecked,
@@ -461,19 +496,17 @@
                 this.post();
             },
             changeSelectExecutor (val) {
-                if (val === 'undefined') {
-                    this.selectExecutor = '';
-                    this.clearResult();
-                    return false;
-                }
-
                 if (this.inputChecked) {
                     //remove from inputChecked string executor_id parameter
                     this.inputChecked = this.inputChecked.replace(/(\&|\?)executor_id=(\d+)/gm, '');
                 }
 
-                this.selectExecutor = val;
-                this.inputChecked = this.inputChecked + '&' + this.selectExecutor;
+                if (val === '') {
+                    this.selectExecutor = '';
+                } else {
+                    this.selectExecutor = val;
+                    this.inputChecked = this.inputChecked + '&' + this.selectExecutor;
+                }
 
                 this.$root.$emit('resultChecked', {
                     data: this.inputChecked,
@@ -559,9 +592,9 @@
                 this.inputChecked = '';
                 this.clearResult();
             },
-            checkBoxStatus (e) {
+            checkBoxStatus() {
                 let serialize = '';
-                let checkboxAll = e.target.form.querySelectorAll('input[type=checkbox]');
+                let checkboxAll = document.querySelectorAll('input[type=checkbox]');
 
                 let checkboxArray = Array.from(checkboxAll);
 

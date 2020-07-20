@@ -3,6 +3,7 @@
 return [
     'date_range' => 'Date range',
     'clear' => 'Clear',
+    'clear_all_filters' => 'Clear all filters',
     'department_of_the_author' => 'Submitter’s Department',
     'choose_department' => 'Choose department',
     'author' => 'Submitter',
