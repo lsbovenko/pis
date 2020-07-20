@@ -50,8 +50,8 @@
             </section>
 
             <section class="sidebar-section">
-                <h4 @click="clearSubmitter" class="block-subtitle">{{ideas.author}}
-                    <i class="reset-filter">×</i>
+                <h4 class="block-subtitle">{{ideas.author}}
+                    <i @click="clearSubmitter" class="reset-filter">×</i>
                 </h4>
                 <div class="btn-group-vue dropdown customer-select" id="customer-select">
                     <div class="menu-overlay-vue" v-if="showDropdown" @click.stop="toggleMenu"></div>
