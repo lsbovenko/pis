@@ -6,7 +6,7 @@
         <section class="item mg-right-12">
             <div id="datepicker"></div>
             <div @click="removeChecked" id="reset-filters" class="reset-btn">
-                <i>×</i>
+                <i class="reset-filter"></i>
                 <span>{{ideas.clear_all_filters}}</span>
             </div>
 
@@ -25,7 +25,7 @@
 
             <section class="sidebar-section">
                 <h4 class="block-subtitle">{{ideas.department_of_the_author}}
-                    <i @click="clearDepartment" class="reset-filter">×</i>
+                    <i @click="clearDepartment" class="reset-filter"></i>
                 </h4>
                 <div class="btn-group-vue dropdown customer-select" id="user-department-select">
                     <div class="menu-overlay-vue" v-if="showDropdownUserDepartment" @click.stop="toggleMenuUserDepartment"></div>
@@ -51,7 +51,7 @@
 
             <section class="sidebar-section">
                 <h4 class="block-subtitle">{{ideas.author}}
-                    <i @click="clearSubmitter" class="reset-filter">×</i>
+                    <i @click="clearSubmitter" class="reset-filter"></i>
                 </h4>
                 <div class="btn-group-vue dropdown customer-select" id="customer-select">
                     <div class="menu-overlay-vue" v-if="showDropdown" @click.stop="toggleMenu"></div>
@@ -79,7 +79,7 @@
 
             <section class="sidebar-section">
                 <h4 class="block-subtitle">{{ideas.executor}}
-                    <i @click="clearExecutor" class="reset-filter">×</i>
+                    <i @click="clearExecutor" class="reset-filter"></i>
                 </h4>
                 <div class="btn-group-vue dropdown customer-select" id="executor-select">
                     <div class="menu-overlay-vue" v-if="showDropdownExecutor" @click.stop="toggleMenuExecutor"></div>
@@ -105,7 +105,7 @@
 
             <section class="sidebar-section">
                 <h4 class="block-subtitle">{{ideas.age_of_ideas}}
-                    <i @click="clearIdeaAge" class="reset-filter">×</i>
+                    <i @click="clearIdeaAge" class="reset-filter"></i>
                 </h4>
                 <div class="btn-group-vue dropdown customer-select" id="idea-age-select">
                     <div class="menu-overlay-vue" v-if="showDropdownIdeaAge" @click.stop="toggleMenuIdeaAge"></div>
@@ -132,7 +132,7 @@
         <section id="departments" class="item mg-top-10 sidebar-section">
             <ul class="without-list-style">
                 <li class="first">{{ideas.department}}
-                    <i @click="clearCheckboxFilter('department_id[]')" class="reset-filter">×</i>
+                    <i @click="clearCheckboxFilter('department_id[]')" class="reset-filter"></i>
                 </li>
                 <li v-for="(itemDepartament, index) in filters.departmentsList">
                     <label class="inbtn">
@@ -150,7 +150,7 @@
         <section id="competenc" class="item sidebar-section">
             <ul class="without-list-style">
                 <li class="first">{{ideas.core_competency}}
-                    <i @click="clearCheckboxFilter('core_competency_id[]')" class="reset-filter">×</i>
+                    <i @click="clearCheckboxFilter('core_competency_id[]')" class="reset-filter"></i>
                 </li>
                 <li v-for="(itemCompetenc, index) in filters.coreCompetenciesList">
                     <label class="inbtn">
@@ -168,7 +168,7 @@
         <section id="operational" class="item sidebar-section">
             <ul class="without-list-style">
                 <li class="first">{{ideas.operational_goal}}
-                    <i @click="clearCheckboxFilter('operational_goal_id[]')" class="reset-filter">×</i>
+                    <i @click="clearCheckboxFilter('operational_goal_id[]')" class="reset-filter"></i>
                 </li>
                 <li v-for="(itemOperational, index) in filters.operationalGoalsList">
                     <label class="inbtn">
@@ -186,7 +186,7 @@
         <section id="type" class="item sidebar-section">
             <ul class="without-list-style">
                 <li class="first">{{ideas.type}}
-                    <i @click="clearCheckboxFilter('type_id[]')" class="reset-filter">×</i>
+                    <i @click="clearCheckboxFilter('type_id[]')" class="reset-filter"></i>
                 </li>
                 <li v-for="(itemType, index) in filters.typesList">
                     <label class="inbtn">
@@ -204,7 +204,7 @@
         <section v-if="filters.tagsList && Object.keys(filters.tagsList).length" id="tag" class="item bottom-20 sidebar-section">
             <ul class="without-list-style">
                 <li class="first">{{ideas.tag}}
-                    <i @click="clearCheckboxFilter('tag_id[]')" class="reset-filter">×</i>
+                    <i @click="clearCheckboxFilter('tag_id[]')" class="reset-filter"></i>
                 </li>
                 <li v-for="(itemTag, index) in filters.tagsList">
                     <label class="inbtn">

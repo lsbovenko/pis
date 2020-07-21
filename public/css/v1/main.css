@@ -10389,30 +10389,23 @@ body .container .btn_.btn-outline-red:hover {
     height: 18px;
 }
 
-.left-sidebar ul li.first .reset-filter {
-    right: 12px;
-}
-
 .reset-filter {
-    display: inline-block;
-    font-size: 18px;
-    color: #fff;
-    background: #eee;
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
-    text-align: center;
-    font-style: normal;
-    line-height: 18px;
+    display: inline;
     position: absolute;
+    bottom: 0px;
     right: 0px;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    background-repeat: no-repeat;
+    background-color: #ffffff;
+    background-size: contain;
+    background-image: url(../../images/reset-button.svg);
     cursor: pointer;
 }
 
-@-moz-document url-prefix() {
-    .reset-filter {
-        font-size: 16px;
-    }
+.left-sidebar ul li.first .reset-filter {
+    right: 12px;
 }
 
 .left-sidebar .reset-btn {
@@ -10425,6 +10418,7 @@ body .container .btn_.btn-outline-red:hover {
     padding: 5px 0;
     cursor: pointer;
     transition: 0.3s;
+    position: relative;
 }
 
 .left-sidebar .reset-btn:hover {
@@ -10432,17 +10426,8 @@ body .container .btn_.btn-outline-red:hover {
 }
 
 .left-sidebar .reset-btn i {
-    display: inline-block;
-    font-size: 18px;
-    color: #fff;
-    background: #eee;
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
-    text-align: center;
-    font-style: normal;
-    line-height: 20px;
-    margin-right: 10px;
+    position: static;
+    margin-right: 5px;
 }
 
 .left-sidebar .reset-btn span {
