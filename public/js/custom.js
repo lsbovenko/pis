@@ -34,6 +34,11 @@
                     },300);
             }
         });
+        if (searchIdeaVuejs.attr('urlSearch')) {
+            searchIdeaVuejs.val(searchIdeaVuejs.attr('urlSearch'));
+            searchIdeaVuejs.click();
+            searchIdeaVuejs.attr('pageSearch', 0);
+        }
 
         $('#form-search-idea').submit(function () {
             return false;
@@ -41,7 +46,7 @@
 
         var datepicker = $('#datepicker');
         var datepickerDates = $('#datepicker-dates');
-        datepicker.datepicker({
+        var dp = datepicker.datepicker({
             range: true,
             maxDate: new Date(),
             dateFormat: 'yyyy-mm-dd',
@@ -55,6 +60,11 @@
                 }
             }
         });
+        if (datepickerDates.attr('urlDates')) {
+            var urlDates = datepickerDates.attr('urlDates').split(',');
+            dp.data('datepicker').selectDate([new Date(urlDates[0]), new Date(urlDates[1])]);
+            datepickerDates.attr('pageDatepicker', 0);
+        }
 
         $('#reset-filters').on('click', function () {
             datepicker.datepicker().data('datepicker').clear();

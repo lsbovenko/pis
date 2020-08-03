@@ -509,7 +509,8 @@ class IdeasController extends Controller
                 '
             )
             ->groupBy('c.id')
-            ->orderBy('priority', 'DESC');
+            ->orderBy('priority', 'DESC')
+            ->orderBy('c.id', 'DESC');
 
         $searchedItems = $query->get();
 
