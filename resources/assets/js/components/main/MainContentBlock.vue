@@ -81,15 +81,15 @@
                                 aria-haspopup="true"
                                 aria-expanded="true"
                         >
-                            <em> {{ideas.new_first}} </em>
+                            <em> {{selectedOrderDir}} </em>
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuOrder" v-model="query.filter_match">
-                            <li class="order-list active" @click="orderSort(`${query.newFirst}`)"><a class="pointer">{{ideas.new_first}}</a></li>
-                            <li class="order-list" @click="orderSort(`${query.oldFirst}`)"><a class="pointer">{{ideas.old_first}}</a></li>
-                            <li class="order-list" @click="orderSort(`${query.likes}`)"><a class="pointer">{{ideas.likes}}</a></li>
-                            <li class="order-list" @click="orderSort(`${query.comments}`)"><a class="pointer">{{ideas.commentaries}}</a></li>
-                            <li class="order-list" @click="orderSort(`${query.likesComments}`)"><a class="pointer">{{ideas.likes_comments}}</a></li>
+                            <li ref="newFirst" v-bind:orderSort="query.newFirst" class="order-list" @click="orderSort(`${query.newFirst}`)"><a class="pointer">{{ideas.new_first}}</a></li>
+                            <li ref="oldFirst" v-bind:orderSort="query.oldFirst" class="order-list" @click="orderSort(`${query.oldFirst}`)"><a class="pointer">{{ideas.old_first}}</a></li>
+                            <li ref="likes" v-bind:orderSort="query.likes" class="order-list" @click="orderSort(`${query.likes}`)"><a class="pointer">{{ideas.likes}}</a></li>
+                            <li ref="comments" v-bind:orderSort="query.comments" class="order-list" @click="orderSort(`${query.comments}`)"><a class="pointer">{{ideas.commentaries}}</a></li>
+                            <li ref="likesComments" v-bind:orderSort="query.likesComments" class="order-list" @click="orderSort(`${query.likesComments}`)"><a class="pointer">{{ideas.likes_comments}}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -200,21 +200,21 @@
         data() {
             return {
                 pathUrl: pathUrl,
-                selected: 'active',
+                selected: this.$route.query.statusId || 'active',
                 loading: true,
                 viewBlock: false,
                 ideaEmpty: false,
                 query: {
-                    limit: 15,
-                    page: 1,
+                    limit: this.$route.query.limit || 15,
                     count: 0,
                     newFirst: 'new',
                     oldFirst: 'old',
                     likes: 'likes',
                     comments: 'comments',
                     likesComments: 'likes_comments',
-                    statusId: 'active',
-                    orderDir: 'new',
+                    statusId: this.$route.query.statusId || 'active',
+                    orderDir: this.$route.query.orderDir || 'new',
+                    page: this.$route.query.page || 1,
                 },
                 collection: {
                     data: [],
@@ -234,6 +234,43 @@
                 resultFilters: '',
                 listMenu: ['/', '/priority-board', '/my-ideas', '/pending-review', '/declined'],
                 url: (window.location.pathname === '/') ? '/get-idea/all' : '/get-idea' + pathUrl
+            }
+        },
+        computed: {
+            selectedOrderDir: function () {
+                switch (this.query.orderDir) {
+                    case this.query.newFirst:
+                        return this.ideas.new_first;
+                    case this.query.oldFirst:
+                        return this.ideas.old_first;
+                    case this.query.likes:
+                        return this.ideas.likes;
+                    case this.query.comments:
+                        return this.ideas.commentaries;
+                    case this.query.likesComments:
+                        return this.ideas.likes_comments;
+                }
+            },
+        },
+        watch: {
+            selectedOrderDir: function () {
+                switch (this.query.orderDir) {
+                    case this.$refs.newFirst.getAttribute('orderSort'):
+                        this.$refs.newFirst.setAttribute('class', 'order-list active');
+                        break;
+                    case this.$refs.oldFirst.getAttribute('orderSort'):
+                        this.$refs.oldFirst.setAttribute('class', 'order-list active');
+                        break;
+                    case this.$refs.likes.getAttribute('orderSort'):
+                        this.$refs.likes.setAttribute('class', 'order-list active');
+                        break;
+                    case this.$refs.comments.getAttribute('orderSort'):
+                        this.$refs.comments.setAttribute('class', 'order-list active');
+                        break;
+                    case this.$refs.likesComments.getAttribute('orderSort'):
+                        this.$refs.likesComments.setAttribute('class', 'order-list active');
+                        break;
+                }
             }
         },
         mounted() {
@@ -295,8 +332,8 @@
                 }
 
                 if (this.query.orderDir == this.query.oldFirst || this.query.orderDir == this.query.newFirst) {  // function ideaStatus() has this code for other options
-                    this.$root.$emit('checkStatusIdAndOrderDir', this.query);
                     this.query.page = 1;
+                    this.$root.$emit('checkStatusIdAndOrderDir', this.query);
                     this.applyChange();
                 }
             },
@@ -311,9 +348,9 @@
                 });
 
                 this.query.statusId = param;
+                this.query.page = 1;
                 this.$root.$emit('checkStatusIdAndOrderDir', this.query);
 
-                this.query.page = 1;
                 this.active = 'active';
                 this.applyChange();
             },
@@ -322,18 +359,21 @@
             },
             updateLimit() {
                 this.query.page = 1;
+                this.$root.$emit('checkStatusIdAndOrderDir', this.query);
                 this.applyChange();
             },
 
             prevPage() {
                 if(this.collection.prev_page_url) {
                     this.query.page = Number(this.query.page) - 1;
+                    this.$root.$emit('checkStatusIdAndOrderDir', this.query);
                     this.applyChange();
                 }
             },
             nextPage() {
                 if (this.collection.next_page_url){
                     this.query.page = Number(this.query.page) + 1;
+                    this.$root.$emit('checkStatusIdAndOrderDir', this.query);
                     this.applyChange();
                 }
             },
