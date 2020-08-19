@@ -1,8 +1,8 @@
 <template>
     <form action="">
         <input type="hidden" :value="activeStatusId" ref="activeStatusId">
-        <input type="hidden" ref="searchIdeaVuejs" id="search-idea-vuejs" @click="changeSearchIdea()" v-bind:urlSearch="getUrlSearch()" v-bind:pageSearch="1">
-        <input type="hidden" ref="datepickerDates" id="datepicker-dates" @click="changeDatepickerDates()" v-bind:urlDates="getUrlDates()" v-bind:pageDatepicker="1">
+        <input type="hidden" ref="searchIdeaVuejs" id="search-idea-vuejs" @click="changeSearchIdea()" v-bind:urlSearch="filterParams.searchIdea" v-bind:pageSearch="1">
+        <input type="hidden" ref="datepickerDates" id="datepicker-dates" @click="changeDatepickerDates()" v-bind:urlDates="filterParams.datepickerDates" v-bind:pageDatepicker="1">
         <section class="item mg-right-12">
             <div id="datepicker"></div>
             <div @click="removeChecked" id="reset-filters" class="reset-btn">
@@ -31,15 +31,15 @@
                 </h4>
                 <div class="btn-group-vue dropdown customer-select" id="user-department-select">
                     <div class="menu-overlay-vue" v-if="showDropdownUserDepartment" @click.stop="toggleMenuUserDepartment"></div>
-                    <li @click="toggleMenuUserDepartment()" class="dropdown-toggle-vue" v-if="selectedOptionUserDepartmentId">
+                    <li @click="toggleMenuUserDepartment()" class="dropdown-toggle-vue" v-if="filterParams.submittersDepartmentId">
                         {{selectedOptionNameUserDepartmentData}}
                         <span class="caret"></span>
                     </li>
-                    <li @click="toggleMenuUserDepartment()" class="dropdown-toggle-vue" v-if="selectedOptionNameUserDepartment && !selectedOptionUserDepartmentId">
+                    <li @click="toggleMenuUserDepartment()" class="dropdown-toggle-vue" v-if="selectedOptionNameUserDepartment && !filterParams.submittersDepartmentId">
                         {{selectedOptionNameUserDepartment}}
                         <span class="caret"></span>
                     </li>
-                    <li @click="toggleMenuUserDepartment()" class="dropdown-toggle-vue" v-if="!selectedOptionNameUserDepartment && !selectedOptionUserDepartmentId">
+                    <li @click="toggleMenuUserDepartment()" class="dropdown-toggle-vue" v-if="!selectedOptionNameUserDepartment && !filterParams.submittersDepartmentId">
                         {{ideas.choose_department}}
                         <span class="caret-menu"></span>
                     </li>
@@ -61,16 +61,16 @@
                 </h4>
                 <div class="btn-group-vue dropdown customer-select" id="customer-select">
                     <div class="menu-overlay-vue" v-if="showDropdown" @click.stop="toggleMenu"></div>
-                    <li @click="toggleMenu()" class="dropdown-toggle-vue" v-if="selectedOptionUserId">
+                    <li @click="toggleMenu()" class="dropdown-toggle-vue" v-if="filterParams.submitterId">
                         {{selectedOptionNameUserData}}
                         <span class="caret"></span>
                     </li>
-                    <li @click="toggleMenu()" class="dropdown-toggle-vue" v-if="selectedOptionName && !selectedOptionUserId">
+                    <li @click="toggleMenu()" class="dropdown-toggle-vue" v-if="selectedOptionName && !filterParams.submitterId">
                         {{selectedOptionName}}
                         <span class="caret"></span>
                     </li>
 
-                    <li @click="toggleMenu()" class="dropdown-toggle-vue" v-if="!selectedOptionName && !selectedOptionUserId">
+                    <li @click="toggleMenu()" class="dropdown-toggle-vue" v-if="!selectedOptionName && !filterParams.submitterId">
                         {{ideas.choose_author}}
                         <span class="caret-menu"></span>
                     </li>
@@ -93,15 +93,15 @@
                 </h4>
                 <div class="btn-group-vue dropdown customer-select" id="executor-select">
                     <div class="menu-overlay-vue" v-if="showDropdownExecutor" @click.stop="toggleMenuExecutor"></div>
-                    <li @click="toggleMenuExecutor()" class="dropdown-toggle-vue" v-if="selectedOptionExecutorId">
+                    <li @click="toggleMenuExecutor()" class="dropdown-toggle-vue" v-if="filterParams.ownerId">
                         {{selectedOptionNameExecutorData}}
                         <span class="caret"></span>
                     </li>
-                    <li @click="toggleMenuExecutor()" class="dropdown-toggle-vue" v-if="selectedOptionNameExecutor && !selectedOptionExecutorId">
+                    <li @click="toggleMenuExecutor()" class="dropdown-toggle-vue" v-if="selectedOptionNameExecutor && !filterParams.ownerId">
                         {{selectedOptionNameExecutor}}
                         <span class="caret"></span>
                     </li>
-                    <li @click="toggleMenuExecutor()" class="dropdown-toggle-vue" v-if="!selectedOptionNameExecutor && !selectedOptionExecutorId">
+                    <li @click="toggleMenuExecutor()" class="dropdown-toggle-vue" v-if="!selectedOptionNameExecutor && !filterParams.ownerId">
                         {{ideas.choose_executor}}
                         <span class="caret-menu"></span>
                     </li>
@@ -123,15 +123,15 @@
                 </h4>
                 <div class="btn-group-vue dropdown customer-select" id="idea-age-select">
                     <div class="menu-overlay-vue" v-if="showDropdownIdeaAge" @click.stop="toggleMenuIdeaAge"></div>
-                    <li @click="toggleMenuIdeaAge()" class="dropdown-toggle-vue" v-if="selectedOptionIdeaAgeId">
+                    <li @click="toggleMenuIdeaAge()" class="dropdown-toggle-vue" v-if="filterParams.ageOfIdeasId">
                         {{selectedOptionNameIdeaAgeData}}
                         <span class="caret"></span>
                     </li>
-                    <li @click="toggleMenuIdeaAge()" class="dropdown-toggle-vue" v-if="selectedOptionNameIdeaAge && !selectedOptionIdeaAgeId">
+                    <li @click="toggleMenuIdeaAge()" class="dropdown-toggle-vue" v-if="selectedOptionNameIdeaAge && !filterParams.ageOfIdeasId">
                         {{selectedOptionNameIdeaAge}}
                         <span class="caret"></span>
                     </li>
-                    <li @click="toggleMenuIdeaAge()" class="dropdown-toggle-vue" v-if="!selectedOptionNameIdeaAge && !selectedOptionIdeaAgeId">
+                    <li @click="toggleMenuIdeaAge()" class="dropdown-toggle-vue" v-if="!selectedOptionNameIdeaAge && !filterParams.ageOfIdeasId">
                         {{ideas.choose_age_of_ideas}}
                         <span class="caret-menu"></span>
                     </li>
@@ -259,27 +259,35 @@
         },
         data() {
             return {
-                active: 'active',
                 selectUser: '',
                 selectUserDepartment: '',
                 selectIdeaAge: '',
                 selectExecutor: '',
-                searchIdea: '',
-                datepickerDates: '',
+                searchIdea: this.getUrlSearch(),
+                datepickerDates: this.getUrlDates(),
                 inputChecked: '',
+                filterParams: {
+                    searchIdea: this.$route.query.search_idea || '',
+                    datepickerDates: this.$route.query.datepicker_dates || '',
+                    isAnonymous: this.$route.query.is_anonymous || '',
+                    isLikedIdeas: this.$route.query.is_liked || '',
+                    submittersDepartmentId: this.$route.query.user_department_id || '',
+                    submitterId: this.$route.query.user_id || '',
+                    ownerId: this.$route.query.executor_id || '',
+                    ageOfIdeasId: this.$route.query.idea_age || '',
+                    departmentIds: this.getDepartmentIds() || [],
+                    coreCompetencyIds: this.getCoreCompetencyIds() || [],
+                    operationalGoalIds: this.getOperationalGoalIds() || [],
+                    typeIds: this.getTypeIds() || [],
+                    tagIds: this.getTagIds() || [],
+                },
                 query: {
                     limit: this.$route.query.limit || 15,
-                    count: 0,
                     statusId: this.$route.query.statusId || 'active',
                     orderDir: this.$route.query.orderDir || 'new',
                     page: this.$route.query.page || 1,
                 },
-                url: (window.location.pathname === '/') ? '/get-idea/all' : '/get-idea' + pathUrl,
-                resetParam: {
-                    limit: 15,
-                    statusId: '',
-                    selected: ''
-                },
+                orderResult: '',
                 selectedOption: {
                     name: ''
                 },
@@ -301,54 +309,43 @@
                 showDropdownIdeaAge: false,
                 showDropdownExecutor: false,
                 ideaAges: [45, 90],
-                selectedOptionUserId: this.$route.query.user_id || '',
-                selectedOptionUserDepartmentId: this.$route.query.user_department_id || '',
-                selectedOptionExecutorId: this.$route.query.executor_id || '',
-                selectedOptionIdeaAgeId: this.$route.query.idea_age || '',
-                checkedDepartmentIds: this.getDepartmentIds() || '',
-                checkedCoreCompetencyIds: this.getCoreCompetencyIds() || '',
-                checkedOperationalGoalIds: this.getOperationalGoalIds() || '',
-                checkedTypeIds: this.getTypeIds() || '',
-                checkedTagIds: this.getTagIds() || '',
-                checkedIsAnonymous: this.$route.query.is_anonymous || '',
-                checkedIsLiked: this.$route.query.is_liked || '',
                 pageSearch: 1,
                 pageDatepicker: 1,
-                previousUrl: '',
+                isPost: 1,
             }
         },
         computed: {
             selectedOptionNameUserData: function() {
-                if (this.selectedOptionUserId) {
+                if (this.filterParams.submitterId) {
                     for (var index in this.users) {
-                        if (this.users[index].id == this.selectedOptionUserId) {
+                        if (this.users[index].id == this.filterParams.submitterId) {
                             return this.users[index].name + ' ' + this.users[index].last_name;
                         }
                     }
                 }
             },
             selectedOptionNameUserDepartmentData: function() {
-                if (this.selectedOptionUserDepartmentId) {
+                if (this.filterParams.submittersDepartmentId) {
                     for (var index in this.filters.departmentsList) {
-                        if (this.filters.departmentsList[index].id == this.selectedOptionUserDepartmentId) {
+                        if (this.filters.departmentsList[index].id == this.filterParams.submittersDepartmentId) {
                             return this.filters.departmentsList[index].name;
                         }
                     }
                 }
             },
             selectedOptionNameExecutorData: function() {
-                if (this.selectedOptionExecutorId) {
+                if (this.filterParams.ownerId) {
                     for (var index in this.filters.executorsList) {
-                        if (this.filters.executorsList[index].id == this.selectedOptionExecutorId) {
+                        if (this.filters.executorsList[index].id == this.filterParams.ownerId) {
                             return this.filters.executorsList[index].name;
                         }
                     }
                 }
             },
             selectedOptionNameIdeaAgeData: function() {
-                if (this.selectedOptionIdeaAgeId) {
+                if (this.filterParams.ageOfIdeasId) {
                     for (var index in this.ideaAges) {
-                        if (this.ideaAges[index] == this.selectedOptionIdeaAgeId) {
+                        if (this.ideaAges[index] == this.filterParams.ageOfIdeasId) {
                             for (var indexProps in this.ideas.idea_ages) {
                                 if (index == indexProps) {
                                     return this.ideas.idea_ages[indexProps];
@@ -363,25 +360,25 @@
             selectedOptionNameUserData: function () {
                 if (this.selectedOptionNameUserData) {
                     this.selectedOptionName = this.selectedOptionNameUserData;
-                    this.changeSelect('user_id=' + this.selectedOptionUserId);
+                    this.changeSelect('user_id=' + this.filterParams.submitterId);
                 }
             },
             selectedOptionNameUserDepartmentData: function () {
                 if (this.selectedOptionNameUserDepartmentData) {
                     this.selectedOptionNameUserDepartment = this.selectedOptionNameUserDepartmentData;
-                    this.changeSelectUserDepartment('user_department_id=' + this.selectedOptionUserDepartmentId);
+                    this.changeSelectUserDepartment('user_department_id=' + this.filterParams.submittersDepartmentId);
                 }
             },
             selectedOptionNameExecutorData: function () {
                 if (this.selectedOptionNameExecutorData) {
                     this.selectedOptionNameExecutor = this.selectedOptionNameExecutorData;
-                    this.changeSelectExecutor('executor_id=' + this.selectedOptionExecutorId);
+                    this.changeSelectExecutor('executor_id=' + this.filterParams.ownerId);
                 }
             },
             selectedOptionNameIdeaAgeData: function () {
                 if (this.selectedOptionNameIdeaAgeData) {
                     this.selectedOptionNameIdeaAge = this.selectedOptionNameIdeaAgeData;
-                    this.changeSelectIdeaAge('idea_age=' + this.selectedOptionIdeaAgeId);
+                    this.changeSelectIdeaAge('idea_age=' + this.filterParams.ageOfIdeasId);
                 }
             },
         },
@@ -393,9 +390,9 @@
             this.selectedOptionExecutor = this.filters.executorsList;
 
             this.$root.$on('checkStatusIdAndOrderDir', (res) => {
+                this.query.limit = res.limit;
                 this.query.statusId = res.statusId;
                 this.query.orderDir = res.orderDir;
-                this.query.limit = res.limit;
                 this.query.page = res.page;
                 this.post();
             });
@@ -412,15 +409,18 @@
                         this.query.page = this.pageDatepicker;
                     }
                 }
-                this.changeHandler(0);
+                if (this.isPost) {
+                    this.setInputChecked();
+                    this.post();
+                }
             });
         },
         methods: {
             getUrlSearch() {
-                return this.$route.query.search_idea || '';
+                return this.$route.query.search_idea ? 'search_idea=' + this.$route.query.search_idea : '';
             },
             getUrlDates() {
-                return this.$route.query.datepicker_dates || '';
+                return this.$route.query.datepicker_dates ? 'datepicker_dates=' + this.$route.query.datepicker_dates : '';
             },
             getDepartmentIds() {
                 for (var index in this.$route.query) {
@@ -430,8 +430,8 @@
                 }
             },
             isDepartmentChecked(itemDepartamentId) {
-                for (var index in this.checkedDepartmentIds) {
-                    if (itemDepartamentId == this.checkedDepartmentIds[index]) {
+                for (var index in this.filterParams.departmentIds) {
+                    if (itemDepartamentId == this.filterParams.departmentIds[index]) {
                         return 'checked';
                     }
                 }
@@ -444,8 +444,8 @@
                 }
             },
             isCoreCompetencyChecked(itemCoreCompetencyId) {
-                for (var index in this.checkedCoreCompetencyIds) {
-                    if (itemCoreCompetencyId == this.checkedCoreCompetencyIds[index]) {
+                for (var index in this.filterParams.coreCompetencyIds) {
+                    if (itemCoreCompetencyId == this.filterParams.coreCompetencyIds[index]) {
                         return 'checked';
                     }
                 }
@@ -458,8 +458,8 @@
                 }
             },
             isOperationalGoalChecked(itemOperationalGoalId) {
-                for (var index in this.checkedOperationalGoalIds) {
-                    if (itemOperationalGoalId == this.checkedOperationalGoalIds[index]) {
+                for (var index in this.filterParams.operationalGoalIds) {
+                    if (itemOperationalGoalId == this.filterParams.operationalGoalIds[index]) {
                         return 'checked';
                     }
                 }
@@ -472,8 +472,8 @@
                 }
             },
             isTypeChecked(itemTypeId) {
-                for (var index in this.checkedTypeIds) {
-                    if (itemTypeId == this.checkedTypeIds[index]) {
+                for (var index in this.filterParams.typeIds) {
+                    if (itemTypeId == this.filterParams.typeIds[index]) {
                         return 'checked';
                     }
                 }
@@ -490,39 +490,39 @@
                 }
             },
             isTagChecked(itemTagId) {
-                for (var index in this.checkedTagIds) {
-                    if (itemTagId == this.checkedTagIds[index]) {
+                for (var index in this.filterParams.tagIds) {
+                    if (itemTagId == this.filterParams.tagIds[index]) {
                         return 'checked';
                     }
                 }
             },
             isAnonymousChecked() {
-                if (this.checkedIsAnonymous) {
+                if (this.filterParams.isAnonymous) {
                     return 'checked';
                 }
             },
             isLikedChecked() {
-                if (this.checkedIsLiked) {
+                if (this.filterParams.isLikedIdeas) {
                     return 'checked';
                 }
             },
             clearDepartment() {
-                this.selectedOptionUserDepartmentId = '';
+                this.filterParams.submittersDepartmentId = '';
                 this.updateOptionUserDepartment('');
                 this.changeSelectUserDepartment('');
             },
             clearSubmitter() {
-                this.selectedOptionUserId = '';
+                this.filterParams.submitterId = '';
                 this.updateOption('');
                 this.changeSelect('');
             },
             clearExecutor() {
-                this.selectedOptionExecutorId = '';
+                this.filterParams.ownerId = '';
                 this.updateOptionExecutor('');
                 this.changeSelectExecutor('');
             },
             clearIdeaAge() {
-                this.selectedOptionIdeaAgeId = '';
+                this.filterParams.ageOfIdeasId = '';
                 this.updateOptionIdeaAge('');
                 this.changeSelectIdeaAge('');
             },
@@ -561,30 +561,28 @@
                 this.$emit('updateOptionExecutor', this.selectedOptionExecutor);
             },
             toggleMenu () {
-                this.selectedOptionUserId = '';
+                this.filterParams.submitterId = '';
                 this.showDropdown = !this.showDropdown;
                 this.removedClass();
             },
             toggleMenuUserDepartment () {
-                this.selectedOptionUserId = '';
-                this.selectedOptionUserDepartmentId = '';
+                this.filterParams.submitterId = '';
+                this.filterParams.submittersDepartmentId = '';
                 this.showDropdownUserDepartment = !this.showDropdownUserDepartment;
                 this.removedClassUserDepartment();
             },
             toggleMenuIdeaAge () {
-                this.selectedOptionIdeaAgeId = '';
+                this.filterParams.ageOfIdeasId = '';
                 this.showDropdownIdeaAge = !this.showDropdownIdeaAge;
                 this.removedClassIdeaAge();
             },
             toggleMenuExecutor () {
-                this.selectedOptionExecutorId = '';
+                this.filterParams.ownerId = '';
                 this.showDropdownExecutor = !this.showDropdownExecutor;
                 this.removedClassExecutor();
             },
             post() {
-                const params = {
-                    ...this.query
-                };
+                const params = {...this.query};
 
                 if (this.selectIdeaAge) {
                     let ideaStatuses = document.getElementById('idea-status').childNodes;
@@ -619,29 +617,23 @@
                         url += '&' + index + '=' + params[index];
                     }
                 }
-                var currentUrl = '?' + urlParams + url;
-                if (this.previousUrl != currentUrl) {
-                    this.$root.$emit('preloaderPage', true);
-
-                    this.$router.push(currentUrl).catch(err => {});
-                    axios.get(this.url + '?' + urlParams, {params: params})
-                        .then((res) => {
-                            this.$root.$emit('resultFilter', res);
-                        });
-                    this.previousUrl = currentUrl;
-                }
+                this.$root.$emit('preloaderPage', true);
+                this.$router.push('?' + urlParams + url).catch(err => {});
+                this.$root.$emit('resultFilter', {data: {...this.filterParams, ...params}, orderResult: this.orderResult});
+                this.orderResult = '';
+                this.isPost = 0;
             },
-            changeHandler(page = 1) {
+            setInputChecked() {
                 let serialize = this.checkBoxStatus();
                 this.inputChecked = serialize.substr(1);
                 if (this.selectUser) {
-                    this.inputChecked = this.inputChecked + '&' +this.selectUser
+                    this.inputChecked = this.inputChecked + '&' + this.selectUser;
                 }
                 if (this.selectUserDepartment) {
-                    this.inputChecked = this.inputChecked + '&' + this.selectUserDepartment
+                    this.inputChecked = this.inputChecked + '&' + this.selectUserDepartment;
                 }
                 if (this.selectIdeaAge) {
-                    this.inputChecked = this.inputChecked + '&' +this.selectIdeaAge
+                    this.inputChecked = this.inputChecked + '&' + this.selectIdeaAge;
                 }
                 if (this.selectExecutor) {
                     this.inputChecked = this.inputChecked + '&' + this.selectExecutor;
@@ -652,20 +644,15 @@
                 if (this.datepickerDates) {
                     this.inputChecked = this.inputChecked + '&' + this.datepickerDates;
                 }
-
-                if (page) {
-                    this.query.page = page;
-                }
-                this.$root.$emit('resultChecked', {
-                    data: this.inputChecked,
-                    statusId: this.query.statusId,
-                    orderDir: this.query.orderDir
-                });
-
-                this.post();
-
+                this.isPost = 1;
+            },
+            changeHandler() {
+                this.setInputChecked();
+                this.query.page = 1;
             },
             changeSelect (val) {
+                this.filterParams.submitterId = val.replace('user_id=', '');
+                this.isPost = 1;
                 if (this.inputChecked) {
                     this.inputChecked = this.inputChecked.replace(/(\&|\?)user_id=(\d+)/gm, '');
                 }
@@ -676,26 +663,20 @@
                     this.selectUser = val;
                     this.inputChecked = this.inputChecked + '&' + this.selectUser;
                 }
-
-                this.$root.$emit('resultChecked', {
-                    data: this.inputChecked,
-                    statusId: this.query.statusId,
-                    orderDir: this.query.orderDir
-                });
-                this.post();
             },
             changeSelectUserDepartment (val) {
                 let department = val.replace('user_department_id=', '');
                 this.$root.$emit('changeUserSelect', {data: department});
-
-                if (!this.selectedOptionUserId) {
+                this.filterParams.submittersDepartmentId = department;
+                this.isPost = 1;
+                if (!this.filterParams.submitterId) {
                     this.selectedOptionName = '';
                     if (this.inputChecked) {
                         //remove from inputChecked string user_id parameter
                         this.inputChecked = this.inputChecked.replace(/(\&|\?)user_id=(\d+)/gm, '');
+                        this.filterParams.submitterId = '';
                     }
                 }
-
                 if (this.inputChecked) {
                     //remove from inputChecked string user_department_id parameter
                     this.inputChecked = this.inputChecked.replace(/(\&|\?)user_department_id=(\d+)/gm, '');
@@ -708,17 +689,11 @@
                     this.selectUserDepartment = val;
                     this.inputChecked = this.inputChecked + '&' + this.selectUserDepartment;
                 }
-
-                this.$root.$emit('resultChecked', {
-                    data: this.inputChecked,
-                    statusId: this.query.statusId,
-                    orderDir: this.query.orderDir
-                });
-                this.post();
             },
             changeSelectIdeaAge (val) {
                 this.query.statusId = this.activeStatusId;
-
+                this.filterParams.ageOfIdeasId = val.replace('idea_age=', '');
+                this.isPost = 1;
                 if (this.inputChecked) {
                     //remove from inputChecked string idea_age parameter
                     this.inputChecked = this.inputChecked.replace(/(\&|\?)idea_age=(\d+)/gm, '');
@@ -730,15 +705,10 @@
                     this.selectIdeaAge = val;
                     this.inputChecked = this.inputChecked + '&' + this.selectIdeaAge;
                 }
-
-                this.$root.$emit('resultChecked', {
-                    data: this.inputChecked,
-                    statusId: this.query.statusId,
-                    orderDir: this.query.orderDir
-                });
-                this.post();
             },
             changeSelectExecutor (val) {
+                this.filterParams.ownerId = val.replace('executor_id=', '');
+                this.isPost = 1;
                 if (this.inputChecked) {
                     //remove from inputChecked string executor_id parameter
                     this.inputChecked = this.inputChecked.replace(/(\&|\?)executor_id=(\d+)/gm, '');
@@ -750,17 +720,11 @@
                     this.selectExecutor = val;
                     this.inputChecked = this.inputChecked + '&' + this.selectExecutor;
                 }
-
-                this.$root.$emit('resultChecked', {
-                    data: this.inputChecked,
-                    statusId: this.query.statusId,
-                    orderDir: this.query.orderDir
-                });
-                this.post();
             },
             changeSearchIdea () {
                 let val = 'search_idea=' + this.$refs.searchIdeaVuejs.value;
-
+                this.filterParams.searchIdea = this.$refs.searchIdeaVuejs.value;
+                this.isPost = 1;
                 if (this.inputChecked) {
                     //remove from inputChecked string search_idea parameter
                     this.inputChecked = this.inputChecked.replace(/(\&|\?)search_idea=([а-яА-Яa-zA-Z0-9ёЁ\s]*)/gmu, '');
@@ -768,20 +732,13 @@
 
                 this.searchIdea = val;
                 this.inputChecked = this.inputChecked + '&' + this.searchIdea;
-
                 this.pageSearch = this.query.page;
                 this.query.page = 1;
-
-                this.$root.$emit('resultChecked', {
-                    data: this.inputChecked,
-                    statusId: this.query.statusId,
-                    orderDir: this.query.orderDir
-                });
-                this.post();
             },
             changeDatepickerDates () {
                 let val = 'datepicker_dates=' + this.$refs.datepickerDates.value;
-
+                this.filterParams.datepickerDates = this.$refs.datepickerDates.value;
+                this.isPost = 1;
                 if (this.inputChecked) {
                     //remove from inputChecked string datepicker_dates parameter
                     this.inputChecked = this.inputChecked.replace(/(\&|\?)datepicker_dates=([\d\-\,]+)/gm, '');
@@ -789,25 +746,12 @@
 
                 this.datepickerDates = val;
                 this.inputChecked = this.inputChecked + '&' + this.datepickerDates;
-
                 this.pageDatepicker = this.query.page;
                 this.query.page = 1;
-
-                this.$root.$emit('resultChecked', {
-                    data: this.inputChecked,
-                    statusId: this.query.statusId,
-                    orderDir: this.query.orderDir
-                });
-                this.post();
-            },
-            clearResult () {
-                this.post();
             },
             removeChecked () {
                 let uncheck = document.getElementsByTagName('input');
-
                 for (let i=0; i < uncheck.length; i++) {
-
                     if (uncheck[i].type == 'checkbox') {
                         uncheck[i].checked = false;
                     }
@@ -817,10 +761,6 @@
                 ideaStatuses.forEach(function (el) {
                     el.classList.remove('active');
                 });
-                this.query.statusId = '';
-                this.query.orderDir = 'new';
-                this.query.limit = 15;
-                this.query.page = 1;
                 this.pageSearch = 1;
                 this.pageDatepicker = 1;
                 this.removedClass();
@@ -840,24 +780,70 @@
                 this.searchIdea = '';
                 this.datepickerDates = '';
                 this.$root.$emit('changeUserSelect', {data: ''});
-                this.$root.$emit('resultChecked', {data: '', orderResult: 'removed'});
-                this.$root.$emit('resetAllFilterParams', this.resetParam);
                 this.inputChecked = '';
-                this.selectedOptionUserId = '';
-                this.selectedOptionUserDepartmentId = '';
-                this.selectedOptionExecutorId = '';
-                this.selectedOptionIdeaAgeId = '';
-                this.clearResult();
+                this.removeFilterParams();
+                this.post();
+            },
+            removeFilterParams() {
+                this.filterParams.searchIdea = '';
+                this.filterParams.datepickerDates = '';
+                this.filterParams.isAnonymous = '';
+                this.filterParams.isLikedIdeas = '';
+                this.filterParams.submittersDepartmentId = '';
+                this.filterParams.submitterId = '';
+                this.filterParams.ownerId = '';
+                this.filterParams.ageOfIdeasId = '';
+                this.filterParams.departmentIds = [];
+                this.filterParams.coreCompetencyIds = [];
+                this.filterParams.operationalGoalIds = [];
+                this.filterParams.typeIds = [];
+                this.filterParams.tagIds = [];
+
+                this.query.limit = 15;
+                this.query.statusId = '';
+                this.query.orderDir = 'new';
+                this.query.page = 1;
+
+                this.orderResult = 'removed';
             },
             checkBoxStatus() {
                 let serialize = '';
+                this.filterParams.isAnonymous = '';
+                this.filterParams.isLikedIdeas = '';
+                this.filterParams.departmentIds = [];
+                this.filterParams.coreCompetencyIds = [];
+                this.filterParams.operationalGoalIds = [];
+                this.filterParams.typeIds = [];
+                this.filterParams.tagIds = [];
+
                 let checkboxAll = document.querySelectorAll('input[type=checkbox]');
-
                 let checkboxArray = Array.from(checkboxAll);
-
                 for (let i = 0; i < checkboxArray.length; ++i) {
                     if (checkboxArray[i].type === 'checkbox' && checkboxArray[i].checked) {
                         serialize += '&' + checkboxArray[i].name + '=' + checkboxArray[i].value;
+                        switch (checkboxArray[i].name) {
+                            case 'is_anonymous':
+                                this.filterParams.isAnonymous = checkboxArray[i].value;
+                                break;
+                            case 'is_liked':
+                                this.filterParams.isLikedIdeas = checkboxArray[i].value;
+                                break;
+                            case 'department_id[]':
+                                this.filterParams.departmentIds.push(checkboxArray[i].value);
+                                break;
+                            case 'core_competency_id[]':
+                                this.filterParams.coreCompetencyIds.push(checkboxArray[i].value);
+                                break;
+                            case 'operational_goal_id[]':
+                                this.filterParams.operationalGoalIds.push(checkboxArray[i].value);
+                                break;
+                            case 'type_id[]':
+                                this.filterParams.typeIds.push(checkboxArray[i].value);
+                                break;
+                            case 'tag_id[]':
+                                this.filterParams.tagIds.push(checkboxArray[i].value);
+                                break;
+                        }
                     }
                 }
                 return serialize;
