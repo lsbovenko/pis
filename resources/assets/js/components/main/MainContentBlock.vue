@@ -204,6 +204,7 @@
                 loading: true,
                 viewBlock: false,
                 ideaEmpty: false,
+                filterParams: {},
                 query: {
                     limit: this.$route.query.limit || 15,
                     count: 0,
@@ -231,7 +232,6 @@
                 topUsersByCompletedIdeasLast3Month: {
                     data: []
                 },
-                resultFilters: '',
                 listMenu: ['/', '/priority-board', '/my-ideas', '/pending-review', '/declined'],
                 url: (window.location.pathname === '/') ? '/get-idea/all' : '/get-idea' + pathUrl
             }
@@ -274,40 +274,23 @@
             }
         },
         mounted() {
-            this.fetch();
-
             this.$root.$on('resultFilter', (result) => {
-                Vue.set(this.$data, 'collection', result.data.ideas);
-                this.query.page = result.data.ideas.current_page;
-                this.query.count = result.data.ideas.total;
-                this.filter = result.data.filter;
+                this.filterParams = result.data;
+                this.fetch();
 
-                this.viewPaginateBlock(result.data.ideas.total);
+                if (result.orderResult === 'removed') {
+                    this.selected = '';
+                    this.query.limit = this.filterParams.limit;
+                    this.query.statusId = this.filterParams.statusId;
+                    this.query.orderDir = this.filterParams.orderDir;
+                    this.query.page = this.filterParams.page;
 
-                this.$root.$emit('preloaderPage', false);
-            });
-
-            this.$root.$on('resultChecked', (result) => {
-                this.resultFilters = result.data;
-                this.query.statusId = result.statusId;
-                this.query.orderDir = result.orderDir;
-
-                if (result.orderResult === 'removed'){
                     let orderMenu = document.getElementById('dropdownMenuOrder');
                     orderMenu.getElementsByTagName('em')[0].innerHTML = this.ideas.new_first;
                     this.querySelectorMenuOrder();
                 }
-
-                this.viewBlock = true;
-                this.ideaEmpty = false;
+                this.$root.$emit('preloaderPage', false);
             });
-
-            this.$root.$on('resetAllFilterParams', (result) => {
-                this.query.limit = result.limit;
-                this.query.statusId = result.statusId;
-                this.query.orderDir = 'new';
-                this.selected = result.selected;
-            })
         },
         methods: {
             orderSort(sort) {
@@ -334,7 +317,6 @@
                 if (this.query.orderDir == this.query.oldFirst || this.query.orderDir == this.query.newFirst) {  // function ideaStatus() has this code for other options
                     this.query.page = 1;
                     this.$root.$emit('checkStatusIdAndOrderDir', this.query);
-                    this.applyChange();
                 }
             },
             ideaStatus(param) {
@@ -350,40 +332,29 @@
                 this.query.statusId = param;
                 this.query.page = 1;
                 this.$root.$emit('checkStatusIdAndOrderDir', this.query);
-
                 this.active = 'active';
-                this.applyChange();
-            },
-            applyChange() {
-                this.fetch();
             },
             updateLimit() {
                 this.query.page = 1;
                 this.$root.$emit('checkStatusIdAndOrderDir', this.query);
-                this.applyChange();
             },
-
             prevPage() {
                 if(this.collection.prev_page_url) {
                     this.query.page = Number(this.query.page) - 1;
                     this.$root.$emit('checkStatusIdAndOrderDir', this.query);
-                    this.applyChange();
                 }
             },
             nextPage() {
                 if (this.collection.next_page_url){
                     this.query.page = Number(this.query.page) + 1;
                     this.$root.$emit('checkStatusIdAndOrderDir', this.query);
-                    this.applyChange();
                 }
             },
             fetch() {
                 this.$root.$emit('preloaderPage', true);
-                const params = {
-                    ...this.query
-                };
+                const params = {...this.filterParams};
 
-                axios.get(this.url + '?' + this.resultFilters, {params: params})
+                axios.get(this.url, {params: params})
                     .then((res) => {
                         Vue.set(this.$data, 'collection', res.data.ideas);
                         Vue.set(this.$data, 'topUsers', res.data.topUsers);
@@ -433,8 +404,8 @@
                     elements[i].classList.remove('active');
                     elements[i].onclick = (event) => {
                         this.removedClassOrder(elements);
-                        if (event.target.innerHTML === this.innerHTML) {
-                            this.classList.add("active");
+                        if (event.target.innerHTML === this.selectedOrderDir) {
+                            event.target.parentNode.classList.add('active');
                         }
                     };
                 }

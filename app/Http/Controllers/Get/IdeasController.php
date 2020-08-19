@@ -204,8 +204,8 @@ class IdeasController extends Controller
             $query->where($key, '=', $value);
         }
 
-        if (isset($input['user_department_id'])) {
-            $userDepartmentId = $input['user_department_id'];
+        if (isset($input['submittersDepartmentId'])) {
+            $userDepartmentId = $input['submittersDepartmentId'];
             $query->whereHas(
                 'user',
                 function ($q) use ($userDepartmentId) {
@@ -214,8 +214,8 @@ class IdeasController extends Controller
             );
         }
 
-        if (isset($input['department_id'])) {
-            $departmentId = $input['department_id'];
+        if (isset($input['departmentIds'])) {
+            $departmentId = $input['departmentIds'];
             $query->whereHas(
                 'departments',
                 function ($q) use ($departmentId) {
@@ -224,14 +224,14 @@ class IdeasController extends Controller
             );
         }
 
-        if (isset($input['executor_id'])) {
-            $executorId = $input['executor_id'];
+        if (isset($input['ownerId'])) {
+            $executorId = $input['ownerId'];
             $query->join('ideas_executors as ie', 'ideas.id', '=', 'ie.idea_id');
             $query->where('ie.executor_id', $executorId);
         }
 
-        if (isset($input['core_competency_id'])) {
-            $coreCompetencyId = $input['core_competency_id'];
+        if (isset($input['coreCompetencyIds'])) {
+            $coreCompetencyId = $input['coreCompetencyIds'];
             $query->whereHas(
                 'coreCompetencies',
                 function ($q) use ($coreCompetencyId) {
@@ -240,8 +240,8 @@ class IdeasController extends Controller
             );
         }
 
-        if (isset($input['operational_goal_id'])) {
-            $operationalGoalId = $input['operational_goal_id'];
+        if (isset($input['operationalGoalIds'])) {
+            $operationalGoalId = $input['operationalGoalIds'];
             $query->whereHas(
                 'operationalGoals',
                 function ($q) use ($operationalGoalId) {
@@ -260,8 +260,8 @@ class IdeasController extends Controller
             );
         }
 
-        if (!empty($input['tag_id'])) {
-            $tagId = $input['tag_id'];
+        if (!empty($input['tagIds'])) {
+            $tagId = $input['tagIds'];
             $query->whereHas(
                 'tags',
                 function ($q) use ($tagId) {
@@ -276,34 +276,34 @@ class IdeasController extends Controller
             $query->where('st.slug', '=', $statusId);
         }
 
-        if (isset($input['type_id'])) {
-            $typeId = $input['type_id'];
+        if (isset($input['typeIds'])) {
+            $typeId = $input['typeIds'];
             $query->whereIn('type_id', $typeId);
         }
 
-        if (isset($input['user_id'])) {
-            $userId = $input['user_id'];
+        if (isset($input['submitterId'])) {
+            $userId = $input['submitterId'];
             $query->where('ideas.user_id', '=', $userId);
         }
 
-        if (isset($input['is_anonymous'])) {
+        if (isset($input['isAnonymous'])) {
             $query->whereNull('ideas.user_id');
         }
 
-        if (isset($input['is_liked'])) {
+        if (isset($input['isLikedIdeas'])) {
             $user = $request->user();
             $query->join('idea_likes as il', 'ideas.id', '=', 'il.idea_id');
             $query->where('il.user_id', $user->id);
         }
 
-        if (isset($input['idea_age'])) {
-            $ideaAge = $input['idea_age'];
+        if (isset($input['ageOfIdeasId'])) {
+            $ideaAge = $input['ageOfIdeasId'];
             $date = new \DateTime("-$ideaAge days");
             $query->where('ideas.created_at', '<', $date->format('Y-m-d H:i:s'));
         }
 
-        if (isset($input['datepicker_dates'])) {
-            $datepickerDates = $input['datepicker_dates'];
+        if (isset($input['datepickerDates'])) {
+            $datepickerDates = $input['datepickerDates'];
             $dates = explode(',', $datepickerDates);
             if (count($dates) == 2) {
                 $beginDate = $dates[0] . ' 00:00:00';
@@ -312,8 +312,8 @@ class IdeasController extends Controller
             }
         }
 
-        if (isset($input['search_idea'])) {
-            $searchIdea = $input['search_idea'];
+        if (isset($input['searchIdea'])) {
+            $searchIdea = $input['searchIdea'];
             if (!$searchQueryTitle) {
                 $query->where('title', 'LIKE', "%$searchIdea%");
 
@@ -342,7 +342,7 @@ class IdeasController extends Controller
 
         $orderBy = (isset($input['orderDir'])) ? $input['orderDir'] : '';
 
-        if (empty($input['search_idea'])) {
+        if (empty($input['searchIdea'])) {
             switch ($orderBy) {
                 case 'old':
                     $query->orderBy('ideas.id', 'ASC');
@@ -470,7 +470,7 @@ class IdeasController extends Controller
      */
     protected function getIdeas($request, $filterParams = null)
     {
-        if ($request['search_idea']) {
+        if ($request['searchIdea']) {
             $searchQueryTitle = $this->getChangeFilter($request, $filterParams);
             $ideas = $this->getChangeFilter($request, $filterParams, $searchQueryTitle)
                 ->paginate($this->checkedLimit($request));
