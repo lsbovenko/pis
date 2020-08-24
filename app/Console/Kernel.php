@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\UpdateUsers;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\SendEmails;
@@ -15,6 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         SendEmails::class,
+        UpdateUsers::class
     ];
 
     /**
@@ -30,6 +32,7 @@ class Kernel extends ConsoleKernel
          */
         //  */5 * * * * php /var/www/html/pis/artisan schedule:run >> /dev/null 2>&1
         $schedule->command('emails:send')->everyFiveMinutes();
+        $schedule->command('users:update')->daily(); //Run the task every day at midnight
     }
 
     /**

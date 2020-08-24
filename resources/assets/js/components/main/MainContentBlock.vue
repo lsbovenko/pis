@@ -117,8 +117,13 @@
                                     <div v-if="item.user">
                                         <div v-if="item.executors && item.executors.length" v-for="executor in item.executors">
                                             <div class="user-info">
-                                                <span class="avatar" v-bind:style="'background-color: ' + executor.icon_color">
-                                                    {{ executor.name.substring(0,1) }}{{executor.last_name.substring(0,1) }}
+                                                <span
+                                                    class="avatar"
+                                                    v-bind:style="'background-image: url(' + executor.avatar + '); background-color: ' + executor.icon_color + ';'"
+                                                >
+                                                    <span v-if="!executor.avatar">
+                                                        {{ executor.name.substring(0,1) }}{{executor.last_name.substring(0,1) }}
+                                                    </span>
                                                 </span>
                                                 <span class="user-name">
                                                     {{ executor.name }}
@@ -130,8 +135,12 @@
                                             </div>
                                         </div>
                                         <div class="user-info">
-                                            <span class="avatar" v-bind:style="'background-color: ' + item.user.icon_color">
-                                                {{ item.user.name.substring(0,1) }}{{ item.user.last_name.substring(0,1) }}
+                                            <span class="avatar"
+                                                  v-bind:style="'background-image: url(' + item.user.avatar + '); background-color: ' + item.user.icon_color + ';'"
+                                            >
+                                                <span v-if="!item.user.avatar">
+                                                    {{ item.user.name.substring(0,1) }}{{ item.user.last_name.substring(0,1) }}
+                                                </span>
                                             </span>
                                             <span class="user-name">
                                                 {{ item.user.name }}

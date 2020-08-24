@@ -2,7 +2,7 @@
 
 return [
 
-    'version' => '1.0.34',
+    'version' => '1.0.35',
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -74,6 +74,18 @@ return [
 
 
     'auth_api_key' => env('AUTH_API_KEY', ''),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Api Token
+    |--------------------------------------------------------------------------
+    |
+    | This Api Token is used to connect to route https://auth.velmie.com/api/v2/users/active
+    | via OpenID Connect Protocol. Token is generated in Auth Velmie.
+    |
+    */
+
+    'api_token' => env('API_TOKEN', ''),
 
     /*
     |--------------------------------------------------------------------------

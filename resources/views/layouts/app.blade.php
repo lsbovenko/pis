@@ -69,8 +69,12 @@
                         <a href="{{ config('app.auth_url') }}">Login</a>
                     @else
                         <a data-toggle="dropdown" href="#">
-                            <em class="avatar user_avatar_name" style="background-color: {{ Auth::user()->icon_color }}">
-                                {{mb_substr(Auth::user()->name, 0 ,1)}}{{mb_substr(Auth::user()->last_name, 0 ,1)}}
+                            <em class="avatar user_avatar_name"
+                                style="background-image: url({{Auth::user()->avatar}}); background-color: {{ Auth::user()->icon_color }};"
+                            >
+                                @if (!Auth::user()->avatar)
+                                    {{mb_substr(Auth::user()->name, 0 ,1)}}{{mb_substr(Auth::user()->last_name, 0 ,1)}}
+                                @endif
                             </em>
                             {{ Auth::user()->name }}
                             <span class="caret"></span>

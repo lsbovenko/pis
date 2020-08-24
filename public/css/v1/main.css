@@ -8327,6 +8327,8 @@ body .dropdown .avatar {
     font-size: 11px;
     text-transform: uppercase;
     font-style: normal;
+    background-position: center;
+    background-size: cover;
 }
 
 @media (max-width: 767px) {
@@ -9018,6 +9020,8 @@ body .container .content-box .idea .reviews ul li .image {
         background-size: 32px auto;*/
     -webkit-border-radius: 50%;
     border-radius: 50%;
+    background-position: center;
+    background-size: cover;
 }
 
 .button-comment {
@@ -9725,6 +9729,8 @@ body .container .btn_.btn-outline-red:hover {
     font-size: 11px;
     text-transform: uppercase;
     font-style: normal;
+    background-position: center;
+    background-size: cover;
 }
 
 @media (max-width: 559px) {

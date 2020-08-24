@@ -12,6 +12,7 @@
         "laravelcollective/html": "~5.0",
         "spatie/laravel-menu": "^2.1",
         "tymon/jwt-auth": "0.5.*",
+        "ext-json": "*",
         "zizaco/entrust": "5.2.x-dev"
     },
     "require-dev": {
