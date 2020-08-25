@@ -6,6 +6,7 @@ use App\Console\Commands\UpdateUsers;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\SendEmails;
+use App\Console\Commands\SetStamp;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,7 +17,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         SendEmails::class,
-        UpdateUsers::class
+        UpdateUsers::class,
+        SetStamp::class,
     ];
 
     /**
