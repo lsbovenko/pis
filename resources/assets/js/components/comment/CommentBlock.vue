@@ -2,8 +2,12 @@
     <div>
         <ul class="without-list-style">
             <li v-if="count > 0" v-for="item in comments">
-                <div class="image" v-bind:style="'background-color: ' + item.user.icon_color">
-                    {{ item.user.name.substring(0,1) }}{{ item.user.last_name.substring(0,1) }}
+                <div class="image"
+                     v-bind:style="'background-image: url(' + item.user.avatar + '); background-color: ' + item.user.icon_color + ';'"
+                >
+                    <span v-if="!item.user.avatar">
+                        {{ item.user.name.substring(0,1) }}{{ item.user.last_name.substring(0,1) }}
+                    </span>
                 </div>
                 <div class="text-reviews">
                     <b>

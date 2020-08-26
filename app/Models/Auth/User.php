@@ -30,7 +30,9 @@ class User extends Authenticatable
         'email',
         'department_id',
         'position_id',
-        'is_active'
+        'is_active',
+        'external_id',
+        'avatar'
     ];
 
     /**
