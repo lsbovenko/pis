@@ -51,7 +51,6 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         //'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
-        'auth' => \App\Http\Middleware\Auth::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
@@ -60,8 +59,6 @@ class Kernel extends HttpKernel
         'role' => \Zizaco\Entrust\Middleware\EntrustRole::class,
         'permission' => \Zizaco\Entrust\Middleware\EntrustPermission::class,
         'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
-        'jwt' => \App\Http\Middleware\AuthorizeByJWT::class,
-        'refresh_jwt' => \App\Http\Middleware\RefreshJWT::class,
-        'check_user' => \App\Http\Middleware\CheckUser::class,
+        'velmie_oidc_auth' => \App\Http\Middleware\VelmieOIDCAuth::class,
     ];
 }
