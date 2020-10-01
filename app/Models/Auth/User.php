@@ -16,6 +16,8 @@ use App\Models\Categories\Status;
  */
 class User extends Authenticatable
 {
+    const USER_ACTIVE = 1;
+
     use Notifiable;
     use EntrustUserTrait;
 
@@ -216,5 +218,13 @@ class User extends Authenticatable
     public function ideasOfExecutor()
     {
         return $this->belongsToMany(Idea::class, 'ideas_executors', 'executor_id', 'idea_id', 'id', 'id');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive()
+    {
+        return $this->is_active === self::USER_ACTIVE;
     }
 }
