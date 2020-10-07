@@ -16,10 +16,10 @@ use App\Models\Categories\Status;
  */
 class User extends Authenticatable
 {
-    const USER_ACTIVE = 1;
-
     use Notifiable;
     use EntrustUserTrait;
+
+    const USER_ACTIVE = 1;
 
     /**
      * The attributes that are mass assignable.

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Libraries\OpenIDConnectClient;
 use App\Models\Auth\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -13,9 +13,18 @@ use Illuminate\Support\Facades\Auth;
  */
 class VelmieOIDCAuthController extends Controller
 {
-    public function callback(Request $request)
+    public function callback(OpenIDConnectClient $authApiClient)
     {
-        $userParams = $request->all();
+        $authApiClient->authenticate();
+        $verifiedClaims = $authApiClient->getVerifiedClaims('data');
+
+        $userParams = [
+            'name' => $verifiedClaims->firstName,
+            'last_name' => $verifiedClaims->lastName,
+            'email' => $verifiedClaims->email,
+            'external_id' => $verifiedClaims->externalId,
+        ];
+
         if (empty($userParams['external_id'])) {
             return redirect()->guest(config('app.auth_url'));
         }

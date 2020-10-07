@@ -223,6 +223,7 @@ return [
         App\Providers\AuthApiClientServiceProvider::class,
         App\Providers\UserCreatorServiceProvider::class,
         App\Providers\WebhookServiceProvider::class,
+        App\Providers\VelmieOIDCAuthApiClientServiceProvider::class,
     ],
 
     /*
