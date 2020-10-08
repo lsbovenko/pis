@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Department extends Model
 {
+    const DEPARTMENT_ACTIVE = 1;
+
     /**
      * disable update timestamp fields
      *

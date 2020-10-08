@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Position extends Model
 {
+    const POSITION_ACTIVE = 1;
+
     /**
      * disable update timestamp fields
      *
