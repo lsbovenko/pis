@@ -15,4 +15,17 @@ class Department extends AbstractRepository
     {
         return ModelDepartment::class;
     }
+
+    public function getDepartmentByName(string $name)
+    {
+        $department = ModelDepartment::where('name', $name)->first();
+        if (!$department) {
+            $department = ModelDepartment::create([
+                'name' => $name,
+                'is_active' => ModelDepartment::DEPARTMENT_ACTIVE,
+            ]);
+        }
+
+        return $department;
+    }
 }
