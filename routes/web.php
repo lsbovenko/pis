@@ -17,7 +17,7 @@ if (App::environment('production')) {
 
 Route::post('/webhook/receive', 'Webhook@receive')->name('/webhook/receive');
 Route::get('lang/{lang}', 'IndexController@switchLanguage')->name('lang');
-Route::get('auth', 'VelmieOIDCAuthController@callback');
+Route::get('auth', 'VelmieOIDCAuthController@callback')->name('auth');
 
 /**
  * only auth users
