@@ -21,7 +21,7 @@ class VelmieOIDCAuthApiClientServiceProvider extends ServiceProvider
                 config('oidc.client_secret')
             );
 
-            $OIDCClient->setRedirectURL(config('oidc.redirect_url'));
+            $OIDCClient->setRedirectURL(route('auth'));
             $OIDCClient->addScope(['openid', 'all']);
 
             return $OIDCClient;
