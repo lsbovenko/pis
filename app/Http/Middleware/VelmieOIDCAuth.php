@@ -21,7 +21,7 @@ class VelmieOIDCAuth
     public function handle($request, \Closure $next)
     {
         if (!Auth::check() || !Auth::user()->isActive()) {
-            return redirect()->guest(config('app.auth_url'));
+            return redirect()->guest(route('auth'));
         }
 
         return $next($request);
