@@ -12,7 +12,8 @@ pipelines:
           name: Deploy to production
           image: rdoepner/docker-deployer:7.2
           deployment: production
-          trigger: manual
+          trigger: automatic
+          size: 2x
           script:
             - eval "$(ssh-agent -s)"
             - ssh-add ~/.ssh/id_pipelines
