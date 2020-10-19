@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Libraries\OpenIDConnectClient;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -11,6 +12,13 @@ use Illuminate\Support\Facades\Auth;
  */
 class VelmieOIDCAuth
 {
+    protected $authApiClient;
+
+    public function __construct(OpenIDConnectClient $authApiClient)
+    {
+        $this->authApiClient = $authApiClient;
+    }
+
     /**
      * Handle an incoming request.
      *
@@ -21,7 +29,7 @@ class VelmieOIDCAuth
     public function handle($request, \Closure $next)
     {
         if (!Auth::check() || !Auth::user()->isActive()) {
-            return redirect()->guest(route('auth'));
+            return redirect()->guest($this->authApiClient->getAuthorizationUrlAndCommit());
         }
 
         return $next($request);
