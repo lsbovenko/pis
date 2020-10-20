@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'lifetime' => env('SESSION_LIFETIME', 5),//5 minutes
+    'lifetime' => env('SESSION_LIFETIME', 20160), //2 weak
 
     'expire_on_close' => false,
 
