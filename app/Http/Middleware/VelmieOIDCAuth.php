@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use App\Libraries\OpenIDConnectClient;
 use Illuminate\Support\Facades\Auth;
+use Jumbojett\OpenIDConnectClient;
 
 /**
  * Class VelmieOIDCAuth

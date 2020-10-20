@@ -4,6 +4,12 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/velmie/openid-connect-php"
+        }
+    ],
     "require": {
         "php": ">=5.6.4",
         "guzzlehttp/guzzle": "~6.0",
@@ -14,8 +20,8 @@
         "tymon/jwt-auth": "0.5.*",
         "ext-json": "*",
         "zizaco/entrust": "5.2.x-dev",
-        "phpseclib/phpseclib": "^2.0.29",
-        "doctrine/dbal": "^2.10"
+        "doctrine/dbal": "^2.10",
+        "jumbojett/openid-connect-php": "master-dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -25,8 +31,7 @@
     },
     "autoload": {
         "classmap": [
-            "database",
-            "app/Libraries"
+            "database"
         ],
         "psr-4": {
             "App\\": "app/"

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Libraries\OpenIDConnectClient;
 use App\Models\Auth\User;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Jumbojett\OpenIDConnectClient;
 
 /**
  * Class VelmieOIDCAuthController

@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Libraries\OpenIDConnectClient;
 use Illuminate\Support\ServiceProvider;
+use Jumbojett\OpenIDConnectClient;
 
 /**
  * Class VelmieOIDCAuthApiClientServiceProvider
