@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Jumbojett\OpenIDConnectClient;
 
@@ -26,12 +28,25 @@ class VelmieOIDCAuth
      * @param \Closure $next
      * @return mixed
      */
-    public function handle($request, \Closure $next)
+    public function handle(Request $request, \Closure $next)
     {
-        if (!Auth::check() || !Auth::user()->isActive()) {
+        if (!Auth::check() || !Auth::user()->isActive() || $this->isSessionLifetimeUp($request)) {
             return redirect()->guest($this->authApiClient->getAuthorizationUrlAndCommit());
         }
 
         return $next($request);
+    }
+
+    private function isSessionLifetimeUp(Request $request)
+    {
+        $session = $request->session();
+
+        $now = Carbon::now()->timestamp;
+        $startSession = $session->get('oidc_auth_time', null);
+        if ($startSession === null) {
+            return false;
+        }
+
+        return $now - $startSession > config('oidc.session_lifetime') * Carbon::SECONDS_PER_MINUTE;
     }
 }
