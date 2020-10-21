@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Auth\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Jumbojett\OpenIDConnectClient;
@@ -14,7 +16,7 @@ use Jumbojett\OpenIDConnectClient;
  */
 class VelmieOIDCAuthController extends Controller
 {
-    public function callback(OpenIDConnectClient $authApiClient)
+    public function callback(Request $request, OpenIDConnectClient $authApiClient)
     {
         $authApiClient->authenticate();
         $verifiedClaims = $authApiClient->getVerifiedClaims('data');
@@ -45,6 +47,8 @@ class VelmieOIDCAuthController extends Controller
         $roleRepository->updateRole($user, $verifiedClaims->roles);
 
         Auth::login($user);
+        $startSession = Carbon::now()->timestamp;
+        $request->session()->put('oidc_auth_time', $startSession);
 
         return redirect()->intended();
     }
