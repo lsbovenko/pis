@@ -219,7 +219,6 @@ return [
         App\Providers\IdeaControlServiceProvider::class,
         App\Providers\DataCleanerServiceProvider::class,
         App\Providers\MenuServiceProvider::class,
-        App\Providers\JWTServiceProvider::class,
         App\Providers\AuthApiClientServiceProvider::class,
         App\Providers\UserCreatorServiceProvider::class,
         App\Providers\WebhookServiceProvider::class,
