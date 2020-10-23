@@ -1,37 +1,35 @@
 clone:
   depth: 2
 
+definitions:
+  steps:
+    - step: &check-code
+        name: Check code
+        image: "herloct/phpcs"
+        script:
+          - "php -v"
+          - "phpcs --standard=PSR12 app/"
+
+    - step: &deploy-to-prod
+        name: Deploy to prod
+        image: rdoepner/docker-deployer:7.2
+        deployment: production
+        trigger: automatic
+        size: 2x
+        script:
+          - deployer --version
+          - eval "$(ssh-agent -s)"
+          - ssh-add ~/.ssh/id_pipelines
+          - deployer deploy prod
+
 pipelines:
   branches:
     master:
-      - step:
-          image: rdoepner/docker-deployer:7.2
-          script:
-            - deployer --version
-      - step:
-          name: Deploy to production
-          image: rdoepner/docker-deployer:7.2
-          deployment: production
-          trigger: automatic
-          size: 2x
-          script:
-            - eval "$(ssh-agent -s)"
-            - ssh-add ~/.ssh/id_pipelines
-            - deployer deploy prod
+      - step: *deploy-to-prod
 
     develop:
-      - step:
-          name: Check codestyle
-          image: "herloct/phpcs"
-          script:
-            - "php -v"
-            - "phpcs --standard=PSR12 app/"
+      - step: *check-code
 
   pull-requests:
     develop:
-      - step:
-          name: Check codestyle
-          image: "herloct/phpcs"
-          script:
-            - "php -v"
-            - "phpcs --standard=PSR12 app/"
+      - step: *check-code
