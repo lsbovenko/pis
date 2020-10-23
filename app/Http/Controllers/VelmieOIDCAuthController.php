@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Auth\User;
+use App\Service\UserSyncService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -16,36 +17,13 @@ use Jumbojett\OpenIDConnectClient;
  */
 class VelmieOIDCAuthController extends Controller
 {
-    public function callback(Request $request, OpenIDConnectClient $authApiClient)
+    public function callback(Request $request, OpenIDConnectClient $authApiClient, UserSyncService $userSyncService)
     {
         $authApiClient->authenticate();
-        $verifiedClaims = $authApiClient->getVerifiedClaims('data');
+        $userData = $authApiClient->getVerifiedClaims('data');
+        $userSyncService->sync([$userData]);
 
-        $userParams = [
-            'name' => $verifiedClaims->firstName,
-            'last_name' => $verifiedClaims->lastName,
-            'email' => $verifiedClaims->email,
-            'is_active' => (int)$verifiedClaims->active,
-            'avatar' => $verifiedClaims->avatar->small,
-            'external_id' => $verifiedClaims->externalId,
-        ];
-
-        if (empty($userParams['external_id'])) {
-            return redirect()->guest(config('app.auth_url'));
-        }
-
-        $departmentRepository = App::make('repository.department');
-        $userParams['department_id'] = $departmentRepository->getDepartmentByName($verifiedClaims->department)->id;
-
-        $positionRepository = App::make('repository.position');
-        $userParams['position_id'] = $positionRepository->getPositionByName($verifiedClaims->position)->id;
-
-        $user = User::where('external_id', $userParams['external_id'])->first();
-        $user ? $user->update($userParams) : $user = User::create($userParams);
-
-        $roleRepository = App::make('repository.role');
-        $roleRepository->updateRole($user, $verifiedClaims->roles);
-
+        $user = User::where('external_id', $userData->externalId)->first();
         Auth::login($user);
         $startSession = Carbon::now()->timestamp;
         $request->session()->put('oidc_auth_time', $startSession);
