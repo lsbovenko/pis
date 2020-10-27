@@ -23,8 +23,8 @@ class AuthV2ApiClient
     public function getActiveUsers()
     {
         $response = $this->httpClient->request('GET', 'users/active');
-        $data = json_decode($response->getBody()->getContents(), true);
+        $data = json_decode($response->getBody()->getContents());
 
-        return $data['data'];
+        return $data->data;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Service\UserSyncService;
 use Illuminate\Console\Command;
 use App\Models\Auth\User;
 use App\Models\Categories\Department;
@@ -30,14 +31,18 @@ class UpdateUsers extends Command
      */
     protected $description = 'Update users from auth';
 
+    private $userSyncService;
+
     /**
      * Create a new command instance.
      *
+     * @param UserSyncService $userSyncService
      * @return void
      */
-    public function __construct()
+    public function __construct(UserSyncService $userSyncService)
     {
         parent::__construct();
+        $this->userSyncService = $userSyncService;
     }
 
     /**
@@ -48,41 +53,7 @@ class UpdateUsers extends Command
         try {
             $apiClient = new AuthV2ApiClient();
             $authUsers = $apiClient->getActiveUsers();
-
-            foreach ($authUsers as $authUser) {
-                $user = User::where('email', $authUser['email'])->first();
-
-                if ($user) {
-                    $user->name = $authUser['firstName'];
-                    $user->last_name = $authUser['lastName'];
-                    $user->is_active = $authUser['active'];
-                    $user->external_id = $authUser['externalId'];
-
-                    if (isset($authUser['avatar']['small'])) {
-                        $user->avatar = $authUser['avatar']['small'];
-                    }
-
-                    $position = Position::where('id', '=', $user->position_id)->get()->first();
-                    if ($position->name != $authUser['position'] && $authUser['position'] != '') {
-                        $newPosition = Position::where('name', '=', $authUser['position'])->get()->first();
-                        if (empty($newPosition)) {
-                            $newPosition = Position::create(['name' => $authUser['position'], 'is_active' => 1]);
-                        }
-                        $user->position_id = $newPosition->id;
-                    }
-
-                    $department = Department::where('id', '=', $user->department_id)->get()->first();
-                    if ($department->name != $authUser['department'] && $authUser['department'] != '') {
-                        $newDepartment = Department::where('name', '=', $authUser['department'])->get()->first();
-                        if (empty($newDepartment)) {
-                            $newDepartment = Department::create(['name' => $authUser['department'], 'is_active' => 1]);
-                        }
-                        $user->department_id = $newDepartment->id;
-                    }
-
-                    $user->save();
-                }
-            }
+            $this->userSyncService->sync($authUsers, $blockAbsent = true);
         } catch (\Throwable $e) {
             $this->error($e->getMessage());
             Log::error($e);

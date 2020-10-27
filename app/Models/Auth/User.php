@@ -19,6 +19,7 @@ class User extends Authenticatable
     use Notifiable;
     use EntrustUserTrait;
 
+    const USER_NOT_ACTIVE = 0;
     const USER_ACTIVE = 1;
 
     /**
