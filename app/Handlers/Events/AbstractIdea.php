@@ -2,7 +2,6 @@
 
 namespace App\Handlers\Events;
 
-use App\Repositories\RemoteUser;
 use Illuminate\Support\Facades\App;
 use App\Service\EmailQueueCreator;
 
@@ -17,14 +16,6 @@ abstract class AbstractIdea
      * @var EmailQueueCreator
      */
     private $emailQueueService;
-
-    /**
-     * @return RemoteUser
-     */
-    protected function getRemoteUserRepository(): RemoteUser
-    {
-        return App::make('repository.remote_user');
-    }
 
     /**
      * @return EmailQueueCreator
