@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\Categories\Status;
 use App\Mail\IdeaChangedStatus\ToUser;
 use App\Mail\IdeaChangedStatus\ToAll;
-
+use App\Repositories\User as UserRepo;
 use Illuminate\Support\Facades\App;
 
 /**
@@ -18,6 +18,13 @@ use Illuminate\Support\Facades\App;
  */
 class IdeaChangedStatus extends AbstractIdea
 {
+    private $userRepo;
+
+    public function __construct(UserRepo $userRepo)
+    {
+        $this->userRepo = $userRepo;
+    }
+
     /**
      * Handle the event.
      *
@@ -50,7 +57,7 @@ class IdeaChangedStatus extends AbstractIdea
 
     protected function notifyAll(IdeaWasChangedStatus $event)
     {
-        foreach ($this->getRemoteUserRepository()->getAll() as $user) {
+        foreach ($this->userRepo->getActiveUsers() as $user) {
             $this->getQueueService()->add($user['email'], new ToAll($event->getIdea()));
         }
 

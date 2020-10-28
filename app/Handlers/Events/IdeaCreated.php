@@ -5,6 +5,7 @@ namespace App\Handlers\Events;
 use App\Events\IdeaWasCreated;
 use App\Mail\IdeaCreated\ToUser;
 use App\Mail\IdeaCreated\ToSuperadmin;
+use App\Repositories\User as UserRepo;
 
 /**
  * Class IdeaCreated
@@ -13,6 +14,13 @@ use App\Mail\IdeaCreated\ToSuperadmin;
  */
 class IdeaCreated extends AbstractIdea
 {
+    private $userRepo;
+
+    public function __construct(UserRepo $userRepo)
+    {
+        $this->userRepo = $userRepo;
+    }
+
     /**
      * @param IdeaWasCreated $event
      */
@@ -43,7 +51,7 @@ class IdeaCreated extends AbstractIdea
      */
     protected function notifySuperadmins(IdeaWasCreated $event)
     {
-        foreach ($this->getRemoteUserRepository()->getSuperadmins() as $user) {
+        foreach ($this->userRepo->getSuperadmins() as $user) {
             $this->getQueueService()->add($user['email'], new ToSuperadmin($event->getIdea()));
         }
         return $this;

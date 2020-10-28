@@ -4,6 +4,7 @@ namespace App\Handlers\Events;
 
 use App\Events\IdeaWasApproved;
 use App\Mail\IdeaApproved\ToAll;
+use App\Repositories\User as UserRepo;
 
 /**
  * Class IdeaApproved
@@ -12,6 +13,13 @@ use App\Mail\IdeaApproved\ToAll;
  */
 class IdeaApproved extends AbstractIdea
 {
+    private $userRepo;
+
+    public function __construct(UserRepo $userRepo)
+    {
+        $this->userRepo = $userRepo;
+    }
+
     /**
      * Handle the event.
      *
@@ -29,7 +37,7 @@ class IdeaApproved extends AbstractIdea
      */
     protected function notifyAll(IdeaWasApproved $event)
     {
-        foreach ($this->getRemoteUserRepository()->getAll() as $user) {
+        foreach ($this->userRepo->getActiveUsers() as $user) {
             $this->getQueueService()->add($user['email'], new ToAll($event->getIdea()));
         }
 
