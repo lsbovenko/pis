@@ -131,8 +131,14 @@ var dislike;
                 ['style', ['bold', 'underline', 'italic']],
                 ['color', ['color']],
                 ['para', ['ul', 'ol', 'paragraph']],
-                ['insert', ['link']] //'picture',
-            ]
+                ['insert', ['link', 'picture']] //'picture',
+            ],
+            maximumImageFileSize: 512*1024,
+            callbacks: {
+                onImageUploadError: function (msg) {
+                    alert(msg);
+                }
+            }
         });
     });
 })(jQuery);
