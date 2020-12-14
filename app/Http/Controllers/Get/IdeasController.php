@@ -56,7 +56,8 @@ class IdeasController extends Controller
             : [];
         $ideaId = $request->get('idea_id');
 
-        $searchIdeas = App::make('repository.idea')->getApprovedSearchIdeas($searchSimilarIdea, $similarIdeaIds, $ideaId);
+        $searchIdeas = App::make('repository.idea')
+            ->getApprovedSearchIdeas($searchSimilarIdea, $similarIdeaIds, $ideaId);
 
         return response()->json($this->getIdeasArray($searchIdeas));
     }
