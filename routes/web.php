@@ -49,8 +49,11 @@ Route::group(['middleware' => ['velmie_oidc_auth']], function () {
     Route::get('/get-idea/priority-board', 'Get\IdeasController@priorityBoard')->name('/get-idea/priority-board');
     Route::get('/get-idea/my-ideas', 'Get\IdeasController@myIdeas')->name('/get-idea/my-ideas');
 
-    //JQuery
-    Route::get('/get-idea/similar', 'Get\IdeasController@getSimilarIdeas')->name('get-idea/similar');
+    Route::get('/get-idea/{id}/current-tags', 'Get\IdeasController@getCurrentTags')->where('id', '[0-9]+')->name('/get-idea/current-tags');
+    Route::get('/get-idea/{id}/popular-exclude-current-tags', 'Get\IdeasController@getPopularExcludeCurrentTags')->where('id', '[0-9]+')->name('/get-idea/popular-exclude-current-tags');
+    Route::get('/available-tags', 'Get\IdeasController@getAvailableTags')->name('/available-tags');
+    Route::get('/get-idea/{id}/similar-ideas', 'Get\IdeasController@getSimilarIdeas')->where('id', '[0-9]+')->name('/get-idea/similar-ideas');
+    Route::get('/search-ideas', 'Get\IdeasController@getSearchIdeas')->name('/search-ideas');
 
     //superadmin or admin
     Route::group(['middleware' => ['role:admin|superadmin']], function() {

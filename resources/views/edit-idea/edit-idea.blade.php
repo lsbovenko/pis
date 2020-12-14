@@ -24,7 +24,8 @@
             @include('index.partials.add-fields')
             <div class="row bottom-button">
                 <div class="col-md-12 text-right">
-                    <button type="submit" class="btn_ btn-blue last">{{ trans('ideas.change') }}</button>
+                    <button type="button" class="btn_ btn-blue last" @click.prevent="onClickEditIdea" id="edit_idea_button">{{ trans('ideas.change') }}</button>
+                    <button type="submit" hidden="hidden" id="edit_idea_submit"></button>
                 </div>
             </div>
         </form>

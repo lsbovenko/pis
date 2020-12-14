@@ -101,6 +101,7 @@
 <script src="{{ asset('js/libs.min.js') }}"></script>
 <script src="{{ asset('js/common.js') }}?v={{ config('app.version') }}"></script>
 <script src="{{ asset('js/custom.js') }}?v={{ config('app.version') }}"></script>
+<script src="{{ asset('js/tag.js') }}?v={{ config('app.version') }}"></script>
 @yield('scripts')
 @yield('inline-scripts')
 </body>

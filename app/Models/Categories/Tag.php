@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
+    const POPULAR_TAGS_LIMIT = 10;
+
     protected $table = 'tags';
 
     protected $primaryKey = 'id';

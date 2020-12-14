@@ -11,9 +11,11 @@ namespace App\Http\Controllers\Get;
 
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User;
+use App\Models\Categories\Tag;
 use App\Models\Idea as ModelIdea;
 use Illuminate\Http\Request;
 use App\Models\Idea;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
@@ -46,7 +48,7 @@ class IdeasController extends Controller
         );
     }
 
-    public function getSimilarIdeas(Request $request)
+    public function getSearchIdeas(Request $request)
     {
         $searchSimilarIdea = $request->get('search_similar_idea');
         $similarIdeaIds = $request->get('similar_idea_id')
@@ -54,12 +56,9 @@ class IdeasController extends Controller
             : [];
         $ideaId = $request->get('idea_id');
 
-        /** @var \App\Service\Reference $reference */
-        $reference = App::make('reference');
+        $searchIdeas = App::make('repository.idea')->getApprovedSearchIdeas($searchSimilarIdea, $similarIdeaIds, $ideaId);
 
-        return response()->json(
-            $reference->getApprovedSearchIdeasForSelect($searchSimilarIdea, $similarIdeaIds, $ideaId)
-        );
+        return response()->json($this->getIdeasArray($searchIdeas));
     }
 
     /**
@@ -515,5 +514,85 @@ class IdeasController extends Controller
         $searchedItems = $query->get();
 
         return $searchedItems;
+    }
+
+    /**
+     * @param  int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getCurrentTags(int $id)
+    {
+        $currentTags = Idea::where('id', $id)->first()->tags()->orderBy('name', 'asc')->get();
+
+        return response()->json($this->getTagsArray($currentTags));
+    }
+
+    /**
+     * @param  int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getPopularExcludeCurrentTags(int $id)
+    {
+        $excludeCurrentTagIds = $id ? Idea::where('id', $id)->first()->tags()->pluck('id')->toArray() : [];
+        $popularTagIds = DB::table('ideas_tags')
+            ->select('tag_id', DB::raw('count(*) as count'))
+            ->whereNotIn('tag_id', $excludeCurrentTagIds)
+            ->groupBy('tag_id')
+            ->orderBy('count', 'desc')
+            ->limit(Tag::POPULAR_TAGS_LIMIT)
+            ->pluck('tag_id')
+            ->toArray();
+        $popularTags = App::make('repository.tag')->getPopularTagsByIds($popularTagIds);
+
+        return response()->json($this->getTagsArray($popularTags));
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAvailableTags()
+    {
+        $availableTags = App::make('repository.tag')->getAllTags();
+
+        return response()->json($this->getTagsArray($availableTags));
+    }
+
+    /**
+     * @param Collection $tags
+     * @return array
+     */
+    private function getTagsArray(Collection $tags)
+    {
+        $tagsArray = [];
+        foreach ($tags as $tag) {
+            $tagsArray[] = ['id' => $tag->id, 'text' => $tag->name];
+        }
+
+        return $tagsArray;
+    }
+
+    /**
+     * @param  int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSimilarIdeas(int $id)
+    {
+        $similarIdeas = Idea::where('id', $id)->first()->similarIdeas()->orderBy('title', 'asc')->get();
+
+        return response()->json($this->getIdeasArray($similarIdeas));
+    }
+
+    /**
+     * @param Collection $ideas
+     * @return array
+     */
+    private function getIdeasArray(Collection $ideas)
+    {
+        $ideasArray = [];
+        foreach ($ideas as $idea) {
+            $ideasArray[] = ['id' => $idea->id, 'text' => $idea->title];
+        }
+
+        return $ideasArray;
     }
 }
